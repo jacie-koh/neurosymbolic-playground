@@ -52,15 +52,22 @@ function miniNeural(): SVGElement {
 
 function neuralBlock(): HTMLElement {
   const st = store.get();
+  const sit = getSituation(st.situationId);
+  const disabled = !!sit?.isException;
   const layers = [st.neural.features.length, ...st.neural.hiddenLayers, 1];
+
   return el(
     "div",
     {
-      class: "block neural",
-      draggable: true,
+      class: "block neural" + (disabled ? " disabled" : ""),
+      draggable: !disabled,
       "data-kind": "neural",
-      title: "Double-click to customize the neural network",
-      ondblclick: () => store.set({ view: "neural" }),
+      title: sit?.isException
+        ? "Not applicable for this exception situation"
+        : "Double-click to customize the neural network",
+      ondblclick: () => {
+        if (!disabled) store.set({ view: "neural" });
+      },
     },
     el(
       "div",
@@ -80,16 +87,22 @@ function neuralBlock(): HTMLElement {
 function symbolicBlock(): HTMLElement {
   const st = store.get();
   const sit = getSituation(st.situationId);
+  const disabled = !!sit?.isException;
   // Fixed per situation — the user can inspect it but not swap it.
   const m = METHODS[sit?.suggestedMethod ?? st.symbolic.method];
+
   return el(
     "div",
     {
-      class: "block symbolic",
-      draggable: true,
+      class: "block symbolic" + (disabled ? " disabled" : ""),
+      draggable: !disabled,
       "data-kind": "symbolic",
-      title: "Double-click to see how this symbolic method works",
-      ondblclick: () => store.set({ view: "symbolic" }),
+      title: sit?.isException
+        ? "Not applicable for this exception situation"
+        : "Double-click to see how this symbolic method works",
+      ondblclick: () => {
+        if (!disabled) store.set({ view: "symbolic" });
+      },
     },
     el(
       "div",
@@ -120,6 +133,7 @@ function connector(pattern: StackingPattern): HTMLElement {
 /** Order the two blocks on the canvas according to the stacking pattern. */
 function canvas(): HTMLElement {
   const st = store.get();
+  const sit = getSituation(st.situationId);
   const pattern = st.pattern ?? "learning-reasoning";
 
   const neural = neuralBlock();
@@ -141,16 +155,25 @@ function canvas(): HTMLElement {
 
   enableDragSwap(row);
 
+  const hint = sit?.isException
+    ? el(
+        "p",
+        { class: "muted", style: { margin: "0 0 16px", fontSize: "13px", color: "#d9534f" } },
+        "⚠️  This situation is an exception: there's no clean separation between " +
+          "perception and reasoning. The flow shown is illustrative only."
+      )
+    : el(
+        "p",
+        { class: "muted", style: { margin: "0 0 16px", fontSize: "13px" } },
+        "Drag a block to swap the order, or pick a pattern on the right. " +
+          "Double-click the neural block to customize it; double-click the " +
+          "symbolic block to see how it reasons."
+      );
+
   return el(
     "div",
     { class: "canvas" },
-    el(
-      "p",
-      { class: "muted", style: { margin: "0 0 16px", fontSize: "13px" } },
-      "Drag a block to swap the order, or pick a pattern on the right. " +
-        "Double-click the neural block to customize it; double-click the " +
-        "symbolic block to see how it reasons."
-    ),
+    hint,
     row
   );
 }

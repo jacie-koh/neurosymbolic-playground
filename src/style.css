@@ -550,6 +550,41 @@ button {
   line-height: 1.5;
 }
 
+.flow-demo {
+  min-height: 96px;
+}
+.flow-node {
+  min-height: 72px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: pre-line;
+  display: grid;
+  place-items: center;
+}
+.flow-node.neural {
+  background: rgba(245, 147, 34, 0.1);
+  border-color: rgba(245, 147, 34, 0.4);
+  color: #8a4d00;
+}
+.flow-node.symbolic {
+  background: rgba(8, 119, 189, 0.08);
+  border-color: rgba(8, 119, 189, 0.35);
+  color: #0d4e7e;
+}
+.flow-node.output {
+  background: rgba(142, 68, 173, 0.08);
+  border-color: rgba(142, 68, 173, 0.35);
+  color: #5c2b76;
+}
+.flow-arrow {
+  font-size: 26px;
+  color: var(--muted);
+}
+
 .muted {
   color: var(--muted);
 }
