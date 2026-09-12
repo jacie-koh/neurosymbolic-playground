@@ -189,7 +189,13 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       { class: "btn-row", style: { marginTop: "12px" } },
       playing
         ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, liveGrid ? "▶ Replay solve in real time" : "▶ Watch it solve in real time"),
+        : el(
+            "button",
+            { class: "btn primary", onclick: () => playFrom(t) },
+            canShowRealSolution(t)
+              ? liveGrid ? "▶ Replay the real verified answer" : "▶ Reveal the real verified answer"
+              : liveGrid ? "▶ Replay independent re-solve" : "▶ Watch independent re-solve (not Z3-verified)"
+          ),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
         : ""
@@ -249,14 +255,58 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     );
   }
 
+  /** True only when nothing's been edited and the offline Z3 pass actually found an answer — the only case where there's a real, verified solution to show. */
+  function canShowRealSolution(t: KenKenTrace): boolean {
+    // t.result was computed from t.interpreted (the corrected reading) — it only
+    // corresponds to what's on screen when the Neural ↔ Symbolic loop is active and
+    // nothing's been manually edited. Any other pattern is showing the raw,
+    // uncorrected reading, which the offline pipeline never separately solved.
+    if (!loopActive()) return false;
+    const source = t.interpreted.map((c) => ({ cells: c.cells, op: c.op, target: c.target }));
+    const edited = JSON.stringify(cages) !== JSON.stringify(source);
+    return !edited && t.result.status === "sat" && !!t.result.solution;
+  }
+
   function playFrom(t: KenKenTrace): void {
     stopPlaying();
+    logLines = [];
+    playIdx = 0;
+    playing = true;
+
+    if (canShowRealSolution(t)) {
+      // Reveal the real Z3-verified answer from the offline pipeline, cell by cell —
+      // not a live search, since Z3's own internal decision process isn't recorded.
+      const solution = t.result.solution!;
+      playSteps = [];
+      for (let r = 0; r < t.size; r++) {
+        for (let c = 0; c < t.size; c++) playSteps.push({ row: r, col: c, digit: solution[r][c] });
+      }
+      liveGrid = Array.from({ length: t.size }, () => Array(t.size).fill(0));
+      const delay = Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)));
+      const tick = () => {
+        if (!playing) return;
+        if (playIdx >= playSteps.length) {
+          playing = false;
+          drawBody();
+          return;
+        }
+        const step = playSteps[playIdx];
+        if (liveGrid) liveGrid[step.row][step.col] = step.digit;
+        logLines.push(`(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`);
+        playIdx++;
+        drawBody();
+        playTimer = setTimeout(tick, delay);
+      };
+      drawBody();
+      playTimer = setTimeout(tick, delay);
+      return;
+    }
+
+    // Edited cages (or the offline baseline itself was unsat): Z3 never verified this
+    // exact state, so fall back to an independent client-side search instead.
     const result = solveKenKenWithSteps(t.size, cages);
     playSteps = result.steps;
-    playIdx = 0;
     liveGrid = Array.from({ length: t.size }, () => Array(t.size).fill(0));
-    logLines = [];
-    playing = true;
     const delay = Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
     const tick = () => {
       if (!playing) return;

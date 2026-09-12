@@ -153,7 +153,13 @@ export function renderZebraDebugger(root: HTMLElement): void {
       { class: "btn-row", style: { marginTop: "12px" } },
       playing
         ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, livePositions ? "▶ Replay solve in real time" : "▶ Watch it solve in real time"),
+        : el(
+            "button",
+            { class: "btn primary", onclick: () => playFrom(t) },
+            canShowRealSolution(t)
+              ? livePositions ? "▶ Replay the real verified answer" : "▶ Reveal the real verified answer"
+              : livePositions ? "▶ Replay independent re-solve" : "▶ Watch independent re-solve (not MINIEXACT-verified)"
+          ),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
         : ""
@@ -205,14 +211,50 @@ export function renderZebraDebugger(root: HTMLElement): void {
     );
   }
 
+  /** True only when nothing's been edited and the offline MINIEXACT pass actually found an answer — the only case where there's a real, verified solution to show. */
+  function canShowRealSolution(t: ZebraTrace): boolean {
+    const edited = clues.some((c, i) => JSON.stringify(c) !== JSON.stringify(t.clues[i]));
+    return !edited && t.result.status === "sat" && !!t.result.solution;
+  }
+
   function playFrom(t: ZebraTrace): void {
     stopPlaying();
-    const result = solveZebraWithSteps({ size: t.size, groups: t.groups, clues });
-    playSteps = result.steps;
+    logLines = [];
     playIdx = 0;
     livePositions = {};
-    logLines = [];
     playing = true;
+
+    if (canShowRealSolution(t)) {
+      // Reveal the real MINIEXACT-verified assignment from the offline pipeline, entity by
+      // entity — not a live search, since the solver's own internal decision process isn't recorded.
+      const solution = t.result.solution!;
+      playSteps = Object.values(t.groups)
+        .flat()
+        .map((entity) => ({ entity, house: solution[entity] }));
+      const delay = Math.max(120, Math.min(400, 3000 / Math.max(1, playSteps.length)));
+      const tick = () => {
+        if (!playing) return;
+        if (playIdx >= playSteps.length) {
+          playing = false;
+          drawBody();
+          return;
+        }
+        const step = playSteps[playIdx];
+        if (livePositions) livePositions[step.entity] = step.house;
+        logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
+        playIdx++;
+        drawBody();
+        playTimer = setTimeout(tick, delay);
+      };
+      drawBody();
+      playTimer = setTimeout(tick, delay);
+      return;
+    }
+
+    // Edited clues (or the offline baseline itself was unsat): MINIEXACT never verified this
+    // exact state, so fall back to an independent client-side search instead.
+    const result = solveZebraWithSteps({ size: t.size, groups: t.groups, clues });
+    playSteps = result.steps;
     const delay = Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
     const tick = () => {
       if (!playing) return;
