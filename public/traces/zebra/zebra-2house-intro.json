@@ -1,0 +1,40 @@
+{
+  "id": "zebra-2house-intro",
+  "title": "2 houses \u2014 names & music genres",
+  "size": 2,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@pop",
+      "g1@rock"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Eric is not in the first house",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 1
+    },
+    {
+      "source": "Eric is the person who loves rock music",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@rock"
+    }
+  ],
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 2,
+      "g0@arnold": 1,
+      "g1@rock": 2,
+      "g1@pop": 1
+    },
+    "unique": true
+  },
+  "verification": "encoded_constraints_only; semantic translation is not proved"
+}

@@ -1,0 +1,395 @@
+/**
+ * Interactive Reasoning Debugger — Sudoku module.
+ *
+ * Reads real traces produced by the standalone/ research backend: a pretrained
+ * CNN reading a photographed grid, run through the authors' Z3 encoding, with
+ * a bounded correction loop over ranked CNN alternatives when constraints
+ * conflict. See standalone/README.md for the pipeline and its honesty caveats
+ * ("sat" means the *interpreted* constraints have a solution, not that the
+ * image was read correctly).
+ *
+ * Select a cell to see what the CNN actually read, its confidence, and its
+ * ranked alternatives. Overriding a cell edits the interpreted grid and
+ * reruns an exact client-side backtracking solve (genericSudoku.ts) — a
+ * separate, honest re-solve, not a replay of the offline Z3 result.
+ */
+
+import { el, clear } from "../dom";
+import {
+  SUDOKU_TRACE_MANIFEST,
+  loadSudokuTrace,
+  type SudokuTrace,
+  type CellPrediction,
+} from "../data/traces";
+import { findConflicts, solveGeneric, solveGenericWithSteps, type Grid } from "../neural/genericSudoku";
+import { renderLiveLog } from "./liveLog";
+import { store } from "../state";
+
+function cellKey(r: number, c: number): string {
+  return `${r},${c}`;
+}
+
+/** Whether the chosen stacking pattern (set on the builder page) is the real bounded correction loop. */
+function loopActive(): boolean {
+  return store.get().pattern === "learning-reasoning";
+}
+
+export function renderSudokuDebugger(root: HTMLElement): void {
+  clear(root);
+
+  let activeFile = SUDOKU_TRACE_MANIFEST[0].file;
+  let trace: SudokuTrace | null = null;
+  /** The grid the user is currently working from: starts as trace.interpreted. */
+  let working: Grid = [];
+  let selected: [number, number] | null = null;
+  /** Cells the user has manually overridden away from the trace's interpreted reading. */
+  const overridden = new Set<string>();
+  let playing = false;
+  let playTimer: ReturnType<typeof setTimeout> | undefined;
+  let playSteps: { row: number; col: number; digit: number }[] = [];
+  let playIdx = 0;
+  let liveGrid: Grid | null = null;
+  let logLines: string[] = [];
+
+  function stopPlaying(): void {
+    playing = false;
+    if (playTimer !== undefined) {
+      clearTimeout(playTimer);
+      playTimer = undefined;
+    }
+  }
+
+  const picker = el("div", { class: "seg" });
+  const body = el("div", { style: { marginTop: "16px" } });
+  root.append(picker, body);
+
+  function selectTrace(file: string): void {
+    stopPlaying();
+    liveGrid = null;
+    logLines = [];
+    activeFile = file;
+    selected = null;
+    overridden.clear();
+    clear(body);
+    body.append(el("p", { class: "muted" }, "Loading trace…"));
+    loadSudokuTrace(file)
+      .then((t) => {
+        trace = t;
+        const source = loopActive() ? t.interpreted : t.recognized;
+        working = source.map((row) => [...row]);
+        drawPicker();
+        drawBody();
+      })
+      .catch(() => {
+        clear(body);
+        body.append(
+          el("p", { class: "note" }, "Couldn't load this trace — the dev server may still be starting up."),
+          el("button", { class: "btn", onclick: () => selectTrace(file) }, "Retry")
+        );
+      });
+  }
+
+  function drawPicker(): void {
+    clear(picker);
+    for (const entry of SUDOKU_TRACE_MANIFEST) {
+      picker.append(
+        el(
+          "button",
+          {
+            class: "seg-btn" + (entry.file === activeFile ? " active" : ""),
+            onclick: () => selectTrace(entry.file),
+          },
+          el("span", { class: "seg-flow" }, entry.id.replace(/^sudoku-/, "")),
+          el(
+            "span",
+            { class: "seg-name" },
+            entry.id.includes("ambiguous")
+              ? "sat but silently wrong"
+              : entry.id.includes("correction")
+              ? "has a self-correction"
+              : "clean read"
+          )
+        )
+      );
+    }
+  }
+
+  function cellPrediction(t: SudokuTrace, r: number, c: number): CellPrediction | undefined {
+    return t.predictions[cellKey(r, c)];
+  }
+
+  function correctionFor(t: SudokuTrace, r: number, c: number) {
+    // Corrections only apply to what's actually on screen when the correction loop is active —
+    // in one-shot mode we're deliberately showing the pre-correction (recognized) reading.
+    if (!loopActive()) return undefined;
+    return t.corrections.find((cc) => cc.row === r && cc.col === c);
+  }
+
+  function ambiguousFor(t: SudokuTrace, r: number, c: number) {
+    return t.ambiguousGivens.find((a) => a.row === r && a.col === c);
+  }
+
+  function drawBody(): void {
+    if (!trace) return;
+    const t = trace;
+    clear(body);
+
+    const conflicts = findConflicts(working);
+    const conflictCells = new Set(conflicts.map((cf) => cellKey(cf.row, cf.col)));
+    const solve = solveGeneric(working);
+
+    const sourceImage = el(
+      "div",
+      { style: { flex: "0 0 auto" } },
+      el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
+      el("img", {
+        src: t.imageUrl,
+        alt: `Real ${t.style} photo of ${t.title}`,
+        style: { display: "block", maxWidth: "220px", width: "100%", height: "auto", borderRadius: "6px", border: "1px solid var(--line)" },
+      })
+    );
+
+    const grid = el("div", {
+      class: "lab-grid",
+      style: { gridTemplateColumns: `repeat(${t.size}, ${t.size > 9 ? 32 : 46}px)` },
+    });
+
+    for (let r = 0; r < t.size; r++) {
+      for (let c = 0; c < t.size; c++) {
+        const given = t.recognized[r][c] !== 0;
+        const value = working[r][c];
+        const isSelected = selected && selected[0] === r && selected[1] === c;
+        const isCorrected = !!correctionFor(t, r, c);
+        const isAmbiguous = !!ambiguousFor(t, r, c);
+        const isOverridden = overridden.has(cellKey(r, c));
+        const isConflict = conflictCells.has(cellKey(r, c));
+        const solverFill = !given ? (liveGrid ? liveGrid[r][c] || null : solve.solution ? solve.solution[r][c] : null) : null;
+
+        let background = "var(--panel)";
+        let color = "inherit";
+        if (isConflict) {
+          background = "#fdecec";
+          color = "#b3261e";
+        } else if (isOverridden) {
+          background = "#eef5fb";
+        } else if (isAmbiguous) {
+          background = "#f3e8ff";
+          color = "#6b21a8";
+        } else if (isCorrected) {
+          background = "#fdecdc";
+        } else if (!given) {
+          background = "#f4f6f7";
+          color = "var(--muted)";
+        }
+
+        grid.append(
+          el(
+            "button",
+            {
+              style: {
+                width: t.size > 9 ? "32px" : "46px",
+                height: t.size > 9 ? "32px" : "46px",
+                border: isSelected ? "2px solid var(--pos)" : "1px solid var(--line)",
+                borderRadius: "8px",
+                background,
+                color,
+                fontWeight: given ? "700" : "500",
+                fontSize: t.size > 9 ? "12px" : "16px",
+                cursor: given ? "pointer" : "default",
+              },
+              "aria-label": `row ${r + 1} column ${c + 1}`,
+              onclick: given ? () => { stopPlaying(); selected = [r, c]; drawBody(); } : undefined,
+            },
+            value !== 0 ? String(value) : solverFill != null ? String(solverFill) : ""
+          )
+        );
+      }
+    }
+
+    const playRow = el(
+      "div",
+      { class: "btn-row", style: { marginTop: "12px" } },
+      playing
+        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
+        : el("button", { class: "btn primary", onclick: () => playFrom() }, liveGrid ? "▶ Replay solve in real time" : "▶ Watch it solve in real time"),
+      playing
+        ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
+        : ""
+    );
+
+    const logBox = renderLiveLog(logLines);
+
+    const status = el(
+      "div",
+      { class: "note", style: { marginTop: "16px" } },
+      el("b", {}, "Client-side re-solve: "),
+      solve.status === "sat"
+        ? `satisfiable${conflicts.length === 0 ? "" : " (conflicts remain in the given clues)"}. ` +
+          "Solver-filled cells are shown in gray on the grid above."
+        : `unsatisfiable under the current readings${conflicts.length ? ` — ${conflicts.length} direct conflict${conflicts.length === 1 ? "" : "s"} among the given clues.` : "."}`
+    );
+
+    const meta = el(
+      "div",
+      { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
+      loopActive()
+        ? `${t.title} · ${t.style} · Neural ↔ Symbolic (correction loop) · offline pipeline result: ${t.result.status}` +
+          (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
+          (t.correctionAttempts ? ` · ${t.corrections.length} correction(s) applied over ${t.correctionAttempts} attempt(s)` : " · no corrections needed")
+        : `${t.title} · ${t.style} · one-shot reading (no correction loop) — showing what the CNN read before any correction was tried` +
+          (t.corrections.length ? `; the real pipeline's correction loop fixed ${t.corrections.length} cell(s) from here` : "")
+    );
+
+    const ambiguityNote =
+      t.ambiguousGivens.length > 0
+        ? el(
+            "div",
+            { class: "note", style: { marginTop: "16px" } },
+            el("span", { class: "badge badge-strong" }, "sat but possibly wrong"),
+            ` this puzzle solved ${t.result.status === "sat" ? "successfully" : ""}, but ${t.ambiguousGivens.length} ` +
+              `given cell${t.ambiguousGivens.length === 1 ? "" : "s"} (purple below) has a low-confidence reading whose ranked ` +
+              "alternative ALSO produces a valid, different solution — a Sudoku symmetric-swap ambiguity the bounded correction " +
+              "search never sees, since it only runs when the given readings conflict outright. Click a purple cell for details."
+          )
+        : "";
+
+    const panel = el("div", { class: "note", style: { marginTop: "16px" } });
+    drawPanel(panel, t);
+
+    const resetBtn = el(
+      "button",
+      {
+        class: "btn",
+        style: { marginTop: "12px" },
+        onclick: () => {
+          stopPlaying();
+          liveGrid = null;
+          logLines = [];
+          const source = loopActive() ? t.interpreted : t.recognized;
+          working = source.map((row) => [...row]);
+          overridden.clear();
+          selected = null;
+          drawBody();
+        },
+      },
+      "Reset to pipeline readings"
+    );
+
+    body.append(
+      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage, grid),
+      meta,
+      ambiguityNote,
+      playRow,
+      logBox,
+      status,
+      panel,
+      resetBtn
+    );
+  }
+
+  function playFrom(): void {
+    stopPlaying();
+    const result = solveGenericWithSteps(working);
+    playSteps = result.steps;
+    playIdx = 0;
+    liveGrid = working.map((row) => row.map((v) => (v !== 0 ? v : 0)));
+    logLines = [];
+    playing = true;
+    const delay = Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
+    const tick = () => {
+      if (!playing) return;
+      if (playIdx >= playSteps.length) {
+        playing = false;
+        drawBody();
+        return;
+      }
+      const step = playSteps[playIdx];
+      if (liveGrid) liveGrid[step.row][step.col] = step.digit;
+      logLines.push(step.digit ? `(${step.row + 1},${step.col + 1}): try ${step.digit}` : `(${step.row + 1},${step.col + 1}): backtrack`);
+      playIdx++;
+      drawBody();
+      playTimer = setTimeout(tick, delay);
+    };
+    drawBody();
+    playTimer = setTimeout(tick, delay);
+  }
+
+  function drawPanel(panel: HTMLElement, t: SudokuTrace): void {
+    if (!selected) {
+      panel.append("Select a given (bold) cell to see the CNN's reading, its confidence, and ranked alternatives.");
+      return;
+    }
+    const [r, c] = selected;
+    const pred = cellPrediction(t, r, c);
+    const correction = correctionFor(t, r, c);
+    if (!pred) {
+      panel.append(`Cell (${r + 1}, ${c + 1}) has no recorded prediction.`);
+      return;
+    }
+    const current = working[r][c];
+    const isUserOverride = overridden.has(cellKey(r, c));
+    const rows: HTMLElement[] = [
+      el(
+        "div",
+        {},
+        el("b", {}, `Cell (${r + 1}, ${c + 1}): `),
+        `CNN read ${pred.value} at ${(pred.confidence * 100).toFixed(1)}% confidence.` +
+          (isUserOverride ? ` Currently showing your override: ${current}.` : "")
+      ),
+    ];
+    if (correction) {
+      rows.push(
+        el(
+          "div",
+          { style: { marginTop: "6px" } },
+          el("span", { class: "badge badge-strong" }, "self-corrected offline"),
+          ` the pipeline's own reading (${correction.before}) conflicted with a Sudoku constraint, so it tried the ` +
+            `alternative ${correction.after} (${(correction.score * 100).toFixed(2)}% confidence) and that resolved the conflict.`
+        )
+      );
+    }
+    const ambiguous = ambiguousFor(t, r, c);
+    if (ambiguous) {
+      rows.push(
+        el(
+          "div",
+          { style: { marginTop: "6px" } },
+          el("span", { class: "badge", style: { background: "#f3e8ff", color: "#6b21a8", border: "1px solid #d9b8f5" } }, "sat but possibly wrong"),
+          ` the offline pipeline never flagged this cell — it only reacts to outright conflicts — but its reading (${ambiguous.given}, ` +
+            `${(ambiguous.confidence * 100).toFixed(1)}%) is far from certain, and the alternative ${ambiguous.alternative} ` +
+            `(${ambiguous.alternativeConfidence != null ? (ambiguous.alternativeConfidence * 100).toFixed(1) : "?"}%) also solves the ` +
+            "puzzle completely, just with a different final grid. Try it below to see the other valid solution."
+        )
+      );
+    }
+    if (pred.topK.length > 1) {
+      const alts = el("div", { class: "digit-picker", style: { marginTop: "10px" } });
+      alts.append(el("span", { class: "digit-picker-label" }, "Try:"));
+      for (const [digit, prob] of pred.topK) {
+        alts.append(
+          el(
+            "button",
+            {
+              class: "btn" + (current === digit ? " primary" : ""),
+              style: { padding: "6px 10px" },
+              onclick: () => {
+                stopPlaying();
+                liveGrid = null;
+                logLines = [];
+                working[r][c] = digit;
+                overridden.add(cellKey(r, c));
+                drawBody();
+              },
+            },
+            `${digit} (${(prob * 100).toFixed(1)}%)`
+          )
+        );
+      }
+      rows.push(alts);
+    }
+    panel.append(...rows);
+  }
+
+  drawPicker();
+  selectTrace(activeFile);
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reasoning Debuggers</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <span class="brand-mark">◈</span>
+      <h1>Interactive Reasoning Debuggers</h1>
+    </header>
+    <main class="view">
+      <div class="view-head">
+        <h2>Standalone modules</h2>
+        <p>
+          Each puzzle module below is a self-contained page browsing real traces produced by the
+          <code>standalone/</code> research backend (pretrained CNNs, Z3, MINIEXACT, a local LLM). Not yet
+          wired into the main playground app — that integration is a deliberate later step.
+        </p>
+      </div>
+      <div class="card-grid">
+        <a class="situation-card" href="/debuggers/sudoku.html" style="text-decoration:none;color:inherit">
+          <div class="icon">🔢</div>
+          <h3>Sudoku</h3>
+          <div class="tagline">CNN digit reading + Z3 solving, with a real self-correction example.</div>
+        </a>
+        <a class="situation-card" href="/debuggers/kenken.html" style="text-decoration:none;color:inherit">
+          <div class="icon">🧮</div>
+          <h3>KenKen</h3>
+          <div class="tagline">Cage extraction + CNN target/operator reading + Z3 solving, editable cages.</div>
+        </a>
+        <a class="situation-card" href="/debuggers/zebra.html" style="text-decoration:none;color:inherit">
+          <div class="icon">🦓</div>
+          <h3>Zebra / Einstein</h3>
+          <div class="tagline">Local-LLM clue translation + Colored Exact Cover / MINIEXACT, editable relations.</div>
+        </a>
+        <a class="situation-card" href="/debuggers/hitori.html" style="text-decoration:none;color:inherit">
+          <div class="icon">◻️</div>
+          <h3>Hitori</h3>
+          <div class="tagline">Real Z3 forced-move proofs, stepped through with plain-language evidence.</div>
+        </a>
+        <a class="situation-card" href="/debuggers/vdp.html" style="text-decoration:none;color:inherit">
+          <div class="icon">🧩</div>
+          <h3>Visual Discrimination</h3>
+          <div class="tagline">Real fresh CNN perception (trained from scratch here) + the real FO-SL synthesizer.</div>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

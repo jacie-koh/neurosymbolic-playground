@@ -11,7 +11,7 @@
 export type SudokuGrid = number[][];
 
 /** Check if a digit (1-9) can be placed at (row, col) without violating constraints. */
-function isValid(grid: SudokuGrid, row: number, col: number, digit: number): boolean {
+export function isValidPlacement(grid: SudokuGrid, row: number, col: number, digit: number): boolean {
   // Check row
   for (let c = 0; c < 9; c++) {
     if (grid[row][c] === digit) return false;
@@ -56,7 +56,7 @@ export function solveSudoku(grid: SudokuGrid): boolean {
 
   const [row, col] = empty;
   for (let digit = 1; digit <= 9; digit++) {
-    if (isValid(grid, row, col, digit)) {
+    if (isValidPlacement(grid, row, col, digit)) {
       grid[row][col] = digit;
       if (solveSudoku(grid)) return true;
       grid[row][col] = 0; // backtrack
@@ -140,7 +140,7 @@ export function generateSudoku(): SudokuGrid {
     // Try digits in random order
     const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5);
     for (const digit of digits) {
-      if (isValid(g, row, col, digit)) {
+      if (isValidPlacement(g, row, col, digit)) {
         g[row][col] = digit;
         if (fillRandom(g, nextRow, nextCol)) return true;
         g[row][col] = 0;
@@ -195,7 +195,11 @@ export function isComplete(grid: SudokuGrid): boolean {
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       if (grid[r][c] === 0) return false;
-      if (!isValid(grid, r, c, grid[r][c])) return false;
+      const digit = grid[r][c];
+      grid[r][c] = 0;
+      const valid = isValidPlacement(grid, r, c, digit);
+      grid[r][c] = digit;
+      if (!valid) return false;
     }
   }
   return true;

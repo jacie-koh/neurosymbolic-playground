@@ -1,0 +1,150 @@
+{
+  "id": "sudoku-4x4-printed",
+  "title": "Printed 4\u00d74 \u2014 clean read",
+  "size": 4,
+  "style": "printed",
+  "image": "board4_0.png",
+  "checkpoint": "sudoku_hexasudoku_unified_cnn.pth",
+  "recognized": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      4
+    ],
+    [
+      2,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ]
+  ],
+  "interpreted": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      4
+    ],
+    [
+      2,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ]
+  ],
+  "predictions": {
+    "0,3": {
+      "value": 2,
+      "confidence": 0.9983,
+      "topK": [
+        [
+          2,
+          0.9983
+        ],
+        [
+          3,
+          0.0
+        ]
+      ]
+    },
+    "1,3": {
+      "value": 4,
+      "confidence": 0.999,
+      "topK": [
+        [
+          4,
+          0.999
+        ]
+      ]
+    },
+    "2,0": {
+      "value": 2,
+      "confidence": 0.9983,
+      "topK": [
+        [
+          2,
+          0.9983
+        ],
+        [
+          3,
+          0.0
+        ]
+      ]
+    },
+    "3,0": {
+      "value": 3,
+      "confidence": 0.9992,
+      "topK": [
+        [
+          3,
+          0.9992
+        ],
+        [
+          2,
+          0.0
+        ]
+      ]
+    }
+  },
+  "corrections": [],
+  "correctionAttempts": 0,
+  "ambiguousGivens": [],
+  "result": {
+    "status": "sat",
+    "solution": [
+      [
+        4,
+        3,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        1,
+        4,
+        3
+      ],
+      [
+        3,
+        4,
+        2,
+        1
+      ]
+    ],
+    "unique": true,
+    "conflicts": []
+  },
+  "verification": "constraints_only; image interpretation is not proved",
+  "imageUrl": "/traces/sudoku/images/sudoku-4x4-printed.png"
+}

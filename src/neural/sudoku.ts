@@ -10,7 +10,8 @@
  * can memorize seen puzzles, but the symbolic solver guarantees valid solutions.
  */
 
-import { generatePuzzle, solveSudoku, type SudokuGrid } from "./sudokuSolver";
+import { generatePuzzle, solveSudoku, isValidPlacement, type SudokuGrid } from "./sudokuSolver";
+import type { StackingPattern } from "../state";
 
 export interface SudokuConfig {
   learningRate: number;
@@ -325,5 +326,40 @@ export class SudokuModel {
     // Now use solver to enforce constraints
     solveSudoku(pred);
     return pred;
+  }
+
+  /**
+   * Execute genuinely different neural/symbolic arrangements. They intentionally
+   * share the same classifier and puzzle so the visual comparison isolates the
+   * effect of where constraints enter the computation.
+   */
+  predictWithPattern(puzzle: SudokuGrid, pattern: StackingPattern): SudokuGrid {
+    if (pattern === "learning-for-reasoning") {
+      // Neural proposes a complete board; the solver gets that proposal as input.
+      return this.predictNeuroSymbolic(puzzle, puzzle);
+    }
+
+    if (pattern === "reasoning-for-learning") {
+      // Constraints come first: produce legal symbolic targets before the neural
+      // policy is evaluated against them.
+      const constrained = puzzle.map((row) => [...row]);
+      solveSudoku(constrained);
+      return constrained;
+    }
+
+    // Bidirectional loop: preserve neural proposals only when they satisfy the
+    // current constraint state, then let the solver repair/fill the remainder.
+    const repaired = puzzle.map((row) => [...row]);
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        if (puzzle[r][c] !== 0) continue;
+        const proposal = this.digitalClassifier.predict(this.cellFeatures(puzzle, r, c));
+        if (proposal >= 1 && proposal <= 9 && isValidPlacement(repaired, r, c, proposal)) {
+          repaired[r][c] = proposal;
+        }
+      }
+    }
+    solveSudoku(repaired);
+    return repaired;
   }
 }

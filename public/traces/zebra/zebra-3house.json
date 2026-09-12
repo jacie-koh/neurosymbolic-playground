@@ -1,0 +1,76 @@
+{
+  "id": "zebra-3house",
+  "title": "3 houses \u2014 names, hair color & birthdays",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@blonde",
+      "g1@black",
+      "g1@brown"
+    ],
+    "g2": [
+      "g2@jan",
+      "g2@april",
+      "g2@sept"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in September is the person who has brown hair.",
+      "relation": "same",
+      "a": "g2@sept",
+      "b": "g1@brown"
+    },
+    {
+      "source": "The person who has blonde hair is Arnold.",
+      "relation": "same",
+      "a": "g1@blonde",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person whose birthday is in January is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@jan",
+      "position": 1
+    },
+    {
+      "source": "The person who has black hair is Peter.",
+      "relation": "same",
+      "a": "g1@black",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who has black hair is in the first house.",
+      "relation": "at",
+      "a": "g1@black",
+      "position": 1
+    },
+    {
+      "source": "The person whose birthday is in January is not in the third house.",
+      "relation": "not_at",
+      "a": "g2@jan",
+      "position": 3
+    }
+  ],
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@black": 1,
+      "g0@peter": 1,
+      "g0@arnold": 2,
+      "g0@eric": 3,
+      "g1@blonde": 2,
+      "g1@brown": 3,
+      "g2@sept": 3,
+      "g2@april": 1,
+      "g2@jan": 2
+    },
+    "unique": true
+  },
+  "verification": "encoded_constraints_only; semantic translation is not proved"
+}

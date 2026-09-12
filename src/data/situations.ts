@@ -1,12 +1,7 @@
 /**
- * The "situations" the user picks from in step 1.
- *
- * Game-based examples where neural perception meets symbolic reasoning:
- * logic puzzles (Sudoku, Hitori, Zebra), spatial reasoning (Maze, Jigsaw),
- * strategy games (Contract Bridge, Word Search), and deduction games (Guess Who?).
- * 
- * Mafia/Werewolf is included as an exception: pure reasoning-oriented LLM
- * with no clean perception→reason split.
+ * The "situations" the user picks from in step 1: the five puzzle modules with
+ * a real standalone/ research backend (pretrained CNNs, Z3/SAT solving) behind
+ * an interactive debugger — Sudoku, Hitori, KenKen, Visual Discrimination, Zebra.
  */
 
 import type { SymbolicMethod, StackingPattern } from "../state";
@@ -97,10 +92,58 @@ export const SITUATIONS: Situation[] = [
     combinedStrength:
       "Perception reads the grid; the symbolic solver keeps the solution globally " +
       "consistent. The network learns which cells matter from weak supervision.",
-    suggestedMethod: "rules",
+    suggestedMethod: "forward-chaining",
     suggestedPattern: "learning-for-reasoning",
     dataset: "circle",
     complexity: 2,
+  },
+  {
+    id: "kenken",
+    title: "KenKen Solver",
+    tagline: "Read digits, operators, and cage boundaries from a grid image, then satisfy row/column and cage arithmetic.",
+    icon: "🧮",
+    description:
+      "A KenKen board shows a grid partitioned into cages, each labeled with a target number and an operator. " +
+      "Computer vision finds the cage boundaries; a CNN reads each cage's target digits and operator; a " +
+      "constraint solver enforces row/column uniqueness plus every cage's arithmetic.",
+    perception: "Detect cage boundaries and read each cage's target number and operator from the image.",
+    reasoning: "Apply row/column uniqueness plus each cage's arithmetic (sum, product, difference, or quotient).",
+    neuralWeakness:
+      "A pure CNN can misread multi-digit targets or touching handwritten glyphs, and has no way to check " +
+      "whether a reading is even arithmetically possible for the cage's cell count and grid size.",
+    symbolicWeakness:
+      "A pure solver can't read pixels or find cage boundaries — it needs the cage structure and targets first.",
+    combinedStrength:
+      "Vision finds structure and reads labels; the solver enforces exact arithmetic and can flag or correct " +
+      "readings that are mathematically impossible for the puzzle.",
+    suggestedMethod: "rules",
+    suggestedPattern: "learning-for-reasoning",
+    dataset: "circle",
+    complexity: 3,
+  },
+  {
+    id: "visual-discrimination",
+    title: "Visual Discrimination Puzzle",
+    tagline: "Look at example and candidate scenes, then find the rule that picks out the right one.",
+    icon: "🧩",
+    description:
+      "Given a few example images sharing a hidden property and several candidate images, a vision model " +
+      "detects each scene's objects and attributes (shape, color, size, material) and their relations; a " +
+      "symbolic learner searches for a first-order logic rule true on every example and exactly one candidate.",
+    perception: "Detect objects and their attributes/relations (shape, color, size, material, left-of, etc.) in each scene.",
+    reasoning: "Search a bounded first-order logic fragment for a discriminating rule, verified independently.",
+    neuralWeakness:
+      "A pure similarity or prototype network picks the 'closest-looking' candidate without any explicit, " +
+      "checkable rule — it performs little better than chance on puzzles designed to need real discrimination.",
+    symbolicWeakness:
+      "A pure rule search can't see the images — it needs objects, attributes, and relations extracted first.",
+    combinedStrength:
+      "Perception extracts a structured scene description; symbolic search finds an interpretable rule and " +
+      "proves it holds on every example and exactly one candidate — verifiable, not just plausible.",
+    suggestedMethod: "kg",
+    suggestedPattern: "learning-for-reasoning",
+    dataset: "circle",
+    complexity: 3,
   },
   {
     id: "zebra-puzzle",
@@ -123,206 +166,10 @@ export const SITUATIONS: Situation[] = [
     combinedStrength:
       "The network learns to parse clues; the solver enforces logical consistency. " +
       "Together they solve fresh puzzles from weak supervision (just the answer set).",
-    suggestedMethod: "rules",
-    suggestedPattern: "learning-for-reasoning",
-    dataset: "circle",
-    complexity: 3,
-  },
-  {
-    id: "maze",
-    title: "Maze Solver",
-    tagline: "Read a maze image, find the path from start to goal.",
-    icon: "🧭",
-    description:
-      "A maze is rendered as a pixel image (walls are dark, paths are light). " +
-      "A CNN segments the image to find walls and paths; a graph-search algorithm " +
-      "(BFS/A*) plans a route from start to goal. Training uses generated mazes " +
-      "(DFS, Wilson's, or percolation methods) at varying complexity.",
-    perception: "Identify walls, paths, start, and goal from the maze image.",
-    reasoning: "Compute a collision-free path from start to goal using graph search.",
-    neuralWeakness:
-      "A pure CNN can learn to trace paths locally but has no global view; " +
-      "it overfits to maze topologies seen in training and doesn't generalize.",
-    symbolicWeakness:
-      "A pure pathfinder needs a hand-crafted grid or perfect segmentation; " +
-      "it can't handle real-world maze images with noise or varying wall widths.",
-    combinedStrength:
-      "Perception extracts a clean topology from the image; the symbolic planner " +
-      "guarantees a globally optimal path. The network learns segmentation robustness.",
-    suggestedMethod: "rules",
-    suggestedPattern: "learning-for-reasoning",
-    dataset: "circle",
-    complexity: 2,
-  },
-  {
-    id: "contract-bridge",
-    title: "Contract Bridge Bidding",
-    tagline: "Read your hand of cards, apply bidding rules to communicate strength and distribution.",
-    icon: "🃏",
-    description:
-      "In Contract Bridge, players bid to communicate their hand strength and suit distribution. " +
-      "An encoder (neural) processes your 13 cards and opponents' revealed information; " +
-      "a bidding rule engine applies Standard American Yellow Card conventions to suggest a bid. " +
-      "Training uses WBridge5's deal dataset (1M bids from a strong computer player).",
-    perception: "Encode your hand's strength, distribution, and controls from the 13 cards dealt.",
-    reasoning: "Apply bidding conventions to select the bid that best describes your hand.",
-    neuralWeakness:
-      "A pure network can learn hand-strength correlation but misses the structured " +
-      "logic of bidding systems; it produces inconsistent (unreliable to partner) bids.",
-    symbolicWeakness:
-      "Bidding rules are precise and deterministic, but they require numerical features " +
-      "(high-card points, suit lengths, controls) that must be computed from raw cards.",
-    combinedStrength:
-      "The network learns to encode hand features; the rule engine produces consistent, " +
-      "human-interpretable bids. Partners can predict each other's hands reliably.",
-    suggestedMethod: "rules",
-    suggestedPattern: "learning-for-reasoning",
-    dataset: "gauss",
-    complexity: 3,
-  },
-
-  // ---- Graph-Based Reasoning (Neural → Symbolic) ----
-  {
-    id: "jigsaw",
-    title: "Jigsaw Puzzle Reconstruction",
-    tagline: "Read image fragments and match edges to reconstruct the original image.",
-    icon: "🧩",
-    description:
-      "A jigsaw puzzle is broken into 9–376 pieces. A CNN extracts edge descriptors " +
-      "from each fragment; a graph-matching solver finds the permutation that minimizes " +
-      "edge dissimilarity and reconstructs the image. Uses LSU Fragmented Image Repository " +
-      "and JigsawNet (450+ puzzles, 400 synthetic + 40 hand-torn + 10 real scanned).",
-    perception: "Extract edge vectors and corner features from each jigsaw piece.",
-    reasoning: "Match edges between pieces to find the correct permutation and spatial arrangement.",
-    neuralWeakness:
-      "A pure CNN classifies individual piece features but has no way to enforce " +
-      "global consistency (each piece placed exactly once, all edges matched).",
-    symbolicWeakness:
-      "Graph matching can find the best permutation if given edge similarity scores, " +
-      "but the network must extract those scores from raw pixel data first.",
-    combinedStrength:
-      "Perception learns robust edge descriptors despite image variation; the solver " +
-      "enforces global coherence. Together they handle puzzle variants unseen in training.",
     suggestedMethod: "kg",
     suggestedPattern: "learning-for-reasoning",
     dataset: "circle",
     complexity: 3,
-  },
-
-  // ---- Hybrid Neural-Symbolic (Tightly Coupled) ----
-  {
-    id: "fuzzy-maze",
-    title: "Fuzzy-Logic Maze Navigation",
-    tagline: "Neural confidence feeds fuzzy rules; rules guide learning through uncertain walls.",
-    icon: "🌊",
-    description:
-      "A maze with soft (fuzzy) walls — the CNN outputs confidence that each cell " +
-      "is passable (not a hard threshold, but 0..1 probability). A fuzzy-logic planner " +
-      "selects the best-confidence path in real time, and its success/failure signal " +
-      "flows back to improve the network. Tight neural↔symbolic loop.",
-    perception: "Estimate traversability confidence (0..1) for each maze cell.",
-    reasoning: "Plan a path that maximizes overall confidence using fuzzy aggregation.",
-    neuralWeakness:
-      "A pure confidence estimator produces no path guarantee; it can pick high-confidence " +
-      "dead ends if it's memorized, and it doesn't learn from plan failures.",
-    symbolicWeakness:
-      "A pure fuzzy planner can't read maze images and can't learn which walls are real " +
-      "obstacles vs. false positives in noisy data.",
-    combinedStrength:
-      "Fuzzy rules turn confidence into a plan; plan success/failure trains the network. " +
-      "The loop learns to balance confidence and global feasibility.",
-    suggestedMethod: "rules",
-    suggestedPattern: "learning-reasoning",
-    dataset: "circle",
-    complexity: 2,
-  },
-  {
-    id: "word-search",
-    title: "Word Search Solver",
-    tagline: "Find words in a grid by reading letters and checking word-list rules interactively.",
-    icon: "📝",
-    description:
-      "A word-search grid is shown as an image. A CNN reads letter positions; " +
-      "a search algorithm interleaves word-list lookup with spatial reasoning: " +
-      "'Is there a path in any direction that spells a known word?' The network and " +
-      "solver communicate iteratively — the solver's found-words guide the network, " +
-      "and the network's confidence refinement guides the search.",
-    perception: "Recognize each letter in the grid from pixels.",
-    reasoning: "Find paths (horizontally, vertically, diagonally, forward/reverse) that spell known words.",
-    neuralWeakness:
-      "A pure CNN can trace letter sequences locally but doesn't know which are " +
-      "valid English words; it hallucinates solutions.",
-    symbolicWeakness:
-      "A pure word-list searcher can't read pixels and needs perfect letter labels " +
-      "from an oracle.",
-    combinedStrength:
-      "Perception reads letters; the solver checks a dictionary. Iterative refinement " +
-      "improves both: the solver's feedback corrects the network's uncertain letter reads.",
-    suggestedMethod: "forward-chaining",
-    suggestedPattern: "learning-reasoning",
-    dataset: "circle",
-    complexity: 2,
-  },
-
-  // ---- Knowledge-Augmented (Symbolic → Neural) ----
-  {
-    id: "guess-who",
-    title: "Guess Who? Face Deduction",
-    tagline: "Learn to identify faces by comparing attributes; symbolic rules guide visual learning.",
-    icon: "🤔",
-    description:
-      "A Guess Who?-style game: a target face is hidden; you ask 'Does your person " +
-      "wear glasses?' A CNN learns face attribute classifiers (glasses, hair color, " +
-      "age, etc.) trained on attribute-annotated faces. Symbolic rules (constraint " +
-      "propagation) maintain which faces remain possible. Uses CartoonSet or CelebA " +
-      "with 12+ labeled attributes per face.",
-    perception: "Classify visual attributes (glasses, hair, expression, age) from face images.",
-    reasoning: "Maintain a set of possible target faces by eliminating those that don't match answers.",
-    neuralWeakness:
-      "A pure CNN can classify attributes but doesn't reason about which faces " +
-      "are still plausible; it asks redundant questions.",
-    symbolicWeakness:
-      "Symbolic elimination needs attributes computed first; the network can't read " +
-      "faces on its own.",
-    combinedStrength:
-      "Attribute learning is guided by which faces remain possible (symbolic feedback). " +
-      "The network learns to focus on discriminative attributes. Constraint propagation " +
-      "minimizes questions asked.",
-    suggestedMethod: "kg",
-    suggestedPattern: "reasoning-for-learning",
-    dataset: "gauss",
-    complexity: 2,
-  },
-
-  // ---- Exception: Reasoning-Oriented LLM (No Clean Split) ----
-  {
-    id: "mafia-werewolf",
-    title: "Mafia / Werewolf Social Deduction",
-    tagline: "No clean perceive→reason split: pure generative reasoning with dialogue and deception.",
-    icon: "🎭",
-    description:
-      "In Mafia/Werewolf, players use dialogue and voting to deduce who the hidden " +
-      "threat is. There's no separate perception phase: language itself IS the reasoning. " +
-      "An LLM (not a clean neural-symbolic pipeline) must detect deception, build coalitions, " +
-      "and persuade others. Training uses Mafiascum dialogue corpus, Ibraheem et al. (2022) " +
-      "controlled games, Avalon NLU, or Werewolf Among Us multimodal data. " +
-      "Exception: no playground, just flow.",
-    perception: "N/A — language and social dynamics are the entire domain.",
-    reasoning: "N/A — deduce hidden roles through dialogue, persuasion, and vote coordination.",
-    neuralWeakness:
-      "A pure generative LLM can produce fluent deception but has no systematic way " +
-      "to reason about consistency or build reliable coalitions.",
-    symbolicWeakness:
-      "Pure symbolic rules (game state, voting) miss the persuasion and social dynamics " +
-      "that win games.",
-    combinedStrength:
-      "N/A — this game is a pure reasoning challenge. LLMs excel at dialogue but struggle " +
-      "with multi-turn deception and game theory.",
-    suggestedMethod: "kg", // placeholder; N/A for this exception
-    suggestedPattern: "learning-for-reasoning", // placeholder; N/A for this exception
-    dataset: "circle",
-    complexity: 3,
-    isException: true,
   },
 ];
 

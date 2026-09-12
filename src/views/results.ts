@@ -11,6 +11,28 @@ import { PATTERNS } from "../data/patterns";
 import { getController } from "../runtime";
 import { renderDigitSumResults } from "./digitSumResults";
 import { renderDrugDiscoveryResults } from "./drugDiscoveryResults";
+import { renderSituationLab } from "./situationLab";
+import { renderSudokuDebugger } from "./sudokuDebugger";
+import { renderZebraDebugger } from "./zebraDebugger";
+import { renderKenKenDebugger } from "./kenkenDebugger";
+import { renderHitoriDebugger } from "./hitoriDebugger";
+import { renderVDPDebugger } from "./vdpDebugger";
+import { renderRealResults } from "./realResults";
+
+const DEBUGGER_RENDERERS: Record<string, (root: HTMLElement) => void> = {
+  sudoku: renderSudokuDebugger,
+  "zebra-puzzle": renderZebraDebugger,
+  kenken: renderKenKenDebugger,
+  hitori: renderHitoriDebugger,
+  "visual-discrimination": renderVDPDebugger,
+};
+
+let liveTraceTimers: ReturnType<typeof setTimeout>[] = [];
+
+function cancelLiveTrace(): void {
+  liveTraceTimers.forEach(clearTimeout);
+  liveTraceTimers = [];
+}
 
 interface Scores {
   performance: number;
@@ -60,13 +82,43 @@ function scoreCard(title: string, subtitle: string, s: Scores): HTMLElement {
 }
 
 export function renderResults(root: HTMLElement): void {
+  cancelLiveTrace();
   clear(root);
 
   const st = store.get();
   const sit = getSituation(st.situationId);
 
-  // digit-sum, drug-discovery, and sudoku each have real, live demos of their own;
-  // every other situation uses the illustrative trade-off cards below.
+  const debuggerRenderer = st.situationId ? DEBUGGER_RENDERERS[st.situationId] : undefined;
+  if (debuggerRenderer && st.situationId) {
+    renderRealResults(root, st.situationId, () => renderResults(root));
+
+    const debuggerHost = el("div", { style: { marginTop: "16px" } });
+    root.append(debuggerHost);
+    debuggerRenderer(debuggerHost);
+
+    root.append(
+      el(
+        "div",
+        { class: "btn-row", style: { marginTop: "16px" } },
+        el(
+          "button",
+          { class: "btn", onclick: () => store.set({ view: "builder", mode: "customize" }) },
+          "← Back to builder"
+        ),
+        el(
+          "button",
+          { class: "btn", onclick: () => store.set({ view: "situations" }) },
+          "New situation"
+        )
+      )
+    );
+    return;
+  }
+
+  // digit-sum and drug-discovery each have real, live demos of their own; the five
+  // paper-backed puzzle modules have their own real interactive debuggers (above);
+  // every other situation uses the illustrative trade-off cards below (no real
+  // backend exists for them).
   if (st.situationId === "digit-sum") {
     renderDigitSumResults(root);
     return;
@@ -120,7 +172,18 @@ export function renderResults(root: HTMLElement): void {
       )
     );
 
-    root.append(head, info, flowNote, actions);
+    const host = el("div");
+    renderSituationLab(host, true);
+    root.append(
+      head,
+      info,
+      el("div", { class: "metric-card", style: { marginTop: "16px" } },
+        el("div", { class: "label" }, "Interactive data flow"),
+        host
+      ),
+      flowNote,
+      actions
+    );
     return;
   }
   const pattern = PATTERNS[st.pattern ?? "learning-for-reasoning"];
@@ -208,93 +271,280 @@ export function renderResults(root: HTMLElement): void {
     scoreCard("Symbolic only", "Reasoning only, no perception", symbolicOnly)
   );
 
-  const exampleText = sit
-    ? `${sit.title}: ${sit.perception} → ${sit.reasoning} → final decision`
-    : `${pattern.taxonomy}: ${pattern.summary}`;
+  type ExampleCase = { label: string; input: string; reason: string; output: string };
+  type ExampleSetMap = Record<string, Record<string, ExampleCase[]>>;
 
-  const flowNodes = sit
-    ? {
-        sudoku: [
-          { label: "Digit image", kind: "neural", text: "Recognize\ncell digits" },
-          { label: "Constraint check", kind: "symbolic", text: "Apply\nrow/col/box rules" },
-          { label: "Solved board", kind: "output", text: "Valid\nfinal state" },
-        ],
-        hitori: [
-          { label: "Grid image", kind: "neural", text: "Read\nnumber cells" },
-          { label: "Rule check", kind: "symbolic", text: "Eliminate\nduplicate adjacencies" },
-          { label: "Shaded board", kind: "output", text: "Single\nconnected region" },
-        ],
-        "zebra-puzzle": [
-          { label: "Clue text", kind: "neural", text: "Parse\nlogic clues" },
-          { label: "Constraint solver", kind: "symbolic", text: "Apply\nattribute constraints" },
-          { label: "Unique answer", kind: "output", text: "Who owns\nthe zebra?" },
-        ],
-        maze: [
-          { label: "Maze image", kind: "neural", text: "Detect\nwalls and paths" },
-          { label: "Graph planner", kind: "symbolic", text: "Find\nshortest valid route" },
-          { label: "Path to goal", kind: "output", text: "Collision-free\nsolution" },
-        ],
-        "contract-bridge": [
-          { label: "Deal cards", kind: "neural", text: "Encode\nhand strength" },
-          { label: "Bidding rules", kind: "symbolic", text: "Apply\nconventions & distributions" },
-          { label: "Bid decision", kind: "output", text: "Best\nopening bid" },
-        ],
-        jigsaw: [
-          { label: "Piece edges", kind: "neural", text: "Match\nedge descriptors" },
-          { label: "Permutation solver", kind: "symbolic", text: "Arrange\nall pieces consistently" },
-          { label: "Rebuilt image", kind: "output", text: "Full\ncompleted board" },
-        ],
-        "fuzzy-maze": [
-          { label: "Traversability map", kind: "neural", text: "Estimate\ncell confidence" },
-          { label: "Fuzzy planner", kind: "symbolic", text: "Maximize\nconfident path" },
-          { label: "Safe route", kind: "output", text: "Navigate\nwith uncertainty" },
-        ],
-        "word-search": [
-          { label: "Letter grid", kind: "neural", text: "Read\nall characters" },
-          { label: "Word matcher", kind: "symbolic", text: "Check\npaths against dictionary" },
-          { label: "Found words", kind: "output", text: "Highlighted\nsolutions" },
-        ],
-        "guess-who": [
-          { label: "Face image", kind: "neural", text: "Infer\nvisual attributes" },
-          { label: "Constraint filter", kind: "symbolic", text: "Eliminate\nimpossible faces" },
-          { label: "Target match", kind: "output", text: "Best\nremaining candidate" },
-        ],
-      }[sit.id] ?? [
-        { label: "Perception", kind: "neural", text: "Inputs" },
-        { label: "Reasoning", kind: "symbolic", text: "Rules" },
-        { label: "Decision", kind: "output", text: "Output" },
-      ]
-    : [
-        { label: "Perception", kind: "neural", text: "Inputs" },
-        { label: "Reasoning", kind: "symbolic", text: "Rules" },
-        { label: "Decision", kind: "output", text: "Output" },
-      ];
+  const makeTrace = (prefix: string, body: string) => `{${prefix}: ${body}}`;
+
+  const baseExampleSets: ExampleSetMap = {
+    sudoku: {
+      "learning-for-reasoning": [
+        {
+          label: "Cell fix",
+          input: "grid = [[5,0,4],[0,8,0],[1,0,9]]; observed digits = {5,8,1,9,4}",
+          reason: "candidate(row2,col6) = {5,8}; box rule removes 5 => 8",
+          output: "board = [[5,2,4],[7,8,1],[1,3,9]]; valid Sudoku",
+        },
+        {
+          label: "Last move",
+          input: "row 8 still has {2,5,7} and box rule leaves only 7",
+          reason: "row/col/box constraints eliminate the other candidates",
+          output: "fill 7 and the full board becomes consistent",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Constraint loss",
+          input: "digit logits for missing cells: p(5)=0.41, p(8)=0.58",
+          reason: "rule loss penalizes row/col/box conflicts; network learns to prefer legal digits",
+          output: "updated weights shift toward valid candidates and lower constraint loss",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Repair loop",
+          input: "neural guess: row2,col6 ≈ 5 with low confidence",
+          reason: "symbolic checker rejects 5, repairs to 8, then feeds corrected label back into the model",
+          output: "revised prediction: 8 with higher confidence and legal board state",
+        },
+      ],
+    },
+    hitori: {
+      "learning-for-reasoning": [
+        {
+          label: "Duplicate cut",
+          input: "grid[2,4] = 4 and grid[2,5] = 4; same row and both unshaded",
+          reason: "duplicate-adjacency rule blocks one of the pair to preserve validity",
+          output: "cells [2,4] are shaded and connectivity remains single-region",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Constraint gradient",
+          input: "network scores adjacency candidates: 0.72 for keep, 0.31 for shade",
+          reason: "symbolic rule says adjacency conflict must be broken; training signal updates the classifier",
+          output: "cell-level weights move toward shade decisions that satisfy rules",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Repair pass",
+          input: "raw grid confidence suggests both 4s remain; local ambiguity remains",
+          reason: "rule-based pruning removes one candidate, then the network re-ranks the remaining cells",
+          output: "one consistent unshaded region emerges after feedback",
+        },
+      ],
+    },
+    "zebra-puzzle": {
+      "learning-for-reasoning": [
+        {
+          label: "Constraint prune",
+          input: "clues = {Englishman=red house, Spaniard=dog, Ukrainian=tea, Norwegian=first house, Japanese=Parliaments, ...}",
+          reason: "constraint propagation combines the full clue set and eliminates every inconsistent person/pet assignment",
+          output: "unique solution: {Japanese = zebra}",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Logic-guided training",
+          input: "clue embeddings produce multiple candidate assignments",
+          reason: "symbolic consistency score penalizes impossible combinations during learning",
+          output: "network learns to favor clue combinations that satisfy the full logic graph",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Backtracking loop",
+          input: "neural clue parser marks several partial assignments as plausible",
+          reason: "symbolic search rejects contradictory branches and feeds the survivors back to the parser",
+          output: "only one complete assignment remains: the unique solution",
+        },
+      ],
+    },
+    maze: {
+      "learning-for-reasoning": [
+        {
+          label: "Short path",
+          input: "maze_pixels = walls around center corridor; start=(0,0), goal=(8,8)",
+          reason: "A* expands neighbors and discards dead ends until the shortest path remains",
+          output: "route = [(0,0),(0,1),...,(8,8)] with no wall collisions",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Planner-guided training",
+          input: "network predicts passability for each cell: wall=0.19, open=0.86",
+          reason: "planning loss rewards cells on shortest feasible routes and penalizes dead-end guesses",
+          output: "training sharpens path segmentation toward traversable corridors",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Adaptive route",
+          input: "neural map has uncertain cells near the center",
+          reason: "symbolic planner tests each branch and updates which cells are trusted for the next pass",
+          output: "revised route avoids uncertain walls while keeping a low-cost path",
+        },
+      ],
+    },
+    "contract-bridge": {
+      "learning-for-reasoning": [
+        {
+          label: "Open bid",
+          input: "hand = {AKQ, 5 spades, 17 HCP}; opponents show no strong suit",
+          reason: "bidding rules map distribution and controls to a legal opening bid",
+          output: "opening_bid = 1♠ with descriptive strength and fit",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Convention loss",
+          input: "network scores candidate bids: 1♠=0.74, 2♣=0.46",
+          reason: "symbolic convention rules penalize bids that violate fit/strength constraints",
+          output: "weights are updated to prefer conventionally valid opening bids",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Bid refinement",
+          input: "initial network bid is 2♣, but distribution is sparse",
+          reason: "rules reject the fit and feed back a refined hand description to the model",
+          output: "revised bid becomes 1♠ with consistent partnership logic",
+        },
+      ],
+    },
+    jigsaw: {
+      "learning-for-reasoning": [
+        {
+          label: "Edge match",
+          input: "pieceA.edgeRight = sky-blue; pieceB.edgeLeft = sky-blue; edgeScore = 0.94",
+          reason: "graph matching aligns the highest-similarity neighbors and enforces one-to-one placement",
+          output: "combined image reconstructs the original landscape",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Graph update",
+          input: "edge descriptors for 20 pieces form a similarity graph",
+          reason: "symbolic matching loss rewards adjacent edges that agree and penalizes impossible placements",
+          output: "network improves edge embeddings to keep true neighbors close",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Puzzle repair",
+          input: "network predicts a wrong neighbor for a sky edge",
+          reason: "graph solver rejects the impossible placement and sends the corrected adjacency back to the learner",
+          output: "final arrangement becomes globally consistent and image is restored",
+        },
+      ],
+    },
+    "fuzzy-maze": {
+      "learning-for-reasoning": [
+        {
+          label: "Confidence route",
+          input: "cell_confidence = {north:0.78, east:0.31, south:0.65}",
+          reason: "fuzzy rules maximize confidence while avoiding risky dead ends",
+          output: "choose north route; path remains safe under uncertainty",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Confidence update",
+          input: "neural passability map: north=0.78, east=0.31, south=0.65",
+          reason: "symbolic fuzzy objective rewards high-confidence traversable cells and penalizes low-confidence traps",
+          output: "network updates to prefer reliable cells over flaky ones",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Looped navigation",
+          input: "initial plan prefers north but crosses a noisy cell",
+          reason: "symbolic feedback rejects the fragile branch and the network reweights it for the next pass",
+          output: "a safer route survives the next iteration of the loop",
+        },
+      ],
+    },
+    "word-search": {
+      "learning-for-reasoning": [
+        {
+          label: "Dictionary hit",
+          input: "letters = [C,A,T] on a diagonal from row 2 col 5 to row 4 col 7",
+          reason: "search rules walk each direction and confirm the word is in dictionary",
+          output: "CAT is highlighted with a valid path and accepted",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Word score",
+          input: "candidate paths = {CAT, CAR, COT}; neural OCR confidence for each is mixed",
+          reason: "dictionary legality strengthens only the valid path and suppresses false matches",
+          output: "classifier learns to favor letter sequences that correspond to real words",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Iterative search",
+          input: "raw OCR sees C-A-T and C-O-T as plausible",
+          reason: "rule checker confirms CAT but rejects COT; corrected signal feeds back into the recognizer",
+          output: "the final accepted word is CAT, not the false alternative",
+        },
+      ],
+    },
+    "guess-who": {
+      "learning-for-reasoning": [
+        {
+          label: "Candidate prune",
+          input: "attributes = {glasses, darkHair, smile, noMoustache}",
+          reason: "constraint elimination rejects all faces that contradict the observed attributes",
+          output: "one remaining face matches the target and the guess is resolved",
+        },
+      ],
+      "reasoning-for-learning": [
+        {
+          label: "Attribute filter",
+          input: "face attributes from network: glasses=0.91, moustache=0.14, hair=dark",
+          reason: "symbolic elimination suppresses incompatible face candidates and guides the next training step",
+          output: "classifier learns to focus on discriminative features for the target",
+        },
+      ],
+      "learning-reasoning": [
+        {
+          label: "Question loop",
+          input: "network initially has two plausible faces with similar feature scores",
+          reason: "symbolic search filters the impossible one and feeds the corrected candidate set back into the model",
+          output: "final target is the only remaining candidate after the loop",
+        },
+      ],
+    },
+  } as const;
+
+  const fallbackExamples: Record<string, ExampleCase[]> = {
+    "learning-for-reasoning": [{ label: "Example", input: "raw perceptual features arrive from the neural encoder", reason: "symbolic rules apply the relevant constraints", output: "final decision is consistent and valid" }],
+    "reasoning-for-learning": [{ label: "Example", input: "constraint facts arrive from the symbolic layer", reason: "neural model updates under rule-guided supervision", output: "weights adapt toward the valid solution" }],
+    "learning-reasoning": [{ label: "Example", input: "neural hypothesis and symbolic constraints are both active", reason: "co-training resolves conflicting signals and tightens the loop", output: "final result is a stable, rule-consistent prediction" }],
+  };
+
+  const exampleSets = sit ? (baseExampleSets[sit.id] ?? fallbackExamples) : fallbackExamples;
+  const exampleCases = exampleSets[(st.pattern ?? "learning-for-reasoning")] ?? exampleSets["learning-for-reasoning"];
+
+  const demo = exampleCases[0];
+  const exampleText = sit
+    ? `${sit.title}: ${makeTrace("input", demo.input)} → ${makeTrace("rule", demo.reason)} → ${makeTrace("output", demo.output)}`
+    : `${pattern.taxonomy}: ${makeTrace("input", demo.input)} → ${makeTrace("rule", demo.reason)} → ${makeTrace("output", demo.output)}`;
+
+  const interactiveHost = el("div");
+  renderSituationLab(interactiveHost, true);
 
   const flowDemo = el(
     "div",
     { class: "metric-card", style: { marginTop: "18px" } },
-    el("div", { class: "label" }, "Live data flow"),
-    el(
-      "div",
-      { class: "flow-demo", style: { display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "16px", alignItems: "center" } },
-      ...flowNodes.map((node, idx) =>
-        el(
-          "div",
-          { style: { display: "flex", alignItems: "center", gap: "10px", flex: "1 1 180px" } },
-          idx > 0 ? el("div", { class: "flow-arrow" }, pattern.flow.includes("→") ? "→" : "↔") : null,
-          el(
-            "div",
-            { class: `flow-node ${node.kind}`, style: { flex: "1 1 160px" } },
-            el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" } }, node.label),
-            node.text
-          )
-        )
-      )
-    ),
+    el("div", { class: "label" }, "Interactive data flow"),
+    interactiveHost,
     el(
       "div",
       { class: "note", style: { marginTop: "14px" } },
-      el("b", {}, "Example: "),
+      el("b", {}, "Execution trace: "),
       exampleText,
       el(
         "div",
@@ -356,4 +606,3 @@ export function renderResults(root: HTMLElement): void {
     actions
   );
 }
-

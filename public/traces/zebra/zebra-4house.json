@@ -1,0 +1,122 @@
+{
+  "id": "zebra-4house",
+  "title": "4 houses \u2014 left/right ordering",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@black",
+      "g1@red",
+      "g1@blonde",
+      "g1@brown"
+    ],
+    "g2": [
+      "g2@engineer",
+      "g2@artist",
+      "g2@doctor",
+      "g2@teacher"
+    ],
+    "g3": [
+      "g3@coffee",
+      "g3@water",
+      "g3@tea",
+      "g3@milk"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who has brown hair is not in the second house.",
+      "relation": "not_at",
+      "a": "g1@brown",
+      "position": 2
+    },
+    {
+      "source": "The person who is a doctor is Peter.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@doctor"
+    },
+    {
+      "source": "The person who is a doctor is the one who only drinks water.",
+      "relation": "same",
+      "a": "g2@doctor",
+      "b": "g3@water"
+    },
+    {
+      "source": "The person who is an artist is somewhere to the left of the person who is an engineer.",
+      "relation": "left",
+      "a": "g2@artist",
+      "b": "g2@engineer"
+    },
+    {
+      "source": "The person who likes milk is the person who has blonde hair.",
+      "relation": "same",
+      "a": "g3@milk",
+      "b": "g1@blonde"
+    },
+    {
+      "source": "The person who has red hair is Alice.",
+      "relation": "same",
+      "a": "g1@red",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person who is an artist and Arnold are next to each other.",
+      "relation": "next_to",
+      "a": "g2@artist",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who is an artist is in the third house.",
+      "relation": "at",
+      "a": "g2@artist",
+      "position": 3
+    },
+    {
+      "source": "The person who likes milk is somewhere to the left of the tea drinker.",
+      "relation": "left",
+      "a": "g3@milk",
+      "b": "g3@tea"
+    },
+    {
+      "source": "Arnold is somewhere to the right of Eric.",
+      "relation": "right",
+      "a": "g0@arnold",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who has black hair is the coffee drinker.",
+      "relation": "same",
+      "a": "g1@black",
+      "b": "g3@coffee"
+    }
+  ],
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@artist": 3,
+      "g2@engineer": 4,
+      "g2@doctor": 1,
+      "g2@teacher": 2,
+      "g0@peter": 1,
+      "g3@water": 1,
+      "g0@arnold": 4,
+      "g0@eric": 2,
+      "g0@alice": 3,
+      "g1@red": 3,
+      "g1@brown": 1,
+      "g1@blonde": 2,
+      "g1@black": 4,
+      "g3@milk": 2,
+      "g3@coffee": 4,
+      "g3@tea": 3
+    },
+    "unique": true
+  },
+  "verification": "encoded_constraints_only; semantic translation is not proved"
+}

@@ -564,6 +564,15 @@ button {
   white-space: pre-line;
   display: grid;
   place-items: center;
+  transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+}
+.flow-node.pending,
+.flow-arrow.pending {
+  opacity: 0.28;
+}
+.flow-node.pending {
+  filter: grayscale(0.65);
+  transform: scale(0.98);
 }
 .flow-node.neural {
   background: rgba(245, 147, 34, 0.1);
@@ -580,10 +589,49 @@ button {
   border-color: rgba(142, 68, 173, 0.35);
   color: #5c2b76;
 }
+.flow-payload {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 600;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+}
 .flow-arrow {
   font-size: 26px;
   color: var(--muted);
 }
+
+.lab-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  width: fit-content;
+}
+.lab-token-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.lab-token {
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+}
+button.lab-token { cursor: pointer; }
 
 .muted {
   color: var(--muted);
@@ -729,4 +777,3 @@ button {
   border-color: var(--pos);
   background: #eef5fb;
 }
-
