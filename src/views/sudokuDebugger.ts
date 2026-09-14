@@ -381,20 +381,31 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     const delay = revealMode
       ? Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)))
       : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
+    // Rebuilding the whole grid + log on every tick is real DOM work (worse on a
+    // 16x16 board), and a large step count wants a tiny `delay` for the animation to
+    // finish in a reasonable time -- but re-rendering that often meant the Stop
+    // button was being torn down and recreated faster than clicks could reliably
+    // land, making it stop only some of the time. Capping the actual re-render rate
+    // and batching multiple logical steps into each visual frame keeps total
+    // playback time the same while the button stays clickable throughout.
+    const RENDER_INTERVAL = 50;
+    const stepsPerTick = Math.max(1, Math.round(RENDER_INTERVAL / delay));
     const tick = () => {
       if (!playing) return;
+      for (let i = 0; i < stepsPerTick && playIdx < playSteps.length; i++) {
+        applyStep(playSteps[playIdx]);
+        playIdx++;
+      }
       if (playIdx >= playSteps.length) {
         playing = false;
         drawBody();
         return;
       }
-      applyStep(playSteps[playIdx]);
-      playIdx++;
       drawBody();
-      playTimer = setTimeout(tick, delay);
+      playTimer = setTimeout(tick, RENDER_INTERVAL);
     };
     drawBody();
-    playTimer = setTimeout(tick, delay);
+    playTimer = setTimeout(tick, RENDER_INTERVAL);
   }
 
   function drawPanel(panel: HTMLElement, t: SudokuTrace): void {

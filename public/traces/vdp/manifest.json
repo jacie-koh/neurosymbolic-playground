@@ -57,7 +57,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 5
+    "difficulty": 4
   },
   {
     "id": "vdp-agreement-fovariant-3",
@@ -141,7 +141,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-alternate-color-fovariant-19",
@@ -525,7 +525,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 3
   },
   {
     "id": "vdp-assimilation-fovariant-8",
@@ -537,7 +537,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 3
   },
   {
     "id": "vdp-breaking-fovariant-13",
@@ -720,6 +720,30 @@
     "difficulty": 5
   },
   {
+    "id": "vdp-devoicing-fovariant-10-swap4",
+    "file": "vdp-devoicing-fovariant-10-swap4.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-10-swap4)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-devoicing-fovariant-17",
+    "file": "vdp-devoicing-fovariant-17.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-17)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
     "id": "vdp-devoicing-fovariant-21",
     "file": "vdp-devoicing-fovariant-21.json",
     "pattern": "devoicing",
@@ -754,5 +778,65 @@
     "matches": false,
     "freshStatus": "unknown",
     "difficulty": 5
+  },
+  {
+    "id": "vdp-devoicing-fovariant-3-swap4",
+    "file": "vdp-devoicing-fovariant-3-swap4.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-3-swap4)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-meeussen-fovariant-21",
+    "file": "vdp-meeussen-fovariant-21.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-21)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-meeussen-fovariant-6",
+    "file": "vdp-meeussen-fovariant-6.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-6)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-meeussen-fovariant-8",
+    "file": "vdp-meeussen-fovariant-8.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-8)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-meeussen-fovariant-9",
+    "file": "vdp-meeussen-fovariant-9.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-9)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
   }
 ]

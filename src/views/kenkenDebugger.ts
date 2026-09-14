@@ -352,20 +352,28 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     const delay = revealMode
       ? Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)))
       : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
+    // Capped re-render rate + batched steps per frame -- see sudokuDebugger.ts's
+    // playFrom for why: rebuilding the whole grid on every tick at a tiny `delay`
+    // made the Stop button get torn down and recreated faster than clicks could
+    // reliably land on it.
+    const RENDER_INTERVAL = 50;
+    const stepsPerTick = Math.max(1, Math.round(RENDER_INTERVAL / delay));
     const tick = () => {
       if (!playing) return;
+      for (let i = 0; i < stepsPerTick && playIdx < playSteps.length; i++) {
+        applyStep(playSteps[playIdx]);
+        playIdx++;
+      }
       if (playIdx >= playSteps.length) {
         playing = false;
         drawBody();
         return;
       }
-      applyStep(playSteps[playIdx]);
-      playIdx++;
       drawBody();
-      playTimer = setTimeout(tick, delay);
+      playTimer = setTimeout(tick, RENDER_INTERVAL);
     };
     drawBody();
-    playTimer = setTimeout(tick, delay);
+    playTimer = setTimeout(tick, RENDER_INTERVAL);
   }
 
   function findPrediction(t: KenKenTrace, cage: Cage): KenKenCagePrediction | undefined {
