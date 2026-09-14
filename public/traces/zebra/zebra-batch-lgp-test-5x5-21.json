@@ -1,0 +1,174 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-21",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-21)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@peter",
+      "g0@arnold",
+      "g0@alice",
+      "g0@bob"
+    ],
+    "g1": [
+      "g1@bird",
+      "g1@dog",
+      "g1@hamster",
+      "g1@fish",
+      "g1@cat"
+    ],
+    "g2": [
+      "g2@fantasy",
+      "g2@romance",
+      "g2@science-fiction",
+      "g2@biography",
+      "g2@mystery"
+    ],
+    "g3": [
+      "g3@basketball",
+      "g3@soccer",
+      "g3@tennis",
+      "g3@baseball",
+      "g3@swimming"
+    ],
+    "g4": [
+      "g4@pall-mall",
+      "g4@prince",
+      "g4@blue-master",
+      "g4@blends",
+      "g4@dunhill"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The Dunhill smoker is in the fifth house.",
+      "relation": "at",
+      "a": "g4@dunhill",
+      "position": 5
+    },
+    {
+      "source": "The person with an aquarium of fish is directly left of the person who loves biography books.",
+      "relation": "immediately_left",
+      "a": "g1@fish",
+      "b": "g2@biography"
+    },
+    {
+      "source": "The person who loves mystery books is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g2@mystery",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who smokes many unique blends is the person who loves soccer.",
+      "relation": "same",
+      "a": "g4@blends",
+      "b": "g3@soccer"
+    },
+    {
+      "source": "The person who loves romance books is directly left of the person who smokes Blue Master.",
+      "relation": "immediately_left",
+      "a": "g2@romance",
+      "b": "g4@blue-master"
+    },
+    {
+      "source": "Arnold is somewhere to the right of the person who loves fantasy books.",
+      "relation": "right",
+      "a": "g0@arnold",
+      "b": "g2@fantasy"
+    },
+    {
+      "source": "Alice is not in the third house.",
+      "relation": "not_at",
+      "a": "g0@alice",
+      "position": 3
+    },
+    {
+      "source": "The person who loves fantasy books is Peter.",
+      "relation": "same",
+      "a": "g2@fantasy",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person partial to Pall Mall is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g4@pall-mall",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who keeps a pet bird is in the second house.",
+      "relation": "at",
+      "a": "g1@bird",
+      "position": 2
+    },
+    {
+      "source": "The person who smokes many unique blends is the person with a pet hamster.",
+      "relation": "same",
+      "a": "g4@blends",
+      "b": "g1@hamster"
+    },
+    {
+      "source": "Eric is directly left of the person who loves tennis.",
+      "relation": "immediately_left",
+      "a": "g0@eric",
+      "b": "g3@tennis"
+    },
+    {
+      "source": "The person who loves tennis is in the fifth house.",
+      "relation": "at",
+      "a": "g3@tennis",
+      "position": 5
+    },
+    {
+      "source": "The person who loves swimming is directly left of the person who keeps a pet bird.",
+      "relation": "immediately_left",
+      "a": "g3@swimming",
+      "b": "g1@bird"
+    },
+    {
+      "source": "The person partial to Pall Mall is the person who loves baseball.",
+      "relation": "same",
+      "a": "g4@pall-mall",
+      "b": "g3@baseball"
+    },
+    {
+      "source": "The person who has a cat and Arnold are next to each other.",
+      "relation": "next_to",
+      "a": "g1@cat",
+      "b": "g0@arnold"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@dunhill": 5,
+      "g1@bird": 2,
+      "g3@tennis": 5,
+      "g0@eric": 4,
+      "g3@swimming": 1,
+      "g3@baseball": 2,
+      "g4@pall-mall": 2,
+      "g3@soccer": 3,
+      "g3@basketball": 4,
+      "g4@blends": 3,
+      "g1@hamster": 3,
+      "g4@prince": 1,
+      "g4@blue-master": 4,
+      "g2@romance": 3,
+      "g1@fish": 1,
+      "g2@biography": 2,
+      "g1@cat": 4,
+      "g1@dog": 5,
+      "g0@arnold": 5,
+      "g0@peter": 1,
+      "g2@fantasy": 1,
+      "g0@alice": 2,
+      "g0@bob": 3,
+      "g2@mystery": 4,
+      "g2@science-fiction": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

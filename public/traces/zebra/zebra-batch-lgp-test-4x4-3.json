@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-3",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-3)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@alice",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@holly",
+      "g1@kailyn",
+      "g1@aniya",
+      "g1@janelle"
+    ],
+    "g2": [
+      "g2@april",
+      "g2@feb",
+      "g2@sept",
+      "g2@jan"
+    ],
+    "g3": [
+      "g3@ranch",
+      "g3@colonial",
+      "g3@victorian",
+      "g3@craftsman"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Peter is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@feb"
+    },
+    {
+      "source": "The person whose birthday is in February is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g2@feb",
+      "position": 4
+    },
+    {
+      "source": "The person whose birthday is in January is somewhere to the right of the person in a ranch-style home.",
+      "relation": "right",
+      "a": "g2@jan",
+      "b": "g3@ranch"
+    },
+    {
+      "source": "The person whose birthday is in January is directly left of Eric.",
+      "relation": "immediately_left",
+      "a": "g2@jan",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person in a ranch-style home is the person whose birthday is in April.",
+      "relation": "same",
+      "a": "g3@ranch",
+      "b": "g2@april"
+    },
+    {
+      "source": "The person whose mother's name is Janelle is the person whose birthday is in September.",
+      "relation": "same",
+      "a": "g1@janelle",
+      "b": "g2@sept"
+    },
+    {
+      "source": "The person in a ranch-style home and The person whose mother's name is Kailyn are next to each other.",
+      "relation": "next_to",
+      "a": "g3@ranch",
+      "b": "g1@kailyn"
+    },
+    {
+      "source": "Arnold is The person whose mother's name is Holly.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@holly"
+    },
+    {
+      "source": "The person whose mother's name is Kailyn is directly left of the person residing in a Victorian house.",
+      "relation": "immediately_left",
+      "a": "g1@kailyn",
+      "b": "g3@victorian"
+    },
+    {
+      "source": "The person whose birthday is in January is the person in a Craftsman-style house.",
+      "relation": "same",
+      "a": "g2@jan",
+      "b": "g3@craftsman"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@feb": 1,
+      "g0@peter": 1,
+      "g0@arnold": 2,
+      "g1@holly": 2,
+      "g0@alice": 3,
+      "g0@eric": 4,
+      "g2@jan": 3,
+      "g3@craftsman": 3,
+      "g2@april": 2,
+      "g2@sept": 4,
+      "g3@ranch": 2,
+      "g1@janelle": 4,
+      "g1@aniya": 1,
+      "g1@kailyn": 3,
+      "g3@victorian": 4,
+      "g3@colonial": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

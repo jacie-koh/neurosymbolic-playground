@@ -1,0 +1,175 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-30",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-30)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@peter",
+      "g0@bob",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@master",
+      "g1@bachelor",
+      "g1@doctorate",
+      "g1@high-school",
+      "g1@associate"
+    ],
+    "g2": [
+      "g2@yellow",
+      "g2@green",
+      "g2@blue",
+      "g2@red",
+      "g2@white"
+    ],
+    "g3": [
+      "g3@mountain",
+      "g3@camping",
+      "g3@cruise",
+      "g3@beach",
+      "g3@city"
+    ],
+    "g4": [
+      "g4@huawei-p50",
+      "g4@google-pixel-6",
+      "g4@iphone-13",
+      "g4@oneplus-9",
+      "g4@samsung-galaxy-s21"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Alice is the person with a master's degree.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g1@master"
+    },
+    {
+      "source": "The person who uses a OnePlus 9 is the person with a doctorate.",
+      "relation": "same",
+      "a": "g4@oneplus-9",
+      "b": "g1@doctorate"
+    },
+    {
+      "source": "The person who loves blue is somewhere to the left of Bob.",
+      "relation": "left",
+      "a": "g2@blue",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who prefers city breaks is Peter.",
+      "relation": "same",
+      "a": "g3@city",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves beach vacations is the person whose favorite color is green.",
+      "relation": "same",
+      "a": "g3@beach",
+      "b": "g2@green"
+    },
+    {
+      "source": "The person who loves white is the person who uses an iPhone 13.",
+      "relation": "same",
+      "a": "g2@white",
+      "b": "g4@iphone-13"
+    },
+    {
+      "source": "The person who uses a OnePlus 9 is the person who enjoys mountain retreats.",
+      "relation": "same",
+      "a": "g4@oneplus-9",
+      "b": "g3@mountain"
+    },
+    {
+      "source": "The person who uses a Huawei P50 is somewhere to the left of the person whose favorite color is red.",
+      "relation": "left",
+      "a": "g4@huawei-p50",
+      "b": "g2@red"
+    },
+    {
+      "source": "The person who loves beach vacations is not in the first house.",
+      "relation": "not_at",
+      "a": "g3@beach",
+      "position": 1
+    },
+    {
+      "source": "Alice is in the fourth house.",
+      "relation": "at",
+      "a": "g0@alice",
+      "position": 4
+    },
+    {
+      "source": "Eric and Peter are next to each other.",
+      "relation": "next_to",
+      "a": "g0@eric",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Alice is the person whose favorite color is red.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g2@red"
+    },
+    {
+      "source": "There is one house between Peter and the person who uses a OnePlus 9.",
+      "relation": "distance",
+      "a": "g0@peter",
+      "b": "g4@oneplus-9",
+      "distance": 2
+    },
+    {
+      "source": "The person with a bachelor's degree is the person who uses a Samsung Galaxy S21.",
+      "relation": "same",
+      "a": "g1@bachelor",
+      "b": "g4@samsung-galaxy-s21"
+    },
+    {
+      "source": "The person who enjoys camping trips is the person who loves blue.",
+      "relation": "same",
+      "a": "g3@camping",
+      "b": "g2@blue"
+    },
+    {
+      "source": "The person who loves beach vacations is the person with a high school diploma.",
+      "relation": "same",
+      "a": "g3@beach",
+      "b": "g1@high-school"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@alice": 4,
+      "g1@master": 4,
+      "g2@red": 4,
+      "g4@huawei-p50": 2,
+      "g0@arnold": 1,
+      "g0@eric": 2,
+      "g0@peter": 3,
+      "g0@bob": 5,
+      "g3@city": 3,
+      "g4@oneplus-9": 5,
+      "g1@doctorate": 5,
+      "g3@mountain": 5,
+      "g1@bachelor": 1,
+      "g4@samsung-galaxy-s21": 1,
+      "g1@high-school": 2,
+      "g1@associate": 3,
+      "g3@beach": 2,
+      "g2@green": 2,
+      "g3@camping": 1,
+      "g3@cruise": 4,
+      "g2@blue": 1,
+      "g2@white": 3,
+      "g2@yellow": 5,
+      "g4@iphone-13": 3,
+      "g4@google-pixel-6": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

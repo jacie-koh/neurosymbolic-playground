@@ -1,0 +1,42 @@
+{
+  "id": "zebra-batch-lgp-test-2x2-1",
+  "title": "ZebraLogic 2-house puzzle (id lgp-test-2x2-1)",
+  "size": 2,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@engineer",
+      "g1@doctor"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Eric is directly left of Arnold.",
+      "relation": "immediately_left",
+      "a": "g0@eric",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who is a doctor is not in the first house.",
+      "relation": "not_at",
+      "a": "g1@doctor",
+      "position": 1
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 1,
+      "g0@arnold": 2,
+      "g1@doctor": 2,
+      "g1@engineer": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

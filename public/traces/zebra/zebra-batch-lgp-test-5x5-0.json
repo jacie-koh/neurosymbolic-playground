@@ -1,0 +1,175 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-0",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-0)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@stew",
+      "g1@stir-fry",
+      "g1@spaghetti",
+      "g1@grilled-cheese",
+      "g1@pizza"
+    ],
+    "g2": [
+      "g2@watermelon",
+      "g2@lime",
+      "g2@desert",
+      "g2@dragonfruit",
+      "g2@cherry"
+    ],
+    "g3": [
+      "g3@fantasy",
+      "g3@biography",
+      "g3@mystery",
+      "g3@science-fiction",
+      "g3@romance"
+    ],
+    "g4": [
+      "g4@photography",
+      "g4@knitting",
+      "g4@cooking",
+      "g4@gardening",
+      "g4@painting"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves stir fry is the Desert smoothie lover.",
+      "relation": "same",
+      "a": "g1@stir-fry",
+      "b": "g2@desert"
+    },
+    {
+      "source": "The person who loves the spaghetti eater is the person who enjoys gardening.",
+      "relation": "same",
+      "a": "g1@spaghetti",
+      "b": "g4@gardening"
+    },
+    {
+      "source": "Bob is somewhere to the left of the person who loves mystery books.",
+      "relation": "left",
+      "a": "g0@bob",
+      "b": "g3@mystery"
+    },
+    {
+      "source": "The person who paints as a hobby is directly left of Alice.",
+      "relation": "immediately_left",
+      "a": "g4@painting",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The Desert smoothie lover is the person who loves romance books.",
+      "relation": "same",
+      "a": "g2@desert",
+      "b": "g3@romance"
+    },
+    {
+      "source": "The photography enthusiast and the person who loves eating grilled cheese are next to each other.",
+      "relation": "next_to",
+      "a": "g4@photography",
+      "b": "g1@grilled-cheese"
+    },
+    {
+      "source": "The person who loves cooking is somewhere to the left of the Desert smoothie lover.",
+      "relation": "left",
+      "a": "g4@cooking",
+      "b": "g2@desert"
+    },
+    {
+      "source": "The person who likes Cherry smoothies is Alice.",
+      "relation": "same",
+      "a": "g2@cherry",
+      "b": "g0@alice"
+    },
+    {
+      "source": "There is one house between the person who drinks Lime smoothies and the person who enjoys gardening.",
+      "relation": "distance",
+      "a": "g2@lime",
+      "b": "g4@gardening",
+      "distance": 2
+    },
+    {
+      "source": "The Watermelon smoothie lover is Eric.",
+      "relation": "same",
+      "a": "g2@watermelon",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is directly left of the Dragonfruit smoothie lover.",
+      "relation": "immediately_left",
+      "a": "g1@grilled-cheese",
+      "b": "g2@dragonfruit"
+    },
+    {
+      "source": "The person who is a pizza lover is Alice.",
+      "relation": "same",
+      "a": "g1@pizza",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person who loves romance books is Peter.",
+      "relation": "same",
+      "a": "g3@romance",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves fantasy books is the Watermelon smoothie lover.",
+      "relation": "same",
+      "a": "g3@fantasy",
+      "b": "g2@watermelon"
+    },
+    {
+      "source": "Alice is the person who loves biography books.",
+      "relation": "same",
+      "a": "g3@biography",
+      "b": "g0@alice"
+    },
+    {
+      "source": "Eric is not in the third house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 3
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@painting": 4,
+      "g0@alice": 5,
+      "g2@cherry": 5,
+      "g1@pizza": 5,
+      "g3@biography": 5,
+      "g0@bob": 1,
+      "g0@eric": 2,
+      "g2@watermelon": 2,
+      "g3@fantasy": 2,
+      "g0@arnold": 3,
+      "g0@peter": 4,
+      "g3@romance": 4,
+      "g2@desert": 4,
+      "g1@stir-fry": 4,
+      "g2@lime": 1,
+      "g2@dragonfruit": 3,
+      "g4@gardening": 3,
+      "g1@spaghetti": 3,
+      "g1@grilled-cheese": 2,
+      "g1@stew": 1,
+      "g3@science-fiction": 1,
+      "g3@mystery": 3,
+      "g4@photography": 1,
+      "g4@cooking": 2,
+      "g4@knitting": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

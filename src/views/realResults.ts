@@ -175,7 +175,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      notImplemented: "The real Zebra pipeline is one-shot: parse once, solve once. There's no retry/correction loop feeding solver conflicts back into re-parsing.",
+      notImplemented: "The real solve step is one-shot: MINIEXACT runs once, and a solver conflict never triggers a re-parse. (Parsing itself does retry the LLM up to once if its JSON output fails schema validation — but that's a format check catching malformed output, not the symbolic solver reasoning about the puzzle, so it doesn't count as this pattern.)",
     },
   },
   "visual-discrimination": {

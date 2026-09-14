@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "sudoku-16x16-ambiguous",
+    "file": "sudoku-16x16-ambiguous.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9775,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-4x4-printed",
+    "file": "sudoku-4x4-printed.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9987,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-9x9-clean",
+    "file": "sudoku-9x9-clean.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9861,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-9x9-correction",
+    "file": "sudoku-9x9-correction.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9715,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-9x9-printed",
+    "file": "sudoku-9x9-printed.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9079,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_0",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_0.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_1",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_1.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_10",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_10.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_11",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_11.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_12",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_12.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_13",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_13.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_14",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_14.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_15",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_15.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_16",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_16.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_17",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_17.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_18",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_18.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_19",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Hex_Notation-board16_19.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9998,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_0",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_0.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_1",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_1.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_10",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_10.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_11",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_11.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_12",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_12.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_13",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_13.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_14",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_14.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_15",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_15.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_16",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_16.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_17",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_17.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_18",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_18.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_19",
+    "file": "sudoku-batch-HexaSudoku_16x16-Computer_Numeric-board16_19.json",
+    "size": 16,
+    "style": "printed",
+    "notation": "hex",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_0",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_0.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9856,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_1",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_1.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9889,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_10",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_10.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9869,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_11",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_11.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9865,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_12",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_12.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9847,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_13",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_13.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.982,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_14",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_14.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9865,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_15",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_15.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9823,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_16",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_16.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9841,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_17",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_17.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9902,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_18",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_18.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9804,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_19",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Hex_Notation-board16_19.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9877,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_0",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_0.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9301,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_1",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_1.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9522,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_10",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_10.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9359,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_11",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_11.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9577,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_12",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_12.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9367,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_13",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_13.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9409,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_14",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_14.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.953,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_15",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_15.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.941,
+    "status": "unsat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_16",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_16.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.953,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_17",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_17.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9552,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_18",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_18.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9394,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_19",
+    "file": "sudoku-batch-HexaSudoku_16x16-Handwritten_Numeric-board16_19.json",
+    "size": 16,
+    "style": "handwritten",
+    "notation": "hex",
+    "avgConfidence": 0.9497,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_0",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_0.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9987,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_1",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_1.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.974,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_10",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_10.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9677,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_11",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_11.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_12",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_12.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9987,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_13",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_13.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9678,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_14",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_14.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_15",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_15.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9369,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_16",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_16.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_17",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_17.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9678,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_18",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_18.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_19",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_19.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.968,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-4x4-board4_2",
+    "file": "sudoku-batch-Sudoku-Computer-4x4-board4_2.json",
+    "size": 4,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_0",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_0.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9079,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_1",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_1.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.8951,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_10",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_10.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9151,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_11",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_11.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9328,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_12",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_12.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9195,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_13",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_13.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.893,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_14",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_14.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9201,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_15",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_15.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9321,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_16",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_16.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9236,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_17",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_17.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9221,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_18",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_18.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.8795,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_19",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_19.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9012,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Computer-9x9-board9_2",
+    "file": "sudoku-batch-Sudoku-Computer-9x9-board9_2.json",
+    "size": 9,
+    "style": "printed",
+    "notation": "numeric",
+    "avgConfidence": 0.9017,
+    "status": "sat",
+    "legibility": null
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_0",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_0.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9972,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_1",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_1.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9968,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_10",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_10.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9947,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_11",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_11.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9908,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_12",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_12.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9988,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_13",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_13.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9887,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_14",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_14.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9999,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_15",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_15.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9965,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_16",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_16.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9926,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_17",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_17.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9989,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_18",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_18.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9992,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_19",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_19.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9987,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_2",
+    "file": "sudoku-batch-Sudoku-Handwritten-4x4-board4_2.json",
+    "size": 4,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.999,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_0",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_0.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9861,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_1",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_1.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9917,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_10",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_10.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9884,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_11",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_11.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9873,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_12",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_12.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.981,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_13",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_13.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.987,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_14",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_14.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.982,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_15",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_15.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9845,
+    "status": "sat",
+    "legibility": "medium"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_16",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_16.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.989,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_17",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_17.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9754,
+    "status": "sat",
+    "legibility": "low"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_18",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_18.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9943,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_19",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_19.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9926,
+    "status": "sat",
+    "legibility": "high"
+  },
+  {
+    "id": "sudoku-batch-Sudoku-Handwritten-9x9-board9_2",
+    "file": "sudoku-batch-Sudoku-Handwritten-9x9-board9_2.json",
+    "size": 9,
+    "style": "handwritten",
+    "notation": "numeric",
+    "avgConfidence": 0.9614,
+    "status": "sat",
+    "legibility": "low"
+  }
+]

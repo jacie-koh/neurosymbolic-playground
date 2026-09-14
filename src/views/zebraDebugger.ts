@@ -6,6 +6,13 @@
  * entities, which the authors' Colored Exact Cover encoding solves via MINIEXACT.
  * See standalone/puzzlelab/zebra.py.
  *
+ * The real parser does retry the LLM once if its JSON output fails schema
+ * validation (re-prompted with the validator's error) — but that's a format
+ * check on the LLM's own output, not the symbolic solver rejecting an
+ * interpretation. MINIEXACT itself always runs exactly once, with no
+ * solver-conflict-driven re-parse loop; the curated traces here don't record
+ * which parser attempt succeeded.
+ *
  * Select a clue to see its structured interpretation, and edit its relation
  * (e.g. "left" -> "immediately_left") or target to see how the surviving
  * assignment changes. Edits rerun an exact client-side backtracking solve
@@ -13,9 +20,39 @@
  */
 
 import { el, clear } from "../dom";
-import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, type ZebraTrace, type ZebraClueRecord } from "../data/traces";
-import { solveZebra, solveZebraWithSteps, type Relation } from "../neural/genericZebra";
+import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, loadZebraManifest, type ZebraTrace, type ZebraManifestEntry, type ZebraClueRecord } from "../data/traces";
+import { solveZebra, solveZebraWithSteps, type Relation, type ZebraIR } from "../neural/genericZebra";
 import { renderLiveLog } from "./liveLog";
+import { renderRandomizer } from "./randomizer";
+
+interface EnrichedZebraEntry extends ZebraManifestEntry {
+  hasBacktrack: boolean;
+  hasDeadClue: boolean;
+}
+
+/** Real, computed (not stored) properties: does the client-side search backtrack at
+ * all, and is any clue logically redundant (removable without losing the solution)? */
+async function enrichZebraManifest(manifest: ZebraManifestEntry[]): Promise<EnrichedZebraEntry[]> {
+  const out: EnrichedZebraEntry[] = [];
+  for (const entry of manifest) {
+    try {
+      const t = await loadZebraTrace(entry.file);
+      const ir: ZebraIR = { size: t.size, groups: t.groups, clues: t.clues };
+      const stepped = solveZebraWithSteps(ir);
+      const hasBacktrack = stepped.steps.some((s) => s.house === 0);
+      let hasDeadClue = false;
+      for (let i = 0; i < t.clues.length && !hasDeadClue; i++) {
+        const without: ZebraIR = { size: t.size, groups: t.groups, clues: t.clues.filter((_, idx) => idx !== i) };
+        const res = solveZebra(without);
+        if (res.status === "sat" && JSON.stringify(res.solution) === JSON.stringify(stepped.solution)) hasDeadClue = true;
+      }
+      out.push({ ...entry, hasBacktrack, hasDeadClue });
+    } catch {
+      out.push({ ...entry, hasBacktrack: false, hasDeadClue: false });
+    }
+  }
+  return out;
+}
 
 const RELATIONS: Relation[] = [
   "at",
@@ -56,9 +93,38 @@ export function renderZebraDebugger(root: HTMLElement): void {
     }
   }
 
+  const randomizerHost = el("div");
   const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(picker, body);
+  root.append(
+    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by house count from the full pool:"),
+    randomizerHost,
+    picker,
+    body
+  );
+
+  loadZebraManifest()
+    .then(enrichZebraManifest)
+    .then((manifest) => {
+      renderRandomizer<EnrichedZebraEntry>(randomizerHost, manifest, {
+        fields: [
+          { key: "houses", label: "Houses", get: (e) => e.houses },
+          { key: "hasBacktrack", label: "Backtracks", get: (e) => (e.hasBacktrack ? "yes" : "no") },
+          { key: "hasDeadClue", label: "Has dead rule", get: (e) => (e.hasDeadClue ? "yes" : "no") },
+        ],
+        onPick: (entry) => {
+          if (!entry) {
+            clear(body);
+            body.append(el("p", { class: "note" }, "No real examples match that combination — try loosening a filter."));
+            return;
+          }
+          selectTrace(entry.file);
+        },
+      });
+    })
+    .catch(() => {
+      randomizerHost.append(el("p", { class: "muted", style: { fontSize: "12px" } }, "Randomizer unavailable — couldn't load the example manifest."));
+    });
 
   function selectTrace(file: string): void {
     stopPlaying();
@@ -179,7 +245,12 @@ export function renderZebraDebugger(root: HTMLElement): void {
       "div",
       { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
       `${t.title} · ${t.size} houses, ${groupKeys.length} categories · offline pipeline result: ${t.result.status}` +
-        (t.result.unique != null ? `, unique=${t.result.unique}` : "")
+        (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
+        (t.parseAttempts
+          ? t.parseAttempts > 1
+            ? ` · LLM parse self-corrected: attempt 1's JSON failed schema validation, attempt ${t.parseAttempts} passed`
+            : " · LLM parse succeeded on the first attempt, no schema-validation retry needed"
+          : "")
     );
 
     const panel = el("div", { class: "note", style: { marginTop: "16px" } });

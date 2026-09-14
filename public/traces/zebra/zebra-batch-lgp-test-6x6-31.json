@@ -1,0 +1,278 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-31",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-31)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@bob",
+      "g0@arnold",
+      "g0@carol",
+      "g0@eric",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@xiaomi-mi-11",
+      "g1@google-pixel-6",
+      "g1@samsung-galaxy-s21",
+      "g1@oneplus-9",
+      "g1@huawei-p50",
+      "g1@iphone-13"
+    ],
+    "g2": [
+      "g2@romance",
+      "g2@historical-fiction",
+      "g2@fantasy",
+      "g2@mystery",
+      "g2@science-fiction",
+      "g2@biography"
+    ],
+    "g3": [
+      "g3@tulips",
+      "g3@roses",
+      "g3@carnations",
+      "g3@daffodils",
+      "g3@iris",
+      "g3@lilies"
+    ],
+    "g4": [
+      "g4@dog",
+      "g4@cat",
+      "g4@bird",
+      "g4@fish",
+      "g4@rabbit",
+      "g4@horse"
+    ],
+    "g5": [
+      "g5@trade-school",
+      "g5@high-school",
+      "g5@master",
+      "g5@associate",
+      "g5@bachelor",
+      "g5@doctorate"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The bird keeper is the person who uses a Google Pixel 6.",
+      "relation": "same",
+      "a": "g4@bird",
+      "b": "g1@google-pixel-6"
+    },
+    {
+      "source": "The person who loves a bouquet of daffodils is the person with an associate's degree.",
+      "relation": "same",
+      "a": "g3@daffodils",
+      "b": "g5@associate"
+    },
+    {
+      "source": "The person who uses a OnePlus 9 is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g1@oneplus-9",
+      "position": 4
+    },
+    {
+      "source": "There are two houses between the person with a master's degree and the rabbit owner.",
+      "relation": "distance",
+      "a": "g5@master",
+      "b": "g4@rabbit",
+      "distance": 3
+    },
+    {
+      "source": "The person who loves a carnations arrangement is Arnold.",
+      "relation": "same",
+      "a": "g3@carnations",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who loves the boquet of lilies is not in the sixth house.",
+      "relation": "not_at",
+      "a": "g3@lilies",
+      "position": 6
+    },
+    {
+      "source": "The person who loves the vase of tulips is Carol.",
+      "relation": "same",
+      "a": "g3@tulips",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person with a high school diploma is Bob.",
+      "relation": "same",
+      "a": "g5@high-school",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who attended trade school is somewhere to the left of the person who keeps horses.",
+      "relation": "left",
+      "a": "g5@trade-school",
+      "b": "g4@horse"
+    },
+    {
+      "source": "The person who loves mystery books is Eric.",
+      "relation": "same",
+      "a": "g2@mystery",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The fish enthusiast is directly left of Carol.",
+      "relation": "immediately_left",
+      "a": "g4@fish",
+      "b": "g0@carol"
+    },
+    {
+      "source": "Bob is the fish enthusiast.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g4@fish"
+    },
+    {
+      "source": "Eric is the dog owner.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g4@dog"
+    },
+    {
+      "source": "The person who loves a carnations arrangement is the person who uses a Google Pixel 6.",
+      "relation": "same",
+      "a": "g3@carnations",
+      "b": "g1@google-pixel-6"
+    },
+    {
+      "source": "The person who loves fantasy books is in the second house.",
+      "relation": "at",
+      "a": "g2@fantasy",
+      "position": 2
+    },
+    {
+      "source": "The person who uses a Samsung Galaxy S21 is the person who loves the boquet of iris.",
+      "relation": "same",
+      "a": "g1@samsung-galaxy-s21",
+      "b": "g3@iris"
+    },
+    {
+      "source": "Alice is the person with an associate's degree.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g5@associate"
+    },
+    {
+      "source": "The person who uses a Google Pixel 6 is not in the second house.",
+      "relation": "not_at",
+      "a": "g1@google-pixel-6",
+      "position": 2
+    },
+    {
+      "source": "The dog owner is the person with a doctorate.",
+      "relation": "same",
+      "a": "g4@dog",
+      "b": "g5@doctorate"
+    },
+    {
+      "source": "The fish enthusiast is the person who uses a Samsung Galaxy S21.",
+      "relation": "same",
+      "a": "g4@fish",
+      "b": "g1@samsung-galaxy-s21"
+    },
+    {
+      "source": "The person who uses an iPhone 13 is somewhere to the right of the person who loves fantasy books.",
+      "relation": "right",
+      "a": "g1@iphone-13",
+      "b": "g2@fantasy"
+    },
+    {
+      "source": "The person who loves mystery books is somewhere to the right of the person who loves the boquet of iris.",
+      "relation": "right",
+      "a": "g2@mystery",
+      "b": "g3@iris"
+    },
+    {
+      "source": "Alice is the person who uses an iPhone 13.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g1@iphone-13"
+    },
+    {
+      "source": "The person who attended trade school is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g5@trade-school",
+      "position": 4
+    },
+    {
+      "source": "The person who loves biography books is directly left of Eric.",
+      "relation": "immediately_left",
+      "a": "g2@biography",
+      "b": "g0@eric"
+    },
+    {
+      "source": "There is one house between the rabbit owner and the person who loves historical fiction books.",
+      "relation": "distance",
+      "a": "g4@rabbit",
+      "b": "g2@historical-fiction",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves the boquet of iris is somewhere to the right of the person who uses a Xiaomi Mi 11.",
+      "relation": "right",
+      "a": "g3@iris",
+      "b": "g1@xiaomi-mi-11"
+    },
+    {
+      "source": "The person who loves science fiction books is the person who uses a Samsung Galaxy S21.",
+      "relation": "same",
+      "a": "g2@science-fiction",
+      "b": "g1@samsung-galaxy-s21"
+    },
+    {
+      "source": "The person who loves the boquet of lilies is not in the second house.",
+      "relation": "not_at",
+      "a": "g3@lilies",
+      "position": 2
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@fantasy": 2,
+      "g1@iphone-13": 6,
+      "g0@alice": 6,
+      "g5@associate": 6,
+      "g3@daffodils": 6,
+      "g0@arnold": 1,
+      "g3@carnations": 1,
+      "g1@google-pixel-6": 1,
+      "g4@bird": 1,
+      "g0@peter": 2,
+      "g0@bob": 3,
+      "g5@high-school": 3,
+      "g4@fish": 3,
+      "g0@carol": 4,
+      "g0@eric": 5,
+      "g3@tulips": 4,
+      "g2@mystery": 5,
+      "g4@dog": 5,
+      "g5@doctorate": 5,
+      "g1@samsung-galaxy-s21": 3,
+      "g3@iris": 3,
+      "g2@biography": 4,
+      "g2@science-fiction": 3,
+      "g2@romance": 1,
+      "g2@historical-fiction": 6,
+      "g4@rabbit": 4,
+      "g5@master": 1,
+      "g3@roses": 2,
+      "g3@lilies": 5,
+      "g4@cat": 2,
+      "g4@horse": 6,
+      "g5@trade-school": 2,
+      "g5@bachelor": 4,
+      "g1@xiaomi-mi-11": 2,
+      "g1@huawei-p50": 4,
+      "g1@oneplus-9": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

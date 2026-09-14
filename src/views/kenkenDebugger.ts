@@ -13,9 +13,10 @@
  */
 
 import { el, clear } from "../dom";
-import { KENKEN_TRACE_MANIFEST, loadKenKenTrace, type KenKenTrace, type KenKenCagePrediction } from "../data/traces";
+import { KENKEN_TRACE_MANIFEST, loadKenKenTrace, loadKenKenManifest, type KenKenTrace, type KenKenManifestEntry, type KenKenCagePrediction } from "../data/traces";
 import { solveKenKen, solveKenKenWithSteps, type Cage, type Op, type Grid } from "../neural/genericKenKen";
 import { renderLiveLog } from "./liveLog";
+import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
 
 /** Whether the chosen stacking pattern (set on the builder page) is the real bounded correction loop. */
@@ -53,9 +54,37 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     }
   }
 
+  const randomizerHost = el("div");
   const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(picker, body);
+  root.append(
+    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by size/style/legibility from the full pool:"),
+    randomizerHost,
+    picker,
+    body
+  );
+
+  loadKenKenManifest()
+    .then((manifest) => {
+      renderRandomizer<KenKenManifestEntry>(randomizerHost, manifest, {
+        fields: [
+          { key: "size", label: "Size", get: (e) => e.size, order: [3, 4, 5, 6, 7, 8, 9] },
+          { key: "style", label: "Style", get: (e) => e.style, order: ["printed", "handwritten"] },
+          { key: "legibility", label: "Legibility", get: (e) => e.legibility, order: ["high", "medium", "low"] },
+        ],
+        onPick: (entry) => {
+          if (!entry) {
+            clear(body);
+            body.append(el("p", { class: "note" }, "No real examples match that combination — try loosening a filter."));
+            return;
+          }
+          selectTrace(entry.file);
+        },
+      });
+    })
+    .catch(() => {
+      randomizerHost.append(el("p", { class: "muted", style: { fontSize: "12px" } }, "Randomizer unavailable — couldn't load the example manifest."));
+    });
 
   function selectTrace(file: string): void {
     stopPlaying();

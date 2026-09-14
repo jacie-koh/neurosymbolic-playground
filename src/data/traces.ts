@@ -91,6 +91,21 @@ function loadTrace<T>(puzzle: string, file: string): Promise<T> {
   return p;
 }
 
+export interface SudokuManifestEntry {
+  id: string;
+  file: string;
+  size: number;
+  style: "printed" | "handwritten";
+  notation: "hex" | "numeric";
+  avgConfidence: number | null;
+  legibility: "high" | "medium" | "low" | null;
+  status: string;
+}
+
+export function loadSudokuManifest(): Promise<SudokuManifestEntry[]> {
+  return loadTrace<SudokuManifestEntry[]>("sudoku", "manifest.json");
+}
+
 export function loadSudokuTrace(file: string): Promise<SudokuTrace> {
   return loadTrace<SudokuTrace>("sudoku", file);
 }
@@ -120,6 +135,8 @@ export interface ZebraTrace {
   /** category id -> its "category@value" entity ids, e.g. g0 -> [g0@arnold, g0@eric]. */
   groups: Record<string, string[]>;
   clues: ZebraClueRecord[];
+  /** How many LLM attempts real parsing took (1 = succeeded first try; 2 = a schema-validation retry was needed). Absent on traces generated before this was tracked. */
+  parseAttempts?: number | null;
   result: {
     status: "sat" | "unsat" | "unknown";
     solution: Record<string, number> | null;
@@ -134,6 +151,19 @@ export const ZEBRA_TRACE_MANIFEST: { id: string; file: string }[] = [
   { id: "zebra-4house", file: "zebra-4house.json" },
   { id: "zebra-4house-full", file: "zebra-4house-full.json" },
 ];
+
+export interface ZebraManifestEntry {
+  id: string;
+  file: string;
+  houses: number;
+  categories: number;
+  status: string;
+  parseAttempts: number | null;
+}
+
+export function loadZebraManifest(): Promise<ZebraManifestEntry[]> {
+  return loadTrace<ZebraManifestEntry[]>("zebra", "manifest.json");
+}
 
 export function loadZebraTrace(file: string): Promise<ZebraTrace> {
   return loadTrace<ZebraTrace>("zebra", file);
@@ -191,6 +221,21 @@ export const KENKEN_TRACE_MANIFEST: { id: string; file: string; style: "printed"
   { id: "kenken-6x6-handwritten", file: "kenken-6x6-handwritten.json", style: "handwritten" },
 ];
 
+export interface KenKenManifestEntry {
+  id: string;
+  file: string;
+  size: number;
+  style: "printed" | "handwritten";
+  avgConfidence: number | null;
+  legibility: "high" | "medium" | "low" | null;
+  status: string;
+  hasCorrection: boolean;
+}
+
+export function loadKenKenManifest(): Promise<KenKenManifestEntry[]> {
+  return loadTrace<KenKenManifestEntry[]>("kenken", "manifest.json");
+}
+
 export function loadKenKenTrace(file: string): Promise<KenKenTrace> {
   return loadTrace<KenKenTrace>("kenken", file);
 }
@@ -222,6 +267,19 @@ export const HITORI_TRACE_MANIFEST: { id: string; file: string }[] = [
   { id: "hitori-ppbench-8x8", file: "hitori-ppbench-8x8.json" },
   { id: "hitori-ppbench-11x10", file: "hitori-ppbench-11x10.json" },
 ];
+
+export interface HitoriManifestEntry {
+  id: string;
+  file: string;
+  rows: number;
+  cols: number;
+  hasExplanation: boolean;
+  source: "paper" | "pencil-puzzle-bench";
+}
+
+export function loadHitoriManifest(): Promise<HitoriManifestEntry[]> {
+  return loadTrace<HitoriManifestEntry[]>("hitori", "manifest.json");
+}
 
 export function loadHitoriTrace(file: string): Promise<HitoriTrace> {
   return loadTrace<HitoriTrace>("hitori", file);

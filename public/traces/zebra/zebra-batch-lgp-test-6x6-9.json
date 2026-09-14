@@ -1,0 +1,259 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-9",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-9)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric",
+      "g0@bob",
+      "g0@peter",
+      "g0@carol",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@fred",
+      "g1@bella",
+      "g1@timothy",
+      "g1@meredith",
+      "g1@samantha",
+      "g1@alice"
+    ],
+    "g2": [
+      "g2@pizza",
+      "g2@stir-fry",
+      "g2@grilled-cheese",
+      "g2@spaghetti",
+      "g2@soup",
+      "g2@stew"
+    ],
+    "g3": [
+      "g3@rabbit",
+      "g3@fish",
+      "g3@cat",
+      "g3@dog",
+      "g3@bird",
+      "g3@hamster"
+    ],
+    "g4": [
+      "g4@may",
+      "g4@sept",
+      "g4@mar",
+      "g4@jan",
+      "g4@april",
+      "g4@feb"
+    ],
+    "g5": [
+      "g5@water",
+      "g5@milk",
+      "g5@coffee",
+      "g5@tea",
+      "g5@boba-tea",
+      "g5@root-beer"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in May is the person who loves the spaghetti eater.",
+      "relation": "same",
+      "a": "g4@may",
+      "b": "g2@spaghetti"
+    },
+    {
+      "source": "The person's child is named Fred is the person who loves the stew.",
+      "relation": "same",
+      "a": "g1@fred",
+      "b": "g2@stew"
+    },
+    {
+      "source": "The person who likes milk is the person with a pet hamster.",
+      "relation": "same",
+      "a": "g5@milk",
+      "b": "g3@hamster"
+    },
+    {
+      "source": "There is one house between the person who loves the spaghetti eater and the person who has a cat.",
+      "relation": "distance",
+      "a": "g2@spaghetti",
+      "b": "g3@cat",
+      "distance": 2
+    },
+    {
+      "source": "The person who is the mother of Timothy is Bob.",
+      "relation": "same",
+      "a": "g1@timothy",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person whose birthday is in January is directly left of the one who only drinks water.",
+      "relation": "left",
+      "a": "g4@jan",
+      "b": "g5@water"
+    },
+    {
+      "source": "Carol is the coffee drinker.",
+      "relation": "same",
+      "a": "g0@carol",
+      "b": "g5@coffee"
+    },
+    {
+      "source": "Peter is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g0@peter",
+      "position": 5
+    },
+    {
+      "source": "The person whose birthday is in April is the person's child is named Alice.",
+      "relation": "same",
+      "a": "g4@april",
+      "b": "g1@alice"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is somewhere to the right of the person whose birthday is in September.",
+      "relation": "right",
+      "a": "g2@grilled-cheese",
+      "b": "g4@sept"
+    },
+    {
+      "source": "The person's child is named Bella and Bob are next to each other.",
+      "relation": "next_to",
+      "a": "g1@bella",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who owns a rabbit is Peter.",
+      "relation": "same",
+      "a": "g3@rabbit",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who keeps a pet bird is the person who loves the soup.",
+      "relation": "same",
+      "a": "g3@bird",
+      "b": "g2@soup"
+    },
+    {
+      "source": "The person who owns a rabbit is somewhere to the right of the person who loves stir fry.",
+      "relation": "right",
+      "a": "g3@rabbit",
+      "b": "g2@stir-fry"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is somewhere to the left of the person who owns a rabbit.",
+      "relation": "left",
+      "a": "g2@grilled-cheese",
+      "b": "g3@rabbit"
+    },
+    {
+      "source": "The person whose birthday is in March is the tea drinker.",
+      "relation": "same",
+      "a": "g4@mar",
+      "b": "g5@tea"
+    },
+    {
+      "source": "Peter is the person's child is named Bella.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g1@bella"
+    },
+    {
+      "source": "The person who is the mother of Timothy is somewhere to the right of the person's child is named Bella.",
+      "relation": "right",
+      "a": "g1@bella",
+      "b": "g1@timothy"
+    },
+    {
+      "source": "The person with an aquarium of fish and the person's child is named Bella are next to each other.",
+      "relation": "next_to",
+      "a": "g3@fish",
+      "b": "g1@bella"
+    },
+    {
+      "source": "The one who only drinks water is the person's child is named Fred.",
+      "relation": "same",
+      "a": "g5@water",
+      "b": "g1@fred"
+    },
+    {
+      "source": "The person whose birthday is in May is somewhere to the right of the person with an aquarium of fish.",
+      "relation": "right",
+      "a": "g4@may",
+      "b": "g3@fish"
+    },
+    {
+      "source": "The person with a pet hamster is the person's child is named Meredith.",
+      "relation": "same",
+      "a": "g3@hamster",
+      "b": "g1@meredith"
+    },
+    {
+      "source": "The root beer lover is the person who loves the spaghetti eater.",
+      "relation": "same",
+      "a": "g5@root-beer",
+      "b": "g2@spaghetti"
+    },
+    {
+      "source": "Carol is directly left of Alice.",
+      "relation": "left",
+      "a": "g0@carol",
+      "b": "g0@alice"
+    },
+    {
+      "source": "Eric is in the third house.",
+      "relation": "at",
+      "a": "g0@eric",
+      "position": 3
+    },
+    {
+      "source": "The person who is a pizza lover is Bob.",
+      "relation": "same",
+      "a": "g2@pizza",
+      "b": "g0@bob"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 3,
+      "g0@arnold": 1,
+      "g0@carol": 2,
+      "g5@coffee": 2,
+      "g0@alice": 4,
+      "g0@bob": 5,
+      "g0@peter": 6,
+      "g1@timothy": 5,
+      "g3@rabbit": 6,
+      "g1@bella": 6,
+      "g3@fish": 5,
+      "g4@may": 6,
+      "g2@spaghetti": 6,
+      "g3@cat": 4,
+      "g5@root-beer": 6,
+      "g2@pizza": 5,
+      "g3@dog": 1,
+      "g3@bird": 2,
+      "g3@hamster": 3,
+      "g5@milk": 3,
+      "g2@soup": 2,
+      "g1@meredith": 3,
+      "g1@samantha": 1,
+      "g1@alice": 2,
+      "g1@fred": 4,
+      "g2@stew": 4,
+      "g4@april": 2,
+      "g5@water": 4,
+      "g2@stir-fry": 1,
+      "g2@grilled-cheese": 3,
+      "g5@boba-tea": 1,
+      "g5@tea": 5,
+      "g4@mar": 5,
+      "g4@sept": 1,
+      "g4@jan": 3,
+      "g4@feb": 4
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

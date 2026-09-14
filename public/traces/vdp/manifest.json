@@ -1,0 +1,17 @@
+[
+  {
+    "id": "vdp-match-2",
+    "file": "vdp-match-2.json",
+    "title": "agreement (fovariant-13) \u2014 fresh perception matches the reference"
+  },
+  {
+    "id": "vdp-match",
+    "file": "vdp-match.json",
+    "title": "alternate-color (fovariant-11) \u2014 fresh perception matches the reference"
+  },
+  {
+    "id": "vdp-wrong-candidate",
+    "file": "vdp-wrong-candidate.json",
+    "title": "apocope (fovariant-18-swap4) \u2014 fresh perception finds a formula, but picks the wrong candidate"
+  }
+]

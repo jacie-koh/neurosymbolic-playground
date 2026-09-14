@@ -1,0 +1,186 @@
+[
+  {
+    "id": "zebra-2house-intro",
+    "file": "zebra-2house-intro.json",
+    "houses": 2,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": null
+  },
+  {
+    "id": "zebra-3house",
+    "file": "zebra-3house.json",
+    "houses": 3,
+    "categories": 3,
+    "status": "sat",
+    "parseAttempts": null
+  },
+  {
+    "id": "zebra-4house-full",
+    "file": "zebra-4house-full.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": null
+  },
+  {
+    "id": "zebra-4house",
+    "file": "zebra-4house.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": null
+  },
+  {
+    "id": "zebra-batch-lgp-test-2x2-1",
+    "file": "zebra-batch-lgp-test-2x2-1.json",
+    "houses": 2,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-2x2-16",
+    "file": "zebra-batch-lgp-test-2x2-16.json",
+    "houses": 2,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-2x2-18",
+    "file": "zebra-batch-lgp-test-2x2-18.json",
+    "houses": 2,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-2x2-33",
+    "file": "zebra-batch-lgp-test-2x2-33.json",
+    "houses": 2,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-3x3-1",
+    "file": "zebra-batch-lgp-test-3x3-1.json",
+    "houses": 3,
+    "categories": 3,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-3x3-16",
+    "file": "zebra-batch-lgp-test-3x3-16.json",
+    "houses": 3,
+    "categories": 3,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-3x3-24",
+    "file": "zebra-batch-lgp-test-3x3-24.json",
+    "houses": 3,
+    "categories": 3,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-3x3-7",
+    "file": "zebra-batch-lgp-test-3x3-7.json",
+    "houses": 3,
+    "categories": 3,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-4x4-16",
+    "file": "zebra-batch-lgp-test-4x4-16.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-4x4-21",
+    "file": "zebra-batch-lgp-test-4x4-21.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-4x4-27",
+    "file": "zebra-batch-lgp-test-4x4-27.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-4x4-3",
+    "file": "zebra-batch-lgp-test-4x4-3.json",
+    "houses": 4,
+    "categories": 4,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-5x5-0",
+    "file": "zebra-batch-lgp-test-5x5-0.json",
+    "houses": 5,
+    "categories": 5,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-5x5-12",
+    "file": "zebra-batch-lgp-test-5x5-12.json",
+    "houses": 5,
+    "categories": 5,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-5x5-21",
+    "file": "zebra-batch-lgp-test-5x5-21.json",
+    "houses": 5,
+    "categories": 5,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-5x5-30",
+    "file": "zebra-batch-lgp-test-5x5-30.json",
+    "houses": 5,
+    "categories": 5,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-6x6-31",
+    "file": "zebra-batch-lgp-test-6x6-31.json",
+    "houses": 6,
+    "categories": 6,
+    "status": "sat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-6x6-5",
+    "file": "zebra-batch-lgp-test-6x6-5.json",
+    "houses": 6,
+    "categories": 6,
+    "status": "unsat",
+    "parseAttempts": 1
+  },
+  {
+    "id": "zebra-batch-lgp-test-6x6-9",
+    "file": "zebra-batch-lgp-test-6x6-9.json",
+    "houses": 6,
+    "categories": 6,
+    "status": "sat",
+    "parseAttempts": 1
+  }
+]

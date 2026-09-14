@@ -1,0 +1,460 @@
+{
+  "id": "hitori-batch-5x5-72",
+  "title": "5\u00d75 \u2014 bluecoconut/pencil-puzzle-bench",
+  "grid": [
+    [
+      1,
+      2,
+      3,
+      3,
+      5
+    ],
+    [
+      2,
+      4,
+      3,
+      5,
+      1
+    ],
+    [
+      1,
+      5,
+      4,
+      1,
+      2
+    ],
+    [
+      3,
+      3,
+      2,
+      4,
+      4
+    ],
+    [
+      3,
+      3,
+      1,
+      2,
+      5
+    ]
+  ],
+  "source": "bluecoconut/pencil-puzzle-bench, puzzle http://pzv.jp/p.html?hitori/5/5/1233524351154123324433125; 1 of 573 hitori puzzles in the dataset.",
+  "status": "sat",
+  "solution": [
+    [
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      false,
+      false,
+      false
+    ]
+  ],
+  "unique": true,
+  "deductions": [
+    {
+      "row": 1,
+      "col": 0,
+      "shaded": false,
+      "kind": "local",
+      "evidence": [
+        "At least one of (1,1) and (3,1) must be shaded: both contain 1.",
+        "Cells (1,1) and (2,1) cannot both be shaded.",
+        "Cells (2,1) and (3,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (4,1) and (5,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (4,1) and (5,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "Cells (5,4) and (5,5) cannot both be shaded.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "Cells (4,4) and (5,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (1,1) and (3,1) must be shaded: both contain 1.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "Cells (1,2) and (1,3) cannot both be shaded.",
+        "At least one of (1,3) and (1,4) must be shaded: both contain 3.",
+        "At least one of (1,3) and (2,3) must be shaded: both contain 3.",
+        "Cells (1,1) and (1,2) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (2,1) and (3,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 4,
+      "col": 0,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (4,1) and (5,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (4,1) and (5,1) cannot both be shaded.",
+        "Cells (4,2) and (5,2) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (5,2) and (5,3) cannot both be shaded.",
+        "Cells (4,3) and (5,3) cannot both be shaded.",
+        "At least one of (4,2) and (5,2) must be shaded: both contain 3."
+      ]
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "Cells (2,4) and (3,4) cannot both be shaded.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "Cells (2,2) and (3,2) cannot both be shaded.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (3,2) and (4,2) cannot both be shaded.",
+        "Cells (4,1) and (5,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,3) and (3,4) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "Cells (3,4) and (3,5) cannot both be shaded.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "Cells (4,2) and (4,3) cannot both be shaded.",
+        "Cells (4,1) and (5,1) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (1,4) and (1,5) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "Cells (1,5) and (2,5) cannot both be shaded.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "shaded": true,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "At least one of (1,3) and (1,4) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (1,4) and (1,5) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "Cells (1,3) and (2,3) cannot both be shaded.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "At least one of (1,3) and (1,4) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (1,4) and (1,5) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "shaded": false,
+      "kind": "connectivity",
+      "evidence": [
+        "At least one of (3,1) and (3,4) must be shaded: both contain 1.",
+        "All unshaded cells must form one nonempty edge-connected region.",
+        "At least one of (1,1) and (3,1) must be shaded: both contain 1.",
+        "At least one of (4,1) and (4,2) must be shaded: both contain 3.",
+        "Cells (3,4) and (3,5) cannot both be shaded.",
+        "At least one of (4,4) and (4,5) must be shaded: both contain 4.",
+        "Cells (2,2) and (3,2) cannot both be shaded.",
+        "Cells (1,5) and (2,5) cannot both be shaded.",
+        "Cells (2,1) and (2,2) cannot both be shaded.",
+        "Cells (2,4) and (3,4) cannot both be shaded.",
+        "At least one of (5,1) and (5,2) must be shaded: both contain 3.",
+        "At least one of (4,1) and (5,1) must be shaded: both contain 3.",
+        "Cells (4,5) and (5,5) cannot both be shaded.",
+        "Cells (1,3) and (1,4) cannot both be shaded.",
+        "Cells (3,3) and (3,4) cannot both be shaded.",
+        "At least one of (1,3) and (2,3) must be shaded: both contain 3.",
+        "Cells (1,2) and (2,2) cannot both be shaded.",
+        "Cells (4,2) and (4,3) cannot both be shaded.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "Cells (2,2) and (2,3) cannot both be shaded.",
+        "At least one of (1,5) and (5,5) must be shaded: both contain 5.",
+        "Cells (4,1) and (5,1) cannot both be shaded.",
+        "Cells (4,2) and (5,2) cannot both be shaded.",
+        "Cells (3,4) and (4,4) cannot both be shaded."
+      ]
+    }
+  ]
+}

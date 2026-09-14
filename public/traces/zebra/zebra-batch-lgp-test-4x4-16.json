@@ -1,0 +1,113 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-16",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-16)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@alice",
+      "g0@arnold",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@red",
+      "g1@green",
+      "g1@white",
+      "g1@yellow"
+    ],
+    "g2": [
+      "g2@bird",
+      "g2@fish",
+      "g2@horse",
+      "g2@cat"
+    ],
+    "g3": [
+      "g3@master",
+      "g3@associate",
+      "g3@high-school",
+      "g3@bachelor"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose favorite color is green is the cat lover.",
+      "relation": "same",
+      "a": "g1@green",
+      "b": "g2@cat"
+    },
+    {
+      "source": "There are two houses between Alice and the person whose favorite color is red.",
+      "relation": "distance",
+      "a": "g0@alice",
+      "b": "g1@red",
+      "distance": 3
+    },
+    {
+      "source": "The cat lover is the person with a bachelor's degree.",
+      "relation": "same",
+      "a": "g2@cat",
+      "b": "g3@bachelor"
+    },
+    {
+      "source": "Arnold is the person with a master's degree.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@master"
+    },
+    {
+      "source": "The person who loves yellow is the person with a high school diploma.",
+      "relation": "same",
+      "a": "g1@yellow",
+      "b": "g3@high-school"
+    },
+    {
+      "source": "The person with an associate's degree is in the third house.",
+      "relation": "at",
+      "a": "g3@associate",
+      "position": 3
+    },
+    {
+      "source": "Alice is the person with a high school diploma.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g3@high-school"
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the left of the person whose favorite color is red.",
+      "relation": "left",
+      "a": "g2@fish",
+      "b": "g1@red"
+    },
+    {
+      "source": "Peter is the bird keeper.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@bird"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@associate": 3,
+      "g0@alice": 1,
+      "g1@red": 4,
+      "g3@high-school": 1,
+      "g1@yellow": 1,
+      "g1@green": 2,
+      "g1@white": 3,
+      "g2@cat": 2,
+      "g3@bachelor": 2,
+      "g3@master": 4,
+      "g0@arnold": 4,
+      "g0@eric": 2,
+      "g0@peter": 3,
+      "g2@bird": 3,
+      "g2@fish": 1,
+      "g2@horse": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

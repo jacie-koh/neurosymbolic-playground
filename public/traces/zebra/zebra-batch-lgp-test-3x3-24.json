@@ -1,0 +1,72 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-24",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-24)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@red",
+      "g1@white",
+      "g1@yellow"
+    ],
+    "g2": [
+      "g2@fred",
+      "g2@meredith",
+      "g2@bella"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Arnold is the person whose favorite color is red.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@red"
+    },
+    {
+      "source": "The person's child is named Fred is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g2@fred",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person whose favorite color is red is in the second house.",
+      "relation": "at",
+      "a": "g1@red",
+      "position": 2
+    },
+    {
+      "source": "The person's child is named Bella is in the first house.",
+      "relation": "at",
+      "a": "g2@bella",
+      "position": 1
+    },
+    {
+      "source": "The person who loves white is the person's child is named Meredith.",
+      "relation": "same",
+      "a": "g1@white",
+      "b": "g2@meredith"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@red": 2,
+      "g0@arnold": 2,
+      "g2@bella": 1,
+      "g0@peter": 1,
+      "g0@eric": 3,
+      "g1@yellow": 1,
+      "g1@white": 3,
+      "g2@meredith": 3,
+      "g2@fred": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

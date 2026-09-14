@@ -1,0 +1,125 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-21",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-21)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@peter",
+      "g0@alice",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@tesla-model-3",
+      "g1@honda-civic",
+      "g1@toyota-camry",
+      "g1@ford-f150"
+    ],
+    "g2": [
+      "g2@jan",
+      "g2@april",
+      "g2@sept",
+      "g2@feb"
+    ],
+    "g3": [
+      "g3@painting",
+      "g3@cooking",
+      "g3@gardening",
+      "g3@photography"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in January is not in the second house.",
+      "relation": "not_at",
+      "a": "g2@jan",
+      "position": 2
+    },
+    {
+      "source": "The photography enthusiast is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g3@photography",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The photography enthusiast is somewhere to the left of Peter.",
+      "relation": "left",
+      "a": "g3@photography",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who owns a Honda Civic is directly left of the person who owns a Tesla Model 3.",
+      "relation": "immediately_left",
+      "a": "g1@honda-civic",
+      "b": "g1@tesla-model-3"
+    },
+    {
+      "source": "There is one house between the person who owns a Tesla Model 3 and the person who enjoys gardening.",
+      "relation": "distance",
+      "a": "g1@tesla-model-3",
+      "b": "g3@gardening",
+      "distance": 2
+    },
+    {
+      "source": "The person who owns a Tesla Model 3 is Arnold.",
+      "relation": "same",
+      "a": "g1@tesla-model-3",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person whose birthday is in February is the person who loves cooking.",
+      "relation": "same",
+      "a": "g2@feb",
+      "b": "g3@cooking"
+    },
+    {
+      "source": "The person who owns a Toyota Camry is Peter.",
+      "relation": "same",
+      "a": "g1@toyota-camry",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person whose birthday is in April is Arnold.",
+      "relation": "same",
+      "a": "g2@april",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Alice is the photography enthusiast.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g3@photography"
+    },
+    {
+      "source": "Peter is the person whose birthday is in January.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@jan"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@jan": 4,
+      "g0@peter": 4,
+      "g1@toyota-camry": 4,
+      "g0@alice": 1,
+      "g3@photography": 1,
+      "g0@arnold": 2,
+      "g0@eric": 3,
+      "g1@tesla-model-3": 2,
+      "g1@honda-civic": 1,
+      "g1@ford-f150": 3,
+      "g3@gardening": 4,
+      "g2@april": 2,
+      "g2@sept": 1,
+      "g2@feb": 3,
+      "g3@cooking": 3,
+      "g3@painting": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

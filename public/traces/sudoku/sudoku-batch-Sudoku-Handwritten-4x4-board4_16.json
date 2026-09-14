@@ -1,0 +1,146 @@
+{
+  "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_16",
+  "title": "Handwritten 4x4 (numeric) \u2014 board4_16",
+  "size": 4,
+  "style": "handwritten",
+  "image": "board4_16.png",
+  "imageUrl": "/traces/sudoku/images/sudoku-batch-Sudoku-Handwritten-4x4-board4_16.png",
+  "checkpoint": "sudoku_hexasudoku_unified_cnn.pth",
+  "recognized": [
+    [
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      3,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      4,
+      3
+    ]
+  ],
+  "interpreted": [
+    [
+      0,
+      2,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      3,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      4,
+      3
+    ]
+  ],
+  "predictions": {
+    "0,1": {
+      "value": 2,
+      "confidence": 0.9851,
+      "topK": [
+        [
+          2,
+          0.9851
+        ]
+      ]
+    },
+    "1,2": {
+      "value": 3,
+      "confidence": 0.9999,
+      "topK": [
+        [
+          3,
+          0.9999
+        ],
+        [
+          2,
+          0.0
+        ]
+      ]
+    },
+    "3,2": {
+      "value": 4,
+      "confidence": 0.9984,
+      "topK": [
+        [
+          4,
+          0.9984
+        ],
+        [
+          1,
+          0.0
+        ]
+      ]
+    },
+    "3,3": {
+      "value": 3,
+      "confidence": 0.987,
+      "topK": [
+        [
+          3,
+          0.987
+        ]
+      ]
+    }
+  },
+  "corrections": [],
+  "correctionAttempts": 0,
+  "ambiguousGivens": [],
+  "result": {
+    "status": "sat",
+    "solution": [
+      [
+        3,
+        2,
+        1,
+        4
+      ],
+      [
+        1,
+        4,
+        3,
+        2
+      ],
+      [
+        4,
+        3,
+        2,
+        1
+      ],
+      [
+        2,
+        1,
+        4,
+        3
+      ]
+    ],
+    "unique": true,
+    "conflicts": []
+  },
+  "verification": "constraints_only; image interpretation is not proved"
+}

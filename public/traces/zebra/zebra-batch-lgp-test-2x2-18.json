@@ -1,0 +1,42 @@
+{
+  "id": "zebra-batch-lgp-test-2x2-18",
+  "title": "ZebraLogic 2-house puzzle (id lgp-test-2x2-18)",
+  "size": 2,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@short",
+      "g1@very-short"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Arnold is the person who is very short.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@very-short"
+    },
+    {
+      "source": "Eric is not in the second house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 2
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 1,
+      "g0@arnold": 2,
+      "g1@very-short": 2,
+      "g1@short": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

@@ -1,0 +1,826 @@
+[
+  {
+    "id": "hitori-batch-10x10-77",
+    "file": "hitori-batch-10x10-77.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-78",
+    "file": "hitori-batch-10x10-78.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-79",
+    "file": "hitori-batch-10x10-79.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-80",
+    "file": "hitori-batch-10x10-80.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-81",
+    "file": "hitori-batch-10x10-81.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-82",
+    "file": "hitori-batch-10x10-82.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-83",
+    "file": "hitori-batch-10x10-83.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-84",
+    "file": "hitori-batch-10x10-84.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-85",
+    "file": "hitori-batch-10x10-85.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-86",
+    "file": "hitori-batch-10x10-86.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-10x10-87",
+    "file": "hitori-batch-10x10-87.json",
+    "rows": 10,
+    "cols": 10,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-11x10-98",
+    "file": "hitori-batch-11x10-98.json",
+    "rows": 10,
+    "cols": 11,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x12-88",
+    "file": "hitori-batch-12x12-88.json",
+    "rows": 12,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x12-89",
+    "file": "hitori-batch-12x12-89.json",
+    "rows": 12,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x12-90",
+    "file": "hitori-batch-12x12-90.json",
+    "rows": 12,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x12-91",
+    "file": "hitori-batch-12x12-91.json",
+    "rows": 12,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x12-92",
+    "file": "hitori-batch-12x12-92.json",
+    "rows": 12,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-12x6-76",
+    "file": "hitori-batch-12x6-76.json",
+    "rows": 6,
+    "cols": 12,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-17x17-93",
+    "file": "hitori-batch-17x17-93.json",
+    "rows": 17,
+    "cols": 17,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-17x17-94",
+    "file": "hitori-batch-17x17-94.json",
+    "rows": 17,
+    "cols": 17,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-5x5-71",
+    "file": "hitori-batch-5x5-71.json",
+    "rows": 5,
+    "cols": 5,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-5x5-72",
+    "file": "hitori-batch-5x5-72.json",
+    "rows": 5,
+    "cols": 5,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-5x5-73",
+    "file": "hitori-batch-5x5-73.json",
+    "rows": 5,
+    "cols": 5,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-5x5-74",
+    "file": "hitori-batch-5x5-74.json",
+    "rows": 5,
+    "cols": 5,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x4-75",
+    "file": "hitori-batch-6x4-75.json",
+    "rows": 4,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-62",
+    "file": "hitori-batch-6x6-62.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-63",
+    "file": "hitori-batch-6x6-63.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-64",
+    "file": "hitori-batch-6x6-64.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-65",
+    "file": "hitori-batch-6x6-65.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-66",
+    "file": "hitori-batch-6x6-66.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-67",
+    "file": "hitori-batch-6x6-67.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-68",
+    "file": "hitori-batch-6x6-68.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-69",
+    "file": "hitori-batch-6x6-69.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-6x6-70",
+    "file": "hitori-batch-6x6-70.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-7x7-95",
+    "file": "hitori-batch-7x7-95.json",
+    "rows": 7,
+    "cols": 7,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-7x7-96",
+    "file": "hitori-batch-7x7-96.json",
+    "rows": 7,
+    "cols": 7,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-7x7-97",
+    "file": "hitori-batch-7x7-97.json",
+    "rows": 7,
+    "cols": 7,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-0",
+    "file": "hitori-batch-8x8-0.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-1",
+    "file": "hitori-batch-8x8-1.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-10",
+    "file": "hitori-batch-8x8-10.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-11",
+    "file": "hitori-batch-8x8-11.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-12",
+    "file": "hitori-batch-8x8-12.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-13",
+    "file": "hitori-batch-8x8-13.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-14",
+    "file": "hitori-batch-8x8-14.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-15",
+    "file": "hitori-batch-8x8-15.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-16",
+    "file": "hitori-batch-8x8-16.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-17",
+    "file": "hitori-batch-8x8-17.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-18",
+    "file": "hitori-batch-8x8-18.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-19",
+    "file": "hitori-batch-8x8-19.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-2",
+    "file": "hitori-batch-8x8-2.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-20",
+    "file": "hitori-batch-8x8-20.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-21",
+    "file": "hitori-batch-8x8-21.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-22",
+    "file": "hitori-batch-8x8-22.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-23",
+    "file": "hitori-batch-8x8-23.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-24",
+    "file": "hitori-batch-8x8-24.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-25",
+    "file": "hitori-batch-8x8-25.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-26",
+    "file": "hitori-batch-8x8-26.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-27",
+    "file": "hitori-batch-8x8-27.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-28",
+    "file": "hitori-batch-8x8-28.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-29",
+    "file": "hitori-batch-8x8-29.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-3",
+    "file": "hitori-batch-8x8-3.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-30",
+    "file": "hitori-batch-8x8-30.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-31",
+    "file": "hitori-batch-8x8-31.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-32",
+    "file": "hitori-batch-8x8-32.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-33",
+    "file": "hitori-batch-8x8-33.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-34",
+    "file": "hitori-batch-8x8-34.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-35",
+    "file": "hitori-batch-8x8-35.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-36",
+    "file": "hitori-batch-8x8-36.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-37",
+    "file": "hitori-batch-8x8-37.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-38",
+    "file": "hitori-batch-8x8-38.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-39",
+    "file": "hitori-batch-8x8-39.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-4",
+    "file": "hitori-batch-8x8-4.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-40",
+    "file": "hitori-batch-8x8-40.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-41",
+    "file": "hitori-batch-8x8-41.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-42",
+    "file": "hitori-batch-8x8-42.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-43",
+    "file": "hitori-batch-8x8-43.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-44",
+    "file": "hitori-batch-8x8-44.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-45",
+    "file": "hitori-batch-8x8-45.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-46",
+    "file": "hitori-batch-8x8-46.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-47",
+    "file": "hitori-batch-8x8-47.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-48",
+    "file": "hitori-batch-8x8-48.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-49",
+    "file": "hitori-batch-8x8-49.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-5",
+    "file": "hitori-batch-8x8-5.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-50",
+    "file": "hitori-batch-8x8-50.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-51",
+    "file": "hitori-batch-8x8-51.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-52",
+    "file": "hitori-batch-8x8-52.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-53",
+    "file": "hitori-batch-8x8-53.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-54",
+    "file": "hitori-batch-8x8-54.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-55",
+    "file": "hitori-batch-8x8-55.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-6",
+    "file": "hitori-batch-8x8-6.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-7",
+    "file": "hitori-batch-8x8-7.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-8",
+    "file": "hitori-batch-8x8-8.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-8x8-9",
+    "file": "hitori-batch-8x8-9.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-56",
+    "file": "hitori-batch-9x9-56.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-57",
+    "file": "hitori-batch-9x9-57.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-58",
+    "file": "hitori-batch-9x9-58.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-59",
+    "file": "hitori-batch-9x9-59.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-60",
+    "file": "hitori-batch-9x9-60.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-batch-9x9-61",
+    "file": "hitori-batch-9x9-61.json",
+    "rows": 9,
+    "cols": 9,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-p63",
+    "file": "hitori-p63.json",
+    "rows": 5,
+    "cols": 5,
+    "hasExplanation": true,
+    "source": "paper"
+  },
+  {
+    "id": "hitori-ppbench-11x10",
+    "file": "hitori-ppbench-11x10.json",
+    "rows": 10,
+    "cols": 11,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-ppbench-6x6",
+    "file": "hitori-ppbench-6x6.json",
+    "rows": 6,
+    "cols": 6,
+    "hasExplanation": false,
+    "source": "pencil-puzzle-bench"
+  },
+  {
+    "id": "hitori-ppbench-8x8",
+    "file": "hitori-ppbench-8x8.json",
+    "rows": 8,
+    "cols": 8,
+    "hasExplanation": true,
+    "source": "pencil-puzzle-bench"
+  }
+]

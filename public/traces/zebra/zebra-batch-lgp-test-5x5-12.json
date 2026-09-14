@@ -1,0 +1,193 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-12",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-12)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@arnold",
+      "g0@eric",
+      "g0@bob",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@watermelon",
+      "g1@cherry",
+      "g1@dragonfruit",
+      "g1@lime",
+      "g1@desert"
+    ],
+    "g2": [
+      "g2@hip-hop",
+      "g2@classical",
+      "g2@rock",
+      "g2@pop",
+      "g2@jazz"
+    ],
+    "g3": [
+      "g3@grilled-cheese",
+      "g3@pizza",
+      "g3@spaghetti",
+      "g3@stir-fry",
+      "g3@stew"
+    ],
+    "g4": [
+      "g4@tea",
+      "g4@root-beer",
+      "g4@milk",
+      "g4@water",
+      "g4@coffee"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The coffee drinker is not in the first house.",
+      "relation": "not_at",
+      "a": "g4@coffee",
+      "position": 1
+    },
+    {
+      "source": "The person who loves jazz music is the Desert smoothie lover.",
+      "relation": "same",
+      "a": "g2@jazz",
+      "b": "g1@desert"
+    },
+    {
+      "source": "The Watermelon smoothie lover is in the fourth house.",
+      "relation": "at",
+      "a": "g1@watermelon",
+      "position": 4
+    },
+    {
+      "source": "The coffee drinker is directly left of Peter.",
+      "relation": "immediately_left",
+      "a": "g4@coffee",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The one who only drinks water is the person who loves hip-hop music.",
+      "relation": "same",
+      "a": "g4@water",
+      "b": "g2@hip-hop"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is directly left of the one who only drinks water.",
+      "relation": "immediately_left",
+      "a": "g1@dragonfruit",
+      "b": "g4@water"
+    },
+    {
+      "source": "The Desert smoothie lover is in the fifth house.",
+      "relation": "at",
+      "a": "g1@desert",
+      "position": 5
+    },
+    {
+      "source": "The person who loves stir fry is somewhere to the right of Bob.",
+      "relation": "right",
+      "a": "g3@stir-fry",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is a pizza lover is the person who likes Cherry smoothies.",
+      "relation": "same",
+      "a": "g3@pizza",
+      "b": "g1@cherry"
+    },
+    {
+      "source": "The person who loves classical music is the person who loves the stew.",
+      "relation": "same",
+      "a": "g2@classical",
+      "b": "g3@stew"
+    },
+    {
+      "source": "The one who only drinks water is Bob.",
+      "relation": "same",
+      "a": "g4@water",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The root beer lover is the Dragonfruit smoothie lover.",
+      "relation": "same",
+      "a": "g4@root-beer",
+      "b": "g1@dragonfruit"
+    },
+    {
+      "source": "There is one house between Arnold and the person who likes Cherry smoothies.",
+      "relation": "distance",
+      "a": "g0@arnold",
+      "b": "g1@cherry",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves the spaghetti eater is in the fifth house.",
+      "relation": "at",
+      "a": "g3@spaghetti",
+      "position": 5
+    },
+    {
+      "source": "The person who likes milk is in the fifth house.",
+      "relation": "at",
+      "a": "g4@milk",
+      "position": 5
+    },
+    {
+      "source": "The person who likes Cherry smoothies is Bob.",
+      "relation": "same",
+      "a": "g1@cherry",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is the person who loves the stew.",
+      "relation": "same",
+      "a": "g1@dragonfruit",
+      "b": "g3@stew"
+    },
+    {
+      "source": "Eric and Peter are next to each other.",
+      "relation": "next_to",
+      "a": "g0@eric",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves rock music is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@rock",
+      "position": 1
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@watermelon": 4,
+      "g1@desert": 5,
+      "g2@jazz": 5,
+      "g3@spaghetti": 5,
+      "g4@milk": 5,
+      "g1@lime": 1,
+      "g1@dragonfruit": 2,
+      "g1@cherry": 3,
+      "g4@water": 3,
+      "g2@hip-hop": 3,
+      "g3@pizza": 3,
+      "g0@bob": 3,
+      "g4@root-beer": 2,
+      "g3@stew": 2,
+      "g2@classical": 2,
+      "g2@pop": 1,
+      "g2@rock": 4,
+      "g3@grilled-cheese": 1,
+      "g3@stir-fry": 4,
+      "g4@tea": 1,
+      "g4@coffee": 4,
+      "g0@peter": 5,
+      "g0@eric": 4,
+      "g0@arnold": 1,
+      "g0@alice": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution"
+}

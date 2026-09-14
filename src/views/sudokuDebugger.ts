@@ -18,11 +18,14 @@ import { el, clear } from "../dom";
 import {
   SUDOKU_TRACE_MANIFEST,
   loadSudokuTrace,
+  loadSudokuManifest,
   type SudokuTrace,
+  type SudokuManifestEntry,
   type CellPrediction,
 } from "../data/traces";
 import { findConflicts, solveGeneric, solveGenericWithSteps, type Grid } from "../neural/genericSudoku";
 import { renderLiveLog } from "./liveLog";
+import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
 
 function cellKey(r: number, c: number): string {
@@ -59,9 +62,38 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     }
   }
 
+  const randomizerHost = el("div");
   const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(picker, body);
+  root.append(
+    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by size/style/legibility from the full pool:"),
+    randomizerHost,
+    picker,
+    body
+  );
+
+  loadSudokuManifest()
+    .then((manifest) => {
+      renderRandomizer<SudokuManifestEntry>(randomizerHost, manifest, {
+        fields: [
+          { key: "size", label: "Size", get: (e) => e.size, order: [4, 9, 16] },
+          { key: "style", label: "Style", get: (e) => e.style, order: ["printed", "handwritten"] },
+          { key: "notation", label: "Notation", get: (e) => e.notation, order: ["numeric", "hex"] },
+          { key: "legibility", label: "Legibility", get: (e) => e.legibility, order: ["high", "medium", "low"] },
+        ],
+        onPick: (entry) => {
+          if (!entry) {
+            clear(body);
+            body.append(el("p", { class: "note" }, "No real examples match that combination — try loosening a filter."));
+            return;
+          }
+          selectTrace(entry.file);
+        },
+      });
+    })
+    .catch(() => {
+      randomizerHost.append(el("p", { class: "muted", style: { fontSize: "12px" } }, "Randomizer unavailable — couldn't load the example manifest."));
+    });
 
   function selectTrace(file: string): void {
     stopPlaying();

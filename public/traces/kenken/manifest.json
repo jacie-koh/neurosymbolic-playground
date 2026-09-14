@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "kenken-3x3-clean",
+    "file": "kenken-3x3-clean.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-4x4-clean",
+    "file": "kenken-4x4-clean.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-4x4-correction",
+    "file": "kenken-4x4-correction.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9781,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-6x6-handwritten",
+    "file": "kenken-6x6-handwritten.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9786,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_0",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_0.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_1",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_1.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_10",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_10.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_11",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_11.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_12",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_12.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_13",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_13.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-3x3-board3_14",
+    "file": "kenken-batch-KenKen-Computer-3x3-board3_14.json",
+    "size": 3,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_0",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_0.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_1",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_1.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_10",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_10.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_11",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_11.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_12",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_12.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_13",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_13.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-4x4-board4_14",
+    "file": "kenken-batch-KenKen-Computer-4x4-board4_14.json",
+    "size": 4,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_0",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_0.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_1",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_1.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_10",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_10.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_11",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_11.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_12",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_12.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_13",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_13.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-5x5-board5_14",
+    "file": "kenken-batch-KenKen-Computer-5x5-board5_14.json",
+    "size": 5,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_0",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_0.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_1",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_1.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_10",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_10.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_11",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_11.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_12",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_12.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_13",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_13.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-6x6-board6_14",
+    "file": "kenken-batch-KenKen-Computer-6x6-board6_14.json",
+    "size": 6,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_0",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_0.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_1",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_1.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_10",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_10.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_11",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_11.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_12",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_12.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_13",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_13.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-7x7-board7_14",
+    "file": "kenken-batch-KenKen-Computer-7x7-board7_14.json",
+    "size": 7,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_0",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_0.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_1",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_1.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_10",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_10.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_11",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_11.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_12",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_12.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_13",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_13.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-8x8-board8_14",
+    "file": "kenken-batch-KenKen-Computer-8x8-board8_14.json",
+    "size": 8,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_0",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_0.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_1",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_1.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_10",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_10.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_11",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_11.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_12",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_12.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_13",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_13.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "unknown",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Computer-9x9-board9_14",
+    "file": "kenken-batch-KenKen-Computer-9x9-board9_14.json",
+    "size": 9,
+    "style": "printed",
+    "avgConfidence": 1.0,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": null
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_0",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_0.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9617,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_1",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_1.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9566,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_10",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_10.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.957,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_11",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_11.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9977,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_12",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_12.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9994,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_13",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_13.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9939,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-3x3-board3_14",
+    "file": "kenken-batch-KenKen-Handwritten-3x3-board3_14.json",
+    "size": 3,
+    "style": "handwritten",
+    "avgConfidence": 0.9553,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_0",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_0.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9735,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_1",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_1.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9591,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_10",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_10.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9918,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_11",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_11.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9961,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_12",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_12.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9976,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_13",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_13.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9738,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-4x4-board4_14",
+    "file": "kenken-batch-KenKen-Handwritten-4x4-board4_14.json",
+    "size": 4,
+    "style": "handwritten",
+    "avgConfidence": 0.9785,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_0",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_0.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9701,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_1",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_1.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9951,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_10",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_10.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9831,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_11",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_11.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9959,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_12",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_12.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9716,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_13",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_13.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9945,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-5x5-board5_14",
+    "file": "kenken-batch-KenKen-Handwritten-5x5-board5_14.json",
+    "size": 5,
+    "style": "handwritten",
+    "avgConfidence": 0.9964,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_0",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_0.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.957,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_1",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_1.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9845,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_10",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_10.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.987,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_11",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_11.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9676,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_12",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_12.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9883,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_13",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_13.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9736,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-6x6-board6_14",
+    "file": "kenken-batch-KenKen-Handwritten-6x6-board6_14.json",
+    "size": 6,
+    "style": "handwritten",
+    "avgConfidence": 0.9779,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_0",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_0.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9831,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_1",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_1.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9959,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_10",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_10.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9849,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_11",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_11.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9907,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_12",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_12.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.958,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_13",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_13.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9926,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-7x7-board7_14",
+    "file": "kenken-batch-KenKen-Handwritten-7x7-board7_14.json",
+    "size": 7,
+    "style": "handwritten",
+    "avgConfidence": 0.9864,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_0",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_0.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9867,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_1",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_1.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.988,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_10",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_10.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9682,
+    "status": "sat",
+    "hasCorrection": true,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_11",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_11.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9742,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_12",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_12.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9773,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_13",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_13.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9874,
+    "status": "sat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-8x8-board8_14",
+    "file": "kenken-batch-KenKen-Handwritten-8x8-board8_14.json",
+    "size": 8,
+    "style": "handwritten",
+    "avgConfidence": 0.9761,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_0",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_0.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.9885,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_1",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_1.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.981,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_10",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_10.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.9921,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_11",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_11.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.9795,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_12",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_12.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.9847,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "medium"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_13",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_13.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.9888,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "high"
+  },
+  {
+    "id": "kenken-batch-KenKen-Handwritten-9x9-board9_14",
+    "file": "kenken-batch-KenKen-Handwritten-9x9-board9_14.json",
+    "size": 9,
+    "style": "handwritten",
+    "avgConfidence": 0.977,
+    "status": "unsat",
+    "hasCorrection": false,
+    "legibility": "low"
+  }
+]

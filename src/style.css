@@ -185,6 +185,20 @@ button {
   background: var(--neural);
 }
 
+/* ---------- randomizer filter selects ---------- */
+select {
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+}
+select:hover {
+  background: #f0f3f5;
+}
+
 /* ---------- generic buttons ---------- */
 .btn {
   border: 1px solid var(--line-strong);

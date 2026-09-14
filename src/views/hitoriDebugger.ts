@@ -16,9 +16,10 @@
  */
 
 import { el, clear } from "../dom";
-import { HITORI_TRACE_MANIFEST, loadHitoriTrace, type HitoriTrace, type HitoriDeduction } from "../data/traces";
+import { HITORI_TRACE_MANIFEST, loadHitoriTrace, loadHitoriManifest, type HitoriTrace, type HitoriManifestEntry, type HitoriDeduction } from "../data/traces";
 import { checkViolations, solveHitori, type ShadeGrid } from "../neural/genericHitori";
 import { renderLiveLog } from "./liveLog";
+import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
 
 /** Whether the chosen stacking pattern (set on the builder page) is Symbolic → Neural — the only
@@ -65,9 +66,36 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     }
   }
 
+  const randomizerHost = el("div");
   const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(picker, body);
+  root.append(
+    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by grid size from the full pool:"),
+    randomizerHost,
+    picker,
+    body
+  );
+
+  loadHitoriManifest()
+    .then((manifest) => {
+      renderRandomizer<HitoriManifestEntry>(randomizerHost, manifest, {
+        fields: [
+          { key: "rows", label: "Rows", get: (e) => e.rows },
+          { key: "cols", label: "Columns", get: (e) => e.cols },
+        ],
+        onPick: (entry) => {
+          if (!entry) {
+            clear(body);
+            body.append(el("p", { class: "note" }, "No real examples match that combination — try loosening a filter."));
+            return;
+          }
+          selectTrace(entry.file);
+        },
+      });
+    })
+    .catch(() => {
+      randomizerHost.append(el("p", { class: "muted", style: { fontSize: "12px" } }, "Randomizer unavailable — couldn't load the example manifest."));
+    });
 
   function selectTrace(file: string): void {
     stopPlaying();

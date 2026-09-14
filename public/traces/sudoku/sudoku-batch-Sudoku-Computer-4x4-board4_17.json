@@ -1,0 +1,159 @@
+{
+  "id": "sudoku-batch-Sudoku-Computer-4x4-board4_17",
+  "title": "Printed 4x4 (numeric) \u2014 board4_17",
+  "size": 4,
+  "style": "printed",
+  "image": "board4_17.png",
+  "imageUrl": "/traces/sudoku/images/sudoku-batch-Sudoku-Computer-4x4-board4_17.png",
+  "checkpoint": "sudoku_hexasudoku_unified_cnn.pth",
+  "recognized": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      4,
+      0,
+      0
+    ]
+  ],
+  "interpreted": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      4,
+      0,
+      0
+    ]
+  ],
+  "predictions": {
+    "0,3": {
+      "value": 2,
+      "confidence": 0.9983,
+      "topK": [
+        [
+          2,
+          0.9983
+        ],
+        [
+          3,
+          0.0
+        ]
+      ]
+    },
+    "1,0": {
+      "value": 1,
+      "confidence": 0.8748,
+      "topK": [
+        [
+          1,
+          0.8748
+        ],
+        [
+          4,
+          0.0012
+        ]
+      ]
+    },
+    "2,0": {
+      "value": 3,
+      "confidence": 0.9992,
+      "topK": [
+        [
+          3,
+          0.9992
+        ],
+        [
+          2,
+          0.0
+        ]
+      ]
+    },
+    "3,1": {
+      "value": 4,
+      "confidence": 0.999,
+      "topK": [
+        [
+          4,
+          0.999
+        ]
+      ]
+    }
+  },
+  "corrections": [],
+  "correctionAttempts": 0,
+  "ambiguousGivens": [
+    {
+      "row": 1,
+      "col": 0,
+      "given": 1,
+      "confidence": 0.8748,
+      "alternative": 4,
+      "alternativeConfidence": 0.0012
+    }
+  ],
+  "result": {
+    "status": "sat",
+    "solution": [
+      [
+        4,
+        3,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        4,
+        3
+      ],
+      [
+        3,
+        1,
+        2,
+        4
+      ],
+      [
+        2,
+        4,
+        3,
+        1
+      ]
+    ],
+    "unique": true,
+    "conflicts": []
+  },
+  "verification": "constraints_only; image interpretation is not proved"
+}

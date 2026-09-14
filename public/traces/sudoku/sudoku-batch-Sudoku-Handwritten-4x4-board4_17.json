@@ -1,0 +1,154 @@
+{
+  "id": "sudoku-batch-Sudoku-Handwritten-4x4-board4_17",
+  "title": "Handwritten 4x4 (numeric) \u2014 board4_17",
+  "size": 4,
+  "style": "handwritten",
+  "image": "board4_17.png",
+  "imageUrl": "/traces/sudoku/images/sudoku-batch-Sudoku-Handwritten-4x4-board4_17.png",
+  "checkpoint": "sudoku_hexasudoku_unified_cnn.pth",
+  "recognized": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      4,
+      0,
+      0
+    ]
+  ],
+  "interpreted": [
+    [
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      4,
+      0,
+      0
+    ]
+  ],
+  "predictions": {
+    "0,3": {
+      "value": 2,
+      "confidence": 1.0,
+      "topK": [
+        [
+          2,
+          1.0
+        ],
+        [
+          3,
+          0.0
+        ]
+      ]
+    },
+    "1,0": {
+      "value": 1,
+      "confidence": 0.9983,
+      "topK": [
+        [
+          1,
+          0.9983
+        ]
+      ]
+    },
+    "2,0": {
+      "value": 3,
+      "confidence": 0.9985,
+      "topK": [
+        [
+          3,
+          0.9985
+        ],
+        [
+          2,
+          0.0003
+        ],
+        [
+          1,
+          0.0
+        ]
+      ]
+    },
+    "3,1": {
+      "value": 4,
+      "confidence": 0.9988,
+      "topK": [
+        [
+          4,
+          0.9988
+        ],
+        [
+          1,
+          0.0
+        ]
+      ]
+    }
+  },
+  "corrections": [],
+  "correctionAttempts": 0,
+  "ambiguousGivens": [],
+  "result": {
+    "status": "sat",
+    "solution": [
+      [
+        4,
+        3,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        4,
+        3
+      ],
+      [
+        3,
+        1,
+        2,
+        4
+      ],
+      [
+        2,
+        4,
+        3,
+        1
+      ]
+    ],
+    "unique": true,
+    "conflicts": []
+  },
+  "verification": "constraints_only; image interpretation is not proved"
+}
