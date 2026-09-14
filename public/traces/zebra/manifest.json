@@ -182,5 +182,13 @@
     "categories": 6,
     "status": "sat",
     "parseAttempts": 1
+  },
+  {
+    "id": "zebra-conflict-retry-6house",
+    "file": "zebra-conflict-retry-6house.json",
+    "houses": 6,
+    "categories": 6,
+    "status": "unsat",
+    "parseAttempts": null
   }
 ]

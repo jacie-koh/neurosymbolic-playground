@@ -192,9 +192,16 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
     },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: a tight loop would mean a specific solver conflict (e.g. \"clue 4 and clue 9 can't both hold\") gets fed back to the LLM as a targeted re-prompt about just those two clues, instead of re-parsing from scratch. The real pipeline never does this — MINIEXACT runs exactly once per puzzle, with no path back to the parser.",
+      neurosymbolic: {
+        performance: { value: null, detail: "1/1 real test, not a rate: puzzlelab.zebra.run_with_conflict_retry() genuinely re-prompts the local LLM with the real solver's own unsat result and re-solves from scratch — mechanically real, tested on one known-hard puzzle (real id lgp-test-6x6-5), which stayed unsat on both attempts. See the debugger's own \"conflict retry\" example." },
+        explainability: PROVEN,
+        robustness: NA,
+      },
+      symbolicOnly: {
+        performance: { value: 1.0, detail: "MINIEXACT's own completeness guarantee doesn't change based on how many times perception is retried." },
+        explainability: PROVEN,
+        robustness: NA,
+      },
     },
   },
   "visual-discrimination": {

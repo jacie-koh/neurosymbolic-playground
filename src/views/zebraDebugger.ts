@@ -9,9 +9,11 @@
  * The real parser does retry the LLM once if its JSON output fails schema
  * validation (re-prompted with the validator's error) — but that's a format
  * check on the LLM's own output, not the symbolic solver rejecting an
- * interpretation. MINIEXACT itself always runs exactly once, with no
- * solver-conflict-driven re-parse loop; the curated traces here don't record
- * which parser attempt succeeded.
+ * interpretation. MINIEXACT itself normally runs exactly once, with no
+ * solver-conflict-driven re-parse loop — except for one curated example built
+ * specifically to test this: puzzlelab.zebra.run_with_conflict_retry() really
+ * re-prompts the LLM with the solver's own unsat result and re-solves from
+ * scratch. See its conflictRetry field below, when present.
  *
  * Select a clue to see its structured interpretation, and edit its relation
  * (e.g. "left" -> "immediately_left") or target to see how the surviving
@@ -28,10 +30,12 @@ import { renderRandomizer } from "./randomizer";
 interface EnrichedZebraEntry extends ZebraManifestEntry {
   hasBacktrack: boolean;
   hasDeadClue: boolean;
+  hasConflictRetry: boolean;
 }
 
 /** Real, computed (not stored) properties: does the client-side search backtrack at
- * all, and is any clue logically redundant (removable without losing the solution)? */
+ * all, is any clue logically redundant (removable without losing the solution), and
+ * does this trace carry a real recorded Neural↔Symbolic conflict-retry history? */
 async function enrichZebraManifest(manifest: ZebraManifestEntry[]): Promise<EnrichedZebraEntry[]> {
   const out: EnrichedZebraEntry[] = [];
   for (const entry of manifest) {
@@ -46,9 +50,9 @@ async function enrichZebraManifest(manifest: ZebraManifestEntry[]): Promise<Enri
         const res = solveZebra(without);
         if (res.status === "sat" && JSON.stringify(res.solution) === JSON.stringify(stepped.solution)) hasDeadClue = true;
       }
-      out.push({ ...entry, hasBacktrack, hasDeadClue });
+      out.push({ ...entry, hasBacktrack, hasDeadClue, hasConflictRetry: !!t.conflictRetry });
     } catch {
-      out.push({ ...entry, hasBacktrack: false, hasDeadClue: false });
+      out.push({ ...entry, hasBacktrack: false, hasDeadClue: false, hasConflictRetry: false });
     }
   }
   return out;
@@ -105,6 +109,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
           { key: "houses", label: "Houses", get: (e) => e.houses },
           { key: "hasBacktrack", label: "Backtracks", get: (e) => (e.hasBacktrack ? "yes" : "no") },
           { key: "hasDeadClue", label: "Has dead rule", get: (e) => (e.hasDeadClue ? "yes" : "no") },
+          { key: "hasConflictRetry", label: "Real conflict retry", get: (e) => (e.hasConflictRetry ? "yes" : "no") },
         ],
         onPick: (entry) => {
           if (!entry) {
@@ -247,12 +252,41 @@ export function renderZebraDebugger(root: HTMLElement): void {
 
     const logBox = renderLiveLog(logLines);
 
+    const conflictRetryPanel = t.conflictRetry
+      ? el(
+          "div",
+          { class: "note", style: { marginTop: "16px", borderLeft: "3px solid var(--accent)" } },
+          el("b", {}, "Real Neural ↔ Symbolic loop: "),
+          `this puzzle's ${t.conflictRetry.attempts.length} attempts are all genuinely separate real parse+solve runs — attempt 1's actual solver result was fed back to the same local LLM as a new prompt, then re-parsed and re-solved from scratch.`,
+          el(
+            "ul",
+            { style: { marginTop: "8px", paddingLeft: "18px" } },
+            ...t.conflictRetry.attempts.map((a, i) =>
+              el(
+                "li",
+                { style: { fontSize: "12.5px", marginBottom: "4px" } },
+                el("b", {}, `Attempt ${i + 1}${i === 0 ? "" : " (after real solver-conflict feedback)"}: `),
+                `solver status = ${a.status}`
+              )
+            )
+          ),
+          t.conflictRetry.attempts.every((a) => a.status !== "sat")
+            ? el(
+                "div",
+                { style: { marginTop: "6px", fontSize: "12.5px", color: "var(--muted)" } },
+                "Honest result: the retry didn't fix this particular puzzle — a real solver conflict fed back to the LLM doesn't guarantee a better re-parse. That's a genuine finding, not a bug in the loop."
+              )
+            : ""
+        )
+      : "";
+
     body.append(
       el("div", { style: { display: "flex", gap: "20px", flexWrap: "wrap", alignItems: "flex-start" } },
         el("div", { style: { flex: "1 1 320px" } }, el("h3", { style: { fontSize: "13px", margin: "0 0 4px" } }, "Clues"), clueList),
         el("div", { style: { flex: "1 1 260px" } }, el("h3", { style: { fontSize: "13px", margin: "0 0 4px" } }, "Assignment"), grid)
       ),
       meta,
+      conflictRetryPanel,
       playRow,
       logBox,
       status,

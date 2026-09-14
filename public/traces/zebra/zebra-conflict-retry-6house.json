@@ -1,0 +1,518 @@
+{
+  "id": "zebra-conflict-retry-6house",
+  "title": "ZebraLogic 6-house puzzle \u2014 real Neural\u2194Symbolic conflict retry",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@carol",
+      "g0@eric",
+      "g0@peter",
+      "g0@bob",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@classical",
+      "g1@hip-hop",
+      "g1@jazz",
+      "g1@pop",
+      "g1@rock",
+      "g1@country"
+    ],
+    "g2": [
+      "g2@sarah",
+      "g2@penny",
+      "g2@aniya",
+      "g2@janelle",
+      "g2@kailyn",
+      "g2@holly"
+    ],
+    "g3": [
+      "g3@alice",
+      "g3@fred",
+      "g3@timothy",
+      "g3@bella",
+      "g3@samantha",
+      "g3@meredith"
+    ],
+    "g4": [
+      "g4@very-short",
+      "g4@tall",
+      "g4@short",
+      "g4@very-tall",
+      "g4@super-tall",
+      "g4@average"
+    ],
+    "g5": [
+      "g5@bird",
+      "g5@dog",
+      "g5@horse",
+      "g5@rabbit",
+      "g5@cat",
+      "g5@fish"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves pop music is the cat lover.",
+      "relation": "same",
+      "a": "g1@pop",
+      "b": "g5@cat"
+    },
+    {
+      "source": "The rabbit owner is directly left of The person whose mother's name is Aniya.",
+      "relation": "immediately_left",
+      "a": "g5@rabbit",
+      "b": "g2@aniya"
+    },
+    {
+      "source": "The person whose mother's name is Holly is directly left of Carol.",
+      "relation": "immediately_left",
+      "a": "g2@holly",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person whose mother's name is Holly is the person's child is named Alice.",
+      "relation": "same",
+      "a": "g2@holly",
+      "b": "g3@alice"
+    },
+    {
+      "source": "The person whose mother's name is Holly is the person who loves classical music.",
+      "relation": "same",
+      "a": "g2@holly",
+      "b": "g1@classical"
+    },
+    {
+      "source": "The person who loves jazz music is The person whose mother's name is Sarah.",
+      "relation": "same",
+      "a": "g1@jazz",
+      "b": "g2@sarah"
+    },
+    {
+      "source": "The person's child is named Meredith is somewhere to the right of The person whose mother's name is Aniya.",
+      "relation": "right",
+      "a": "g3@meredith",
+      "b": "g2@aniya"
+    },
+    {
+      "source": "The person who is super tall is The person whose mother's name is Holly.",
+      "relation": "same",
+      "a": "g4@super-tall",
+      "b": "g2@holly"
+    },
+    {
+      "source": "The person who is the mother of Timothy is Bob.",
+      "relation": "same",
+      "a": "g3@timothy",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is very short is somewhere to the left of The person whose mother's name is Aniya.",
+      "relation": "left",
+      "a": "g4@very-short",
+      "b": "g2@aniya"
+    },
+    {
+      "source": "Eric is the fish enthusiast.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g5@fish"
+    },
+    {
+      "source": "The person's child is named Samantha is somewhere to the right of the person who is very tall.",
+      "relation": "right",
+      "a": "g3@samantha",
+      "b": "g4@very-tall"
+    },
+    {
+      "source": "The person who loves rock music is The person whose mother's name is Janelle.",
+      "relation": "same",
+      "a": "g1@rock",
+      "b": "g2@janelle"
+    },
+    {
+      "source": "There is one house between the person who keeps horses and the person's child is named Meredith.",
+      "relation": "distance",
+      "a": "g5@horse",
+      "b": "g3@meredith",
+      "distance": 2
+    },
+    {
+      "source": "The person's child is named Bella is somewhere to the right of Peter.",
+      "relation": "right",
+      "a": "g3@bella",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the left of the bird keeper.",
+      "relation": "left",
+      "a": "g5@fish",
+      "b": "g5@bird"
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the right of the person's child is named Alice.",
+      "relation": "right",
+      "a": "g5@fish",
+      "b": "g3@alice"
+    },
+    {
+      "source": "There is one house between the person's child is named Bella and the person who loves rock music.",
+      "relation": "distance",
+      "a": "g3@bella",
+      "b": "g1@rock",
+      "distance": 2
+    },
+    {
+      "source": "The person who is short is the cat lover.",
+      "relation": "same",
+      "a": "g4@short",
+      "b": "g5@cat"
+    },
+    {
+      "source": "Alice is directly left of the person who loves classical music.",
+      "relation": "immediately_left",
+      "a": "g0@alice",
+      "b": "g1@classical"
+    },
+    {
+      "source": "The person's child is named Bella is The person whose mother's name is Aniya.",
+      "relation": "same",
+      "a": "g3@bella",
+      "b": "g2@aniya"
+    },
+    {
+      "source": "There are two houses between The person whose mother's name is Penny and the person who is short.",
+      "relation": "distance",
+      "a": "g2@penny",
+      "b": "g4@short",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves hip-hop music is in the first house.",
+      "relation": "at",
+      "a": "g1@hip-hop",
+      "position": 1
+    },
+    {
+      "source": "Carol is the person who is tall.",
+      "relation": "same",
+      "a": "g0@carol",
+      "b": "g4@tall"
+    }
+  ],
+  "result": {
+    "status": "unsat",
+    "solution": null,
+    "unique": null
+  },
+  "conflictRetry": {
+    "attempts": [
+      {
+        "clues": [
+          {
+            "source": "The person who loves pop music is the cat lover.",
+            "relation": "same",
+            "a": "g1@pop",
+            "b": "g5@cat"
+          },
+          {
+            "source": "The rabbit owner is directly left of The person whose mother's name is Aniya.",
+            "relation": "immediately_left",
+            "a": "g5@rabbit",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "The person whose mother's name is Holly is directly left of Carol.",
+            "relation": "immediately_left",
+            "a": "g2@holly",
+            "b": "g0@carol"
+          },
+          {
+            "source": "The person whose mother's name is Holly is the person's child is named Alice.",
+            "relation": "same",
+            "a": "g2@holly",
+            "b": "g3@alice"
+          },
+          {
+            "source": "The person whose mother's name is Holly is the person who loves classical music.",
+            "relation": "same",
+            "a": "g2@holly",
+            "b": "g1@classical"
+          },
+          {
+            "source": "The person who loves jazz music is The person whose mother's name is Sarah.",
+            "relation": "same",
+            "a": "g1@jazz",
+            "b": "g2@sarah"
+          },
+          {
+            "source": "The person's child is named Meredith is somewhere to the right of The person whose mother's name is Aniya.",
+            "relation": "right",
+            "a": "g3@meredith",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "The person who is super tall is The person whose mother's name is Holly.",
+            "relation": "same",
+            "a": "g4@super-tall",
+            "b": "g2@holly"
+          },
+          {
+            "source": "The person who is the mother of Timothy is Bob.",
+            "relation": "same",
+            "a": "g3@timothy",
+            "b": "g0@bob"
+          },
+          {
+            "source": "The person who is very short is somewhere to the left of The person whose mother's name is Aniya.",
+            "relation": "left",
+            "a": "g4@very-short",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "Eric is the fish enthusiast.",
+            "relation": "same",
+            "a": "g0@eric",
+            "b": "g5@fish"
+          },
+          {
+            "source": "The person's child is named Samantha is somewhere to the right of the person who is very tall.",
+            "relation": "right",
+            "a": "g3@samantha",
+            "b": "g4@very-tall"
+          },
+          {
+            "source": "The person who loves rock music is The person whose mother's name is Janelle.",
+            "relation": "same",
+            "a": "g1@rock",
+            "b": "g2@janelle"
+          },
+          {
+            "source": "There is one house between the person who keeps horses and the person's child is named Meredith.",
+            "relation": "distance",
+            "a": "g5@horse",
+            "b": "g3@meredith",
+            "distance": 2
+          },
+          {
+            "source": "The person's child is named Bella is somewhere to the right of Peter.",
+            "relation": "right",
+            "a": "g3@bella",
+            "b": "g0@peter"
+          },
+          {
+            "source": "The fish enthusiast is somewhere to the left of the bird keeper.",
+            "relation": "left",
+            "a": "g5@fish",
+            "b": "g5@bird"
+          },
+          {
+            "source": "The fish enthusiast is somewhere to the right of the person's child is named Alice.",
+            "relation": "right",
+            "a": "g5@fish",
+            "b": "g3@alice"
+          },
+          {
+            "source": "There is one house between the person's child is named Bella and the person who loves rock music.",
+            "relation": "distance",
+            "a": "g3@bella",
+            "b": "g1@rock",
+            "distance": 2
+          },
+          {
+            "source": "The person who is short is the cat lover.",
+            "relation": "same",
+            "a": "g4@short",
+            "b": "g5@cat"
+          },
+          {
+            "source": "Alice is directly left of the person who loves classical music.",
+            "relation": "immediately_left",
+            "a": "g0@alice",
+            "b": "g1@classical"
+          },
+          {
+            "source": "The person's child is named Bella is The person whose mother's name is Aniya.",
+            "relation": "same",
+            "a": "g3@bella",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "There are two houses between The person whose mother's name is Penny and the person who is short.",
+            "relation": "distance",
+            "a": "g2@penny",
+            "b": "g4@short",
+            "distance": 2
+          },
+          {
+            "source": "The person who loves hip-hop music is in the first house.",
+            "relation": "at",
+            "a": "g1@hip-hop",
+            "position": 1
+          },
+          {
+            "source": "Carol is the person who is tall.",
+            "relation": "same",
+            "a": "g0@carol",
+            "b": "g4@tall"
+          }
+        ],
+        "status": "unsat"
+      },
+      {
+        "clues": [
+          {
+            "source": "The person who loves pop music is the cat lover.",
+            "relation": "same",
+            "a": "g1@pop",
+            "b": "g5@cat"
+          },
+          {
+            "source": "The rabbit owner is directly left of The person whose mother's name is Aniya.",
+            "relation": "immediately_left",
+            "a": "g5@rabbit",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "The person whose mother's name is Holly is directly left of Carol.",
+            "relation": "immediately_left",
+            "a": "g2@holly",
+            "b": "g0@carol"
+          },
+          {
+            "source": "The person whose mother's name is Holly is the person's child is named Alice.",
+            "relation": "same",
+            "a": "g2@holly",
+            "b": "g3@alice"
+          },
+          {
+            "source": "The person whose mother's name is Holly is the person who loves classical music.",
+            "relation": "same",
+            "a": "g2@holly",
+            "b": "g1@classical"
+          },
+          {
+            "source": "The person who loves jazz music is The person whose mother's name is Sarah.",
+            "relation": "same",
+            "a": "g1@jazz",
+            "b": "g2@sarah"
+          },
+          {
+            "source": "The person's child is named Meredith is somewhere to the right of The person whose mother's name is Aniya.",
+            "relation": "right",
+            "a": "g3@meredith",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "The person who is super tall is The person whose mother's name is Holly.",
+            "relation": "same",
+            "a": "g4@super-tall",
+            "b": "g2@holly"
+          },
+          {
+            "source": "The person who is the mother of Timothy is Bob.",
+            "relation": "same",
+            "a": "g3@timothy",
+            "b": "g0@bob"
+          },
+          {
+            "source": "The person who is very short is somewhere to the left of The person whose mother's name is Aniya.",
+            "relation": "left",
+            "a": "g4@very-short",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "Eric is the fish enthusiast.",
+            "relation": "same",
+            "a": "g0@eric",
+            "b": "g5@fish"
+          },
+          {
+            "source": "The person's child is named Samantha is somewhere to the right of the person who is very tall.",
+            "relation": "right",
+            "a": "g3@samantha",
+            "b": "g4@very-tall"
+          },
+          {
+            "source": "The person who loves rock music is The person whose mother's name is Janelle.",
+            "relation": "same",
+            "a": "g1@rock",
+            "b": "g2@janelle"
+          },
+          {
+            "source": "There is one house between the person who keeps horses and the person's child is named Meredith.",
+            "relation": "distance",
+            "a": "g5@horse",
+            "b": "g3@meredith",
+            "distance": 2
+          },
+          {
+            "source": "The person's child is named Bella is somewhere to the right of Peter.",
+            "relation": "right",
+            "a": "g3@bella",
+            "b": "g0@peter"
+          },
+          {
+            "source": "The fish enthusiast is somewhere to the left of the bird keeper.",
+            "relation": "left",
+            "a": "g5@fish",
+            "b": "g5@bird"
+          },
+          {
+            "source": "The fish enthusiast is somewhere to the right of the person's child is named Alice.",
+            "relation": "right",
+            "a": "g5@fish",
+            "b": "g3@alice"
+          },
+          {
+            "source": "There is one house between the person's child is named Bella and the person who loves rock music.",
+            "relation": "distance",
+            "a": "g3@bella",
+            "b": "g1@rock",
+            "distance": 2
+          },
+          {
+            "source": "The person who is short is the cat lover.",
+            "relation": "same",
+            "a": "g4@short",
+            "b": "g5@cat"
+          },
+          {
+            "source": "Alice is directly left of the person who loves classical music.",
+            "relation": "immediately_left",
+            "a": "g0@alice",
+            "b": "g1@classical"
+          },
+          {
+            "source": "The person's child is named Bella is The person whose mother's name is Aniya.",
+            "relation": "same",
+            "a": "g3@bella",
+            "b": "g2@aniya"
+          },
+          {
+            "source": "There are two houses between The person whose mother's name is Penny and the person who is short.",
+            "relation": "distance",
+            "a": "g2@penny",
+            "b": "g4@short",
+            "distance": 2
+          },
+          {
+            "source": "The person who loves hip-hop music is in the first house.",
+            "relation": "at",
+            "a": "g1@hip-hop",
+            "position": 1
+          },
+          {
+            "source": "Carol is the person who is tall.",
+            "relation": "same",
+            "a": "g0@carol",
+            "b": "g4@tall"
+          }
+        ],
+        "status": "unsat"
+      }
+    ]
+  },
+  "verification": "encoded_constraints_only; semantic translation is not proved; every attempt independently solved by the real MINIEXACT encoding; puzzle id lgp-test-6x6-5 from the real downloaded ZebraLogic dataset"
+}

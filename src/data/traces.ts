@@ -142,6 +142,12 @@ export interface ZebraTrace {
     solution: Record<string, number> | null;
     unique: boolean | null;
   };
+  /** Real Neural↔Symbolic loop, when present: when the real solver found no valid
+   * assignment, the actual solver conflict was fed back to the real LLM for another
+   * attempt. Every entry is a genuinely separate real parse+solve, not simulated. */
+  conflictRetry?: {
+    attempts: { clues: ZebraClueRecord[]; status: "sat" | "unsat" | "unknown" }[];
+  };
   verification: string;
 }
 
