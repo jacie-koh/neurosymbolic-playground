@@ -347,11 +347,29 @@ export interface VDPTrace {
   referenceResult: VDPSynthesisResult;
 }
 
-export const VDP_TRACE_MANIFEST: { id: string; file: string }[] = [
-  { id: "vdp-match", file: "vdp-match.json" },
-  { id: "vdp-match-2", file: "vdp-match-2.json" },
-  { id: "vdp-wrong-candidate", file: "vdp-wrong-candidate.json" },
-];
+export interface VDPManifestEntry {
+  id: string;
+  file: string;
+  pattern: string;
+  title: string;
+  /** Average real object count across the puzzle's 6 scenes -- more objects means more candidates
+   * to discriminate. */
+  objectCount: number;
+  /** The paper generator's own per-pattern bound on quantifiers (vendor/vdp/utils/common.py's
+   * ooo_flags) -- deeper target formulas are harder to synthesize regardless of scene size. */
+  quantifierBound: number;
+  conjunctBound: number | null;
+  /** Whether fresh perception's top discriminator candidate matches the authors' replayed-perception one. */
+  matches: boolean;
+  freshStatus: string | null;
+  /** 1..5, combining objectCount and quantifierBound into one real, comparable difficulty axis
+   * (computed offline in trim_100.py by quintiles over the whole pool). */
+  difficulty: number;
+}
+
+export function loadVDPManifest(): Promise<VDPManifestEntry[]> {
+  return loadTrace<VDPManifestEntry[]>("vdp", "manifest.json");
+}
 
 export function loadVDPTrace(file: string): Promise<VDPTrace> {
   return loadTrace<VDPTrace>("vdp", file);

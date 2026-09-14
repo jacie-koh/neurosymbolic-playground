@@ -1,17 +1,74 @@
 [
   {
+    "id": "vdp-agreement-fovariant-17",
+    "file": "vdp-agreement-fovariant-17.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-17)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-agreement-fovariant-2",
+    "file": "vdp-agreement-fovariant-2.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-2)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-agreement-fovariant-23",
+    "file": "vdp-agreement-fovariant-23.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-23)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
     "id": "vdp-match-2",
     "file": "vdp-match-2.json",
-    "title": "agreement (fovariant-13) \u2014 fresh perception matches the reference"
+    "pattern": "agreement",
+    "title": "agreement (fovariant-13) \u2014 fresh perception matches the reference",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
   },
   {
     "id": "vdp-match",
     "file": "vdp-match.json",
-    "title": "alternate-color (fovariant-11) \u2014 fresh perception matches the reference"
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-11) \u2014 fresh perception matches the reference",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 1
   },
   {
     "id": "vdp-wrong-candidate",
     "file": "vdp-wrong-candidate.json",
-    "title": "apocope (fovariant-18-swap4) \u2014 fresh perception finds a formula, but picks the wrong candidate"
+    "pattern": "apocope",
+    "title": "apocope (fovariant-18-swap4) \u2014 fresh perception finds a formula, but picks the wrong candidate",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": false,
+    "freshStatus": "sat",
+    "difficulty": 1
   }
 ]

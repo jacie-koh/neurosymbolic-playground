@@ -14,18 +14,24 @@
  * fresh pipeline actually perceived and comparing it against both ground truth and
  * the authors' own (replayed) perception on the identical images — including the
  * honest cases where fresh perception lands on the wrong answer or finds nothing.
+ *
+ * 100 real puzzles (spanning all 15 relation patterns) were run through this exact
+ * pipeline offline (standalone/reports/debugger/vdp_fresh/run_100.py) and are
+ * browsable here via a randomizer + a real difficulty slider — object count and
+ * the paper's own per-pattern formula-complexity bound (see VDPManifestEntry).
  */
 
 import { el, clear } from "../dom";
-import { VDP_TRACE_MANIFEST, loadVDPTrace, type VDPTrace, type VDPScene } from "../data/traces";
+import { loadVDPTrace, loadVDPManifest, type VDPTrace, type VDPScene, type VDPManifestEntry } from "../data/traces";
 import { renderLiveLog } from "./liveLog";
+import { renderRandomizer } from "./randomizer";
 
 const ATTRS = ["color", "material", "size", "shape"] as const;
 
 export function renderVDPDebugger(root: HTMLElement): void {
   clear(root);
 
-  let activeFile = VDP_TRACE_MANIFEST[0].file;
+  let activeFile = "vdp-match.json";
   let trace: VDPTrace | null = null;
   let selectedScene: string | null = null;
   let playing = false;
@@ -42,9 +48,16 @@ export function renderVDPDebugger(root: HTMLElement): void {
     }
   }
 
-  const picker = el("div", { class: "seg" });
+  const randomizerHost = el("div");
+  const difficultyNote = el("p", { class: "muted", style: { fontSize: "12px", marginTop: "-4px" } });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(picker, body);
+  root.append(randomizerHost, difficultyNote, body);
+
+  let manifest: VDPManifestEntry[] = [];
+
+  function currentEntry(): VDPManifestEntry | undefined {
+    return manifest.find((e) => e.file === activeFile);
+  }
 
   function selectTrace(file: string): void {
     stopPlaying();
@@ -58,7 +71,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
       .then((t) => {
         trace = t;
         selectedScene = t.scenes.find((s) => s.role === "train")?.sceneId ?? t.scenes[0]?.sceneId ?? null;
-        drawPicker();
+        drawDifficultyNote();
         drawBody();
       })
       .catch(() => {
@@ -70,20 +83,34 @@ export function renderVDPDebugger(root: HTMLElement): void {
       });
   }
 
-  function drawPicker(): void {
-    clear(picker);
-    for (const entry of VDP_TRACE_MANIFEST) {
-      const verdict = entry.id.startsWith("vdp-match") ? "fresh matches reference" : "fresh picks wrong candidate";
-      picker.append(
-        el(
-          "button",
-          { class: "seg-btn" + (entry.file === activeFile ? " active" : ""), onclick: () => selectTrace(entry.file) },
-          el("span", { class: "seg-flow" }, entry.id.replace(/^vdp-/, "")),
-          el("span", { class: "seg-name" }, verdict)
-        )
-      );
-    }
+  function drawDifficultyNote(): void {
+    const entry = currentEntry();
+    difficultyNote.textContent = entry
+      ? `${entry.pattern} · difficulty ${entry.difficulty}/5 · ~${entry.objectCount} objects/scene · ` +
+        `formula budget: ${entry.quantifierBound} quantifiers${entry.conjunctBound != null ? `, ${entry.conjunctBound} conjuncts` : ""}`
+      : "";
   }
+
+  loadVDPManifest().then((m) => {
+    manifest = m;
+    const initial = m.find((e) => e.file === activeFile);
+    renderRandomizer<VDPManifestEntry>(randomizerHost, m, {
+      fields: [
+        { key: "pattern", label: "Pattern", get: (e) => e.pattern },
+        { key: "difficulty", label: "Difficulty", get: (e) => e.difficulty, type: "range" },
+      ],
+      initial,
+      onPick: (entry) => {
+        if (!entry) {
+          clear(body);
+          body.append(el("p", { class: "note" }, "No real examples match that combination — try loosening a filter."));
+          return;
+        }
+        selectTrace(entry.file);
+      },
+    });
+    drawDifficultyNote();
+  });
 
   function verdictBadge(t: VDPTrace): HTMLElement {
     const freshCand = t.freshResult.candidate;
@@ -95,6 +122,54 @@ export function renderVDPDebugger(root: HTMLElement): void {
       return el("span", { class: "badge badge-weak" }, "fresh matches the reference answer");
     }
     return el("span", { class: "badge badge-strong" }, "fresh picks a different candidate than the reference");
+  }
+
+  /**
+   * There's no retry/correction loop for this module (unlike Sudoku's Z3 correction
+   * loop or Zebra's conflict-retry) -- puzzlelab.vdp.run() is a single subprocess
+   * call, real search, no second attempt. So when fresh disagrees with the
+   * reference, this explains *why* from the trace's own real numbers instead of
+   * pretending something got "fixed":
+   *   - low per-attribute accuracy -> a real misclassification steered the search
+   *     toward a different (but still individually verified) discriminator.
+   *   - 100% attribute accuracy -> every color/material/size/shape read correctly,
+   *     so the disagreement traces to the *derived* left/right/front/behind
+   *     relations instead: those come from a depth-regressed 3D position
+   *     estimate, not a classifier output, and a small position drift can flip
+   *     which relations hold even when every attribute is right.
+   */
+  function disagreementExplanation(t: VDPTrace): HTMLElement | null {
+    const freshCand = t.freshResult.candidate;
+    const refCand = t.referenceResult.candidate;
+    if (t.freshResult.status === "sat" && freshCand && refCand && freshCand === refCand) return null;
+
+    if (t.freshResult.status !== "sat") {
+      return el(
+        "div",
+        { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
+        el("b", {}, "Why: "),
+        "the real search found no discriminator that uniquely picks one object within its quantifier/conjunct budget for this scene set — a search-budget limit, not necessarily a perception error."
+      );
+    }
+
+    const acc = t.accuracy;
+    const misreadRates = ATTRS.map((a) => ({ attr: a, rate: acc[a] })).filter((x) => x.rate != null && x.rate < 1);
+    if (misreadRates.length > 0) {
+      const worst = misreadRates.sort((a, b) => (a.rate as number) - (b.rate as number))[0];
+      return el(
+        "div",
+        { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
+        el("b", {}, "Why: "),
+        `fresh perception misread ${worst.attr} on ${(100 - (worst.rate as number) * 100).toFixed(1)}% of objects across this puzzle's scenes — a real classification error that steered the search toward a different, but still independently verified, discriminator.`
+      );
+    }
+
+    return el(
+      "div",
+      { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
+      el("b", {}, "Why: "),
+      "every color/material/size/shape read was correct here — the disagreement instead comes from estimated 3D position (regressed from box size/depth, not classified), which feeds the left/right/front/behind relations the formula quantifies over. A small position drift can flip which relations hold even with perfect attributes."
+    );
   }
 
   function drawBody(): void {
@@ -148,7 +223,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
             t.referenceResult.status,
             t.referenceResult.formula ? el("div", { class: "flow-payload", style: { marginTop: "6px", display: "block" } }, t.referenceResult.formula) : "",
             t.referenceResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${t.referenceResult.candidate}`) : ""
-          )
+          ),
+          disagreementExplanation(t) ?? ""
         );
 
     const sceneTabs = el(
@@ -302,6 +378,5 @@ export function renderVDPDebugger(root: HTMLElement): void {
     );
   }
 
-  drawPicker();
   selectTrace(activeFile);
 }
