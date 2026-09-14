@@ -183,6 +183,14 @@ export function renderZebraDebugger(root: HTMLElement): void {
         : ""
     );
 
+    const stepRow = el(
+      "div",
+      { class: "btn-row", style: { marginTop: "8px" } },
+      el("button", { class: "btn", disabled: playing || playIdx <= 0, onclick: () => stepTo(t, playIdx - 1) }, "◀ Step back"),
+      el("button", { class: "btn", disabled: playing || (playSteps.length > 0 && playIdx >= playSteps.length), onclick: () => stepTo(t, playIdx + 1) }, "Step forward ▶"),
+      livePositions ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `step ${playIdx}/${playSteps.length || "?"}`) : ""
+    );
+
     const status = el(
       "div",
       { class: "note", style: { marginTop: "16px" } },
@@ -256,6 +264,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
       meta,
       conflictRetryPanel,
       playRow,
+      stepRow,
       logBox,
       status,
       panel,
@@ -269,45 +278,61 @@ export function renderZebraDebugger(root: HTMLElement): void {
     return !edited && t.result.status === "sat" && !!t.result.solution;
   }
 
-  function playFrom(t: ZebraTrace): void {
-    stopPlaying();
-    logLines = [];
-    playIdx = 0;
-    livePositions = {};
-    playing = true;
+  /** Whether the current playSteps reveal the real MINIEXACT-verified assignment
+   * (entity by entity, not a live search -- the solver's own internal decision
+   * process isn't recorded) rather than an independent client-side re-solve. */
+  let revealMode = false;
 
-    if (canShowRealSolution(t)) {
-      // Reveal the real MINIEXACT-verified assignment from the offline pipeline, entity by
-      // entity — not a live search, since the solver's own internal decision process isn't recorded.
+  function prepareSteps(t: ZebraTrace): void {
+    revealMode = canShowRealSolution(t);
+    if (revealMode) {
       const solution = t.result.solution!;
       playSteps = Object.values(t.groups)
         .flat()
         .map((entity) => ({ entity, house: solution[entity] }));
-      const delay = Math.max(120, Math.min(400, 3000 / Math.max(1, playSteps.length)));
-      const tick = () => {
-        if (!playing) return;
-        if (playIdx >= playSteps.length) {
-          playing = false;
-          drawBody();
-          return;
-        }
-        const step = playSteps[playIdx];
-        if (livePositions) livePositions[step.entity] = step.house;
-        logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
-        playIdx++;
-        drawBody();
-        playTimer = setTimeout(tick, delay);
-      };
-      drawBody();
-      playTimer = setTimeout(tick, delay);
-      return;
+    } else {
+      // Edited clues (or the offline baseline itself was unsat): MINIEXACT never verified
+      // this exact state, so fall back to an independent client-side search instead.
+      playSteps = solveZebraWithSteps({ size: t.size, groups: t.groups, clues }).steps;
     }
+    playIdx = 0;
+  }
 
-    // Edited clues (or the offline baseline itself was unsat): MINIEXACT never verified this
-    // exact state, so fall back to an independent client-side search instead.
-    const result = solveZebraWithSteps({ size: t.size, groups: t.groups, clues });
-    playSteps = result.steps;
-    const delay = Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
+  /** Rebuilds livePositions/logLines by replaying playSteps[0..n) from scratch --
+   * cheap at these puzzle sizes, and the only correct way to "undo" a backtrack
+   * step (house===0), which doesn't carry the house it's reverting. */
+  function applyStepsUpTo(n: number): void {
+    livePositions = {};
+    logLines = [];
+    for (let i = 0; i < n; i++) {
+      const step = playSteps[i];
+      if (revealMode) {
+        livePositions[step.entity] = step.house;
+        logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
+      } else {
+        if (step.house === 0) delete livePositions[step.entity];
+        else livePositions[step.entity] = step.house;
+        logLines.push(step.house ? `${entityLabel(step.entity)}: try house ${step.house}` : `${entityLabel(step.entity)}: backtrack`);
+      }
+    }
+  }
+
+  function stepTo(t: ZebraTrace, idx: number): void {
+    stopPlaying();
+    if (playSteps.length === 0) prepareSteps(t);
+    playIdx = Math.max(0, Math.min(playSteps.length, idx));
+    applyStepsUpTo(playIdx);
+    drawBody();
+  }
+
+  function playFrom(t: ZebraTrace): void {
+    stopPlaying();
+    prepareSteps(t);
+    playing = true;
+    applyStepsUpTo(0);
+    const delay = revealMode
+      ? Math.max(120, Math.min(400, 3000 / Math.max(1, playSteps.length)))
+      : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
     const tick = () => {
       if (!playing) return;
       if (playIdx >= playSteps.length) {
@@ -315,13 +340,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
         drawBody();
         return;
       }
-      const step = playSteps[playIdx];
-      if (livePositions) {
-        if (step.house === 0) delete livePositions[step.entity];
-        else livePositions[step.entity] = step.house;
-      }
-      logLines.push(step.house ? `${entityLabel(step.entity)}: try house ${step.house}` : `${entityLabel(step.entity)}: backtrack`);
       playIdx++;
+      applyStepsUpTo(playIdx);
       drawBody();
       playTimer = setTimeout(tick, delay);
     };

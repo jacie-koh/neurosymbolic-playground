@@ -202,6 +202,21 @@ export function renderVDPDebugger(root: HTMLElement): void {
         : ""
     );
 
+    // The real FO-SL search itself can't be stepped (puzzlelab.vdp.run() is one opaque
+    // subprocess call, not a recorded search trace -- every completed run here in fact
+    // records exactly one candidate, confirmed against the real sweep data), so this
+    // steps through the one real sequential process that *is* recorded: perceiving
+    // objects one at a time, same as the play button above but manually paced.
+    const stepRow = scene
+      ? el(
+          "div",
+          { class: "btn-row", style: { marginTop: "8px" } },
+          el("button", { class: "btn", disabled: playing || revealedCount(scene) <= 0, onclick: () => stepTo(scene, revealedCount(scene) - 1) }, "◀ Step back"),
+          el("button", { class: "btn", disabled: playing || revealedCount(scene) >= scene.predictions.length, onclick: () => stepTo(scene, revealedCount(scene) + 1) }, "Step forward ▶"),
+          el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `object ${revealedCount(scene)}/${scene.predictions.length}`)
+        )
+      : "";
+
     const resultsPanel = !resultsRevealed
       ? el("div", { class: "note", style: { marginTop: "12px" } }, el("span", { class: "muted" }, "perceiving objects first — the solve result will reveal once perception finishes…"))
       : el(
@@ -256,7 +271,18 @@ export function renderVDPDebugger(root: HTMLElement): void {
         : [];
     const logBox = renderLiveLog(logLines);
 
-    body.append(accRow, playRow, logBox, resultsPanel, sceneTabs, scenePanel);
+    body.append(accRow, playRow, stepRow, logBox, resultsPanel, sceneTabs, scenePanel);
+  }
+
+  function revealedCount(scene: VDPScene): number {
+    return revealCount ?? scene.predictions.length;
+  }
+
+  function stepTo(scene: VDPScene, count: number): void {
+    stopPlaying();
+    revealCount = Math.max(0, Math.min(scene.predictions.length, count));
+    resultsRevealed = revealCount >= scene.predictions.length;
+    drawBody();
   }
 
   function playScene(scene: VDPScene): void {

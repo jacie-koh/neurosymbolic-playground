@@ -209,6 +209,14 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         : ""
     );
 
+    const stepRow = el(
+      "div",
+      { class: "btn-row", style: { marginTop: "8px" } },
+      el("button", { class: "btn", disabled: playing || playIdx <= 0, onclick: () => stepTo(t, playIdx - 1) }, "◀ Step back"),
+      el("button", { class: "btn", disabled: playing || (playSteps.length > 0 && playIdx >= playSteps.length), onclick: () => stepTo(t, playIdx + 1) }, "Step forward ▶"),
+      liveGrid ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `step ${playIdx}/${playSteps.length || "?"}`) : ""
+    );
+
     const logBox = renderLiveLog(logLines);
 
     const status = el(
@@ -256,6 +264,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage, grid),
       meta,
       playRow,
+      stepRow,
       logBox,
       status,
       panel,
@@ -275,47 +284,62 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     return !edited && t.result.status === "sat" && !!t.result.solution;
   }
 
-  function playFrom(t: KenKenTrace): void {
-    stopPlaying();
-    logLines = [];
-    playIdx = 0;
-    playing = true;
+  /** Whether the current playSteps reveal the real Z3-verified answer (cell by cell,
+   * not a live search -- Z3's own internal decision process isn't recorded) rather
+   * than an independent client-side backtracking re-solve. */
+  let revealMode = false;
 
-    if (canShowRealSolution(t)) {
-      // Reveal the real Z3-verified answer from the offline pipeline, cell by cell —
-      // not a live search, since Z3's own internal decision process isn't recorded.
+  function prepareSteps(t: KenKenTrace): void {
+    revealMode = canShowRealSolution(t);
+    if (revealMode) {
       const solution = t.result.solution!;
       playSteps = [];
       for (let r = 0; r < t.size; r++) {
         for (let c = 0; c < t.size; c++) playSteps.push({ row: r, col: c, digit: solution[r][c] });
       }
-      liveGrid = Array.from({ length: t.size }, () => Array(t.size).fill(0));
-      const delay = Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)));
-      const tick = () => {
-        if (!playing) return;
-        if (playIdx >= playSteps.length) {
-          playing = false;
-          drawBody();
-          return;
-        }
-        const step = playSteps[playIdx];
-        if (liveGrid) liveGrid[step.row][step.col] = step.digit;
-        logLines.push(`(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`);
-        playIdx++;
-        drawBody();
-        playTimer = setTimeout(tick, delay);
-      };
-      drawBody();
-      playTimer = setTimeout(tick, delay);
-      return;
+    } else {
+      // Edited cages (or the offline baseline itself was unsat): Z3 never verified this
+      // exact state, so fall back to an independent client-side search instead.
+      playSteps = solveKenKenWithSteps(t.size, cages).steps;
     }
+    playIdx = 0;
+  }
 
-    // Edited cages (or the offline baseline itself was unsat): Z3 never verified this
-    // exact state, so fall back to an independent client-side search instead.
-    const result = solveKenKenWithSteps(t.size, cages);
-    playSteps = result.steps;
+  /** Rebuilds liveGrid/logLines by replaying playSteps[0..n) from scratch -- cheap at
+   * these puzzle sizes, and the only correct way to "undo" a backtrack step, which
+   * doesn't carry the value it's reverting. */
+  function applyStepsUpTo(t: KenKenTrace, n: number): void {
     liveGrid = Array.from({ length: t.size }, () => Array(t.size).fill(0));
-    const delay = Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
+    logLines = [];
+    for (let i = 0; i < n; i++) {
+      const step = playSteps[i];
+      liveGrid[step.row][step.col] = step.digit;
+      logLines.push(
+        revealMode
+          ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
+          : step.digit
+            ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
+            : `(${step.row + 1},${step.col + 1}): backtrack`
+      );
+    }
+  }
+
+  function stepTo(t: KenKenTrace, idx: number): void {
+    stopPlaying();
+    if (playSteps.length === 0) prepareSteps(t);
+    playIdx = Math.max(0, Math.min(playSteps.length, idx));
+    applyStepsUpTo(t, playIdx);
+    drawBody();
+  }
+
+  function playFrom(t: KenKenTrace): void {
+    stopPlaying();
+    prepareSteps(t);
+    playing = true;
+    applyStepsUpTo(t, 0);
+    const delay = revealMode
+      ? Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)))
+      : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
     const tick = () => {
       if (!playing) return;
       if (playIdx >= playSteps.length) {
@@ -323,10 +347,8 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         drawBody();
         return;
       }
-      const step = playSteps[playIdx];
-      if (liveGrid) liveGrid[step.row][step.col] = step.digit;
-      logLines.push(step.digit ? `(${step.row + 1},${step.col + 1}): try ${step.digit}` : `(${step.row + 1},${step.col + 1}): backtrack`);
       playIdx++;
+      applyStepsUpTo(t, playIdx);
       drawBody();
       playTimer = setTimeout(tick, delay);
     };
