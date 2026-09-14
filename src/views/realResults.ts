@@ -13,12 +13,14 @@
  * construction, not an estimate. Where no real number exists for a cell, it
  * says so instead of inventing one.
  *
- * A stacking-pattern tab is one of three things per module: real (has actual
- * measured/checkable data), hypothetical (not built, but a coherent thing that
- * COULD be — shown as a clearly-labeled description, never fake numbers), or
- * removed (structurally impossible for this module, e.g. Hitori has no
- * perception stage ever — the tab is hidden everywhere it's offered, not just
- * here; see isPatternRemoved(), also used by the builder page's chooser).
+ * A stacking-pattern tab is either real (has actual measured/checkable data,
+ * genuinely built and run) or removed: no tab is ever shown for a pattern this
+ * project can't actually demonstrate, whether that's because it's structurally
+ * impossible for the module (e.g. Hitori has no perception stage ever) or
+ * because a real attempt isn't demoable right now (e.g. training a network on
+ * a handful of real correction examples would be pure overfitting, not a real
+ * result). The tab is hidden everywhere it's offered, not just here — see
+ * isPatternRemoved(), also used by the builder page's chooser.
  */
 
 import { el } from "../dom";
@@ -40,11 +42,8 @@ interface PatternRow {
   pureNeural: ColumnStats;
   neurosymbolic: ColumnStats;
   symbolicOnly: ColumnStats;
-  /** This pattern has no real implementation for this module, but is a coherent thing that
-   * COULD be built — shown as a clearly-labeled hypothetical instead of real measurements. */
-  hypothetical?: string;
-  /** This pattern is structurally impossible for this module (not just unbuilt) — omit its
-   * tab from the switcher entirely rather than showing anything for it. */
+  /** No tab is shown for this pattern — either it's structurally impossible for this
+   * module, or a real demo of it isn't achievable right now (see isPatternRemoved()). */
   removed?: true;
 }
 
@@ -77,7 +76,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: Z3's row/column/box conflicts could be replayed as a training signal — fine-tuning the digit-recognition CNN specifically on cases where a misread also broke a constraint (e.g. confusing an 8 for a 3). That could reduce exactly the systematic misreads seen in the handwritten strata. This project keeps perception frozen and only ever independently checks it, since training against this benchmark's own correction outputs risks quietly overfitting to it rather than genuinely improving perception.",
+      removed: true, // Would need real gradient updates on ~10 real correction examples — not a demo, just overfitting.
     },
     "learning-reasoning": {
       pureNeural: {
@@ -119,7 +118,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: every correction the pipeline makes is already recorded (which cage, what the CNN read, what it should have been). That log could hypothetically become fine-tuning data for the cage-reading CNN, so the segmentation bug behind the 96%→25% size-degradation trend gets learned away instead of patched at inference time via search. This project kept the CNN frozen and only ever independently re-verified it, since training on this benchmark's own correction outputs risks overfitting to this specific dataset's error patterns rather than fixing recognition generally.",
+      removed: true, // Same reason as Sudoku — real training on a handful of real correction examples wouldn't be a demo, just overfitting.
     },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NOT_TRAINED, robustness: NA },
@@ -188,7 +187,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: MINIEXACT's solved (or failed) assignments could hypothetically become a fine-tuning signal for the LLM parser, nudging it toward clue interpretations that tend to be satisfiable. This project keeps the LLM frozen and only ever prompts it — a parse that turns out wrong is recorded as a real, honest failure (one of the batch-generated examples really does come back unsat) rather than trained away. Parsing does retry the LLM once on a JSON schema error, but that's a format check on the LLM's own output shape, not the solver reasoning about the puzzle — it doesn't count as this pattern.",
+      removed: true, // Fine-tuning a 4B-parameter LLM isn't feasible on this machine, and there's no real training data for it beyond a handful of parse failures.
     },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
@@ -226,13 +225,13 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: when the FO-SL synthesizer can't find a discriminator, that failure could hypothetically fine-tune the attribute classifier — e.g. sharpening the depth estimate used for front/behind, already identified as the real system's weakest link. This project fine-tunes the vision stack once, offline, on held-out training data only; synthesis-stage feedback never touches it.",
+      removed: true, // Same reason — real training data for this would need synthesis failures we don't actually have (the classifier is already 100% on every held-out object tested).
     },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      hypothetical: "Not built, but coherent: a tight loop would mean a failed synthesis re-triggers perception — re-examining specifically the object pair whose depth estimate is most uncertain, rather than accepting the first perception pass as final. The real pipeline never does this: perception runs exactly once, and synthesis has no way to ask for another look.",
+      removed: true, // Checked feasibility (§ earlier): buildable in principle, but every held-out object already gets 100% attribute accuracy, so there's no real low-confidence failure to demonstrate a retry against.
     },
   },
 };
@@ -306,20 +305,6 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
         )
       )
     );
-
-    if (row.hypothetical) {
-      body.append(
-        switcher,
-        el(
-          "div",
-          { class: "note", style: { marginTop: "14px", borderLeft: "3px solid var(--muted)" } },
-          el("span", { class: "badge", style: { marginRight: "8px" } }, "hypothetical — not implemented"),
-          el("br"),
-          el("span", { style: { display: "inline-block", marginTop: "6px" } }, row.hypothetical)
-        )
-      );
-      return;
-    }
 
     const grid = el(
       "div",
