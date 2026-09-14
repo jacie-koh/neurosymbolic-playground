@@ -1,0 +1,1200 @@
+{
+  "id": "vdp-alternation-fovariant-20-swap3",
+  "title": "alternation (fovariant-20-swap3)",
+  "scenes": [
+    {
+      "sceneId": "0",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/0.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            56.895015716552734,
+            83.42916107177734,
+            148.5428924560547,
+            173.62066650390625
+          ],
+          "color": {
+            "value": "purple",
+            "topK": [
+              [
+                "purple",
+                0.9999985694885254
+              ],
+              [
+                "cyan",
+                7.065567615427426e-07
+              ],
+              [
+                "yellow",
+                4.186485682566854e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999994039535522
+              ],
+              [
+                "rubber",
+                5.458217060549941e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999998807907104
+              ],
+              [
+                "small",
+                8.829785969055592e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999998807907104
+              ],
+              [
+                "cylinder",
+                6.046560230288378e-08
+              ],
+              [
+                "sphere",
+                5.2297064456752196e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            208.6039581298828,
+            88.20784759521484,
+            274.5144958496094,
+            172.78257751464844
+          ],
+          "color": {
+            "value": "cyan",
+            "topK": [
+              [
+                "cyan",
+                0.9999850988388062
+              ],
+              [
+                "blue",
+                6.044534529792145e-06
+              ],
+              [
+                "green",
+                3.968051260017091e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999991655349731
+              ],
+              [
+                "rubber",
+                8.305413530251826e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999977350234985
+              ],
+              [
+                "small",
+                2.233074837931781e-06
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999995231628418
+              ],
+              [
+                "sphere",
+                3.036878126749798e-07
+              ],
+              [
+                "cube",
+                1.330319747694375e-07
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "purple",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "cyan",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "1",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/1.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            58.834835052490234,
+            85.48172760009766,
+            151.241455078125,
+            175.71678161621094
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999997615814209
+              ],
+              [
+                "brown",
+                1.0285702245482753e-07
+              ],
+              [
+                "blue",
+                6.524349061010071e-08
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999994039535522
+              ],
+              [
+                "rubber",
+                6.186858740875323e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999995231628418
+              ],
+              [
+                "small",
+                4.2939967670463375e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "sphere",
+                6.989770540144491e-09
+              ],
+              [
+                "cylinder",
+                6.070906888311356e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            205.5108184814453,
+            89.47645568847656,
+            272.13201904296875,
+            174.75213623046875
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999961853027344
+              ],
+              [
+                "red",
+                1.5180720538410242e-06
+              ],
+              [
+                "gray",
+                1.2406791256580618e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.999998927116394
+              ],
+              [
+                "rubber",
+                1.1105742032668786e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999995231628418
+              ],
+              [
+                "small",
+                4.783889835380251e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999994039535522
+              ],
+              [
+                "sphere",
+                5.14201587975549e-07
+              ],
+              [
+                "cube",
+                7.357786557804502e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            332.9043884277344,
+            92.2872543334961,
+            430.6349182128906,
+            184.65342712402344
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999998807907104
+              ],
+              [
+                "brown",
+                1.3307274571161543e-07
+              ],
+              [
+                "blue",
+                3.124112524233169e-08
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                7.41304839735335e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999972581863403
+              ],
+              [
+                "small",
+                2.695733883228968e-06
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999996423721313
+              ],
+              [
+                "cylinder",
+                2.0295442482165527e-07
+              ],
+              [
+                "sphere",
+                9.951631341209577e-08
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "gray",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        },
+        {
+          "color": "gray",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        }
+      ]
+    },
+    {
+      "sceneId": "2",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/2.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            67.39543914794922,
+            87.92434692382812,
+            141.18508911132812,
+            172.0935821533203
+          ],
+          "color": {
+            "value": "cyan",
+            "topK": [
+              [
+                "cyan",
+                0.9999902248382568
+              ],
+              [
+                "blue",
+                3.364008762218873e-06
+              ],
+              [
+                "purple",
+                3.1706329082226148e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999997615814209
+              ],
+              [
+                "rubber",
+                2.710665967242676e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999997615814209
+              ],
+              [
+                "small",
+                2.414109587789426e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999997615814209
+              ],
+              [
+                "cube",
+                2.614986556181975e-07
+              ],
+              [
+                "sphere",
+                3.3283921396787264e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            194.65757751464844,
+            88.05467987060547,
+            284.412109375,
+            179.3580780029297
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999996423721313
+              ],
+              [
+                "green",
+                1.510873772758714e-07
+              ],
+              [
+                "brown",
+                1.3332957848888327e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                3.3838638557881495e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                3.6766047983860517e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999998807907104
+              ],
+              [
+                "sphere",
+                1.1295686874746025e-07
+              ],
+              [
+                "cylinder",
+                5.82917891733814e-08
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "cyan",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        },
+        {
+          "color": "gray",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        }
+      ]
+    },
+    {
+      "sceneId": "3",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/3.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            198.1202850341797,
+            85.13451385498047,
+            285.9756774902344,
+            175.11033630371094
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999996423721313
+              ],
+              [
+                "brown",
+                3.858688444324798e-07
+              ],
+              [
+                "blue",
+                2.459291081891024e-08
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999998807907104
+              ],
+              [
+                "rubber",
+                7.630065823605037e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999998807907104
+              ],
+              [
+                "small",
+                8.118291106029574e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999997615814209
+              ],
+              [
+                "cylinder",
+                1.6740652597491135e-07
+              ],
+              [
+                "sphere",
+                1.4171801865359157e-07
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            343.5119323730469,
+            91.05406951904297,
+            419.5816955566406,
+            177.69874572753906
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.999997615814209
+              ],
+              [
+                "red",
+                1.1018104260074324e-06
+              ],
+              [
+                "gray",
+                6.542994128722057e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                5.454356610812283e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                3.939821624499018e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                1.0
+              ],
+              [
+                "sphere",
+                2.6341862024992224e-08
+              ],
+              [
+                "cube",
+                8.63732374511983e-09
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "gray",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "4",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/4.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            150.1298065185547,
+            120.77933502197266,
+            193.11285400390625,
+            164.52024841308594
+          ],
+          "color": {
+            "value": "cyan",
+            "topK": [
+              [
+                "cyan",
+                0.9999992847442627
+              ],
+              [
+                "blue",
+                2.8244036798241723e-07
+              ],
+              [
+                "red",
+                1.269337843723406e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                4.54731790000551e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                2.991277225916633e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "sphere",
+                7.525293277410583e-09
+              ],
+              [
+                "cylinder",
+                4.451900625923599e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            223.08470153808594,
+            122.6072769165039,
+            254.6533966064453,
+            163.2476806640625
+          ],
+          "color": {
+            "value": "purple",
+            "topK": [
+              [
+                "purple",
+                0.9999995231628418
+              ],
+              [
+                "blue",
+                1.6445422090782813e-07
+              ],
+              [
+                "red",
+                1.2802738069694897e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                3.995257902289495e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                1.0985420351161679e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                1.0
+              ],
+              [
+                "cube",
+                2.7549436509843872e-08
+              ],
+              [
+                "sphere",
+                1.4352640853587673e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            282.121826171875,
+            124.98030853271484,
+            326.4840393066406,
+            169.34095764160156
+          ],
+          "color": {
+            "value": "cyan",
+            "topK": [
+              [
+                "cyan",
+                0.9999994039535522
+              ],
+              [
+                "red",
+                1.8654500877346436e-07
+              ],
+              [
+                "blue",
+                1.302551311255229e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999971389770508
+              ],
+              [
+                "rubber",
+                2.8476479201344773e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                3.126038095047079e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999997615814209
+              ],
+              [
+                "cylinder",
+                1.4589124930353137e-07
+              ],
+              [
+                "sphere",
+                8.067321033422559e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            357.2702331542969,
+            127.06230926513672,
+            392.8445739746094,
+            168.3404083251953
+          ],
+          "color": {
+            "value": "purple",
+            "topK": [
+              [
+                "purple",
+                0.9999984502792358
+              ],
+              [
+                "blue",
+                8.036682856982225e-07
+              ],
+              [
+                "red",
+                4.0185773286793847e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                2.537833485027896e-11
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                6.857749923483425e-10
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999998807907104
+              ],
+              [
+                "cube",
+                7.594001516508797e-08
+              ],
+              [
+                "sphere",
+                8.233747017527548e-09
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "cyan",
+          "material": "metal",
+          "size": "small",
+          "shape": "cube"
+        },
+        {
+          "color": "purple",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        },
+        {
+          "color": "cyan",
+          "material": "metal",
+          "size": "small",
+          "shape": "cube"
+        },
+        {
+          "color": "purple",
+          "material": "rubber",
+          "size": "small",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "5",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-alternation-fovariant-20-swap3/5.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            127.71244049072266,
+            82.33040618896484,
+            216.6722869873047,
+            172.3407440185547
+          ],
+          "color": {
+            "value": "purple",
+            "topK": [
+              [
+                "purple",
+                0.9999946355819702
+              ],
+              [
+                "red",
+                3.237563760194462e-06
+              ],
+              [
+                "cyan",
+                1.118927457355312e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                4.0762318520570773e-10
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                3.821768501666156e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                0.9999998807907104
+              ],
+              [
+                "cylinder",
+                1.0149518914204236e-07
+              ],
+              [
+                "sphere",
+                1.618024603189383e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            285.3078308105469,
+            127.14437103271484,
+            318.22369384765625,
+            168.55999755859375
+          ],
+          "color": {
+            "value": "cyan",
+            "topK": [
+              [
+                "cyan",
+                0.9999978542327881
+              ],
+              [
+                "blue",
+                6.498841571556113e-07
+              ],
+              [
+                "red",
+                5.387225883168867e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.999996542930603
+              ],
+              [
+                "rubber",
+                3.4024703836621484e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                0.9999998807907104
+              ],
+              [
+                "large",
+                1.0947277928607946e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.999990701675415
+              ],
+              [
+                "sphere",
+                8.739803888602182e-06
+              ],
+              [
+                "cube",
+                6.293108185673191e-07
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "purple",
+          "material": "rubber",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "cyan",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        }
+      ]
+    }
+  ],
+  "accuracy": {
+    "color": 1.0,
+    "material": 1.0,
+    "size": 1.0,
+    "shape": 1.0
+  },
+  "detectedCount": 15,
+  "trueCount": 15,
+  "freshResult": {
+    "status": "sat",
+    "formula": "Exists q0: cylinder. Forall q1: cube. behind(q1,q0)",
+    "candidate": "3.json"
+  },
+  "referenceResult": {
+    "status": "sat",
+    "formula": "Exists q0: cylinder. Forall q1: cube. right(q0,q1)",
+    "candidate": "3.json"
+  }
+}

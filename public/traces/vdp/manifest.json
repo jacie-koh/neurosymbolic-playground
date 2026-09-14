@@ -1,5 +1,29 @@
 [
   {
+    "id": "vdp-agreement-fovariant-13",
+    "file": "vdp-agreement-fovariant-13.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-13)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-agreement-fovariant-14",
+    "file": "vdp-agreement-fovariant-14.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-14)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
     "id": "vdp-agreement-fovariant-17",
     "file": "vdp-agreement-fovariant-17.json",
     "pattern": "agreement",
@@ -21,7 +45,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 4
   },
   {
     "id": "vdp-agreement-fovariant-23",
@@ -33,7 +57,31 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-agreement-fovariant-3",
+    "file": "vdp-agreement-fovariant-3.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-3)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-agreement-fovariant-4",
+    "file": "vdp-agreement-fovariant-4.json",
+    "pattern": "agreement",
+    "title": "agreement (fovariant-4)",
+    "objectCount": 3.5,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
   },
   {
     "id": "vdp-match-2",
@@ -48,6 +96,90 @@
     "difficulty": 5
   },
   {
+    "id": "vdp-alternate-color-fovariant-10",
+    "file": "vdp-alternate-color-fovariant-10.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-10)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-11",
+    "file": "vdp-alternate-color-fovariant-11.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-11)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-15",
+    "file": "vdp-alternate-color-fovariant-15.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-15)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-17",
+    "file": "vdp-alternate-color-fovariant-17.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-17)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-19",
+    "file": "vdp-alternate-color-fovariant-19.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-19)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-2",
+    "file": "vdp-alternate-color-fovariant-2.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-2)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-alternate-color-fovariant-9",
+    "file": "vdp-alternate-color-fovariant-9.json",
+    "pattern": "alternate-color",
+    "title": "alternate-color (fovariant-9)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
     "id": "vdp-match",
     "file": "vdp-match.json",
     "pattern": "alternate-color",
@@ -57,7 +189,103 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-alternation-fovariant-1-swap4",
+    "file": "vdp-alternation-fovariant-1-swap4.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-1-swap4)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
     "difficulty": 1
+  },
+  {
+    "id": "vdp-alternation-fovariant-10-swap5",
+    "file": "vdp-alternation-fovariant-10-swap5.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-10-swap5)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 1
+  },
+  {
+    "id": "vdp-alternation-fovariant-20-swap3",
+    "file": "vdp-alternation-fovariant-20-swap3.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-20-swap3)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 1
+  },
+  {
+    "id": "vdp-alternation-fovariant-21-swap3",
+    "file": "vdp-alternation-fovariant-21-swap3.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-21-swap3)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-alternation-fovariant-23",
+    "file": "vdp-alternation-fovariant-23.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-23)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 1
+  },
+  {
+    "id": "vdp-alternation-fovariant-4",
+    "file": "vdp-alternation-fovariant-4.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-4)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 1
+  },
+  {
+    "id": "vdp-alternation-fovariant-9-swap3",
+    "file": "vdp-alternation-fovariant-9-swap3.json",
+    "pattern": "alternation",
+    "title": "alternation (fovariant-9-swap3)",
+    "objectCount": 2.5,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-22",
+    "file": "vdp-aphaeresis-fovariant-22.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-22)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
   },
   {
     "id": "vdp-wrong-candidate",
@@ -69,6 +297,6 @@
     "conjunctBound": 1,
     "matches": false,
     "freshStatus": "sat",
-    "difficulty": 1
+    "difficulty": 4
   }
 ]
