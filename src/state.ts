@@ -1,19 +1,11 @@
 /**
  * Global application state + a tiny observable store.
  *
- * The whole app is a single page that swaps between a few "views":
- *   situations -> builder -> (neural/symbolic detail) -> results
- *   proportion is a SEPARATE mode (per mentor feedback: do not mix the
- *   customize-each-block flow with the neural<->symbolic proportion slider).
+ * The whole app is a single page that swaps between two "views":
+ *   situations -> results
  */
 
-export type ViewName =
-  | "situations"
-  | "builder"
-  | "neural"
-  | "symbolic"
-  | "proportion"
-  | "results";
+export type ViewName = "situations" | "results";
 
 /** The three symbolic engines the user can choose for the symbolic block. */
 export type SymbolicMethod = "kg" | "rules" | "forward-chaining";
@@ -54,20 +46,15 @@ export interface SymbolicConfig {
 
 export interface AppState {
   view: ViewName;
-  /** Which interaction layer of the builder we are in. */
-  mode: "customize" | "proportion";
   situationId: string | null;
   pattern: StackingPattern | null;
   neural: NeuralConfig;
   symbolic: SymbolicConfig;
-  /** Fraction of the decision delegated to the symbolic side, 0..1. */
-  proportion: number;
 }
 
 function defaultState(): AppState {
   return {
     view: "situations",
-    mode: "customize",
     situationId: null,
     pattern: "learning-for-reasoning",
     neural: {
@@ -85,7 +72,6 @@ function defaultState(): AppState {
       method: "rules",
       threshold: 0.5,
     },
-    proportion: 0.5,
   };
 }
 

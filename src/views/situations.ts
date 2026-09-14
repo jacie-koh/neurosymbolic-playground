@@ -61,9 +61,9 @@ export function renderSituations(root: HTMLElement): void {
       {
         class: "btn primary",
         disabled: !chosen,
-        onclick: () => store.set({ view: "builder", mode: "customize" }),
+        onclick: () => store.set({ view: "results" }),
       },
-      "Continue to architecture \u2192"
+      "See real results \u2192"
     ),
     !chosen ? el("span", { class: "muted" }, "Select a situation to continue") : null
   );
