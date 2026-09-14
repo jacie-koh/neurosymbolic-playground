@@ -1,0 +1,1496 @@
+{
+  "id": "vdp-aphaeresis-fovariant-3",
+  "title": "aphaeresis (fovariant-3)",
+  "scenes": [
+    {
+      "sceneId": "0",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/0.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            59.027828216552734,
+            81.27941131591797,
+            149.52525329589844,
+            170.61463928222656
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999974966049194
+              ],
+              [
+                "red",
+                1.0577660987109994e-06
+              ],
+              [
+                "yellow",
+                9.50765013385535e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999978542327881
+              ],
+              [
+                "rubber",
+                2.151442686226801e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999997615814209
+              ],
+              [
+                "small",
+                2.7372590238883276e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "cylinder",
+                1.2757786826966822e-08
+              ],
+              [
+                "sphere",
+                5.496755495215666e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            171.24392700195312,
+            85.60128021240234,
+            236.9132537841797,
+            170.10809326171875
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999983310699463
+              ],
+              [
+                "red",
+                9.340807309854426e-07
+              ],
+              [
+                "gray",
+                4.98715394314786e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999985694885254
+              ],
+              [
+                "rubber",
+                1.4644776911154622e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999998807907104
+              ],
+              [
+                "small",
+                1.1134443411719985e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999986886978149
+              ],
+              [
+                "sphere",
+                1.099370138035738e-06
+              ],
+              [
+                "cube",
+                2.5756577315405593e-07
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            336.7212829589844,
+            89.87920379638672,
+            411.1751403808594,
+            174.97940063476562
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999958276748657
+              ],
+              [
+                "red",
+                1.7078117480195942e-06
+              ],
+              [
+                "gray",
+                1.456356699236494e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999998807907104
+              ],
+              [
+                "rubber",
+                1.3827653333464696e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                3.8256921186530235e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999998807907104
+              ],
+              [
+                "sphere",
+                8.037311971520467e-08
+              ],
+              [
+                "cube",
+                1.520121806208863e-08
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "1",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/1.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            53.088356018066406,
+            84.46282958984375,
+            144.76519775390625,
+            175.3839569091797
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999967813491821
+              ],
+              [
+                "yellow",
+                1.5674767155360314e-06
+              ],
+              [
+                "gray",
+                9.197608505928656e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999986886978149
+              ],
+              [
+                "rubber",
+                1.3686933471035445e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999996423721313
+              ],
+              [
+                "small",
+                3.706411746406957e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "cylinder",
+                2.0035589187727965e-08
+              ],
+              [
+                "sphere",
+                9.420144664318286e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            232.1677703857422,
+            100.05146789550781,
+            297.020751953125,
+            170.16006469726562
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999971389770508
+              ],
+              [
+                "red",
+                1.2916101468363195e-06
+              ],
+              [
+                "gray",
+                8.198824730243359e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999985694885254
+              ],
+              [
+                "rubber",
+                1.4504338423648733e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                3.872628606682582e-11
+              ]
+            ]
+          },
+          "shape": {
+            "value": "sphere",
+            "topK": [
+              [
+                "sphere",
+                0.9999998807907104
+              ],
+              [
+                "cube",
+                1.0057884480829671e-07
+              ],
+              [
+                "cylinder",
+                5.850051820743829e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            336.8665466308594,
+            102.06324768066406,
+            404.3050231933594,
+            172.73699951171875
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999980926513672
+              ],
+              [
+                "red",
+                7.296324611161253e-07
+              ],
+              [
+                "yellow",
+                6.326516199806065e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999998807907104
+              ],
+              [
+                "rubber",
+                1.0601463173998127e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                1.154966920713374e-11
+              ]
+            ]
+          },
+          "shape": {
+            "value": "sphere",
+            "topK": [
+              [
+                "sphere",
+                0.9999998807907104
+              ],
+              [
+                "cube",
+                1.0000306360780087e-07
+              ],
+              [
+                "cylinder",
+                4.645113449441851e-08
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "sphere"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "sphere"
+        }
+      ]
+    },
+    {
+      "sceneId": "2",
+      "role": "test",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/2.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            87.60565185546875,
+            123.6072998046875,
+            122.19380950927734,
+            164.5435791015625
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999946355819702
+              ],
+              [
+                "red",
+                2.669096829777118e-06
+              ],
+              [
+                "yellow",
+                2.5528643163852394e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                1.1884943695861239e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                7.210256836032158e-10
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                1.0
+              ],
+              [
+                "cube",
+                3.8758710019237697e-08
+              ],
+              [
+                "sphere",
+                3.129104442223252e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            147.36241149902344,
+            123.95513153076172,
+            190.41262817382812,
+            168.6748809814453
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999933242797852
+              ],
+              [
+                "yellow",
+                3.383552666491596e-06
+              ],
+              [
+                "red",
+                2.933864379883744e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                2.53212242284917e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                2.959197775709299e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "sphere",
+                3.0997888700312615e-08
+              ],
+              [
+                "cylinder",
+                4.5113943691887926e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            225.23374938964844,
+            127.96007537841797,
+            257.3759460449219,
+            169.5082244873047
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999932050704956
+              ],
+              [
+                "red",
+                3.4042084280372364e-06
+              ],
+              [
+                "yellow",
+                3.2292855394189246e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999996423721313
+              ],
+              [
+                "rubber",
+                3.7903137695138867e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                4.57691795574533e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999996423721313
+              ],
+              [
+                "sphere",
+                2.1086719925733632e-07
+              ],
+              [
+                "cube",
+                6.282751741082393e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            358.6095886230469,
+            131.4641876220703,
+            394.7084045410156,
+            174.1644744873047
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.999974250793457
+              ],
+              [
+                "red",
+                1.669267294346355e-05
+              ],
+              [
+                "yellow",
+                7.912245564511977e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999576807022095
+              ],
+              [
+                "rubber",
+                4.232140781823546e-05
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                8.526021666455108e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999970197677612
+              ],
+              [
+                "sphere",
+                2.23695246859279e-06
+              ],
+              [
+                "cube",
+                7.020728389761643e-07
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "small",
+          "shape": "cube"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        },
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "3",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/3.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            62.56018829345703,
+            82.09703826904297,
+            152.2954864501953,
+            171.1208953857422
+          ],
+          "color": {
+            "value": "brown",
+            "topK": [
+              [
+                "brown",
+                0.9999963045120239
+              ],
+              [
+                "gray",
+                1.3276962818054017e-06
+              ],
+              [
+                "yellow",
+                1.2288027164686355e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999979734420776
+              ],
+              [
+                "rubber",
+                2.0131160454184283e-06
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999997615814209
+              ],
+              [
+                "small",
+                2.410582737866207e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "cylinder",
+                1.8098230469831833e-08
+              ],
+              [
+                "sphere",
+                5.9084164227840574e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            204.8795166015625,
+            85.19319915771484,
+            271.2091979980469,
+            169.99835205078125
+          ],
+          "color": {
+            "value": "red",
+            "topK": [
+              [
+                "red",
+                0.9999958276748657
+              ],
+              [
+                "cyan",
+                2.184922550441115e-06
+              ],
+              [
+                "purple",
+                1.550852857690188e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                1.329933274618611e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999996423721313
+              ],
+              [
+                "small",
+                3.1777750564288e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999953508377075
+              ],
+              [
+                "sphere",
+                4.5494307414628565e-06
+              ],
+              [
+                "cube",
+                6.810564201487068e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            338.5866394042969,
+            88.46268463134766,
+            413.37335205078125,
+            174.58236694335938
+          ],
+          "color": {
+            "value": "red",
+            "topK": [
+              [
+                "red",
+                0.9999934434890747
+              ],
+              [
+                "purple",
+                2.7057867555413395e-06
+              ],
+              [
+                "cyan",
+                2.325479727005586e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                2.0279128376543554e-10
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.999998927116394
+              ],
+              [
+                "small",
+                1.104575744648173e-06
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999998807907104
+              ],
+              [
+                "sphere",
+                9.073586682006862e-08
+              ],
+              [
+                "cube",
+                3.7215328596573727e-09
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "brown",
+          "material": "metal",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "red",
+          "material": "rubber",
+          "size": "large",
+          "shape": "cylinder"
+        },
+        {
+          "color": "red",
+          "material": "rubber",
+          "size": "large",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "4",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/4.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            88.09266662597656,
+            121.42695617675781,
+            130.77731323242188,
+            164.905029296875
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999994039535522
+              ],
+              [
+                "green",
+                3.37117427307021e-07
+              ],
+              [
+                "blue",
+                1.4667186576389213e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                3.579304852507903e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                4.089659721984162e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "sphere",
+                1.6882787390315457e-09
+              ],
+              [
+                "cylinder",
+                1.1081149331459983e-09
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            211.2089385986328,
+            89.3443374633789,
+            278.0708923339844,
+            175.1497344970703
+          ],
+          "color": {
+            "value": "blue",
+            "topK": [
+              [
+                "blue",
+                0.9999732971191406
+              ],
+              [
+                "gray",
+                1.4526306586049031e-05
+              ],
+              [
+                "purple",
+                4.696491032518679e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                2.3686578032311445e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                1.0
+              ],
+              [
+                "small",
+                7.216530706344315e-10
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999998807907104
+              ],
+              [
+                "sphere",
+                1.4536934145326086e-07
+              ],
+              [
+                "cube",
+                2.8257831630185137e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            328.00616455078125,
+            129.59727478027344,
+            362.38018798828125,
+            171.70262145996094
+          ],
+          "color": {
+            "value": "red",
+            "topK": [
+              [
+                "red",
+                0.9999986886978149
+              ],
+              [
+                "purple",
+                6.243054144761118e-07
+              ],
+              [
+                "brown",
+                6.061376893740089e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                1.0
+              ],
+              [
+                "rubber",
+                6.625169746143911e-09
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                2.413214517105189e-09
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.9999995231628418
+              ],
+              [
+                "sphere",
+                3.2927201232269e-07
+              ],
+              [
+                "cube",
+                7.078735819732174e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            395.8161926269531,
+            130.52137756347656,
+            434.1817321777344,
+            173.15731811523438
+          ],
+          "color": {
+            "value": "red",
+            "topK": [
+              [
+                "red",
+                0.9999977350234985
+              ],
+              [
+                "brown",
+                1.600456130290695e-06
+              ],
+              [
+                "purple",
+                5.361654302760144e-07
+              ]
+            ]
+          },
+          "material": {
+            "value": "metal",
+            "topK": [
+              [
+                "metal",
+                0.9999991655349731
+              ],
+              [
+                "rubber",
+                8.892156415640784e-07
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                3.6939475478448e-08
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                0.999997615814209
+              ],
+              [
+                "sphere",
+                1.4711042695125798e-06
+              ],
+              [
+                "cube",
+                9.023933671414852e-07
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "gray",
+          "material": "metal",
+          "size": "small",
+          "shape": "cube"
+        },
+        {
+          "color": "blue",
+          "material": "rubber",
+          "size": "large",
+          "shape": "cylinder"
+        },
+        {
+          "color": "red",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        },
+        {
+          "color": "red",
+          "material": "metal",
+          "size": "small",
+          "shape": "cylinder"
+        }
+      ]
+    },
+    {
+      "sceneId": "5",
+      "role": "train",
+      "image": "/traces/vdp/images/vdp-aphaeresis-fovariant-3/5.jpg",
+      "imageWidth": 480,
+      "imageHeight": 320,
+      "predictions": [
+        {
+          "box": [
+            128.6717529296875,
+            85.21517181396484,
+            218.3916473388672,
+            175.9166259765625
+          ],
+          "color": {
+            "value": "gray",
+            "topK": [
+              [
+                "gray",
+                0.9999947547912598
+              ],
+              [
+                "blue",
+                3.4379816042928724e-06
+              ],
+              [
+                "brown",
+                1.2784162208845373e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                0.9999998807907104
+              ],
+              [
+                "metal",
+                9.109898968517882e-08
+              ]
+            ]
+          },
+          "size": {
+            "value": "large",
+            "topK": [
+              [
+                "large",
+                0.9999998807907104
+              ],
+              [
+                "small",
+                1.447247370833793e-07
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cube",
+            "topK": [
+              [
+                "cube",
+                1.0
+              ],
+              [
+                "cylinder",
+                3.176714002961489e-08
+              ],
+              [
+                "sphere",
+                3.092637257395836e-08
+              ]
+            ]
+          }
+        },
+        {
+          "box": [
+            294.0466003417969,
+            128.49302673339844,
+            327.3234558105469,
+            170.2380828857422
+          ],
+          "color": {
+            "value": "blue",
+            "topK": [
+              [
+                "blue",
+                0.9999715089797974
+              ],
+              [
+                "purple",
+                9.485935152042657e-06
+              ],
+              [
+                "gray",
+                9.275786396756303e-06
+              ]
+            ]
+          },
+          "material": {
+            "value": "rubber",
+            "topK": [
+              [
+                "rubber",
+                1.0
+              ],
+              [
+                "metal",
+                1.0058637950338678e-10
+              ]
+            ]
+          },
+          "size": {
+            "value": "small",
+            "topK": [
+              [
+                "small",
+                1.0
+              ],
+              [
+                "large",
+                7.438397120473894e-10
+              ]
+            ]
+          },
+          "shape": {
+            "value": "cylinder",
+            "topK": [
+              [
+                "cylinder",
+                1.0
+              ],
+              [
+                "cube",
+                4.339641535011651e-09
+              ],
+              [
+                "sphere",
+                2.1885111500807852e-09
+              ]
+            ]
+          }
+        }
+      ],
+      "groundTruth": [
+        {
+          "color": "gray",
+          "material": "rubber",
+          "size": "large",
+          "shape": "cube"
+        },
+        {
+          "color": "blue",
+          "material": "rubber",
+          "size": "small",
+          "shape": "cylinder"
+        }
+      ]
+    }
+  ],
+  "accuracy": {
+    "color": 1.0,
+    "material": 1.0,
+    "size": 1.0,
+    "shape": 1.0
+  },
+  "detectedCount": 19,
+  "trueCount": 19,
+  "freshResult": {
+    "status": "sat",
+    "formula": "Exists q0: cube. Exists q1: cylinder. Forall q2: cylinder. right(q2,q0)",
+    "candidate": "0.json"
+  },
+  "referenceResult": {
+    "status": "sat",
+    "formula": "Exists q0: cube. Exists q1: cylinder. Forall q2: cylinder. right(q2,q0)",
+    "candidate": "0.json"
+  }
+}

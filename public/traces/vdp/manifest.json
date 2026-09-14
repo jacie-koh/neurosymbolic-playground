@@ -33,7 +33,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 5
   },
   {
     "id": "vdp-agreement-fovariant-2",
@@ -45,7 +45,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 5
   },
   {
     "id": "vdp-agreement-fovariant-23",
@@ -117,7 +117,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-alternate-color-fovariant-15",
@@ -129,7 +129,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-alternate-color-fovariant-17",
@@ -141,7 +141,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-alternate-color-fovariant-19",
@@ -177,7 +177,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-match",
@@ -237,7 +237,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-alternation-fovariant-23",
@@ -273,7 +273,55 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-1",
+    "file": "vdp-aphaeresis-fovariant-1.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-1)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-12",
+    "file": "vdp-aphaeresis-fovariant-12.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-12)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-15",
+    "file": "vdp-aphaeresis-fovariant-15.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-15)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-19",
+    "file": "vdp-aphaeresis-fovariant-19.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-19)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
   },
   {
     "id": "vdp-aphaeresis-fovariant-22",
@@ -285,7 +333,79 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-24",
+    "file": "vdp-aphaeresis-fovariant-24.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-24)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
     "difficulty": 4
+  },
+  {
+    "id": "vdp-aphaeresis-fovariant-3",
+    "file": "vdp-aphaeresis-fovariant-3.json",
+    "pattern": "aphaeresis",
+    "title": "aphaeresis (fovariant-3)",
+    "objectCount": 3.2,
+    "quantifierBound": 3,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-apocope-fovariant-14",
+    "file": "vdp-apocope-fovariant-14.json",
+    "pattern": "apocope",
+    "title": "apocope (fovariant-14)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-apocope-fovariant-15-swap4",
+    "file": "vdp-apocope-fovariant-15-swap4.json",
+    "pattern": "apocope",
+    "title": "apocope (fovariant-15-swap4)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-apocope-fovariant-24-swap4",
+    "file": "vdp-apocope-fovariant-24-swap4.json",
+    "pattern": "apocope",
+    "title": "apocope (fovariant-24-swap4)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-apocope-fovariant-4-swap4",
+    "file": "vdp-apocope-fovariant-4-swap4.json",
+    "pattern": "apocope",
+    "title": "apocope (fovariant-4-swap4)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
   },
   {
     "id": "vdp-wrong-candidate",
@@ -297,6 +417,6 @@
     "conjunctBound": 1,
     "matches": false,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   }
 ]
