@@ -89,11 +89,17 @@ export function solveGeneric(input: Grid): SolveResult {
   return { status, solution };
 }
 
-/** One mutation of the backtracking search: digit>0 is a trial placement, digit===0 undoes it. */
+/** One mutation of the backtracking search: digit>0 is a trial placement, digit===0
+ * undoes it. deadEnd steps (digit===0, deadEnd: true) are the actual dead-end moment
+ * -- this cell has no legal digit left at all, given the current trial grid -- as
+ * opposed to a plain undo, which just means a deeper cell dead-ended and this trial
+ * is being abandoned to try the next candidate. */
 export interface SolveStep {
   row: number;
   col: number;
   digit: number;
+  deadEnd?: boolean;
+  reason?: string;
 }
 
 export interface SolveTrace extends SolveResult {
@@ -134,10 +140,35 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
     return best;
   }
 
+  /** Names one real, specific reason every digit is blocked at (row,col) -- the first
+   * digit found blocked, and the exact occupied cell blocking it -- rather than a
+   * generic "no candidates" message. */
+  function explainDeadEnd(row: number, col: number): string {
+    const box = boxSize(size);
+    for (let digit = 1; digit <= size; digit++) {
+      for (let i = 0; i < size; i++) {
+        if (grid[row][i] === digit) return `digit ${digit} is already at (${row + 1},${i + 1}) in this row`;
+        if (grid[i][col] === digit) return `digit ${digit} is already at (${i + 1},${col + 1}) in this column`;
+      }
+      const br = Math.floor(row / box) * box;
+      const bc = Math.floor(col / box) * box;
+      for (let r = br; r < br + box; r++) {
+        for (let c = bc; c < bc + box; c++) {
+          if (grid[r][c] === digit) return `digit ${digit} is already at (${r + 1},${c + 1}) in this box`;
+        }
+      }
+    }
+    return `every digit 1-${size} conflicts somewhere in this row, column, or box`;
+  }
+
   function backtrack(): boolean {
     const picked = pickCell();
     if (!picked) return true;
     const { row, col, candidates } = picked;
+    if (candidates.length === 0) {
+      steps.push({ row, col, digit: 0, deadEnd: true, reason: explainDeadEnd(row, col) });
+      return false;
+    }
     for (const digit of candidates) {
       grid[row][col] = digit;
       steps.push({ row, col, digit });

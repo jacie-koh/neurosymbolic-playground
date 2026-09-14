@@ -23,7 +23,7 @@
 
 import { el, clear } from "../dom";
 import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, loadZebraManifest, type ZebraTrace, type ZebraManifestEntry, type ZebraClueRecord } from "../data/traces";
-import { solveZebra, solveZebraWithSteps, type Relation } from "../neural/genericZebra";
+import { solveZebra, solveZebraWithSteps, type Relation, type ZebraSolveStep } from "../neural/genericZebra";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 
@@ -53,7 +53,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
   let selectedIdx: number | null = null;
   let playing = false;
   let playTimer: ReturnType<typeof setTimeout> | undefined;
-  let playSteps: { entity: string; house: number }[] = [];
+  let playSteps: ZebraSolveStep[] = [];
   let playIdx = 0;
   let livePositions: Record<string, number> | null = null;
   let logLines: string[] = [];
@@ -70,8 +70,15 @@ export function renderZebraDebugger(root: HTMLElement): void {
   const body = el("div", { style: { marginTop: "16px" } });
   root.append(randomizerHost, body);
 
+  /** Populated once the manifest loads, so drawBody() can look up this puzzle's real
+   * offline-computed hasBacktrack/hasDeadClue/hasConflictRetry flags (see
+   * standalone/reports/debugger/build_manifests.py) and surface them, not just
+   * offer them as randomizer filters. */
+  let manifestByFile = new Map<string, ZebraManifestEntry>();
+
   loadZebraManifest()
     .then((manifest) => {
+      manifestByFile = new Map(manifest.map((e) => [e.file, e]));
       renderRandomizer<ZebraManifestEntry>(randomizerHost, manifest, {
         fields: [
           { key: "houses", label: "Houses", get: (e) => e.houses },
@@ -88,6 +95,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
           selectTrace(entry.file);
         },
       });
+      if (trace) drawBody();
     })
     .catch(() => {
       randomizerHost.append(el("p", { class: "muted", style: { fontSize: "12px" } }, "Randomizer unavailable — couldn't load the example manifest."));
@@ -213,6 +221,19 @@ export function renderZebraDebugger(root: HTMLElement): void {
           : "")
     );
 
+    // Real, offline-computed (build_manifests.py): removing this clue and re-solving
+    // still gives the identical solution -- it was never actually needed to pin the
+    // answer down, a "dead rule" in the sense that survives even though the puzzle
+    // as authored includes it.
+    const deadClueNote = manifestByFile.get(activeFile)?.hasDeadClue
+      ? el(
+          "div",
+          { class: "note", style: { marginTop: "10px", borderLeft: "3px solid var(--accent)" } },
+          el("span", { class: "badge badge-strong" }, "dead rule"),
+          " at least one clue in this puzzle is logically redundant — solving with it removed still reaches the exact same solution, verified by re-solving without it."
+        )
+      : "";
+
     const panel = el("div", { class: "note", style: { marginTop: "16px" } });
     drawPanel(panel, t);
 
@@ -262,6 +283,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
         el("div", { style: { flex: "1 1 260px" } }, el("h3", { style: { fontSize: "13px", margin: "0 0 4px" } }, "Assignment"), grid)
       ),
       meta,
+      deadClueNote,
       conflictRetryPanel,
       playRow,
       stepRow,
@@ -298,23 +320,35 @@ export function renderZebraDebugger(root: HTMLElement): void {
     playIdx = 0;
   }
 
-  /** Rebuilds livePositions/logLines by replaying playSteps[0..n) from scratch --
-   * cheap at these puzzle sizes, and the only correct way to "undo" a backtrack
-   * step (house===0), which doesn't carry the house it's reverting. */
-  function applyStepsUpTo(n: number): void {
+  function resetLive(): void {
     livePositions = {};
     logLines = [];
-    for (let i = 0; i < n; i++) {
-      const step = playSteps[i];
-      if (revealMode) {
-        livePositions[step.entity] = step.house;
-        logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
-      } else {
-        if (step.house === 0) delete livePositions[step.entity];
-        else livePositions[step.entity] = step.house;
-        logLines.push(step.house ? `${entityLabel(step.entity)}: try house ${step.house}` : `${entityLabel(step.entity)}: backtrack`);
-      }
+  }
+
+  /** O(1): applies exactly one more step during auto-play, so a fast-ticking (as low
+   * as 15ms) backtracking trace with many steps stays responsive -- replaying from
+   * scratch every tick was O(n) per tick (O(n^2) overall) and could bog the tab down
+   * badly enough that the Stop button stopped registering clicks in time. */
+  function applyStep(step: ZebraSolveStep): void {
+    if (!livePositions) return;
+    if (revealMode) {
+      livePositions[step.entity] = step.house;
+      logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
+    } else if (step.deadEnd) {
+      logLines.push(`⚠ dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`);
+    } else {
+      if (step.house === 0) delete livePositions[step.entity];
+      else livePositions[step.entity] = step.house;
+      logLines.push(step.house ? `${entityLabel(step.entity)}: try house ${step.house}` : `${entityLabel(step.entity)}: backtrack`);
     }
+  }
+
+  /** O(n): only used for manual step-back/jump, which is infrequent -- replaying
+   * from scratch is the only correct way to "undo" a backtrack step (house===0),
+   * which doesn't carry the house it's reverting. */
+  function applyStepsUpTo(n: number): void {
+    resetLive();
+    for (let i = 0; i < n; i++) applyStep(playSteps[i]);
   }
 
   function stepTo(t: ZebraTrace, idx: number): void {
@@ -329,7 +363,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
     stopPlaying();
     prepareSteps(t);
     playing = true;
-    applyStepsUpTo(0);
+    resetLive();
     const delay = revealMode
       ? Math.max(120, Math.min(400, 3000 / Math.max(1, playSteps.length)))
       : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
@@ -340,8 +374,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
         drawBody();
         return;
       }
+      applyStep(playSteps[playIdx]);
       playIdx++;
-      applyStepsUpTo(playIdx);
       drawBody();
       playTimer = setTimeout(tick, delay);
     };

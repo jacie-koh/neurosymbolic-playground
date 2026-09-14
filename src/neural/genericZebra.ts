@@ -145,10 +145,16 @@ export function solveZebra(ir: ZebraIR): ZebraSolveResult {
   return ok ? { status: "sat", solution: { ...positions } } : { status: "unsat", solution: null };
 }
 
-/** One mutation of the backtracking search: house>0 is a trial placement, house===0 undoes it. */
+/** One mutation of the backtracking search: house>0 is a trial placement, house===0
+ * undoes it. deadEnd steps (house===0, deadEnd: true) are the actual dead-end moment
+ * -- this entity has no legal house left at all, given the current trial assignment
+ * -- as opposed to a plain undo, which just means a deeper entity dead-ended and
+ * this trial is being abandoned to try the next candidate house. */
 export interface ZebraSolveStep {
   entity: string;
   house: number;
+  deadEnd?: boolean;
+  reason?: string;
 }
 
 export interface ZebraSolveTrace extends ZebraSolveResult {
@@ -199,11 +205,34 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
     return best;
   }
 
+  /** Names one real, specific clue blocking this entity -- tries its first free
+   * house and reports the clue that rules it out (every other free house fails a
+   * clue too, or there'd be a candidate), rather than a generic "no houses" message. */
+  function explainDeadEnd(group: string, entity: string): string {
+    const freeHouses: number[] = [];
+    for (let house = 1; house <= ir.size; house++) if (!usedByGroup[group].has(house)) freeHouses.push(house);
+    if (freeHouses.length === 0) return "every house in this category is already assigned to another entity";
+    const house = freeHouses[0];
+    positions[entity] = house;
+    const violated = ir.clues.find((clue) => {
+      const known = [clue.a, clue.b].filter(Boolean).every((e) => positions[e as string] != null);
+      return known && !satisfies(clue, positions);
+    });
+    delete positions[entity];
+    if (!violated) return `house ${house} and every other free house still fail some combination of clues`;
+    const clueDesc = violated.b ? `${violated.relation}(${violated.a}, ${violated.b})` : `${violated.relation}(${violated.a})`;
+    return `placing it at house ${house} would violate clue "${clueDesc}" — every other free house fails a clue too`;
+  }
+
   function backtrack(remaining: number): boolean {
     if (remaining === 0) return true;
     const picked = pickNext();
     if (!picked) return false;
     const { group, entity, candidates } = picked;
+    if (candidates.length === 0) {
+      steps.push({ entity, house: 0, deadEnd: true, reason: explainDeadEnd(group, entity) });
+      return false;
+    }
     for (const house of candidates) {
       positions[entity] = house;
       usedByGroup[group].add(house);

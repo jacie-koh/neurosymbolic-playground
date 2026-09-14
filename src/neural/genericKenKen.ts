@@ -48,11 +48,17 @@ export interface KenKenSolveResult {
   solution: Grid | null;
 }
 
-/** One mutation of the backtracking search: digit>0 is a trial placement, digit===0 undoes it. */
+/** One mutation of the backtracking search: digit>0 is a trial placement, digit===0
+ * undoes it. deadEnd steps (digit===0, deadEnd: true) are the actual dead-end moment
+ * -- this cell has no legal digit left at all, given the current trial grid -- as
+ * opposed to a plain undo, which just means a deeper cell dead-ended and this trial
+ * is being abandoned to try the next candidate. */
 export interface KenKenSolveStep {
   row: number;
   col: number;
   digit: number;
+  deadEnd?: boolean;
+  reason?: string;
 }
 
 export interface KenKenSolveTrace extends KenKenSolveResult {
@@ -131,11 +137,40 @@ export function solveKenKenWithSteps(size: number, cages: Cage[]): KenKenSolveTr
     return best;
   }
 
+  /** Names one real, specific reason every digit is blocked at (row,col) -- the first
+   * digit found blocked, and whether it's a row/column duplicate or this cell's cage
+   * arithmetic, rather than a generic "no candidates" message. */
+  function explainDeadEnd(row: number, col: number): string {
+    const cage = cageOf.get(`${row},${col}`);
+    for (let digit = 1; digit <= size; digit++) {
+      if (!rowColOk(row, col, digit)) {
+        for (let i = 0; i < size; i++) {
+          if (grid[row][i] === digit) return `digit ${digit} is already at (${row + 1},${i + 1}) in this row`;
+          if (grid[i][col] === digit) return `digit ${digit} is already at (${i + 1},${col + 1}) in this column`;
+        }
+      }
+      if (cage) {
+        grid[row][col] = digit;
+        const ok = partialOk(cage);
+        grid[row][col] = 0;
+        if (!ok) {
+          const opLabel = cage.op === "add" ? "sum" : cage.op === "mul" ? "product" : cage.op === "sub" ? "difference" : cage.op === "div" ? "quotient" : "value";
+          return `digit ${digit} would leave this cage's ${opLabel} unable to reach ${cage.target}`;
+        }
+      }
+    }
+    return `every digit 1-${size} conflicts with this cell's row, column, or cage`;
+  }
+
   function backtrack(filled: number): boolean {
     if (filled === size * size) return true;
     const picked = pickCell();
     if (!picked) return false;
     const { row, col, candidates } = picked;
+    if (candidates.length === 0) {
+      steps.push({ row, col, digit: 0, deadEnd: true, reason: explainDeadEnd(row, col) });
+      return false;
+    }
     for (const digit of candidates) {
       grid[row][col] = digit;
       steps.push({ row, col, digit });

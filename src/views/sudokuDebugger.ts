@@ -23,7 +23,7 @@ import {
   type SudokuManifestEntry,
   type CellPrediction,
 } from "../data/traces";
-import { findConflicts, solveGeneric, solveGenericWithSteps, type Grid } from "../neural/genericSudoku";
+import { findConflicts, solveGeneric, solveGenericWithSteps, type Grid, type SolveStep } from "../neural/genericSudoku";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
@@ -49,7 +49,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
   const overridden = new Set<string>();
   let playing = false;
   let playTimer: ReturnType<typeof setTimeout> | undefined;
-  let playSteps: { row: number; col: number; digit: number }[] = [];
+  let playSteps: SolveStep[] = [];
   let playIdx = 0;
   let liveGrid: Grid | null = null;
   let logLines: string[] = [];
@@ -334,23 +334,35 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     playIdx = 0;
   }
 
-  /** Rebuilds liveGrid/logLines by replaying playSteps[0..n) from scratch -- cheap at
-   * these puzzle sizes, and the only correct way to "undo" a backtrack step, which
-   * doesn't carry the value it's reverting. */
-  function applyStepsUpTo(n: number): void {
+  function stepLine(step: SolveStep): string {
+    if (step.deadEnd) return `⚠ dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
+    return revealMode
+      ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
+      : step.digit
+        ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
+        : `(${step.row + 1},${step.col + 1}): backtrack`;
+  }
+
+  function resetLive(): void {
     liveGrid = working.map((row) => [...row]);
     logLines = [];
-    for (let i = 0; i < n; i++) {
-      const step = playSteps[i];
-      liveGrid[step.row][step.col] = step.digit;
-      logLines.push(
-        revealMode
-          ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
-          : step.digit
-            ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
-            : `(${step.row + 1},${step.col + 1}): backtrack`
-      );
-    }
+  }
+
+  /** O(1): applies exactly one more step during auto-play, so a fast-ticking (as low
+   * as 15ms) backtracking trace with hundreds of steps stays responsive -- replaying
+   * from scratch every tick was O(n) per tick (O(n^2) overall) and could bog the tab
+   * down badly enough that the Stop button stopped registering clicks in time. */
+  function applyStep(step: SolveStep): void {
+    if (liveGrid) liveGrid[step.row][step.col] = step.digit;
+    logLines.push(stepLine(step));
+  }
+
+  /** O(n): only used for manual step-back/jump, which is infrequent -- replaying
+   * from scratch is the only correct way to "undo" a backtrack step, which doesn't
+   * carry the value it's reverting. */
+  function applyStepsUpTo(n: number): void {
+    resetLive();
+    for (let i = 0; i < n; i++) applyStep(playSteps[i]);
   }
 
   function stepTo(t: SudokuTrace, idx: number): void {
@@ -365,7 +377,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     stopPlaying();
     prepareSteps(t);
     playing = true;
-    applyStepsUpTo(0);
+    resetLive();
     const delay = revealMode
       ? Math.max(60, Math.min(300, 6000 / Math.max(1, playSteps.length)))
       : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
@@ -376,8 +388,8 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         drawBody();
         return;
       }
+      applyStep(playSteps[playIdx]);
       playIdx++;
-      applyStepsUpTo(playIdx);
       drawBody();
       playTimer = setTimeout(tick, delay);
     };

@@ -117,7 +117,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-alternate-color-fovariant-15",
@@ -177,7 +177,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-match",
@@ -333,7 +333,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   },
   {
     "id": "vdp-aphaeresis-fovariant-24",
@@ -357,7 +357,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 5
+    "difficulty": 4
   },
   {
     "id": "vdp-apocope-fovariant-1-swap5",
@@ -453,7 +453,7 @@
     "conjunctBound": 1,
     "matches": false,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-11-swap4",
@@ -489,7 +489,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-3",
@@ -525,7 +525,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-8",
@@ -537,7 +537,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-breaking-fovariant-13",
@@ -549,7 +549,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   },
   {
     "id": "vdp-breaking-fovariant-15-swap3",
@@ -573,7 +573,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   },
   {
     "id": "vdp-breaking-fovariant-2",
@@ -597,7 +597,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   },
   {
     "id": "vdp-breaking-fovariant-4",
@@ -609,7 +609,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 3
   },
   {
     "id": "vdp-breaking-fovariant-7",
@@ -618,6 +618,42 @@
     "title": "breaking (fovariant-7)",
     "objectCount": 3.5,
     "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-17-swap5",
+    "file": "vdp-circle-at-ends-fovariant-17-swap5.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-17-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-21-swap5",
+    "file": "vdp-circle-at-ends-fovariant-21-swap5.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-21-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-23-swap5",
+    "file": "vdp-circle-at-ends-fovariant-23-swap5.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-23-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
@@ -633,6 +669,90 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-4",
+    "file": "vdp-circle-at-ends-fovariant-4.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-4)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-5-swap5",
+    "file": "vdp-circle-at-ends-fovariant-5-swap5.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-5-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-circle-at-ends-fovariant-9-swap5",
+    "file": "vdp-circle-at-ends-fovariant-9-swap5.json",
+    "pattern": "circle-at-ends",
+    "title": "circle-at-ends (fovariant-9-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-devoicing-fovariant-1-swap4",
+    "file": "vdp-devoicing-fovariant-1-swap4.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-1-swap4)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-devoicing-fovariant-21",
+    "file": "vdp-devoicing-fovariant-21.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-21)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-devoicing-fovariant-23",
+    "file": "vdp-devoicing-fovariant-23.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-23)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-devoicing-fovariant-23-swap4",
+    "file": "vdp-devoicing-fovariant-23-swap4.json",
+    "pattern": "devoicing",
+    "title": "devoicing (fovariant-23-swap4)",
+    "objectCount": 4.2,
+    "quantifierBound": 3,
+    "conjunctBound": null,
+    "matches": false,
+    "freshStatus": "unknown",
     "difficulty": 5
   }
 ]
