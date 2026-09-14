@@ -57,7 +57,7 @@
     "conjunctBound": 2,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 4
+    "difficulty": 5
   },
   {
     "id": "vdp-agreement-fovariant-3",
@@ -333,7 +333,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 4
   },
   {
     "id": "vdp-aphaeresis-fovariant-24",
@@ -369,7 +369,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-14",
@@ -381,7 +381,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-15-swap4",
@@ -393,7 +393,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-16-swap5",
@@ -405,7 +405,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-23-swap5",
@@ -417,7 +417,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-24-swap4",
@@ -429,7 +429,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-apocope-fovariant-4-swap4",
@@ -441,7 +441,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 2
+    "difficulty": 1
   },
   {
     "id": "vdp-wrong-candidate",
@@ -465,7 +465,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-11-swap5",
@@ -477,7 +477,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-23-swap5",
@@ -513,7 +513,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-6-swap3",
@@ -525,7 +525,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-assimilation-fovariant-8",
@@ -537,7 +537,7 @@
     "conjunctBound": 1,
     "matches": true,
     "freshStatus": "sat",
-    "difficulty": 3
+    "difficulty": 2
   },
   {
     "id": "vdp-breaking-fovariant-13",
@@ -792,6 +792,42 @@
     "difficulty": 5
   },
   {
+    "id": "vdp-meeussen-fovariant-10",
+    "file": "vdp-meeussen-fovariant-10.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-10)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-meeussen-fovariant-11",
+    "file": "vdp-meeussen-fovariant-11.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-11)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-meeussen-fovariant-15",
+    "file": "vdp-meeussen-fovariant-15.json",
+    "pattern": "meeussen",
+    "title": "meeussen (fovariant-15)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
     "id": "vdp-meeussen-fovariant-21",
     "file": "vdp-meeussen-fovariant-21.json",
     "pattern": "meeussen",
@@ -832,6 +868,366 @@
     "file": "vdp-meeussen-fovariant-9.json",
     "pattern": "meeussen",
     "title": "meeussen (fovariant-9)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-partition-fovariant-1",
+    "file": "vdp-partition-fovariant-1.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-1)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-partition-fovariant-10",
+    "file": "vdp-partition-fovariant-10.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-10)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-partition-fovariant-16",
+    "file": "vdp-partition-fovariant-16.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-16)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-partition-fovariant-19",
+    "file": "vdp-partition-fovariant-19.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-19)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-partition-fovariant-22",
+    "file": "vdp-partition-fovariant-22.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-22)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-partition-fovariant-6",
+    "file": "vdp-partition-fovariant-6.json",
+    "pattern": "partition",
+    "title": "partition (fovariant-6)",
+    "objectCount": 3.7,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-shield-fovariant-0-swap3",
+    "file": "vdp-shield-fovariant-0-swap3.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-0-swap3)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-shield-fovariant-13-swap5",
+    "file": "vdp-shield-fovariant-13-swap5.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-13-swap5)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-shield-fovariant-18-swap5",
+    "file": "vdp-shield-fovariant-18-swap5.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-18-swap5)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-shield-fovariant-24-swap4",
+    "file": "vdp-shield-fovariant-24-swap4.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-24-swap4)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-shield-fovariant-3-swap5",
+    "file": "vdp-shield-fovariant-3-swap5.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-3-swap5)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-shield-fovariant-7-swap5",
+    "file": "vdp-shield-fovariant-7-swap5.json",
+    "pattern": "shield",
+    "title": "shield (fovariant-7-swap5)",
+    "objectCount": 5.2,
+    "quantifierBound": 2,
+    "conjunctBound": 1,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 5
+  },
+  {
+    "id": "vdp-spy-fovariant-1-swap3",
+    "file": "vdp-spy-fovariant-1-swap3.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-1-swap3)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-spy-fovariant-10",
+    "file": "vdp-spy-fovariant-10.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-10)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-spy-fovariant-11",
+    "file": "vdp-spy-fovariant-11.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-11)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-spy-fovariant-15-swap4",
+    "file": "vdp-spy-fovariant-15-swap4.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-15-swap4)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-spy-fovariant-19-swap4",
+    "file": "vdp-spy-fovariant-19-swap4.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-19-swap4)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-spy-fovariant-21-swap4",
+    "file": "vdp-spy-fovariant-21-swap4.json",
+    "pattern": "spy",
+    "title": "spy (fovariant-21-swap4)",
+    "objectCount": 4.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 3
+  },
+  {
+    "id": "vdp-threepack-fovariant-15",
+    "file": "vdp-threepack-fovariant-15.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-15)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-threepack-fovariant-18",
+    "file": "vdp-threepack-fovariant-18.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-18)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-threepack-fovariant-20-swap5",
+    "file": "vdp-threepack-fovariant-20-swap5.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-20-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-threepack-fovariant-21",
+    "file": "vdp-threepack-fovariant-21.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-21)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-threepack-fovariant-22-swap5",
+    "file": "vdp-threepack-fovariant-22-swap5.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-22-swap5)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-threepack-fovariant-23",
+    "file": "vdp-threepack-fovariant-23.json",
+    "pattern": "threepack",
+    "title": "threepack (fovariant-23)",
+    "objectCount": 3.3,
+    "quantifierBound": 3,
+    "conjunctBound": 2,
+    "matches": false,
+    "freshStatus": "unknown",
+    "difficulty": 4
+  },
+  {
+    "id": "vdp-train-fovariant-10",
+    "file": "vdp-train-fovariant-10.json",
+    "pattern": "train",
+    "title": "train (fovariant-10)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-train-fovariant-17",
+    "file": "vdp-train-fovariant-17.json",
+    "pattern": "train",
+    "title": "train (fovariant-17)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-train-fovariant-19",
+    "file": "vdp-train-fovariant-19.json",
+    "pattern": "train",
+    "title": "train (fovariant-19)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-train-fovariant-23-swap3",
+    "file": "vdp-train-fovariant-23-swap3.json",
+    "pattern": "train",
+    "title": "train (fovariant-23-swap3)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-train-fovariant-24-swap3",
+    "file": "vdp-train-fovariant-24-swap3.json",
+    "pattern": "train",
+    "title": "train (fovariant-24-swap3)",
+    "objectCount": 3.0,
+    "quantifierBound": 2,
+    "conjunctBound": 2,
+    "matches": true,
+    "freshStatus": "sat",
+    "difficulty": 2
+  },
+  {
+    "id": "vdp-train-fovariant-8-swap3",
+    "file": "vdp-train-fovariant-8-swap3.json",
+    "pattern": "train",
+    "title": "train (fovariant-8-swap3)",
     "objectCount": 3.0,
     "quantifierBound": 2,
     "conjunctBound": 2,
