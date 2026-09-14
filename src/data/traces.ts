@@ -165,6 +165,11 @@ export interface ZebraManifestEntry {
   categories: number;
   status: string;
   parseAttempts: number | null;
+  /** Computed once offline at manifest-build time (standalone/reports/debugger/build_manifests.py)
+   * — never re-solved in the browser, which was slow enough on 6-house puzzles to freeze the page. */
+  hasBacktrack: boolean;
+  hasDeadClue: boolean;
+  hasConflictRetry: boolean;
 }
 
 export function loadZebraManifest(): Promise<ZebraManifestEntry[]> {

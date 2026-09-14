@@ -75,16 +75,21 @@ export interface ZebraSolveResult {
   solution: Record<string, number> | null;
 }
 
+/** Every (group, entity) pair not yet assigned a house. */
+function unassignedEntities(ir: ZebraIR, positions: Record<string, number>): { group: string; entity: string }[] {
+  const out: { group: string; entity: string }[] = [];
+  for (const [group, entities] of Object.entries(ir.groups)) {
+    for (const entity of entities) if (positions[entity] == null) out.push({ group, entity });
+  }
+  return out;
+}
+
 export function solveZebra(ir: ZebraIR): ZebraSolveResult {
   const positions: Record<string, number> = {};
-  const entityQueue: { group: string; entity: string }[] = [];
-  for (const [group, entities] of Object.entries(ir.groups)) {
-    for (const entity of entities) entityQueue.push({ group, entity });
-  }
-  if (entityQueue.length === 0) return { status: "unsat", solution: null };
-
   const usedByGroup: Record<string, Set<number>> = {};
   for (const group of Object.keys(ir.groups)) usedByGroup[group] = new Set();
+  const totalEntities = Object.values(ir.groups).reduce((n, es) => n + es.length, 0);
+  if (totalEntities === 0) return { status: "unsat", solution: null };
 
   function decidableViolated(): boolean {
     return ir.clues.some((clue) => {
@@ -93,24 +98,50 @@ export function solveZebra(ir: ZebraIR): ZebraSolveResult {
     });
   }
 
-  // Incremental backtracking, one entity at a time, pruning against every
-  // clue that's fully decidable so far — scales far better than generating
-  // whole-group permutations up front once puzzles reach 5 houses.
-  function backtrack(idx: number): boolean {
-    if (idx === entityQueue.length) return !decidableViolated();
-    const { group, entity } = entityQueue[idx];
+  function candidatesFor(group: string, entity: string): number[] {
+    const out: number[] = [];
     for (let house = 1; house <= ir.size; house++) {
       if (usedByGroup[group].has(house)) continue;
       positions[entity] = house;
+      const ok = !decidableViolated();
+      delete positions[entity];
+      if (ok) out.push(house);
+    }
+    return out;
+  }
+
+  // Most-constrained-entity-first: a fixed group-then-entity order can blow up
+  // catastrophically on 6-house+ puzzles (millions of trial placements observed) —
+  // always picking whichever unassigned entity has the fewest legal houses left
+  // (given every already-decidable clue) keeps this fast at real puzzle sizes.
+  function pickNext(): { group: string; entity: string; candidates: number[] } | null {
+    let best: { group: string; entity: string; candidates: number[] } | null = null;
+    for (const { group, entity } of unassignedEntities(ir, positions)) {
+      const candidates = candidatesFor(group, entity);
+      if (!best || candidates.length < best.candidates.length) {
+        best = { group, entity, candidates };
+        if (candidates.length <= 1) return best;
+      }
+    }
+    return best;
+  }
+
+  function backtrack(remaining: number): boolean {
+    if (remaining === 0) return true;
+    const picked = pickNext();
+    if (!picked) return false;
+    const { group, entity, candidates } = picked;
+    for (const house of candidates) {
+      positions[entity] = house;
       usedByGroup[group].add(house);
-      if (!decidableViolated() && backtrack(idx + 1)) return true;
+      if (backtrack(remaining - 1)) return true;
       usedByGroup[group].delete(house);
       delete positions[entity];
     }
     return false;
   }
 
-  const ok = backtrack(0);
+  const ok = backtrack(totalEntities);
   return ok ? { status: "sat", solution: { ...positions } } : { status: "unsat", solution: null };
 }
 
@@ -124,18 +155,18 @@ export interface ZebraSolveTrace extends ZebraSolveResult {
   steps: ZebraSolveStep[];
 }
 
-/** Same search as solveZebra, but records every trial placement and undo for animated playback. */
+/** Same most-constrained-entity-first search as solveZebra, but records every trial
+ * placement and undo for animated playback. A fixed group-then-entity order (the
+ * original version of this function) can generate millions of steps on a 6-house+
+ * puzzle — measured 25.8M on one real puzzle, which would hang the animation for
+ * hours — so this uses the same MRV ordering solveZebra() does. */
 export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
   const positions: Record<string, number> = {};
-  const entityQueue: { group: string; entity: string }[] = [];
-  for (const [group, entities] of Object.entries(ir.groups)) {
-    for (const entity of entities) entityQueue.push({ group, entity });
-  }
-  if (entityQueue.length === 0) return { status: "unsat", solution: null, steps: [] };
-
   const usedByGroup: Record<string, Set<number>> = {};
   for (const group of Object.keys(ir.groups)) usedByGroup[group] = new Set();
+  const totalEntities = Object.values(ir.groups).reduce((n, es) => n + es.length, 0);
   const steps: ZebraSolveStep[] = [];
+  if (totalEntities === 0) return { status: "unsat", solution: null, steps };
 
   function decidableViolated(): boolean {
     return ir.clues.some((clue) => {
@@ -144,15 +175,40 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
     });
   }
 
-  function backtrack(idx: number): boolean {
-    if (idx === entityQueue.length) return !decidableViolated();
-    const { group, entity } = entityQueue[idx];
+  function candidatesFor(group: string, entity: string): number[] {
+    const out: number[] = [];
     for (let house = 1; house <= ir.size; house++) {
       if (usedByGroup[group].has(house)) continue;
       positions[entity] = house;
+      const ok = !decidableViolated();
+      delete positions[entity];
+      if (ok) out.push(house);
+    }
+    return out;
+  }
+
+  function pickNext(): { group: string; entity: string; candidates: number[] } | null {
+    let best: { group: string; entity: string; candidates: number[] } | null = null;
+    for (const { group, entity } of unassignedEntities(ir, positions)) {
+      const candidates = candidatesFor(group, entity);
+      if (!best || candidates.length < best.candidates.length) {
+        best = { group, entity, candidates };
+        if (candidates.length <= 1) return best;
+      }
+    }
+    return best;
+  }
+
+  function backtrack(remaining: number): boolean {
+    if (remaining === 0) return true;
+    const picked = pickNext();
+    if (!picked) return false;
+    const { group, entity, candidates } = picked;
+    for (const house of candidates) {
+      positions[entity] = house;
       usedByGroup[group].add(house);
       steps.push({ entity, house });
-      if (!decidableViolated() && backtrack(idx + 1)) return true;
+      if (backtrack(remaining - 1)) return true;
       usedByGroup[group].delete(house);
       delete positions[entity];
       steps.push({ entity, house: 0 });
@@ -160,6 +216,6 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
     return false;
   }
 
-  const ok = backtrack(0);
+  const ok = backtrack(totalEntities);
   return { status: ok ? "sat" : "unsat", solution: ok ? { ...positions } : null, steps };
 }

@@ -23,40 +23,9 @@
 
 import { el, clear } from "../dom";
 import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, loadZebraManifest, type ZebraTrace, type ZebraManifestEntry, type ZebraClueRecord } from "../data/traces";
-import { solveZebra, solveZebraWithSteps, type Relation, type ZebraIR } from "../neural/genericZebra";
+import { solveZebra, solveZebraWithSteps, type Relation } from "../neural/genericZebra";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
-
-interface EnrichedZebraEntry extends ZebraManifestEntry {
-  hasBacktrack: boolean;
-  hasDeadClue: boolean;
-  hasConflictRetry: boolean;
-}
-
-/** Real, computed (not stored) properties: does the client-side search backtrack at
- * all, is any clue logically redundant (removable without losing the solution), and
- * does this trace carry a real recorded Neural↔Symbolic conflict-retry history? */
-async function enrichZebraManifest(manifest: ZebraManifestEntry[]): Promise<EnrichedZebraEntry[]> {
-  const out: EnrichedZebraEntry[] = [];
-  for (const entry of manifest) {
-    try {
-      const t = await loadZebraTrace(entry.file);
-      const ir: ZebraIR = { size: t.size, groups: t.groups, clues: t.clues };
-      const stepped = solveZebraWithSteps(ir);
-      const hasBacktrack = stepped.steps.some((s) => s.house === 0);
-      let hasDeadClue = false;
-      for (let i = 0; i < t.clues.length && !hasDeadClue; i++) {
-        const without: ZebraIR = { size: t.size, groups: t.groups, clues: t.clues.filter((_, idx) => idx !== i) };
-        const res = solveZebra(without);
-        if (res.status === "sat" && JSON.stringify(res.solution) === JSON.stringify(stepped.solution)) hasDeadClue = true;
-      }
-      out.push({ ...entry, hasBacktrack, hasDeadClue, hasConflictRetry: !!t.conflictRetry });
-    } catch {
-      out.push({ ...entry, hasBacktrack: false, hasDeadClue: false, hasConflictRetry: false });
-    }
-  }
-  return out;
-}
 
 const RELATIONS: Relation[] = [
   "at",
@@ -102,9 +71,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
   root.append(randomizerHost, body);
 
   loadZebraManifest()
-    .then(enrichZebraManifest)
     .then((manifest) => {
-      renderRandomizer<EnrichedZebraEntry>(randomizerHost, manifest, {
+      renderRandomizer<ZebraManifestEntry>(randomizerHost, manifest, {
         fields: [
           { key: "houses", label: "Houses", get: (e) => e.houses },
           { key: "hasBacktrack", label: "Backtracks", get: (e) => (e.hasBacktrack ? "yes" : "no") },
