@@ -77,23 +77,25 @@ export const SITUATIONS: Situation[] = [
     tagline: "Read a grid of numbers, mark cells to block duplicates and isolate groups.",
     icon: "◻️",
     description:
-      "A Hitori puzzle shows a grid of numbers. The solver must shade some cells " +
-      "such that no two adjacent cells in the same row/column are both unshaded " +
-      "AND have the same value, and all unshaded cells form a single connected region. " +
-      "A CNN reads the grid; a symbolic solver checks the three Hitori rules.",
-    perception: "Recognize each number in the grid from image pixels.",
-    reasoning: "Mark cells so no duplicates are adjacent, and all unshaded cells are connected.",
+      "A Hitori puzzle shows a grid of numbers, given directly — there is no image or " +
+      "CNN here. The solver must shade some cells such that no two adjacent cells in the " +
+      "same row/column are both unshaded AND have the same value, and all unshaded cells " +
+      "form a single connected region. An exact solver proves each forced move by " +
+      "contradiction, then a local LLM explains that already-proven move in plain language.",
+    perception: "N/A — the grid is given directly; there is no perception stage for this puzzle.",
+    reasoning: "Prove each cell's value is forced by contradiction, then explain the proof in prose.",
     neuralWeakness:
-      "A CNN can learn to mark cells heuristically but has no reason to enforce " +
-      "connectivity or globally satisfy constraints — it overfits to puzzle patterns.",
+      "N/A — no neural component perceives anything here; the only neural step explains an " +
+      "already-verified symbolic proof, so a weak explanation never makes the puzzle wrong.",
     symbolicWeakness:
-      "The symbolic rules are simple once you know the numbers, but a pure solver " +
-      "can't read pixels; it needs human labeling or a separate OCR system.",
+      "A bare proof is logically complete but not naturally readable — a person still has to " +
+      "translate 'this cell's opposite value causes a contradiction' into plain language.",
     combinedStrength:
-      "Perception reads the grid; the symbolic solver keeps the solution globally " +
-      "consistent. The network learns which cells matter from weak supervision.",
+      "The solver proves every forced move is genuinely necessary; the local LLM then explains " +
+      "that proof in prose — reasoning first, with language generation grounded in it, not the " +
+      "usual perceive-then-reason order the other four modules use.",
     suggestedMethod: "forward-chaining",
-    suggestedPattern: "learning-for-reasoning",
+    suggestedPattern: "reasoning-for-learning",
     dataset: "circle",
     complexity: 2,
   },

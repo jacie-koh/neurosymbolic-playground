@@ -12,6 +12,13 @@
  * forced-move proof, or MINIEXACT/FO-SL solution is a checkable witness by
  * construction, not an estimate. Where no real number exists for a cell, it
  * says so instead of inventing one.
+ *
+ * A stacking-pattern tab is one of three things per module: real (has actual
+ * measured/checkable data), hypothetical (not built, but a coherent thing that
+ * COULD be — shown as a clearly-labeled description, never fake numbers), or
+ * removed (structurally impossible for this module, e.g. Hitori has no
+ * perception stage ever — the tab is hidden everywhere it's offered, not just
+ * here; see isPatternRemoved(), also used by the builder page's chooser).
  */
 
 import { el } from "../dom";
@@ -33,8 +40,12 @@ interface PatternRow {
   pureNeural: ColumnStats;
   neurosymbolic: ColumnStats;
   symbolicOnly: ColumnStats;
-  /** Shown instead of the columns when the pattern has no real implementation for this module. */
-  notImplemented?: string;
+  /** This pattern has no real implementation for this module, but is a coherent thing that
+   * COULD be built — shown as a clearly-labeled hypothetical instead of real measurements. */
+  hypothetical?: string;
+  /** This pattern is structurally impossible for this module (not just unbuilt) — omit its
+   * tab from the switcher entirely rather than showing anything for it. */
+  removed?: true;
 }
 
 type ModuleResults = Record<StackingPattern, PatternRow>;
@@ -42,13 +53,6 @@ type ModuleResults = Record<StackingPattern, PatternRow>;
 const NA: Bar = { value: null, detail: "" };
 const NOT_TRAINED = { value: 0 as number | null, detail: "A raw network confidence isn't a checkable proof — 0% by construction, not a measurement." };
 const PROVEN = { value: 1 as number | null, detail: "A sat result always comes with a checkable witness (a Z3 model, forced-move proof, or exact-cover/FO-SL solution) — true by construction of exact solving, not a measured estimate." };
-
-const NO_LOOP: PatternRow = {
-  pureNeural: { performance: NA, explainability: NA, robustness: NA },
-  neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-  symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-  notImplemented: "This module's real pipeline has no symbolic output feeding into a neural step — perception runs once, upstream of any reasoning, and nothing comes back from the solver into the network or a generation step. (Compare Hitori, where the solver's proof genuinely feeds a local LLM to generate an explanation — that's real, see its own tab.)",
-};
 
 const RESULTS: Partial<Record<string, ModuleResults>> = {
   sudoku: {
@@ -69,7 +73,12 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         robustness: NA,
       },
     },
-    "reasoning-for-learning": NO_LOOP,
+    "reasoning-for-learning": {
+      pureNeural: { performance: NA, explainability: NA, robustness: NA },
+      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
+      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      hypothetical: "Not built, but coherent: Z3's row/column/box conflicts could be replayed as a training signal — fine-tuning the digit-recognition CNN specifically on cases where a misread also broke a constraint (e.g. confusing an 8 for a 3). That could reduce exactly the systematic misreads seen in the handwritten strata. This project keeps perception frozen and only ever independently checks it, since training against this benchmark's own correction outputs risks quietly overfitting to it rather than genuinely improving perception.",
+    },
     "learning-reasoning": {
       pureNeural: {
         performance: { value: 0.909, detail: "Perception doesn't change based on what happens after it — same number as the one-shot tab." },
@@ -106,7 +115,12 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         robustness: NA,
       },
     },
-    "reasoning-for-learning": NO_LOOP,
+    "reasoning-for-learning": {
+      pureNeural: { performance: NA, explainability: NA, robustness: NA },
+      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
+      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      hypothetical: "Not built, but coherent: every correction the pipeline makes is already recorded (which cage, what the CNN read, what it should have been). That log could hypothetically become fine-tuning data for the cage-reading CNN, so the segmentation bug behind the 96%→25% size-degradation trend gets learned away instead of patched at inference time via search. This project kept the CNN frozen and only ever independently re-verified it, since training on this benchmark's own correction outputs risks overfitting to this specific dataset's error patterns rather than fixing recognition generally.",
+    },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NOT_TRAINED, robustness: NA },
       neurosymbolic: {
@@ -126,7 +140,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      notImplemented: "Hitori's real pipeline has no neural perception step — the grid is given directly, not read from an image — so nothing flows from a network into the solver here.",
+      removed: true, // Hitori's grid is given directly, never read from an image — there is no perception stage to ever feed a solver, not just an unbuilt one.
     },
     "reasoning-for-learning": {
       pureNeural: {
@@ -149,7 +163,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      notImplemented: "No perception step exists to loop back into, so there's no real bidirectional correction loop here (unlike Sudoku/KenKen's CNN-reading correction loop).",
+      removed: true, // Same reason — no perception stage exists to ever loop back into.
     },
   },
   "zebra-puzzle": {
@@ -170,12 +184,17 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         robustness: NA,
       },
     },
-    "reasoning-for-learning": NO_LOOP,
+    "reasoning-for-learning": {
+      pureNeural: { performance: NA, explainability: NA, robustness: NA },
+      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
+      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      hypothetical: "Not built, but coherent: MINIEXACT's solved (or failed) assignments could hypothetically become a fine-tuning signal for the LLM parser, nudging it toward clue interpretations that tend to be satisfiable. This project keeps the LLM frozen and only ever prompts it — a parse that turns out wrong is recorded as a real, honest failure (one of the batch-generated examples really does come back unsat) rather than trained away. Parsing does retry the LLM once on a JSON schema error, but that's a format check on the LLM's own output shape, not the solver reasoning about the puzzle — it doesn't count as this pattern.",
+    },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      notImplemented: "The real solve step is one-shot: MINIEXACT runs once, and a solver conflict never triggers a re-parse. (Parsing itself does retry the LLM up to once if its JSON output fails schema validation — but that's a format check catching malformed output, not the symbolic solver reasoning about the puzzle, so it doesn't count as this pattern.)",
+      hypothetical: "Not built, but coherent: a tight loop would mean a specific solver conflict (e.g. \"clue 4 and clue 9 can't both hold\") gets fed back to the LLM as a targeted re-prompt about just those two clues, instead of re-parsing from scratch. The real pipeline never does this — MINIEXACT runs exactly once per puzzle, with no path back to the parser.",
     },
   },
   "visual-discrimination": {
@@ -196,12 +215,17 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         robustness: NA,
       },
     },
-    "reasoning-for-learning": NO_LOOP,
+    "reasoning-for-learning": {
+      pureNeural: { performance: NA, explainability: NA, robustness: NA },
+      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
+      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      hypothetical: "Not built, but coherent: when the FO-SL synthesizer can't find a discriminator, that failure could hypothetically fine-tune the attribute classifier — e.g. sharpening the depth estimate used for front/behind, already identified as the real system's weakest link. This project fine-tunes the vision stack once, offline, on held-out training data only; synthesis-stage feedback never touches it.",
+    },
     "learning-reasoning": {
       pureNeural: { performance: NA, explainability: NA, robustness: NA },
       neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
       symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
-      notImplemented: "The real VDP pipeline is one-shot: perceive once, synthesize once. There's no loop feeding synthesis failures back into re-perceiving the scene.",
+      hypothetical: "Not built, but coherent: a tight loop would mean a failed synthesis re-triggers perception — re-examining specifically the object pair whose depth estimate is most uncertain, rather than accepting the first perception pass as final. The real pipeline never does this: perception runs exactly once, and synthesis has no way to ask for another look.",
     },
   },
 };
@@ -246,11 +270,14 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
   const data = RESULTS[situationId];
   if (!data) return;
 
+  const availablePatterns = PATTERN_ORDER.filter((p) => !data[p].removed);
+
   // Hitori's real content lives under Symbolic → Neural (the solver proves a
   // deduction, then a local LLM explains it) — default there instead of the
-  // usual Neural → Symbolic tab, which has no real implementation for it.
+  // usual Neural → Symbolic tab, which is removed entirely for this module.
   const defaultPattern: StackingPattern = situationId === "hitori" ? "reasoning-for-learning" : "learning-for-reasoning";
-  const pattern: StackingPattern = store.get().pattern ?? defaultPattern;
+  let pattern: StackingPattern = store.get().pattern ?? defaultPattern;
+  if (data[pattern].removed) pattern = availablePatterns[0];
   const body = el("div", { style: { marginTop: "16px" } });
 
   function draw(): void {
@@ -260,7 +287,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
     const switcher = el(
       "div",
       { class: "seg" },
-      ...PATTERN_ORDER.map((p) =>
+      ...availablePatterns.map((p) =>
         el(
           "button",
           {
@@ -273,14 +300,15 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
       )
     );
 
-    if (row.notImplemented) {
+    if (row.hypothetical) {
       body.append(
         switcher,
         el(
           "div",
-          { class: "note", style: { marginTop: "14px" } },
-          el("b", {}, `${PATTERNS[pattern].flow}: `),
-          row.notImplemented
+          { class: "note", style: { marginTop: "14px", borderLeft: "3px solid var(--muted)" } },
+          el("span", { class: "badge", style: { marginRight: "8px" } }, "hypothetical — not implemented"),
+          el("br"),
+          el("span", { style: { display: "inline-block", marginTop: "6px" } }, row.hypothetical)
         )
       );
       return;
@@ -307,4 +335,11 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
       body
     )
   );
+}
+
+/** True when this pattern is structurally impossible for this situation (e.g. Hitori has no
+ * perception stage, ever) — used to hide the option everywhere it's offered, not just here. */
+export function isPatternRemoved(situationId: string | null, pattern: StackingPattern): boolean {
+  const data = situationId ? RESULTS[situationId] : undefined;
+  return !!data?.[pattern]?.removed;
 }

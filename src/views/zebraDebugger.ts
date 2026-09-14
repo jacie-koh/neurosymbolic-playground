@@ -94,14 +94,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
   }
 
   const randomizerHost = el("div");
-  const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(
-    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by house count from the full pool:"),
-    randomizerHost,
-    picker,
-    body
-  );
+  root.append(randomizerHost, body);
 
   loadZebraManifest()
     .then(enrichZebraManifest)
@@ -138,7 +132,6 @@ export function renderZebraDebugger(root: HTMLElement): void {
       .then((t) => {
         trace = t;
         clues = t.clues.map((c) => ({ ...c }));
-        drawPicker();
         drawBody();
       })
       .catch(() => {
@@ -150,20 +143,6 @@ export function renderZebraDebugger(root: HTMLElement): void {
       });
   }
 
-  function drawPicker(): void {
-    clear(picker);
-    for (const entry of ZEBRA_TRACE_MANIFEST) {
-      const houses = entry.id.match(/(\d+)house/)?.[1];
-      picker.append(
-        el(
-          "button",
-          { class: "seg-btn" + (entry.file === activeFile ? " active" : ""), onclick: () => selectTrace(entry.file) },
-          el("span", { class: "seg-flow" }, entry.id.replace(/^zebra-/, "").replace(/-/g, " ")),
-          el("span", { class: "seg-name" }, houses ? `${houses} houses` : "")
-        )
-      );
-    }
-  }
 
   function drawBody(): void {
     if (!trace) return;
@@ -447,6 +426,5 @@ export function renderZebraDebugger(root: HTMLElement): void {
     );
   }
 
-  drawPicker();
   selectTrace(activeFile);
 }

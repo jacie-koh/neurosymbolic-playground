@@ -61,13 +61,6 @@ export function renderRandomizer<T extends { id: string }>(
     return all;
   }
 
-  const countLabel = el("span", { class: "muted", style: { fontSize: "12px" } }, "");
-
-  function updateCount(): void {
-    const n = manifest.filter(matches).length;
-    countLabel.textContent = `${n} of ${manifest.length} real examples match`;
-  }
-
   const selects = opts.fields.map((f) => {
     const select = el(
       "select",
@@ -75,7 +68,6 @@ export function renderRandomizer<T extends { id: string }>(
         style: { fontSize: "12px", padding: "4px 8px" },
         onchange: (e: Event) => {
           selected[f.key] = (e.target as HTMLSelectElement).value;
-          updateCount();
         },
       },
       el("option", { value: "" }, `Any ${f.label.toLowerCase()}`),
@@ -101,15 +93,12 @@ export function renderRandomizer<T extends { id: string }>(
     "🎲 Randomize"
   );
 
-  updateCount();
-
   root.append(
     el(
       "div",
       { style: { display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", marginBottom: "10px" } },
       ...selects,
-      randomizeBtn,
-      countLabel
+      randomizeBtn
     )
   );
 }

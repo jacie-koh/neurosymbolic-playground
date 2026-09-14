@@ -63,14 +63,8 @@ export function renderSudokuDebugger(root: HTMLElement): void {
   }
 
   const randomizerHost = el("div");
-  const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(
-    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by size/style/legibility from the full pool:"),
-    randomizerHost,
-    picker,
-    body
-  );
+  root.append(randomizerHost, body);
 
   loadSudokuManifest()
     .then((manifest) => {
@@ -109,7 +103,6 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         trace = t;
         const source = loopActive() ? t.interpreted : t.recognized;
         working = source.map((row) => [...row]);
-        drawPicker();
         drawBody();
       })
       .catch(() => {
@@ -119,31 +112,6 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           el("button", { class: "btn", onclick: () => selectTrace(file) }, "Retry")
         );
       });
-  }
-
-  function drawPicker(): void {
-    clear(picker);
-    for (const entry of SUDOKU_TRACE_MANIFEST) {
-      picker.append(
-        el(
-          "button",
-          {
-            class: "seg-btn" + (entry.file === activeFile ? " active" : ""),
-            onclick: () => selectTrace(entry.file),
-          },
-          el("span", { class: "seg-flow" }, entry.id.replace(/^sudoku-/, "")),
-          el(
-            "span",
-            { class: "seg-name" },
-            entry.id.includes("ambiguous")
-              ? "sat but silently wrong"
-              : entry.id.includes("correction")
-              ? "has a self-correction"
-              : "clean read"
-          )
-        )
-      );
-    }
   }
 
   function cellPrediction(t: SudokuTrace, r: number, c: number): CellPrediction | undefined {
@@ -471,6 +439,5 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     panel.append(...rows);
   }
 
-  drawPicker();
   selectTrace(activeFile);
 }

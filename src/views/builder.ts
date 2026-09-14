@@ -4,6 +4,7 @@ import { store, type StackingPattern } from "../state";
 import { el } from "../dom";
 import { getSituation } from "../data/situations";
 import { PATTERNS, PATTERN_ORDER, METHODS } from "../data/patterns";
+import { isPatternRemoved } from "./realResults";
 
 /** A small static sketch of a neural net for the collapsed block preview. */
 function miniNeural(): SVGElement {
@@ -213,7 +214,7 @@ function enableDragSwap(row: HTMLElement): void {
 
 function patternChooser(): HTMLElement {
   const st = store.get();
-  const opts = PATTERN_ORDER.map((id) => {
+  const opts = PATTERN_ORDER.filter((id) => !isPatternRemoved(st.situationId, id)).map((id) => {
     const p = PATTERNS[id];
     return el(
       "div",

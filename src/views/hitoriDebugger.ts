@@ -67,14 +67,8 @@ export function renderHitoriDebugger(root: HTMLElement): void {
   }
 
   const randomizerHost = el("div");
-  const picker = el("div", { class: "seg" });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(
-    el("div", { class: "note", style: { marginBottom: "10px" } }, el("b", {}, "Curated highlights: "), "hand-picked examples with a specific story (below). Or pick real examples by grid size from the full pool:"),
-    randomizerHost,
-    picker,
-    body
-  );
+  root.append(randomizerHost, body);
 
   loadHitoriManifest()
     .then((manifest) => {
@@ -108,7 +102,6 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         trace = t;
         shaded = t.grid.map((row) => row.map(() => false));
         locked = new Set();
-        drawPicker();
         drawBody();
       })
       .catch(() => {
@@ -120,20 +113,6 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       });
   }
 
-  function drawPicker(): void {
-    clear(picker);
-    for (const entry of HITORI_TRACE_MANIFEST) {
-      const source = entry.id === "hitori-p63" ? "the paper's worked example" : "bluecoconut/pencil-puzzle-bench";
-      picker.append(
-        el(
-          "button",
-          { class: "seg-btn" + (entry.file === activeFile ? " active" : ""), onclick: () => selectTrace(entry.file) },
-          el("span", { class: "seg-flow" }, entry.id.replace(/^hitori-/, "")),
-          el("span", { class: "seg-name" }, source)
-        )
-      );
-    }
-  }
 
   function drawBody(): void {
     if (!trace) return;
@@ -402,6 +381,5 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     }
   }
 
-  drawPicker();
   selectTrace(activeFile);
 }
