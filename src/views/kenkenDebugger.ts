@@ -312,7 +312,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
   }
 
   function stepLine(step: KenKenSolveStep): string {
-    if (step.deadEnd) return `⚠ dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
+    if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
     return revealMode
       ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
       : step.digit

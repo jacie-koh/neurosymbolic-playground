@@ -358,7 +358,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
       logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
       if (step.explain) logLines.push(...explainLines(step.explain));
     } else if (step.deadEnd) {
-      logLines.push(`⚠ dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`);
+      logLines.push(`dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`);
     } else {
       if (step.house === 0) delete livePositions[step.entity];
       else livePositions[step.entity] = step.house;

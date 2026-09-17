@@ -361,18 +361,18 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       const pct = step.correction.confidence != null ? ` (${(step.correction.confidence * 100).toFixed(1)}% confidence)` : "";
       switch (step.correction.kind) {
         case "conflict-found":
-          return `⚠ conflict: ${step.reason}`;
+          return `conflict: ${step.reason}`;
         case "try":
-          return `⚙ correction loop: trying real alternative ${step.digit} at ${pos}${pct} — still conflicts, reverting`;
+          return `correction loop: trying real alternative ${step.digit} at ${pos}${pct} — still conflicts, reverting`;
         case "revert":
-          return `  ↩ ${pos} back to ${step.digit}`;
+          return `  reverting ${pos} to ${step.digit}`;
         case "corrected":
-          return `✓ correction loop: real alternative ${step.digit} at ${pos}${pct} resolves the conflict`;
+          return `correction loop: real alternative ${step.digit} at ${pos}${pct} resolves the conflict`;
         case "give-up":
-          return `✗ correction loop gave up: ${step.reason}`;
+          return `correction loop gave up: ${step.reason}`;
       }
     }
-    if (step.deadEnd) return `⚠ dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
+    if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
     return revealMode
       ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
       : step.digit

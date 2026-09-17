@@ -270,7 +270,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     const freshCand = t.freshResult.candidate;
     const refCand = t.referenceResult.candidate;
     const matches = t.freshResult.status === "sat" && freshCand != null && freshCand === refCand;
-    const verdictLines = [matches ? "✓ fresh matches the reference answer." : "✗ fresh disagrees with the reference answer."];
+    const verdictLines = [matches ? "fresh matches the reference answer." : "fresh disagrees with the reference answer."];
     const reason = disagreementReason(t);
     if (reason) verdictLines.push(reason);
     groups.push(verdictLines);

@@ -1,16 +1,18 @@
 /**
- * "Results & trade-offs" for the five paper-backed modules: an architecture
- * diagram for each of Pure Neural / Neurosymbolic / Symbolic only, switchable
- * across the three stacking patterns — every stage and every number on it real.
+ * "Results & trade-offs" for the five paper-backed modules: one detailed
+ * architecture diagram per stacking pattern (Neural → Symbolic, Symbolic →
+ * Neural, Neural ↔ Symbolic) — every stage and every number on it real.
  *
  * This replaces an earlier Performance/Explainability/Robustness bar-chart
- * version. Bars made "Explainability" look like a measured quantity when it
- * never was (0% for a raw neural confidence, 100% wherever a symbolic solver
- * returned sat — true by construction, not an estimate), and didn't show what
- * the pipeline actually *does*. A diagram does: each box is a real stage of the
- * real pipeline (perception, reasoning, a correction loop when one exists), and
- * the real accuracy number lives on the box it actually measures, not floating
- * in a separate meter. Where no real number exists for a column, it says so
+ * version, and then a version with three separate diagrams (Pure Neural /
+ * Neurosymbolic / Symbolic only) side by side for the same pattern. Bars made
+ * "Explainability" look like a measured quantity when it never was (0% for a
+ * raw neural confidence, 100% wherever a symbolic solver returned sat — true
+ * by construction, not an estimate). Three parallel diagrams fragmented what
+ * is structurally one pipeline with two end-member baselines. This draws the
+ * real neurosymbolic pipeline as one diagram, with the pure-neural and
+ * symbolic-only baselines folded in as a comparison note on the matching stage
+ * (see flowDiagram()). Where no real number exists for a column, it says so
  * instead of drawing an empty diagram.
  *
  * A stacking-pattern tab is either real (has actual measured/checkable data,
@@ -99,7 +101,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Z3 solves; on conflict, retries a ranked alternative" },
           { label: "Output", kind: "output", text: "95.5% answer_correct — bounded correction loop" },
         ],
-        loopNote: "↺ When Z3 hits a conflict, it retries the next-ranked CNN alternative for the disputed cell until sat or the retry budget runs out.",
+        loopNote: "When Z3 hits a conflict, it retries the next-ranked CNN alternative for the disputed cell until sat or the retry budget runs out.",
         caption: "Robustness (handwritten only): 82.2% → 91.0% — this is exactly where the loop earns its keep.",
       },
       symbolicOnly: {
@@ -142,7 +144,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Solver runs; on conflict, retries alternatives prioritized by unsat cores" },
           { label: "Output", kind: "output", text: "83.9% answer_correct — bounded joint-cage correction loop" },
         ],
-        loopNote: "↺ On an unsat conflict, the loop retries ranked CNN alternatives for the cages the unsat core actually implicates, not every cage.",
+        loopNote: "On an unsat conflict, the loop retries ranked CNN alternatives for the cages the unsat core actually implicates, not every cage.",
         caption: "Robustness (handwritten only): 34.6% → 68.4% — real ground recovered, though a real ceiling remains.",
       },
       symbolicOnly: {
@@ -215,7 +217,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "MINIEXACT solves; on unsat, re-prompts the LLM with the solver's own conflict" },
           { label: "Output", kind: "output", text: "1/1 real test — stayed unsat on both attempts, an honest negative result" },
         ],
-        loopNote: "↺ run_with_conflict_retry() genuinely re-prompts the LLM with the real solver's unsat result and re-solves from scratch — mechanically real, not simulated.",
+        loopNote: "run_with_conflict_retry() genuinely re-prompts the LLM with the real solver's unsat result and re-solves from scratch — mechanically real, not simulated.",
         caption: "Tested on one known-hard puzzle (real id lgp-test-6x6-5): a real solver conflict fed back to the LLM doesn't guarantee a better re-parse. That's a genuine finding, not a bug in the loop.",
       },
       symbolicOnly: {

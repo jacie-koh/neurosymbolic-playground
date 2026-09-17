@@ -1,6 +1,6 @@
 /** Shared filter + randomize control for debuggers with a large (~100) real example pool. */
 
-import { el } from "../dom";
+import { el, clear } from "../dom";
 
 export interface FilterField<T> {
   key: string;
@@ -30,8 +30,14 @@ export function renderRandomizer<T extends { id: string }>(
     selected[f.key] = v != null ? String(v) : "";
   }
 
-  function matches(entry: T): boolean {
+  /** Matches every field's current selection except `exceptKey`, so a field's own
+   * option list can be computed against what the *other* filters already narrowed
+   * it to (e.g. legibility only ever has real values for handwritten puzzles -- once
+   * style=printed is picked, legibility has none, and the field disappears rather
+   * than offering choices that would always return zero results). */
+  function matchesExcept(entry: T, exceptKey?: string): boolean {
     return opts.fields.every((f) => {
+      if (f.key === exceptKey) return true;
       const want = selected[f.key];
       if (!want) return true;
       const v = f.get(entry);
@@ -42,6 +48,7 @@ export function renderRandomizer<T extends { id: string }>(
   function optionsFor(f: FilterField<T>): (string | number)[] {
     const seen = new Set<string | number>();
     for (const entry of manifest) {
+      if (!matchesExcept(entry, f.key)) continue;
       const v = f.get(entry);
       if (v != null && v !== "") seen.add(v);
     }
@@ -61,43 +68,52 @@ export function renderRandomizer<T extends { id: string }>(
     return all;
   }
 
-  const controls = opts.fields.map((f) => {
-    return el(
-      "select",
-      {
-        style: { fontSize: "12px", padding: "4px 8px" },
-        onchange: (e: Event) => {
-          selected[f.key] = (e.target as HTMLSelectElement).value;
+  const row = el("div", { style: { display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", marginBottom: "10px" } });
+  root.append(row);
+
+  function render(): void {
+    clear(row);
+    for (const f of opts.fields) {
+      const options = optionsFor(f);
+      // Nothing this field could be set to would leave any results, given the
+      // other filters currently chosen -- don't offer a control that can only
+      // ever produce an empty pool.
+      if (options.length === 0) {
+        selected[f.key] = "";
+        continue;
+      }
+      if (selected[f.key] && !options.some((v) => String(v) === selected[f.key])) {
+        selected[f.key] = "";
+      }
+      row.append(
+        el(
+          "select",
+          {
+            style: { fontSize: "12px", padding: "4px 8px" },
+            onchange: (e: Event) => {
+              selected[f.key] = (e.target as HTMLSelectElement).value;
+              render();
+            },
+          },
+          el("option", { value: "" }, `Any ${f.label.toLowerCase()}`),
+          ...options.map((v) => el("option", { value: String(v), selected: String(v) === selected[f.key] }, `${f.label}: ${v}`))
+        )
+      );
+    }
+    row.append(
+      el(
+        "button",
+        {
+          class: "btn primary",
+          onclick: () => {
+            const pool = manifest.filter((e) => matchesExcept(e));
+            opts.onPick(pool.length === 0 ? null : pool[Math.floor(Math.random() * pool.length)]);
+          },
         },
-      },
-      el("option", { value: "" }, `Any ${f.label.toLowerCase()}`),
-      ...optionsFor(f).map((v) => el("option", { value: String(v), selected: String(v) === selected[f.key] }, `${f.label}: ${v}`))
+        "Randomize"
+      )
     );
-  });
+  }
 
-  const randomizeBtn = el(
-    "button",
-    {
-      class: "btn primary",
-      onclick: () => {
-        const pool = manifest.filter(matches);
-        if (pool.length === 0) {
-          opts.onPick(null);
-          return;
-        }
-        const pick = pool[Math.floor(Math.random() * pool.length)];
-        opts.onPick(pick);
-      },
-    },
-    "🎲 Randomize"
-  );
-
-  root.append(
-    el(
-      "div",
-      { style: { display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", marginBottom: "10px" } },
-      ...controls,
-      randomizeBtn
-    )
-  );
+  render();
 }
