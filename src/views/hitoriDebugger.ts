@@ -66,9 +66,13 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     }
   }
 
+  // Replay/Step/output stay in one fixed block at the top of the page, above the
+  // randomizer -- so they're never pushed around by (or push around) the grid
+  // below, and pressing Replay/Stop never shifts the page.
+  const controlsHost = el("div");
   const randomizerHost = el("div");
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, body);
+  root.append(controlsHost, randomizerHost, body);
 
   loadHitoriManifest()
     .then((manifest) => {
@@ -224,7 +228,10 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       )
     );
 
-    body.append(grid, status, deductionPanel, logBox, controls);
+    clear(controlsHost);
+    controlsHost.append(deductionPanel, logBox);
+
+    body.append(grid, status, controls);
   }
 
   function stepForward(t: HitoriTrace): boolean {

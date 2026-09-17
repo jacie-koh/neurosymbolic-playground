@@ -145,6 +145,16 @@ export function solveZebra(ir: ZebraIR): ZebraSolveResult {
   return ok ? { status: "sat", solution: { ...positions } } : { status: "unsat", solution: null };
 }
 
+/** Why a placement happened: either every other house was ruled out (forced --
+ * ruledOut explains each one, by real clue or by the house already being taken in
+ * this category), or several houses were still legal and this one was picked as a
+ * guess (alsoLegal lists the others, which the search may later backtrack past). */
+export interface ZebraStepReason {
+  forced: boolean;
+  ruledOut: { house: number; takenBy?: string; clue?: ZebraClue }[];
+  alsoLegal?: number[];
+}
+
 /** One mutation of the backtracking search: house>0 is a trial placement, house===0
  * undoes it. deadEnd steps (house===0, deadEnd: true) are the actual dead-end moment
  * -- this entity has no legal house left at all, given the current trial assignment
@@ -155,6 +165,8 @@ export interface ZebraSolveStep {
   house: number;
   deadEnd?: boolean;
   reason?: string;
+  /** Only for real placements (house > 0, not deadEnd) -- why this house, in detail. */
+  explain?: ZebraStepReason;
 }
 
 export interface ZebraSolveTrace extends ZebraSolveResult {
@@ -220,8 +232,34 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
     });
     delete positions[entity];
     if (!violated) return `house ${house} and every other free house still fail some combination of clues`;
-    const clueDesc = violated.b ? `${violated.relation}(${violated.a}, ${violated.b})` : `${violated.relation}(${violated.a})`;
-    return `placing it at house ${house} would violate clue "${clueDesc}" — every other free house fails a clue too`;
+    return `placing it at house ${house} would violate: "${violated.source}" — every other free house fails a clue too`;
+  }
+
+  /** For a placement at chosenHouse: explains every OTHER house that isn't among
+   * candidates -- either it's already taken by another entity in this category, or
+   * placing there would violate a specific real clue (named by its actual source
+   * text). If candidates has more than one option, this placement is a guess
+   * (alsoLegal lists what else was still open), not something forced by the clues
+   * alone -- an honest distinction the earlier version of this search didn't draw. */
+  function explainPlacement(group: string, entity: string, chosenHouse: number, candidates: number[]): ZebraStepReason {
+    const ruledOut: ZebraStepReason["ruledOut"] = [];
+    for (let house = 1; house <= ir.size; house++) {
+      if (house === chosenHouse || candidates.includes(house)) continue;
+      if (usedByGroup[group].has(house)) {
+        const takenBy = ir.groups[group].find((e) => positions[e] === house);
+        ruledOut.push({ house, takenBy });
+        continue;
+      }
+      positions[entity] = house;
+      const violated = ir.clues.find((clue) => {
+        const known = [clue.a, clue.b].filter(Boolean).every((e) => positions[e as string] != null);
+        return known && !satisfies(clue, positions);
+      });
+      delete positions[entity];
+      ruledOut.push({ house, clue: violated });
+    }
+    const forced = candidates.length === 1;
+    return forced ? { forced, ruledOut } : { forced, ruledOut, alsoLegal: candidates.filter((h) => h !== chosenHouse) };
   }
 
   function backtrack(remaining: number): boolean {
@@ -234,9 +272,10 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
       return false;
     }
     for (const house of candidates) {
+      const explain = explainPlacement(group, entity, house, candidates);
       positions[entity] = house;
       usedByGroup[group].add(house);
-      steps.push({ entity, house });
+      steps.push({ entity, house, explain });
       if (backtrack(remaining - 1)) return true;
       usedByGroup[group].delete(house);
       delete positions[entity];
@@ -247,4 +286,49 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
 
   const ok = backtrack(totalEntities);
   return { status: ok ? "sat" : "unsat", solution: ok ? { ...positions } : null, steps };
+}
+
+/** Explains a real, already-known solution (the offline MINIEXACT-verified answer)
+ * entity by entity, in the same reveal order the debugger plays it back in --
+ * MINIEXACT's own internal decision process isn't recorded, so this isn't "how
+ * MINIEXACT decided it," but it IS a real fact about the puzzle: given only the
+ * clues plus whichever entities have been revealed so far, this is exactly which
+ * other houses that's already enough to rule out for the next entity, and which
+ * are still open (early reveals often can't be fully justified by the clues alone
+ * yet, until more of the solution is known -- an honest thing to show, not a gap
+ * to paper over). */
+export function explainRevealSteps(ir: ZebraIR, solution: Record<string, number>): ZebraSolveStep[] {
+  const positions: Record<string, number> = {};
+  const usedByGroup: Record<string, Set<number>> = {};
+  for (const group of Object.keys(ir.groups)) usedByGroup[group] = new Set();
+  const steps: ZebraSolveStep[] = [];
+
+  for (const [group, entities] of Object.entries(ir.groups)) {
+    for (const entity of entities) {
+      const chosenHouse = solution[entity];
+      const ruledOut: ZebraStepReason["ruledOut"] = [];
+      const stillOpen: number[] = [];
+      for (let house = 1; house <= ir.size; house++) {
+        if (house === chosenHouse) continue;
+        if (usedByGroup[group].has(house)) {
+          const takenBy = ir.groups[group].find((e) => positions[e] === house);
+          ruledOut.push({ house, takenBy });
+          continue;
+        }
+        positions[entity] = house;
+        const violated = ir.clues.find((clue) => {
+          const known = [clue.a, clue.b].filter(Boolean).every((e) => positions[e as string] != null);
+          return known && !satisfies(clue, positions);
+        });
+        delete positions[entity];
+        if (violated) ruledOut.push({ house, clue: violated });
+        else stillOpen.push(house);
+      }
+      const forced = stillOpen.length === 0;
+      steps.push({ entity, house: chosenHouse, explain: forced ? { forced, ruledOut } : { forced, ruledOut, alsoLegal: stillOpen } });
+      positions[entity] = chosenHouse;
+      usedByGroup[group].add(chosenHouse);
+    }
+  }
+  return steps;
 }

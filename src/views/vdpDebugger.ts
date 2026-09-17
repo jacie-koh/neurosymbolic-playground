@@ -61,7 +61,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
    * often (each with no reserved height) was both why Stop couldn't reliably keep
    * up with clicks and why the page visibly jumped as images reflowed in and out. */
   let overviewHost: HTMLElement | null = null;
-  let controlsHost: HTMLElement | null = null;
 
   function stopRunning(): void {
     running = false;
@@ -71,10 +70,15 @@ export function renderVDPDebugger(root: HTMLElement): void {
     }
   }
 
+  // Run/Step/output stay in one fixed block at the top of the page -- appended
+  // once, never torn down as a whole -- so they're always in the same place
+  // regardless of how tall the puzzle content below happens to be, and so
+  // pressing Run/Stop never shifts the page around them.
+  const controlsHost = el("div");
   const randomizerHost = el("div");
   const patternNote = el("p", { class: "muted", style: { fontSize: "12px", marginTop: "-4px" } });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, patternNote, body);
+  root.append(controlsHost, randomizerHost, patternNote, body);
 
   let manifest: VDPManifestEntry[] = [];
 
@@ -303,14 +307,14 @@ export function renderVDPDebugger(root: HTMLElement): void {
       if (!running) return;
       if (runIdx >= runSteps.length) {
         running = false;
-        if (controlsHost) drawControls(controlsHost, t);
+        drawControls(controlsHost, t);
         return;
       }
       const prevIdx = runIdx;
       runIdx++;
       runLines = runSteps.slice(0, runIdx);
       // Cheap every tick: just text and a couple of buttons, no images.
-      if (controlsHost) drawControls(controlsHost, t);
+      drawControls(controlsHost, t);
       // Expensive, so only when a pick actually just became known: the overview's
       // thumbnails (real <img> elements) get rebuilt.
       const justRevealed = (prevIdx < freshRevealAt && runIdx >= freshRevealAt) || (prevIdx < refRevealAt && runIdx >= refRevealAt);
@@ -368,7 +372,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row" },
       running
-        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); if (controlsHost) drawControls(controlsHost, t); } }, "⏸ Stop")
+        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); drawControls(controlsHost, t); } }, "⏸ Stop")
         : el("button", { class: "btn primary", onclick: () => runFrom(t) }, runIdx > 0 ? "▶ Replay" : "▶ Run"),
       running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `running… line ${runIdx}/${runSteps.length}`) : ""
     );
@@ -417,10 +421,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
       `${detectionSummary} · ` + ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
     );
 
-    controlsHost = el("div", { style: { marginTop: "12px" } });
     drawControls(controlsHost, t);
 
-    body.append(conceptNote, overviewHost, accRow, controlsHost);
+    body.append(conceptNote, overviewHost, accRow);
   }
 
   selectTrace(activeFile);

@@ -23,7 +23,7 @@
 
 import { el, clear } from "../dom";
 import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, loadZebraManifest, type ZebraTrace, type ZebraManifestEntry, type ZebraClueRecord } from "../data/traces";
-import { solveZebra, solveZebraWithSteps, type Relation, type ZebraSolveStep } from "../neural/genericZebra";
+import { solveZebra, solveZebraWithSteps, explainRevealSteps, type Relation, type ZebraSolveStep, type ZebraStepReason } from "../neural/genericZebra";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 
@@ -66,9 +66,13 @@ export function renderZebraDebugger(root: HTMLElement): void {
     }
   }
 
+  // Replay/Step/output stay in one fixed block at the top of the page, above the
+  // randomizer -- so they're never pushed around by (or push around) the clue
+  // list/assignment grid below, and pressing Replay/Stop never shifts the page.
+  const controlsHost = el("div");
   const randomizerHost = el("div");
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, body);
+  root.append(controlsHost, randomizerHost, body);
 
   /** Populated once the manifest loads, so drawBody() can look up this puzzle's real
    * offline-computed hasBacktrack/hasDeadClue/hasConflictRetry flags (see
@@ -277,6 +281,9 @@ export function renderZebraDebugger(root: HTMLElement): void {
         )
       : "";
 
+    clear(controlsHost);
+    controlsHost.append(playRow, stepRow, logBox);
+
     body.append(
       el("div", { style: { display: "flex", gap: "20px", flexWrap: "wrap", alignItems: "flex-start" } },
         el("div", { style: { flex: "1 1 320px" } }, el("h3", { style: { fontSize: "13px", margin: "0 0 4px" } }, "Clues"), clueList),
@@ -285,9 +292,6 @@ export function renderZebraDebugger(root: HTMLElement): void {
       meta,
       deadClueNote,
       conflictRetryPanel,
-      playRow,
-      stepRow,
-      logBox,
       status,
       panel,
       resetBtn
@@ -308,10 +312,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
   function prepareSteps(t: ZebraTrace): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
-      const solution = t.result.solution!;
-      playSteps = Object.values(t.groups)
-        .flat()
-        .map((entity) => ({ entity, house: solution[entity] }));
+      playSteps = explainRevealSteps({ size: t.size, groups: t.groups, clues: t.clues }, t.result.solution!);
     } else {
       // Edited clues (or the offline baseline itself was unsat): MINIEXACT never verified
       // this exact state, so fall back to an independent client-side search instead.
@@ -325,6 +326,25 @@ export function renderZebraDebugger(root: HTMLElement): void {
     logLines = [];
   }
 
+  /** Renders a real ZebraStepReason (which houses were ruled out, and by what --
+   * another entity already taking it, or a specific real clue by its actual source
+   * text -- plus whichever houses aren't decided yet) into readable lines. */
+  function explainLines(explain: ZebraStepReason): string[] {
+    const lines: string[] = [];
+    for (const r of explain.ruledOut) {
+      if (r.takenBy) lines.push(`      house ${r.house}: already taken by ${entityLabel(r.takenBy)}`);
+      else if (r.clue) lines.push(`      house ${r.house}: violates "${r.clue.source}"`);
+      else lines.push(`      house ${r.house}: ruled out`);
+    }
+    if (explain.forced) {
+      lines.unshift(`    forced — every other house is ruled out:`);
+    } else if (explain.alsoLegal && explain.alsoLegal.length > 0) {
+      const openLabel = revealMode ? "not yet decided by the clues revealed so far" : "still legal too — this is a guess, may backtrack";
+      lines.push(`      house${explain.alsoLegal.length > 1 ? "s" : ""} ${explain.alsoLegal.join(", ")}: ${openLabel}`);
+    }
+    return lines;
+  }
+
   /** O(1): applies exactly one more step during auto-play, so a fast-ticking (as low
    * as 15ms) backtracking trace with many steps stays responsive -- replaying from
    * scratch every tick was O(n) per tick (O(n^2) overall) and could bog the tab down
@@ -334,12 +354,14 @@ export function renderZebraDebugger(root: HTMLElement): void {
     if (revealMode) {
       livePositions[step.entity] = step.house;
       logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
+      if (step.explain) logLines.push(...explainLines(step.explain));
     } else if (step.deadEnd) {
       logLines.push(`⚠ dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`);
     } else {
       if (step.house === 0) delete livePositions[step.entity];
       else livePositions[step.entity] = step.house;
       logLines.push(step.house ? `${entityLabel(step.entity)}: try house ${step.house}` : `${entityLabel(step.entity)}: backtrack`);
+      if (step.house && step.explain) logLines.push(...explainLines(step.explain));
     }
   }
 

@@ -54,9 +54,13 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     }
   }
 
+  // Replay/Step/output stay in one fixed block at the top of the page, above the
+  // randomizer -- so they're never pushed around by (or push around) the puzzle
+  // grid below, and pressing Replay/Stop never shifts the page.
+  const controlsHost = el("div");
   const randomizerHost = el("div");
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, body);
+  root.append(controlsHost, randomizerHost, body);
 
   loadKenKenManifest()
     .then((manifest) => {
@@ -260,12 +264,12 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       "Reset to pipeline readings"
     );
 
+    clear(controlsHost);
+    controlsHost.append(playRow, stepRow, logBox);
+
     body.append(
       el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage, grid),
       meta,
-      playRow,
-      stepRow,
-      logBox,
       status,
       panel,
       resetBtn
