@@ -1,17 +1,17 @@
 /**
- * "Results & trade-offs" for the five paper-backed modules: the original
- * TF-Playground-style panel shape (Pure Neural / Neurosymbolic / Symbolic only,
- * each with Performance / Explainability / Robustness bars, switchable across
- * the three stacking patterns) — but every number is real.
+ * "Results & trade-offs" for the five paper-backed modules: an architecture
+ * diagram for each of Pure Neural / Neurosymbolic / Symbolic only, switchable
+ * across the three stacking patterns — every stage and every number on it real.
  *
- * Performance and Robustness are freshly aggregated from the real full
- * 2,200-case sweep (standalone/reports/visual_full.json) for Sudoku/KenKen, or
- * from standalone/VALIDATION.md for the rest. Explainability isn't a survey
- * score: it's 0% for a raw neural confidence (no checkable proof exists) and
- * 100% wherever a symbolic solver actually ran and returned sat — a Z3 model,
- * forced-move proof, or MINIEXACT/FO-SL solution is a checkable witness by
- * construction, not an estimate. Where no real number exists for a cell, it
- * says so instead of inventing one.
+ * This replaces an earlier Performance/Explainability/Robustness bar-chart
+ * version. Bars made "Explainability" look like a measured quantity when it
+ * never was (0% for a raw neural confidence, 100% wherever a symbolic solver
+ * returned sat — true by construction, not an estimate), and didn't show what
+ * the pipeline actually *does*. A diagram does: each box is a real stage of the
+ * real pipeline (perception, reasoning, a correction loop when one exists), and
+ * the real accuracy number lives on the box it actually measures, not floating
+ * in a separate meter. Where no real number exists for a column, it says so
+ * instead of drawing an empty diagram.
  *
  * A stacking-pattern tab is either real (has actual measured/checkable data,
  * genuinely built and run) or removed: no tab is ever shown for a pattern this
@@ -27,21 +27,28 @@ import { el } from "../dom";
 import { PATTERNS, PATTERN_ORDER } from "../data/patterns";
 import { store, type StackingPattern } from "../state";
 
-interface Bar {
-  value: number | null; // 0..1, or null = not measured / not applicable
-  detail: string;
+interface FlowStage {
+  label: string;
+  kind: "neural" | "symbolic" | "output";
+  text: string;
 }
 
-interface ColumnStats {
-  performance: Bar;
-  explainability: Bar;
-  robustness: Bar;
+interface Pipeline {
+  stages: FlowStage[];
+  /** A real correction/retry loop this pipeline has -- described in words,
+   * since a literal feedback arrow isn't part of the flow-node vocabulary this
+   * reuses (the same one the app's now-removed builder page used). */
+  loopNote?: string;
+  /** Additional real detail (e.g. a handwritten-vs-printed robustness split)
+   * shown under the diagram, when there's something more to say than what's
+   * already on the Output box. */
+  caption?: string;
 }
 
 interface PatternRow {
-  pureNeural: ColumnStats;
-  neurosymbolic: ColumnStats;
-  symbolicOnly: ColumnStats;
+  pureNeural: Pipeline | null;
+  neurosymbolic: Pipeline | null;
+  symbolicOnly: Pipeline | null;
   /** No tab is shown for this pattern — either it's structurally impossible for this
    * module, or a real demo of it isn't achievable right now (see isPatternRemoved()). */
   removed?: true;
@@ -49,226 +56,238 @@ interface PatternRow {
 
 type ModuleResults = Record<StackingPattern, PatternRow>;
 
-const NA: Bar = { value: null, detail: "" };
-const NOT_TRAINED = { value: 0 as number | null, detail: "A raw network confidence isn't a checkable proof — 0% by construction, not a measurement." };
-const PROVEN = { value: 1 as number | null, detail: "A sat result always comes with a checkable witness (a Z3 model, forced-move proof, or exact-cover/FO-SL solution) — true by construction of exact solving, not a measured estimate." };
-
 const RESULTS: Partial<Record<string, ModuleResults>> = {
   sudoku: {
     "learning-for-reasoning": {
       pureNeural: {
-        performance: { value: 0.909, detail: "perception_exact — every digit read correctly, no solving involved. 800/800 real cases." },
-        explainability: NOT_TRAINED,
-        robustness: { value: 0.818, detail: "Same perception check restricted to the 400 handwritten cases only (vs. 100% on printed)." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CNN reads each printed/handwritten digit" },
+          { label: "Output", kind: "output", text: "90.9% exact — no solver, no checkable proof (800/800 real cases)" },
+        ],
       },
       neurosymbolic: {
-        performance: { value: 0.911, detail: "baseline_correct — CNN reads once, Z3 solves once, no correction loop." },
-        explainability: PROVEN,
-        robustness: { value: 0.822, detail: "Same one-shot pipeline restricted to the 400 handwritten cases only (vs. 100% on printed)." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CNN reads each digit, once" },
+          { label: "Reasoning", kind: "symbolic", text: "Z3 solves once from the raw reading" },
+          { label: "Output", kind: "output", text: "91.1% baseline_correct — a sat result is a checkable Z3 model" },
+        ],
+        caption: "Robustness (handwritten only): 82.2%, vs. 100% on printed.",
       },
       symbolicOnly: {
-        performance: { value: 1.0, detail: "727/727 — when perception was exactly correct, Z3 found the correct answer every time (solver reliability, isolated from perception error)." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Z3 solves from the ground-truth digits (no perception)" },
+          { label: "Output", kind: "output", text: "100% (727/727) — solver reliability isolated from perception error" },
+        ],
       },
     },
     "reasoning-for-learning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Would need real gradient updates on ~10 real correction examples — not a demo, just overfitting.
     },
     "learning-reasoning": {
       pureNeural: {
-        performance: { value: 0.909, detail: "Perception doesn't change based on what happens after it — same number as the one-shot tab." },
-        explainability: NOT_TRAINED,
-        robustness: { value: 0.818, detail: "Same as the one-shot tab." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CNN reads each digit" },
+          { label: "Output", kind: "output", text: "90.9% exact — perception doesn't change based on what happens after it" },
+        ],
       },
       neurosymbolic: {
-        performance: { value: 0.955, detail: "answer_correct with the bounded correction loop: when Z3 finds a conflict, it retries ranked CNN alternatives until sat or budget exhausted." },
-        explainability: PROVEN,
-        robustness: { value: 0.91, detail: "Same correction loop restricted to the 400 handwritten cases only — this is where the loop earns its keep (82.2% → 91.0%)." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CNN reads each digit, ranks alternatives" },
+          { label: "Reasoning", kind: "symbolic", text: "Z3 solves; on conflict, retries a ranked alternative" },
+          { label: "Output", kind: "output", text: "95.5% answer_correct — bounded correction loop" },
+        ],
+        loopNote: "↺ When Z3 hits a conflict, it retries the next-ranked CNN alternative for the disputed cell until sat or the retry budget runs out.",
+        caption: "Robustness (handwritten only): 82.2% → 91.0% — this is exactly where the loop earns its keep.",
       },
       symbolicOnly: {
-        performance: { value: 1.0, detail: "Same solver-reliability fact as the one-shot tab — the loop doesn't change what Z3 can prove given correct input." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Z3 solves from the ground-truth digits" },
+          { label: "Output", kind: "output", text: "100% — the loop doesn't change what Z3 can prove given correct input" },
+        ],
       },
     },
   },
   kenken: {
     "learning-for-reasoning": {
-      pureNeural: {
-        performance: NA,
-        explainability: NOT_TRAINED,
-        robustness: NA,
-      },
+      pureNeural: null,
       neurosymbolic: {
-        performance: { value: 0.669, detail: "baseline_correct — CV cage detection + CNN reads once, exact arithmetic solver runs once, no correction. 1,400/1,400 real cases." },
-        explainability: PROVEN,
-        robustness: { value: 0.346, detail: "Same one-shot pipeline restricted to the 700 handwritten cases only (vs. 99.3% on printed) — this is the real source of KenKen's size-degradation trend." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CV cage detection + CNN reads once" },
+          { label: "Reasoning", kind: "symbolic", text: "Exact arithmetic solver runs once, no correction" },
+          { label: "Output", kind: "output", text: "66.9% baseline_correct (1,400/1,400 real cases)" },
+        ],
+        caption: "Robustness (handwritten only): 34.6%, vs. 99.3% on printed — the real source of KenKen's size-degradation trend.",
       },
       symbolicOnly: {
-        performance: { value: 0.999, detail: "943/944 — when the cage read needed zero corrections, the answer was correct essentially every time (solver reliability, isolated from perception error)." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Solver runs from ground-truth cages (no perception)" },
+          { label: "Output", kind: "output", text: "99.9% (943/944) — solver reliability isolated from perception error" },
+        ],
       },
     },
     "reasoning-for-learning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Same reason as Sudoku — real training on a handful of real correction examples wouldn't be a demo, just overfitting.
     },
     "learning-reasoning": {
-      pureNeural: { performance: NA, explainability: NOT_TRAINED, robustness: NA },
+      pureNeural: null,
       neurosymbolic: {
-        performance: { value: 0.839, detail: "answer_correct with the bounded joint-cage correction loop, prioritized by unsat cores. 1,400/1,400 real cases." },
-        explainability: PROVEN,
-        robustness: { value: 0.684, detail: "Same correction loop restricted to the 700 handwritten cases only — the loop recovers real ground here (34.6% → 68.4%), though a real ceiling remains (see notes)." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "CV cage detection + CNN reads, ranks alternatives" },
+          { label: "Reasoning", kind: "symbolic", text: "Solver runs; on conflict, retries alternatives prioritized by unsat cores" },
+          { label: "Output", kind: "output", text: "83.9% answer_correct — bounded joint-cage correction loop" },
+        ],
+        loopNote: "↺ On an unsat conflict, the loop retries ranked CNN alternatives for the cages the unsat core actually implicates, not every cage.",
+        caption: "Robustness (handwritten only): 34.6% → 68.4% — real ground recovered, though a real ceiling remains.",
       },
       symbolicOnly: {
-        performance: { value: 0.999, detail: "Same solver-reliability fact as the one-shot tab." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Solver runs from ground-truth cages" },
+          { label: "Output", kind: "output", text: "99.9% — same solver-reliability fact as the one-shot tab" },
+        ],
       },
     },
   },
   hitori: {
     "learning-for-reasoning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Hitori's grid is given directly, never read from an image — there is no perception stage to ever feed a solver, not just an unbuilt one.
     },
     "reasoning-for-learning": {
-      pureNeural: {
-        performance: NA,
-        explainability: NOT_TRAINED,
-        robustness: NA,
-      },
+      pureNeural: null,
       neurosymbolic: {
-        performance: { value: 1.0, detail: "15/15 sampled pencil-puzzle-bench puzzles (6×6, 8×8, 11×10) match that dataset's recorded solutions. The proof is verified first (symbolic); the local LLM then explains it in prose, labeled by the pipeline itself as \"not formally verified.\"" },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Tests the opposite of each cell's solved value; unsat proves the move forced" },
+          { label: "Explain", kind: "neural", text: "Local LLM turns the first forced move's unsat core into prose" },
+          { label: "Output", kind: "output", text: "100% (15/15) — proof verified first; the LLM's prose is labeled \"not formally verified\"" },
+        ],
       },
       symbolicOnly: {
-        performance: { value: 1.0, detail: "Identical 15/15 — the LLM explanation step is a pure add-on for human readability and never changes whether the puzzle is solved correctly." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "Same forced-move proof search, no LLM step" },
+          { label: "Output", kind: "output", text: "100% (15/15) — identical result; the explanation step never changes correctness" },
+        ],
       },
     },
     "learning-reasoning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Same reason — no perception stage exists to ever loop back into.
     },
   },
   "zebra-puzzle": {
     "learning-for-reasoning": {
-      pureNeural: {
-        performance: NA,
-        explainability: NOT_TRAINED,
-        robustness: NA,
-      },
+      pureNeural: null,
       neurosymbolic: {
-        performance: { value: 1.0, detail: "6/6 original ZebraLogic puzzles solved correctly: fresh local Qwen3-4B parse feeding the authors' Colored Exact Cover / MINIEXACT solver, independently checked against the real answer." },
-        explainability: PROVEN,
-        robustness: { value: null, detail: "Only 6 puzzles sampled from the 1,000 downloaded — too small to split into an independent robustness slice without overstating it." },
+        stages: [
+          { label: "Parse", kind: "neural", text: "Local Qwen3-4B translates numbered clues into typed relations" },
+          { label: "Reasoning", kind: "symbolic", text: "Colored Exact Cover / MINIEXACT solves" },
+          { label: "Output", kind: "output", text: "100% (6/6 original ZebraLogic puzzles) — independently checked against the real answer" },
+        ],
+        caption: "Only 6 puzzles sampled from the 1,000 downloaded — too small to also split out a separate robustness slice without overstating it.",
       },
       symbolicOnly: {
-        performance: { value: 1.0, detail: "MINIEXACT is a complete Exact Cover solver: given correctly parsed clues, it always finds the unique valid assignment — a structural solver guarantee, not a separate sampled statistic." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "MINIEXACT solves from correctly parsed clues" },
+          { label: "Output", kind: "output", text: "100% — a complete Exact Cover solver's structural guarantee, not a sampled statistic" },
+        ],
       },
     },
     "reasoning-for-learning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Fine-tuning a 4B-parameter LLM isn't feasible on this machine, and there's no real training data for it beyond a handful of parse failures.
     },
     "learning-reasoning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
       neurosymbolic: {
-        performance: { value: null, detail: "1/1 real test, not a rate: puzzlelab.zebra.run_with_conflict_retry() genuinely re-prompts the local LLM with the real solver's own unsat result and re-solves from scratch — mechanically real, tested on one known-hard puzzle (real id lgp-test-6x6-5), which stayed unsat on both attempts. See the debugger's own \"conflict retry\" example." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Parse", kind: "neural", text: "Local LLM parses clues" },
+          { label: "Reasoning", kind: "symbolic", text: "MINIEXACT solves; on unsat, re-prompts the LLM with the solver's own conflict" },
+          { label: "Output", kind: "output", text: "1/1 real test — stayed unsat on both attempts, an honest negative result" },
+        ],
+        loopNote: "↺ run_with_conflict_retry() genuinely re-prompts the LLM with the real solver's unsat result and re-solves from scratch — mechanically real, not simulated.",
+        caption: "Tested on one known-hard puzzle (real id lgp-test-6x6-5): a real solver conflict fed back to the LLM doesn't guarantee a better re-parse. That's a genuine finding, not a bug in the loop.",
       },
       symbolicOnly: {
-        performance: { value: 1.0, detail: "MINIEXACT's own completeness guarantee doesn't change based on how many times perception is retried." },
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [
+          { label: "Reasoning", kind: "symbolic", text: "MINIEXACT solves" },
+          { label: "Output", kind: "output", text: "100% — the solver's own completeness guarantee doesn't change with retries" },
+        ],
       },
     },
   },
   "visual-discrimination": {
     "learning-for-reasoning": {
       pureNeural: {
-        performance: { value: 0.365, detail: "The paper's own two pure-neural baselines average ~36.5% (~33% and ~40% reported) — real numbers from the published paper." },
-        explainability: NOT_TRAINED,
-        robustness: NA,
+        stages: [
+          { label: "Similarity", kind: "neural", text: "Paper's own triplet-loss + prototypical-network baselines" },
+          { label: "Output", kind: "output", text: "~36.5% average (~33% and ~40% reported) — barely above chance, no checkable proof" },
+        ],
       },
       neurosymbolic: {
-        performance: { value: 0.83, detail: "5/6 held-out puzzles: from-scratch Faster R-CNN + MobileNetV3-Small attribute classifier feeding the authors' real, unmodified FO-SL/Z3 synthesizer." },
-        explainability: PROVEN,
-        robustness: { value: 0.8, detail: "Same real synthesizer, run against the paper's own saved/replayed perception across a wider 15-puzzle sample: 12/15 sat — a stability check across a different perception source." },
+        stages: [
+          { label: "Perception", kind: "neural", text: "From-scratch Faster R-CNN + MobileNetV3-Small attribute classifier" },
+          { label: "Reasoning", kind: "symbolic", text: "Authors' unmodified FO-SL/Z3 synthesizer searches for a discriminator" },
+          { label: "Output", kind: "output", text: "83% (5/6 held-out puzzles) — a sat result is a checkable FO-SL formula" },
+        ],
+        caption: "Robustness check: the same real synthesizer against the paper's own saved/replayed perception across a wider 15-puzzle sample — 12/15 sat.",
       },
       symbolicOnly: {
-        performance: NA,
-        explainability: PROVEN,
-        robustness: NA,
+        stages: [{ label: "Reasoning", kind: "symbolic", text: "FO-SL/Z3 synthesizer alone" }],
+        caption: "Not measured standalone here — this module has no ground-truth scene models to feed it directly; it's always paired with perception.",
       },
     },
     "reasoning-for-learning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Same reason — real training data for this would need synthesis failures we don't actually have (the classifier is already 100% on every held-out object tested).
     },
     "learning-reasoning": {
-      pureNeural: { performance: NA, explainability: NA, robustness: NA },
-      neurosymbolic: { performance: NA, explainability: NA, robustness: NA },
-      symbolicOnly: { performance: NA, explainability: NA, robustness: NA },
+      pureNeural: null,
+      neurosymbolic: null,
+      symbolicOnly: null,
       removed: true, // Checked feasibility (§ earlier): buildable in principle, but every held-out object already gets 100% attribute accuracy, so there's no real low-confidence failure to demonstrate a retry against.
     },
   },
 };
 
-function bar(label: string, color: string, b: Bar): HTMLElement {
-  if (b.value == null) {
-    return el(
-      "div",
-      { style: { marginBottom: "10px" } },
-      el("div", { style: { fontSize: "12px", marginBottom: "2px" } }, el("span", { class: "muted" }, label)),
-      el("div", { style: { fontSize: "11px", color: "var(--muted)" } }, b.detail || "Not measured for this module's real pipeline.")
-    );
-  }
-  const pct = Math.round(b.value * 100);
-  return el(
-    "div",
-    { style: { marginBottom: "10px" } },
+function flowDiagram(p: Pipeline): HTMLElement {
+  const nodes = p.stages.flatMap((stage, i) => [
+    i > 0 ? el("div", { class: "flow-arrow" }, "→") : null,
     el(
       "div",
-      { style: { display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "4px" } },
-      el("span", { class: "muted" }, label),
-      el("b", {}, `${pct}%`)
+      { class: `flow-node ${stage.kind}`, style: { flex: "1 1 150px" } },
+      el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" } }, stage.label),
+      stage.text
     ),
-    el("div", { class: "meter" }, el("span", { style: { width: `${pct}%`, background: color } })),
-    b.detail ? el("div", { style: { fontSize: "11px", color: "var(--muted)", marginTop: "3px" } }, b.detail) : ""
+  ]);
+  return el(
+    "div",
+    {},
+    el("div", { class: "flow-demo", style: { display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" } }, ...nodes),
+    p.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, p.loopNote) : "",
+    p.caption ? el("div", { style: { fontSize: "12px", marginTop: "8px", color: "var(--muted)" } }, p.caption) : ""
   );
 }
 
-function scoreCard(title: string, subtitle: string, stats: ColumnStats): HTMLElement {
+function scoreCard(title: string, subtitle: string, pipeline: Pipeline | null): HTMLElement {
   return el(
     "div",
     { class: "metric-card" },
     el("div", { class: "label" }, title),
     el("div", { style: { fontSize: "13px", color: "var(--muted)", margin: "2px 0 14px" } }, subtitle),
-    bar("Performance", "#0877bd", stats.performance),
-    bar("Explainability", "#8e44ad", stats.explainability),
-    bar("Robustness", "#f59322", stats.robustness)
+    pipeline ? flowDiagram(pipeline) : el("div", { style: { fontSize: "12px", color: "var(--muted)" } }, "Not measured for this module's real pipeline.")
   );
 }
 
@@ -323,7 +342,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
     el(
       "div",
       { class: "metric-card" },
-      el("div", { class: "label" }, "Results & trade-offs — real measurements, not illustrative estimates"),
+      el("div", { class: "label" }, "Results & trade-offs — real architecture, real numbers"),
       body
     )
   );

@@ -96,7 +96,6 @@ export interface SudokuManifestEntry {
   file: string;
   size: number;
   style: "printed" | "handwritten";
-  notation: "hex" | "numeric";
   avgConfidence: number | null;
   legibility: "high" | "medium" | "low" | null;
   status: string;

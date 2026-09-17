@@ -76,7 +76,6 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         fields: [
           { key: "size", label: "Size", get: (e) => e.size, order: [4, 9, 16] },
           { key: "style", label: "Style", get: (e) => e.style, order: ["printed", "handwritten"] },
-          { key: "notation", label: "Notation", get: (e) => e.notation, order: ["numeric", "hex"] },
           { key: "legibility", label: "Legibility", get: (e) => e.legibility, order: ["high", "medium", "low"] },
         ],
         onPick: (entry) => {
