@@ -159,7 +159,8 @@
           "size": "large",
           "shape": "cube"
         }
-      ]
+      ],
+      "relations": []
     },
     {
       "sceneId": "1",
@@ -392,6 +393,168 @@
           "size": "large",
           "shape": "sphere"
         }
+      ],
+      "relations": [
+        {
+          "name": "behind",
+          "pairs": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "left",
+          "pairs": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "disequal",
+          "pairs": [
+            [
+              2,
+              3
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "same_color",
+          "pairs": [
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "same_material",
+          "pairs": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "same_size",
+          "pairs": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "front",
+          "pairs": [
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "right",
+          "pairs": [
+            [
+              3,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        }
       ]
     },
     {
@@ -551,6 +714,83 @@
           "size": "large",
           "shape": "sphere"
         }
+      ],
+      "relations": [
+        {
+          "name": "behind",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "left",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "disequal",
+          "pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "same_material",
+          "pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "same_size",
+          "pairs": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "front",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "right",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        }
       ]
     },
     {
@@ -709,6 +949,83 @@
           "material": "metal",
           "size": "large",
           "shape": "cube"
+        }
+      ],
+      "relations": [
+        {
+          "name": "front",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "right",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "disequal",
+          "pairs": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "same_material",
+          "pairs": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "same_size",
+          "pairs": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "behind",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "left",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
         }
       ]
     },
@@ -1017,7 +1334,8 @@
           "size": "small",
           "shape": "cube"
         }
-      ]
+      ],
+      "relations": []
     },
     {
       "sceneId": "5",
@@ -1175,6 +1493,57 @@
           "material": "metal",
           "size": "small",
           "shape": "cube"
+        }
+      ],
+      "relations": [
+        {
+          "name": "front",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "right",
+          "pairs": [
+            [
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "disequal",
+          "pairs": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "behind",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "name": "left",
+          "pairs": [
+            [
+              1,
+              2
+            ]
+          ]
         }
       ]
     }

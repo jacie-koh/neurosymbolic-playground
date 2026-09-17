@@ -10,10 +10,10 @@
  *
  * There's no live "rerun" here: full FO-SL synthesis is a real search over
  * first-order formulas, not something worth reimplementing in the browser the way
- * the other four modules' solvers were. This module is for inspecting what the
- * fresh pipeline actually perceived and comparing it against both ground truth and
- * the authors' own (replayed) perception on the identical images — including the
- * honest cases where fresh perception lands on the wrong answer or finds nothing.
+ * the other four modules' solvers were. Pressing Run replays the real perception,
+ * the real derived relations, and the real solve result already computed offline
+ * — narrated in order, not a fresh computation — including the honest cases where
+ * fresh perception lands on the wrong answer or finds nothing.
  *
  * 100 real puzzles (spanning all 15 relation patterns) were run through this exact
  * pipeline offline (standalone/reports/debugger/vdp_fresh/run_100.py) and are
@@ -23,11 +23,12 @@
  * Vocabulary and layout follow Murali et al. (IJCAI 2022) directly, not just the
  * solver's internal terms: a puzzle is Example images E (must all satisfy the
  * discriminator, Definition 3's D1) and Candidate images C (exactly one must,
- * D2+D3) — rendered here as an overview board mirroring the paper's Figure 1,
- * not a flat "scene 0/1/2..." tab list. Each puzzle also carries the real English
- * sentence its ground-truth concept was built from (vendor/vdp/utils/common.py's
- * intended_concept, e.g. "Every sphere has a cylinder to its right"), shown before
- * the raw FO-SL formula so the puzzle reads the way the paper poses it.
+ * D2+D3) — rendered as an overview board mirroring the paper's Figure 1, with
+ * which candidate was picked revealed only after pressing Run, not shown upfront.
+ * Each puzzle also carries the real English sentence its ground-truth concept was
+ * built from (vendor/vdp/utils/common.py's intended_concept, e.g. "Every sphere
+ * has a cylinder to its right"), shown before the raw FO-SL formula so the puzzle
+ * reads the way the paper poses it.
  */
 
 import { el, clear } from "../dom";
@@ -42,18 +43,16 @@ export function renderVDPDebugger(root: HTMLElement): void {
 
   let activeFile = "vdp-match.json";
   let trace: VDPTrace | null = null;
-  let selectedScene: string | null = null;
-  let playing = false;
-  let playTimer: ReturnType<typeof setTimeout> | undefined;
-  /** How many objects in the current scene have been "perceived" so far; null = show everything (not playing). */
-  let revealCount: number | null = null;
-  let resultsRevealed = true;
+  let running = false;
+  let hasRun = false;
+  let runLines: string[] = [];
+  let runTimer: ReturnType<typeof setTimeout> | undefined;
 
-  function stopPlaying(): void {
-    playing = false;
-    if (playTimer !== undefined) {
-      clearTimeout(playTimer);
-      playTimer = undefined;
+  function stopRunning(): void {
+    running = false;
+    if (runTimer !== undefined) {
+      clearTimeout(runTimer);
+      runTimer = undefined;
     }
   }
 
@@ -69,17 +68,15 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   function selectTrace(file: string): void {
-    stopPlaying();
-    revealCount = null;
-    resultsRevealed = true;
+    stopRunning();
+    hasRun = false;
+    runLines = [];
     activeFile = file;
-    selectedScene = null;
     clear(body);
     body.append(el("p", { class: "muted" }, "Loading trace…"));
     loadVDPTrace(file)
       .then((t) => {
         trace = t;
-        selectedScene = t.scenes.find((s) => s.role === "train")?.sceneId ?? t.scenes[0]?.sceneId ?? null;
         drawDifficultyNote();
         drawBody();
       })
@@ -121,16 +118,15 @@ export function renderVDPDebugger(root: HTMLElement): void {
     drawDifficultyNote();
   });
 
-  function verdictBadge(t: VDPTrace): HTMLElement {
-    const freshCand = t.freshResult.candidate;
-    const refCand = t.referenceResult.candidate;
-    if (t.freshResult.status !== "sat") {
-      return el("span", { class: "badge badge-strong" }, "fresh: no discriminator found");
-    }
-    if (freshCand && refCand && freshCand === refCand) {
-      return el("span", { class: "badge badge-weak" }, "fresh matches the reference answer");
-    }
-    return el("span", { class: "badge badge-strong" }, "fresh picks a different candidate than the reference");
+  /** "0.json" (the solver's own candidate identifier, a scene filename) -> "Candidate 2"
+   * (that scene's position among this puzzle's candidates) -- human-readable, not the
+   * raw solver_ir filename the formula's JSON literally names. */
+  function candidateLabel(t: VDPTrace, raw: string | null): string {
+    if (!raw) return "nothing";
+    const sceneId = raw.replace(/\.json$/, "");
+    const candidates = t.scenes.filter((s) => s.role === "test");
+    const idx = candidates.findIndex((s) => s.sceneId === sceneId);
+    return idx >= 0 ? `Candidate ${idx + 1}` : raw;
   }
 
   /**
@@ -147,90 +143,162 @@ export function renderVDPDebugger(root: HTMLElement): void {
    *     estimate, not a classifier output, and a small position drift can flip
    *     which relations hold even when every attribute is right.
    */
-  function disagreementExplanation(t: VDPTrace): HTMLElement | null {
+  function disagreementReason(t: VDPTrace): string | null {
     const freshCand = t.freshResult.candidate;
     const refCand = t.referenceResult.candidate;
     if (t.freshResult.status === "sat" && freshCand && refCand && freshCand === refCand) return null;
 
     if (t.freshResult.status !== "sat") {
-      return el(
-        "div",
-        { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
-        el("b", {}, "Why: "),
-        "the real search found no discriminator that uniquely picks one object within its quantifier/conjunct budget for this scene set — a search-budget limit, not necessarily a perception error."
-      );
+      return "Why: the real search found no discriminator that uniquely picks one candidate within its quantifier/conjunct budget — a search-budget limit, not necessarily a perception error.";
     }
 
     const acc = t.accuracy;
     const misreadRates = ATTRS.map((a) => ({ attr: a, rate: acc[a] })).filter((x) => x.rate != null && x.rate < 1);
     if (misreadRates.length > 0) {
       const worst = misreadRates.sort((a, b) => (a.rate as number) - (b.rate as number))[0];
-      return el(
-        "div",
-        { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
-        el("b", {}, "Why: "),
-        `fresh perception misread ${worst.attr} on ${(100 - (worst.rate as number) * 100).toFixed(1)}% of objects across this puzzle's scenes — a real classification error that steered the search toward a different, but still independently verified, discriminator.`
+      return (
+        `Why: fresh perception misread ${worst.attr} on ${(100 - (worst.rate as number) * 100).toFixed(1)}% of objects across this puzzle's scenes` +
+        " — a real classification error that steered the search toward a different, but still independently verified, discriminator."
       );
     }
 
-    return el(
-      "div",
-      { class: "note", style: { marginTop: "10px", fontSize: "12px" } },
-      el("b", {}, "Why: "),
-      "every color/material/size/shape read was correct here — the disagreement instead comes from estimated 3D position (regressed from box size/depth, not classified), which feeds the left/right/front/behind relations the formula quantifies over. A small position drift can flip which relations hold even with perfect attributes."
+    return (
+      "Why: every color/material/size/shape read was correct here — the disagreement instead comes from estimated 3D position " +
+      "(regressed from box size/depth, not classified), which feeds the left/right/front/behind relations the formula quantifies over. " +
+      "A small position drift can flip which relations hold even with perfect attributes."
     );
   }
 
-  /** "0.json" (the solver's own candidate identifier, a scene filename) -> "Candidate 2"
-   * (that scene's position among this puzzle's candidates) -- human-readable, not the
-   * raw solver_ir filename the formula's JSON literally names. */
-  function candidateLabel(t: VDPTrace, raw: string | null): string | null {
-    if (!raw) return null;
-    const sceneId = raw.replace(/\.json$/, "");
+  function objectSummary(scene: VDPScene): string {
+    return scene.predictions.map((p) => `${p.shape.value}(${p.color.value},${p.material.value},${p.size.value})`).join(", ");
+  }
+
+  /** Condenses this scene's real relations (the actual FO-SL input the solver reasoned
+   * over) into a few readable lines: drops the inverse of an already-shown directional
+   * relation (right is just left reversed, front is just behind reversed) and "disequal"
+   * (almost always true for distinct shapes, rarely informative), and de-duplicates
+   * symmetric same_X pairs. Caps how many pairs are printed per relation so a
+   * many-object scene doesn't flood the log -- the count of anything hidden is shown. */
+  function relationLines(scene: VDPScene): string[] {
+    const SYMMETRIC = new Set(["same_color", "same_material", "same_size"]);
+    const SKIP = new Set(["disequal", "right", "front"]);
+    const lines: string[] = [];
+    for (const rel of scene.relations) {
+      if (SKIP.has(rel.name)) continue;
+      let pairs = rel.pairs;
+      if (SYMMETRIC.has(rel.name)) {
+        const seen = new Set<string>();
+        pairs = pairs.filter(([a, b]) => {
+          const key = a < b ? `${a},${b}` : `${b},${a}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+      }
+      if (pairs.length === 0) continue;
+      const shown = pairs.slice(0, 6).map(([a, b]) => `${rel.name}(${a},${b})`).join(", ");
+      const extra = pairs.length > 6 ? ` +${pairs.length - 6} more` : "";
+      lines.push(`    ${shown}${extra}`);
+    }
+    return lines;
+  }
+
+  function runFrom(t: VDPTrace): void {
+    stopRunning();
+    hasRun = false;
+    runLines = [];
+    running = true;
+
+    const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
-    const idx = candidates.findIndex((s) => s.sceneId === sceneId);
-    return idx >= 0 ? `Candidate ${idx + 1}` : raw;
+    const entry = currentEntry();
+
+    const steps: (() => void)[] = [];
+    examples.forEach((s, i) => steps.push(() => runLines.push(`Example ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`)));
+    candidates.forEach((s, i) => steps.push(() => runLines.push(`Candidate ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`)));
+
+    steps.push(() => runLines.push("Deriving the relations the solver reasons over (left/behind, same_color/material/size):"));
+    [...examples, ...candidates].forEach((s, i) => {
+      const label = i < examples.length ? `Example ${i + 1}` : `Candidate ${i - examples.length + 1}`;
+      const lines = relationLines(s);
+      if (lines.length > 0) {
+        steps.push(() => runLines.push(`  ${label}:`));
+        lines.forEach((line) => steps.push(() => runLines.push(line)));
+      }
+    });
+
+    steps.push(() =>
+      runLines.push(
+        `Searching for a discriminator: guarded FO-SL, ≤${entry?.quantifierBound ?? "?"} quantifiers` +
+          `${entry?.conjunctBound != null ? `, ≤${entry.conjunctBound} conjuncts` : ""} (real Z3 SAT search)…`
+      )
+    );
+    steps.push(() => {
+      runLines.push(
+        t.freshResult.status === "sat" && t.freshResult.formula
+          ? `Fresh perception → found: ${t.freshResult.formula}`
+          : `Fresh perception → ${t.freshResult.status}: no discriminator found within budget`
+      );
+      if (t.freshResult.status === "sat") {
+        runLines.push(`  → holds in all ${examples.length} examples, and in exactly ${candidateLabel(t, t.freshResult.candidate)} among the candidates.`);
+      }
+    });
+    steps.push(() => {
+      runLines.push(
+        t.referenceResult.status === "sat" && t.referenceResult.formula
+          ? `Reference (authors' replayed perception, same images) → found: ${t.referenceResult.formula}`
+          : `Reference → ${t.referenceResult.status}: no discriminator found`
+      );
+      if (t.referenceResult.status === "sat") runLines.push(`  → picks ${candidateLabel(t, t.referenceResult.candidate)}.`);
+    });
+    steps.push(() => {
+      const freshCand = t.freshResult.candidate;
+      const refCand = t.referenceResult.candidate;
+      const matches = t.freshResult.status === "sat" && freshCand != null && freshCand === refCand;
+      runLines.push(matches ? "✓ fresh matches the reference answer." : "✗ fresh disagrees with the reference answer.");
+      const reason = disagreementReason(t);
+      if (reason) runLines.push(reason);
+    });
+    steps.push(() => {
+      running = false;
+      hasRun = true;
+    });
+
+    let idx = 0;
+    const tick = () => {
+      if (idx >= steps.length) return;
+      steps[idx]();
+      idx++;
+      drawBody();
+      if (idx < steps.length) runTimer = setTimeout(tick, 180);
+    };
+    drawBody();
+    runTimer = setTimeout(tick, 180);
   }
 
-  /**
-   * The paper (Murali et al., IJCAI 2022, Definition 3) poses a VDP as: Example
-   * images E, all of which the discriminator must hold in, and Candidate images
-   * C, of which exactly one must satisfy it. This module's data was built with a
-   * train/test split matching that exactly (see traces.ts's VDPScene.role doc) --
-   * "Example"/"Candidate" here is just rendering that in the paper's own words
-   * instead of the solver's internal train/test labels.
-   */
-  function roleLabel(role: "train" | "test"): string {
-    return role === "train" ? "Example" : "Candidate";
-  }
-
-  /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail
-   * together, every Candidate thumbnail together, with whichever candidate fresh
-   * perception and the reference each picked marked -- so the puzzle's actual
-   * question ("which candidate matches?") is visible before diving into any one
-   * scene's perception detail. */
+  /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail together,
+   * every Candidate thumbnail together. Which candidate fresh perception and the
+   * reference each picked is marked only once Run has actually revealed it -- not
+   * upfront, so the board poses the same question a human solver would face. */
   function drawOverview(panel: HTMLElement, t: VDPTrace): void {
     clear(panel);
     const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
-    const freshPick = t.freshResult.candidate?.replace(/\.json$/, "") ?? null;
-    const refPick = t.referenceResult.candidate?.replace(/\.json$/, "") ?? null;
+    const freshPick = hasRun ? t.freshResult.candidate?.replace(/\.json$/, "") ?? null : null;
+    const refPick = hasRun ? t.referenceResult.candidate?.replace(/\.json$/, "") ?? null : null;
 
     function thumb(s: VDPScene, indexLabel: string): HTMLElement {
       const marks = [freshPick === s.sceneId ? "fresh" : null, refPick === s.sceneId ? "reference" : null].filter(Boolean);
       return el(
         "div",
-        {
-          style: { cursor: "pointer", width: "110px" },
-          onclick: () => { stopPlaying(); revealCount = null; resultsRevealed = true; selectedScene = s.sceneId; drawBody(); },
-        },
+        { style: { width: "110px" } },
         el("img", {
           src: s.image,
           alt: `${indexLabel} scene`,
           style: {
             width: "100%",
             borderRadius: "6px",
-            border: s.sceneId === selectedScene ? "3px solid #0877bd" : marks.length ? "3px solid #f59322" : "1px solid var(--line)",
+            border: marks.length ? "3px solid #f59322" : "1px solid var(--line)",
             display: "block",
           },
         }),
@@ -270,232 +338,20 @@ export function renderVDPDebugger(root: HTMLElement): void {
         ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
     );
 
-    const scene = t.scenes.find((s) => s.sceneId === selectedScene);
-
-    const playRow = el(
+    const runRow = el(
       "div",
       { class: "btn-row", style: { marginTop: "12px" } },
-      playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el(
-            "button",
-            { class: "btn primary", disabled: !scene, onclick: () => playScene(scene!) },
-            revealCount != null ? "▶ Replay perceiving this scene" : "▶ Watch it perceive & solve in real time"
-          ),
-      playing && scene
-        ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `perceiving… object ${Math.min(revealCount ?? 0, scene.predictions.length)}/${scene.predictions.length}`)
-        : ""
-    );
-
-    // The real FO-SL search itself can't be stepped (puzzlelab.vdp.run() is one opaque
-    // subprocess call, not a recorded search trace -- every completed run here in fact
-    // records exactly one candidate, confirmed against the real sweep data), so this
-    // steps through the one real sequential process that *is* recorded: perceiving
-    // objects one at a time, same as the play button above but manually paced.
-    const stepRow = scene
-      ? el(
-          "div",
-          { class: "btn-row", style: { marginTop: "8px" } },
-          el("button", { class: "btn", disabled: playing || revealedCount(scene) <= 0, onclick: () => stepTo(scene, revealedCount(scene) - 1) }, "◀ Step back"),
-          el("button", { class: "btn", disabled: playing || revealedCount(scene) >= scene.predictions.length, onclick: () => stepTo(scene, revealedCount(scene) + 1) }, "Step forward ▶"),
-          el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `object ${revealedCount(scene)}/${scene.predictions.length}`)
-        )
-      : "";
-
-    const resultsPanel = !resultsRevealed
-      ? el("div", { class: "note", style: { marginTop: "12px" } }, el("span", { class: "muted" }, "perceiving objects first — the solve result will reveal once perception finishes…"))
-      : el(
-          "div",
-          { class: "note", style: { marginTop: "12px" } },
-          el("div", {}, verdictBadge(t)),
-          el(
-            "div",
-            { style: { marginTop: "10px" } },
-            el("b", {}, "Fresh perception → real FO-SL solve: "),
-            t.freshResult.status,
-            t.freshResult.formula ? el("div", { class: "flow-payload", style: { marginTop: "6px", display: "block" } }, t.freshResult.formula) : "",
-            t.freshResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${candidateLabel(t, t.freshResult.candidate)}`) : ""
-          ),
-          el(
-            "div",
-            { style: { marginTop: "10px" } },
-            el("b", {}, "Reference (authors' replayed perception, same images): "),
-            t.referenceResult.status,
-            t.referenceResult.formula ? el("div", { class: "flow-payload", style: { marginTop: "6px", display: "block" } }, t.referenceResult.formula) : "",
-            t.referenceResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${candidateLabel(t, t.referenceResult.candidate)}`) : ""
-          ),
-          disagreementExplanation(t) ?? ""
-        );
-
-    const groupIndex = new Map<string, number>();
-    for (const role of ["train", "test"] as const) {
-      t.scenes.filter((s) => s.role === role).forEach((s, i) => groupIndex.set(s.sceneId, i + 1));
-    }
-    const sceneTabs = el(
-      "div",
-      { class: "seg", style: { marginTop: "16px" } },
-      ...t.scenes.map((s) =>
-        el(
-          "button",
-          {
-            class: "seg-btn" + (s.sceneId === selectedScene ? " active" : ""),
-            onclick: () => { stopPlaying(); revealCount = null; resultsRevealed = true; selectedScene = s.sceneId; drawBody(); },
-          },
-          el("span", { class: "seg-flow" }, `${roleLabel(s.role)} ${groupIndex.get(s.sceneId)}`),
-          el("span", { class: "seg-name" }, s.role === "train" ? "must satisfy" : "candidate")
-        )
-      )
-    );
-
-    const scenePanel = el("div", { style: { marginTop: "12px" } });
-    if (scene) drawScene(scenePanel, scene);
-
-    const logLines =
-      scene && revealCount != null
-        ? scene.predictions.slice(0, Math.min(revealCount, scene.predictions.length)).map((pred, i) => {
-            const desc = ATTRS.map((a) => pred[a].value).join(" ");
-            const conf = Math.min(...ATTRS.map((a) => pred[a].topK[0][1]));
-            return `object ${i + 1}: ${desc} (${(conf * 100).toFixed(1)}%)`;
-          })
-        : [];
-    const logBox = renderLiveLog(logLines);
-
-    body.append(conceptNote, overview, accRow, playRow, stepRow, logBox, resultsPanel, sceneTabs, scenePanel);
-  }
-
-  function revealedCount(scene: VDPScene): number {
-    return revealCount ?? scene.predictions.length;
-  }
-
-  function stepTo(scene: VDPScene, count: number): void {
-    stopPlaying();
-    revealCount = Math.max(0, Math.min(scene.predictions.length, count));
-    resultsRevealed = revealCount >= scene.predictions.length;
-    drawBody();
-  }
-
-  function playScene(scene: VDPScene): void {
-    stopPlaying();
-    revealCount = 0;
-    resultsRevealed = false;
-    playing = true;
-    const delay = 450;
-    const tick = () => {
-      if (!playing) return;
-      if ((revealCount ?? 0) >= scene.predictions.length) {
-        resultsRevealed = true;
-        playing = false;
-        drawBody();
-        return;
-      }
-      revealCount = (revealCount ?? 0) + 1;
-      drawBody();
-      playTimer = setTimeout(tick, delay);
-    };
-    drawBody();
-    playTimer = setTimeout(tick, delay);
-  }
-
-  const BOX_COLORS = ["#0877bd", "#f59322", "#8e44ad", "#2e8b57", "#c0392b", "#00838f", "#b8860b", "#6a5acd"];
-
-  function drawScene(panel: HTMLElement, scene: VDPScene): void {
-    clear(panel);
-    const shown = revealCount == null ? scene.predictions.length : revealCount;
-
-    const imageBox = el("div", { style: { position: "relative", maxWidth: "480px", marginBottom: "12px" } });
-    const img = el("img", {
-      src: scene.image,
-      width: scene.imageWidth,
-      height: scene.imageHeight,
-      alt: `Rendered CLEVR scene ${scene.sceneId}`,
-      style: { display: "block", width: "100%", height: "auto", borderRadius: "8px", border: "1px solid var(--line)" },
-    });
-    imageBox.append(img);
-    scene.predictions.forEach((pred, i) => {
-      if (i >= shown) return;
-      const [x1, y1, x2, y2] = pred.box;
-      const color = BOX_COLORS[i % BOX_COLORS.length];
-      imageBox.append(
-        el("div", {
-          style: {
-            position: "absolute",
-            left: `${(x1 / scene.imageWidth) * 100}%`,
-            top: `${(y1 / scene.imageHeight) * 100}%`,
-            width: `${((x2 - x1) / scene.imageWidth) * 100}%`,
-            height: `${((y2 - y1) / scene.imageHeight) * 100}%`,
-            border: `2px solid ${color}`,
-            borderRadius: "3px",
-            boxSizing: "border-box",
-            pointerEvents: "none",
-          },
-        }),
-        el(
-          "div",
-          {
-            style: {
-              position: "absolute",
-              left: `${(x1 / scene.imageWidth) * 100}%`,
-              top: `${(y1 / scene.imageHeight) * 100}%`,
-              transform: "translateY(-100%)",
-              background: color,
-              color: "#fff",
-              fontSize: "10px",
-              fontWeight: "700",
-              padding: "1px 4px",
-              borderRadius: "3px 3px 3px 0",
-            },
-          },
-          String(i + 1)
-        )
-      );
-    });
-
-    const grid = el("div", { style: { display: "flex", flexWrap: "wrap", gap: "10px" } });
-    scene.predictions.forEach((pred, i) => {
-      if (i >= shown) {
-        grid.append(
-          el(
-            "div",
-            { class: "compound-token", style: { minWidth: "150px", alignItems: "stretch", opacity: 0.35 } },
-            el("div", { class: "name" }, `object ${i + 1}`),
-            el("div", { style: { fontSize: "12px", marginTop: "4px" } }, el("span", { class: "muted" }, "…"))
-          )
-        );
-        return;
-      }
-      const truth = scene.groundTruth[i];
-      const rows = ATTRS.map((attr) => {
-        const p = pred[attr];
-        const correct = truth && p.value === truth[attr];
-        return el(
-          "div",
-          { style: { fontSize: "12px", marginTop: "4px" } },
-          el("span", { class: "muted" }, `${attr}: `),
-          el("span", { style: { fontWeight: "700", color: correct ? "inherit" : "#b3261e" } }, p.value),
-          truth && !correct ? el("span", { class: "muted" }, ` (truth: ${truth[attr]})`) : "",
-          " ",
-          el("span", { class: "muted" }, `${(p.topK[0][1] * 100).toFixed(1)}%`)
-        );
-      });
-      grid.append(
-        el(
-          "div",
-          { class: "compound-token", style: { minWidth: "150px", alignItems: "stretch", borderLeft: `3px solid ${BOX_COLORS[i % BOX_COLORS.length]}` } },
-          el("div", { class: "name" }, `object ${i + 1}`),
-          ...rows
-        )
-      );
-    });
-    const groupNum = trace ? trace.scenes.filter((s) => s.role === scene.role).findIndex((s) => s.sceneId === scene.sceneId) + 1 : "?";
-    panel.append(
       el(
-        "div",
-        { style: { fontSize: "13px", marginBottom: "6px" } },
-        el("b", {}, `${roleLabel(scene.role)} ${groupNum} — real rendered CLEVR scene, boxes from the actual detector:`)
+        "button",
+        { class: "btn primary", disabled: running, onclick: () => runFrom(t) },
+        running ? "Running…" : hasRun ? "↺ Run again" : "▶ Run"
       ),
-      imageBox,
-      grid
+      running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, "perceiving, deriving relations, solving…") : ""
     );
+
+    const logBox = renderLiveLog(runLines);
+
+    body.append(conceptNote, overview, accRow, runRow, logBox);
   }
 
   selectTrace(activeFile);

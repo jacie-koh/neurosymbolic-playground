@@ -319,6 +319,19 @@ export interface VDPGroundTruth {
   shape: string;
 }
 
+export interface VDPRelation {
+  /** A real relation name from the first-order scene model fed to the solver:
+   * left/right/behind/front (derived from the detector's regressed 3D position,
+   * not classified directly), same_color/same_material/same_size, or disequal. */
+  name: string;
+  /** [objectIndex, objectIndex] pairs (1-based, matching the UI's "object N"
+   * numbering) for which this relation holds, e.g. left: [[1,2]] means object 1 is
+   * left of object 2. Extracted from the real fo_model JSON the solver actually
+   * used (reports/debugger/vdp_fresh/ir100/.../train|test/N.json), not recomputed
+   * or approximated here. */
+  pairs: [number, number][];
+}
+
 export interface VDPScene {
   sceneId: string;
   /** "train" = one of the paper's Example images E (the discriminator must hold in
@@ -333,6 +346,10 @@ export interface VDPScene {
   imageHeight: number;
   predictions: VDPObjectPrediction[];
   groundTruth: VDPGroundTruth[];
+  /** The real binary relations derived from this scene's detected objects, the
+   * actual input the FO-SL solver reasoned over -- see VDPRelation. Absent (empty)
+   * only if the underlying fo_model JSON wasn't available to extract from. */
+  relations: VDPRelation[];
 }
 
 export interface VDPSynthesisResult {
