@@ -109,6 +109,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
     stopPlaying();
     livePositions = null;
     logLines = [];
+    playSteps = [];
+    playIdx = 0;
     activeFile = file;
     selectedIdx = null;
     clear(body);

@@ -88,6 +88,8 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     stopPlaying();
     liveGrid = null;
     logLines = [];
+    playSteps = [];
+    playIdx = 0;
     activeFile = file;
     selectedCage = null;
     clear(body);

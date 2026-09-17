@@ -518,12 +518,6 @@ select:hover {
 }
 
 /* ---------- results / tradeoff ---------- */
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 22px;
-}
 .metric-card {
   background: var(--panel);
   border: 1px solid var(--line);

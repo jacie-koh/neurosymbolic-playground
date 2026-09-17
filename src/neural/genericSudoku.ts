@@ -93,13 +93,19 @@ export function solveGeneric(input: Grid): SolveResult {
  * undoes it. deadEnd steps (digit===0, deadEnd: true) are the actual dead-end moment
  * -- this cell has no legal digit left at all, given the current trial grid -- as
  * opposed to a plain undo, which just means a deeper cell dead-ended and this trial
- * is being abandoned to try the next candidate. */
+ * is being abandoned to try the next candidate.
+ *
+ * correction steps (see solveWithCorrectionLoop) are a different phase entirely:
+ * confidence-ranked retries on a GIVEN cell's real CNN reading, mirroring the real
+ * offline pipeline's bounded best-first search (puzzlelab/visual.py), which only
+ * ever runs when the given digits directly conflict with each other. */
 export interface SolveStep {
   row: number;
   col: number;
   digit: number;
   deadEnd?: boolean;
   reason?: string;
+  correction?: { kind: "conflict-found" | "try" | "revert" | "corrected" | "give-up"; confidence?: number };
 }
 
 export interface SolveTrace extends SolveResult {
@@ -182,4 +188,124 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
   if (findConflicts(grid).length > 0) return { status: "unsat", solution: null, steps: [] };
   const ok = backtrack();
   return { status: ok ? "sat" : "unsat", solution: ok ? grid : null, steps };
+}
+
+/** A real ranked alternative reading for a given cell, and its real CNN confidence. */
+interface GivenChoice {
+  row: number;
+  col: number;
+  digit: number;
+  confidence: number;
+}
+
+interface CorrectionAttempt {
+  changes: { row: number; col: number; from: number; to: number; confidence: number }[];
+  accepted: boolean;
+}
+
+export interface CorrectionLoopResult {
+  /** Whether the loop actually engaged -- only when the given digits directly
+   * conflict, matching the real pipeline (a misread that's still satisfiable, a
+   * classic symmetric-swap ambiguity, gives the solver nothing to react to). */
+  engaged: boolean;
+  status: "sat" | "unsat";
+  /** The given grid with any accepted corrections applied (unchanged if !engaged
+   * or no correction was accepted). */
+  correctedGiven: Grid;
+  attempts: CorrectionAttempt[];
+  steps: SolveStep[];
+}
+
+/**
+ * Client-side port of the real offline correction loop (puzzlelab/visual.py): a
+ * bounded best-first search over up to two ranked alternative readings for the
+ * GIVEN cells directly implicated in a conflict (checked first, by confidence),
+ * falling back to every other given cell's alternatives if that's not enough.
+ * Only ever engages when the given digits directly conflict -- exactly the real
+ * pipeline's own limitation, not a simplification made here.
+ */
+export function solveWithCorrectionLoop(given: Grid, topKByCell: Record<string, [number, number][]>, maxAttempts = 25): CorrectionLoopResult {
+  const board = given.map((row) => [...row]);
+  const directConflicts = findConflicts(board);
+  if (directConflicts.length === 0) {
+    return { engaged: false, status: "sat", correctedGiven: board, attempts: [], steps: [] };
+  }
+
+  const steps: SolveStep[] = [];
+  const first = directConflicts[0];
+  steps.push({
+    row: first.row,
+    col: first.col,
+    digit: first.digit,
+    correction: { kind: "conflict-found" },
+    reason: `digit ${first.digit} at (${first.row + 1},${first.col + 1}) conflicts with (${first.with[0] + 1},${first.with[1] + 1}) in the same ${first.kind === "box" ? "box" : first.kind} — the given readings directly disagree.`,
+  });
+
+  const suspects = new Set<string>();
+  for (const c of directConflicts) {
+    suspects.add(`${c.row},${c.col}`);
+    suspects.add(`${c.with[0]},${c.with[1]}`);
+  }
+
+  const choices: GivenChoice[] = [];
+  for (const [key, topK] of Object.entries(topKByCell)) {
+    const [row, col] = key.split(",").map(Number);
+    if (given[row][col] === 0) continue;
+    for (const [digit, confidence] of topK) {
+      if (digit !== board[row][col] && digit >= 1 && digit <= given.length) choices.push({ row, col, digit, confidence });
+    }
+  }
+
+  function penalty(row: number, col: number, confidence: number): number {
+    return (1 - confidence) + (suspects.has(`${row},${col}`) ? 0 : 1);
+  }
+
+  function fullySatisfiable(g: Grid): boolean {
+    if (findConflicts(g).length > 0) return false;
+    return solveGeneric(g).status === "sat";
+  }
+
+  let queue: { changes: GivenChoice[]; cost: number }[] = choices.map((c) => ({ changes: [c], cost: penalty(c.row, c.col, c.confidence) }));
+  const visited = new Set<string>();
+  const attempts: CorrectionAttempt[] = [];
+  let tries = 0;
+
+  while (queue.length > 0 && tries < maxAttempts) {
+    queue.sort((a, b) => a.cost - b.cost);
+    const node = queue.shift()!;
+    const key = node.changes.map((c) => `${c.row},${c.col},${c.digit}`).sort().join("|");
+    if (visited.has(key)) continue;
+    visited.add(key);
+
+    const candidate = board.map((row) => [...row]);
+    for (const c of node.changes) candidate[c.row][c.col] = c.digit;
+    tries++;
+    const accepted = fullySatisfiable(candidate);
+    attempts.push({ changes: node.changes.map((c) => ({ row: c.row, col: c.col, from: board[c.row][c.col], to: c.digit, confidence: c.confidence })), accepted });
+
+    for (const c of node.changes) {
+      steps.push({ row: c.row, col: c.col, digit: c.digit, correction: { kind: accepted ? "corrected" : "try", confidence: c.confidence } });
+    }
+    if (accepted) {
+      return { engaged: true, status: "sat", correctedGiven: candidate, attempts, steps };
+    }
+    for (const c of node.changes) {
+      steps.push({ row: c.row, col: c.col, digit: board[c.row][c.col], correction: { kind: "revert", confidence: c.confidence } });
+    }
+    if (node.changes.length === 1) {
+      for (const c of choices) {
+        if (c.row === node.changes[0].row && c.col === node.changes[0].col) continue;
+        queue.push({ changes: [...node.changes, c], cost: node.cost + 2 - c.confidence });
+      }
+    }
+  }
+
+  steps.push({
+    row: first.row,
+    col: first.col,
+    digit: board[first.row][first.col],
+    correction: { kind: "give-up" },
+    reason: `Tried ${attempts.length} ranked-alternative combination(s) from the real CNN readings — none resolve the conflict within budget.`,
+  });
+  return { engaged: true, status: "unsat", correctedGiven: board, attempts, steps };
 }

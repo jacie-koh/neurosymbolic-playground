@@ -262,32 +262,65 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
   },
 };
 
-function flowDiagram(p: Pipeline): HTMLElement {
-  const nodes = p.stages.flatMap((stage, i) => [
-    i > 0 ? el("div", { class: "flow-arrow" }, "→") : null,
-    el(
-      "div",
-      { class: `flow-node ${stage.kind}`, style: { flex: "1 1 150px" } },
-      el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em" } }, stage.label),
-      stage.text
-    ),
-  ]);
+/** The real Output stage's text -- already carries the real number -- used as a
+ * one-line summary when a baseline pipeline (pure neural or symbolic only) is
+ * folded into the main diagram as a comparison, rather than drawn as its own
+ * separate diagram. */
+function outputSummary(p: Pipeline | null): string | null {
+  if (!p) return null;
+  const out = p.stages.find((s) => s.kind === "output") ?? p.stages[p.stages.length - 1];
+  return out?.text ?? null;
+}
+
+/** One detailed diagram for the whole pattern -- the real neurosymbolic pipeline's
+ * stages, each carrying its own real number, with the pure-neural and symbolic-
+ * only baselines folded in as a comparison note on the first stage of the matching
+ * kind (pure neural attaches to the first "neural" stage, symbolic only to the
+ * first "symbolic" stage) -- instead of three separate parallel diagrams for what
+ * is structurally one pipeline with two ends. */
+function flowDiagram(row: PatternRow): HTMLElement {
+  const main = row.neurosymbolic;
+  if (!main) return el("div", { style: { fontSize: "12px", color: "var(--muted)" } }, "Not measured for this module's real pipeline.");
+
+  const pureNeuralText = outputSummary(row.pureNeural);
+  const symbolicOnlyText = outputSummary(row.symbolicOnly);
+  let attachedNeural = false;
+  let attachedSymbolic = false;
+
+  const nodes = main.stages.flatMap((stage, i) => {
+    let compare: { label: string; text: string } | null = null;
+    if (stage.kind === "neural" && !attachedNeural) {
+      attachedNeural = true;
+      if (pureNeuralText) compare = { label: "Pure neural alone (no solver)", text: pureNeuralText };
+    } else if (stage.kind === "symbolic" && !attachedSymbolic) {
+      attachedSymbolic = true;
+      if (symbolicOnlyText) compare = { label: "Symbolic alone (no perception)", text: symbolicOnlyText };
+    }
+    return [
+      i > 0 ? el("div", { class: "flow-arrow" }, "→") : null,
+      el(
+        "div",
+        { class: `flow-node ${stage.kind}`, style: { flex: "1 1 210px", display: "block", textAlign: "left" } },
+        el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center" } }, stage.label),
+        el("div", { style: { textAlign: "center" } }, stage.text),
+        compare
+          ? el(
+              "div",
+              { style: { marginTop: "10px", paddingTop: "8px", borderTop: "1px dashed rgba(16,24,40,0.15)", fontSize: "10.5px", opacity: 0.85 } },
+              el("b", {}, `${compare.label}: `),
+              compare.text
+            )
+          : ""
+      ),
+    ];
+  });
+
   return el(
     "div",
     {},
-    el("div", { class: "flow-demo", style: { display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" } }, ...nodes),
-    p.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, p.loopNote) : "",
-    p.caption ? el("div", { style: { fontSize: "12px", marginTop: "8px", color: "var(--muted)" } }, p.caption) : ""
-  );
-}
-
-function scoreCard(title: string, subtitle: string, pipeline: Pipeline | null): HTMLElement {
-  return el(
-    "div",
-    { class: "metric-card" },
-    el("div", { class: "label" }, title),
-    el("div", { style: { fontSize: "13px", color: "var(--muted)", margin: "2px 0 14px" } }, subtitle),
-    pipeline ? flowDiagram(pipeline) : el("div", { style: { fontSize: "12px", color: "var(--muted)" } }, "Not measured for this module's real pipeline.")
+    el("div", { class: "flow-demo", style: { display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "stretch" } }, ...nodes),
+    main.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, main.loopNote) : "",
+    main.caption ? el("div", { style: { fontSize: "12px", marginTop: "8px", color: "var(--muted)" } }, main.caption) : ""
   );
 }
 
@@ -325,15 +358,15 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
       )
     );
 
-    const grid = el(
+    const diagram = el(
       "div",
-      { class: "results-grid", style: { marginTop: "14px" } },
-      scoreCard("Pure neural", "Baseline — perception only, no solver", row.pureNeural),
-      scoreCard("Neurosymbolic", `${PATTERNS[pattern].flow} — real pipeline result`, row.neurosymbolic),
-      scoreCard("Symbolic only", "Reasoning only, no perception", row.symbolicOnly)
+      { class: "metric-card", style: { marginTop: "14px" } },
+      el("div", { class: "label" }, `${PATTERNS[pattern].flow} — real pipeline`),
+      el("div", { style: { fontSize: "13px", color: "var(--muted)", margin: "2px 0 14px" } }, PATTERNS[pattern].taxonomy),
+      flowDiagram(row)
     );
 
-    body.append(switcher, grid);
+    body.append(switcher, diagram);
   }
 
   draw();

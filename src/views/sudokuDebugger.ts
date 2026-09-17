@@ -23,7 +23,7 @@ import {
   type SudokuManifestEntry,
   type CellPrediction,
 } from "../data/traces";
-import { findConflicts, solveGeneric, solveGenericWithSteps, type Grid, type SolveStep } from "../neural/genericSudoku";
+import { findConflicts, solveGeneric, solveGenericWithSteps, solveWithCorrectionLoop, type Grid, type SolveStep } from "../neural/genericSudoku";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
@@ -96,6 +96,8 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     stopPlaying();
     liveGrid = null;
     logLines = [];
+    playSteps = [];
+    playIdx = 0;
     activeFile = file;
     selected = null;
     overridden.clear();
@@ -331,13 +333,45 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       }
     } else {
       // Edited puzzle (or the offline baseline itself was unsat): Z3 never verified this
-      // exact state, so fall back to an independent client-side search instead.
-      playSteps = solveGenericWithSteps(working).steps;
+      // exact state, so fall back to an independent client-side search instead. If the
+      // given digits directly conflict, first run a real confidence-ranked correction
+      // loop (client-side port of puzzlelab/visual.py's search) over every given cell's
+      // real CNN alternatives except ones the user explicitly locked in by overriding --
+      // exactly mirroring what the real offline pipeline does, using the real per-cell
+      // topK data this trace already carries.
+      const topKByCell: Record<string, [number, number][]> = {};
+      for (const [key, pred] of Object.entries(t.predictions)) {
+        if (!overridden.has(key)) topKByCell[key] = pred.topK;
+      }
+      const correction = solveWithCorrectionLoop(working, topKByCell);
+      // Only skip the fill phase if the loop actually engaged and gave up -- a broken
+      // given set has nothing to fill. If it never engaged, or it found a fix, fall
+      // through to the normal fill search (which will itself report unsat honestly
+      // if the corrected givens still don't admit a solution).
+      const giveUp = correction.engaged && correction.status === "unsat";
+      const fillSteps = giveUp ? [] : solveGenericWithSteps(correction.correctedGiven).steps;
+      playSteps = [...correction.steps, ...fillSteps];
     }
     playIdx = 0;
   }
 
   function stepLine(step: SolveStep): string {
+    if (step.correction) {
+      const pos = `(${step.row + 1},${step.col + 1})`;
+      const pct = step.correction.confidence != null ? ` (${(step.correction.confidence * 100).toFixed(1)}% confidence)` : "";
+      switch (step.correction.kind) {
+        case "conflict-found":
+          return `⚠ conflict: ${step.reason}`;
+        case "try":
+          return `⚙ correction loop: trying real alternative ${step.digit} at ${pos}${pct} — still conflicts, reverting`;
+        case "revert":
+          return `  ↩ ${pos} back to ${step.digit}`;
+        case "corrected":
+          return `✓ correction loop: real alternative ${step.digit} at ${pos}${pct} resolves the conflict`;
+        case "give-up":
+          return `✗ correction loop gave up: ${step.reason}`;
+      }
+    }
     if (step.deadEnd) return `⚠ dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
     return revealMode
       ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
