@@ -190,6 +190,37 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
   return { status: ok ? "sat" : "unsat", solution: ok ? grid : null, steps };
 }
 
+/**
+ * Explains a real, already-known solution (the offline Z3-verified answer) cell
+ * by cell, in the same row-major reveal order the debugger plays it back in --
+ * Z3's own internal decision process isn't recorded, so this isn't "how Z3
+ * decided it," but it IS a real fact about the puzzle: given only the given
+ * digits plus whichever cells have been revealed so far, exactly whether every
+ * other digit is already ruled out (forced) or several are still legal (not yet
+ * decided by constraints alone) -- an honest thing to show, not a gap to paper
+ * over, mirroring explainRevealSteps() in genericZebra.ts.
+ */
+export function explainRevealSteps(given: Grid, solution: Grid): SolveStep[] {
+  const size = given.length;
+  const grid = given.map((row) => [...row]);
+  const steps: SolveStep[] = [];
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (given[r][c] !== 0) continue;
+      const trueDigit = solution[r][c];
+      const legal: number[] = [];
+      for (let d = 1; d <= size; d++) if (canPlace(grid, r, c, d)) legal.push(d);
+      const reason =
+        legal.length <= 1
+          ? "forced — every other digit is already ruled out by this row, column, or box"
+          : `${legal.length} digits (${legal.join(", ")}) were still legal here given what's revealed so far — not decided by constraints alone yet`;
+      steps.push({ row: r, col: c, digit: trueDigit, reason });
+      grid[r][c] = trueDigit;
+    }
+  }
+  return steps;
+}
+
 /** A real ranked alternative reading for a given cell, and its real CNN confidence. */
 interface GivenChoice {
   row: number;

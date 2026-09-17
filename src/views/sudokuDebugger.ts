@@ -23,7 +23,7 @@ import {
   type SudokuManifestEntry,
   type CellPrediction,
 } from "../data/traces";
-import { findConflicts, solveGeneric, solveGenericWithSteps, solveWithCorrectionLoop, type Grid, type SolveStep } from "../neural/genericSudoku";
+import { findConflicts, solveGeneric, solveGenericWithSteps, solveWithCorrectionLoop, explainRevealSteps, type Grid, type SolveStep } from "../neural/genericSudoku";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
@@ -284,6 +284,8 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           stopPlaying();
           liveGrid = null;
           logLines = [];
+          playSteps = [];
+          playIdx = 0;
           const source = loopActive() ? t.interpreted : t.recognized;
           working = source.map((row) => [...row]);
           overridden.clear();
@@ -324,13 +326,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
   function prepareSteps(t: SudokuTrace): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
-      const solution = t.result.solution!;
-      playSteps = [];
-      for (let r = 0; r < t.size; r++) {
-        for (let c = 0; c < t.size; c++) {
-          if (working[r][c] === 0) playSteps.push({ row: r, col: c, digit: solution[r][c] });
-        }
-      }
+      playSteps = explainRevealSteps(working, t.result.solution!);
     } else {
       // Edited puzzle (or the offline baseline itself was unsat): Z3 never verified this
       // exact state, so fall back to an independent client-side search instead. If the
@@ -373,11 +369,13 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       }
     }
     if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
-    return revealMode
-      ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
-      : step.digit
-        ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
-        : `(${step.row + 1},${step.col + 1}): backtrack`;
+    if (revealMode) {
+      const base = `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`;
+      return step.reason ? `${base} — ${step.reason}` : base;
+    }
+    return step.digit
+      ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
+      : `(${step.row + 1},${step.col + 1}): backtrack`;
   }
 
   function resetLive(): void {

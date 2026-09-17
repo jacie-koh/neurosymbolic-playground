@@ -248,7 +248,16 @@ export function renderZebraDebugger(root: HTMLElement): void {
       {
         class: "btn",
         style: { marginTop: "12px" },
-        onclick: () => { stopPlaying(); livePositions = null; logLines = []; clues = t.clues.map((c) => ({ ...c })); selectedIdx = null; drawBody(); },
+        onclick: () => {
+          stopPlaying();
+          livePositions = null;
+          logLines = [];
+          playSteps = [];
+          playIdx = 0;
+          clues = t.clues.map((c) => ({ ...c }));
+          selectedIdx = null;
+          drawBody();
+        },
       },
       "Reset to pipeline's interpretation"
     );

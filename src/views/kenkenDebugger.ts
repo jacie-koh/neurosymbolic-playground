@@ -14,7 +14,18 @@
 
 import { el, clear } from "../dom";
 import { KENKEN_TRACE_MANIFEST, loadKenKenTrace, loadKenKenManifest, type KenKenTrace, type KenKenManifestEntry, type KenKenCagePrediction } from "../data/traces";
-import { solveKenKen, solveKenKenWithSteps, type Cage, type Op, type Grid, type KenKenSolveStep } from "../neural/genericKenKen";
+import {
+  solveKenKen,
+  solveKenKenWithSteps,
+  solveKenKenWithCorrectionLoop,
+  explainRevealSteps,
+  cageReadAlternatives,
+  cageKey,
+  type Cage,
+  type Op,
+  type Grid,
+  type KenKenSolveStep,
+} from "../neural/genericKenKen";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
@@ -28,10 +39,6 @@ const OP_SYMBOL: Record<Op, string> = { add: "+", sub: "−", mul: "×", div: "�
 const CLASS_LABEL = (cls: number): string =>
   cls <= 9 ? String(cls) : ({ 10: "+", 11: "÷", 12: "×", 13: "−" }[cls] ?? "?");
 
-function cageKey(cage: { cells: [number, number][] }): string {
-  return cage.cells.map(([r, c]) => `${r}:${c}`).join("|");
-}
-
 export function renderKenKenDebugger(root: HTMLElement): void {
   clear(root);
 
@@ -39,6 +46,10 @@ export function renderKenKenDebugger(root: HTMLElement): void {
   let trace: KenKenTrace | null = null;
   let cages: Cage[] = [];
   let selectedCage: number | null = null;
+  /** Cage indices the user has manually overridden away from the trace's real
+   * reading -- excluded from the correction loop's search, matching the real
+   * offline pipeline's own `locked` exclusion. */
+  const overridden = new Set<number>();
   let playing = false;
   let playTimer: ReturnType<typeof setTimeout> | undefined;
   let playSteps: KenKenSolveStep[] = [];
@@ -92,6 +103,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     playIdx = 0;
     activeFile = file;
     selectedCage = null;
+    overridden.clear();
     clear(body);
     body.append(el("p", { class: "muted" }, "Loading trace…"));
     loadKenKenTrace(file)
@@ -257,8 +269,11 @@ export function renderKenKenDebugger(root: HTMLElement): void {
           stopPlaying();
           liveGrid = null;
           logLines = [];
+          playSteps = [];
+          playIdx = 0;
           const source = loopActive() ? t.interpreted : t.recognized;
           cages = source.map((c) => ({ cells: c.cells, op: c.op, target: c.target }));
+          overridden.clear();
           selectedCage = null;
           drawBody();
         },
@@ -298,26 +313,52 @@ export function renderKenKenDebugger(root: HTMLElement): void {
   function prepareSteps(t: KenKenTrace): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
-      const solution = t.result.solution!;
-      playSteps = [];
-      for (let r = 0; r < t.size; r++) {
-        for (let c = 0; c < t.size; c++) playSteps.push({ row: r, col: c, digit: solution[r][c] });
-      }
+      playSteps = explainRevealSteps(t.size, cages, t.result.solution!);
     } else {
       // Edited cages (or the offline baseline itself was unsat): Z3 never verified this
-      // exact state, so fall back to an independent client-side search instead.
-      playSteps = solveKenKenWithSteps(t.size, cages).steps;
+      // exact state, so fall back to an independent client-side search instead. If the
+      // cages can't be jointly solved, first run a real confidence-ranked joint
+      // correction loop (client-side port of puzzlelab/visual.py's search) over every
+      // unlocked cage's real CNN alternative readings.
+      const topKByCageKey: Record<string, [number, number][][]> = {};
+      for (const pred of t.predictions) {
+        const idx = cages.findIndex((c) => cageKey(c) === cageKey({ cells: pred.cage }));
+        if (idx >= 0 && !overridden.has(idx)) topKByCageKey[cageKey({ cells: pred.cage })] = pred.topK;
+      }
+      const correction = solveKenKenWithCorrectionLoop(t.size, cages, topKByCageKey);
+      const giveUp = correction.engaged && correction.status === "unsat";
+      const fillSteps = giveUp ? [] : solveKenKenWithSteps(t.size, correction.correctedCages).steps;
+      playSteps = [...correction.steps, ...fillSteps];
     }
     playIdx = 0;
   }
 
   function stepLine(step: KenKenSolveStep): string {
+    if (step.correction) {
+      const pos = `(${step.row + 1},${step.col + 1})`;
+      const read = step.correction.op != null && step.correction.target != null ? `${OP_SYMBOL[step.correction.op] || "="} ${step.correction.target}` : "";
+      const pct = step.correction.confidence != null ? ` (${(step.correction.confidence * 100).toFixed(1)}% confidence)` : "";
+      switch (step.correction.kind) {
+        case "conflict-found":
+          return `conflict: ${step.reason}`;
+        case "try":
+          return `correction loop: trying real alternative reading ${read} at cage origin ${pos}${pct} — still conflicts, reverting`;
+        case "revert":
+          return `  reverting cage origin ${pos} to ${read}`;
+        case "corrected":
+          return `correction loop: real alternative reading ${read} at cage origin ${pos}${pct} resolves the conflict`;
+        case "give-up":
+          return `correction loop gave up: ${step.reason}`;
+      }
+    }
     if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
-    return revealMode
-      ? `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`
-      : step.digit
-        ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
-        : `(${step.row + 1},${step.col + 1}): backtrack`;
+    if (revealMode) {
+      const base = `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`;
+      return step.reason ? `${base} — ${step.reason}` : base;
+    }
+    return step.digit
+      ? `(${step.row + 1},${step.col + 1}): try ${step.digit}`
+      : `(${step.row + 1},${step.col + 1}): backtrack`;
   }
 
   function resetLive(t: KenKenTrace): void {
@@ -330,7 +371,10 @@ export function renderKenKenDebugger(root: HTMLElement): void {
    * from scratch every tick was O(n) per tick (O(n^2) overall) and could bog the tab
    * down badly enough that the Stop button stopped registering clicks in time. */
   function applyStep(step: KenKenSolveStep): void {
-    if (liveGrid) liveGrid[step.row][step.col] = step.digit;
+    // Correction steps are cage-level (op/target), not a single cell's value --
+    // row/col there just identifies the cage by its origin cell, so there's no
+    // real grid mutation to apply until the fill phase runs afterward.
+    if (liveGrid && !step.correction) liveGrid[step.row][step.col] = step.digit;
     logLines.push(stepLine(step));
   }
 
@@ -422,11 +466,48 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       );
     }
 
+    if (pred) {
+      const alternatives = cageReadAlternatives(pred.topK, cage.cells.length).filter((alt) => alt.op !== cage.op || alt.target !== cage.target);
+      if (alternatives.length > 0) {
+        const alts = el("div", { class: "digit-picker", style: { marginTop: "10px" } });
+        alts.append(el("span", { class: "digit-picker-label" }, "Try a real alternative reading:"));
+        for (const alt of alternatives) {
+          alts.append(
+            el(
+              "button",
+              {
+                class: "btn",
+                style: { padding: "6px 10px" },
+                onclick: () => {
+                  stopPlaying();
+                  liveGrid = null;
+                  logLines = [];
+                  cage.op = alt.op;
+                  cage.target = alt.target;
+                  overridden.add(selectedCage!);
+                  drawBody();
+                },
+              },
+              `${OP_SYMBOL[alt.op] || "="} ${alt.target} (${(alt.confidence * 100).toFixed(1)}%)`
+            )
+          );
+        }
+        rows.push(alts);
+      }
+    }
+
     const opSelect = el(
       "select",
       {
         disabled: cage.cells.length === 1,
-        onchange: (e: Event) => { stopPlaying(); liveGrid = null; logLines = []; cage.op = (e.target as HTMLSelectElement).value as Op; drawBody(); },
+        onchange: (e: Event) => {
+          stopPlaying();
+          liveGrid = null;
+          logLines = [];
+          cage.op = (e.target as HTMLSelectElement).value as Op;
+          overridden.add(selectedCage!);
+          drawBody();
+        },
       },
       ...(["add", "sub", "mul", "div"] as Op[]).map((op) => el("option", { value: op, selected: op === cage.op }, `${op} (${OP_SYMBOL[op]})`))
     );
@@ -435,14 +516,21 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       min: "1",
       value: String(cage.target),
       style: { width: "70px" },
-      onchange: (e: Event) => { stopPlaying(); liveGrid = null; logLines = []; cage.target = Number((e.target as HTMLInputElement).value); drawBody(); },
+      onchange: (e: Event) => {
+        stopPlaying();
+        liveGrid = null;
+        logLines = [];
+        cage.target = Number((e.target as HTMLInputElement).value);
+        overridden.add(selectedCage!);
+        drawBody();
+      },
     });
 
     rows.push(
       el(
         "div",
         { class: "digit-picker", style: { marginTop: "10px" } },
-        el("span", { class: "digit-picker-label" }, "Try:"),
+        el("span", { class: "digit-picker-label" }, "Or set directly:"),
         cage.cells.length > 1 ? opSelect : el("span", { class: "muted" }, "single cell"),
         targetInput
       )
