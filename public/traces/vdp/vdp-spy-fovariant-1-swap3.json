@@ -1998,5 +1998,6 @@
     "status": "sat",
     "formula": "Exists q0: sphere. Exists q1: cube. behind(q0,q1)",
     "candidate": "3.json"
-  }
+  },
+  "intendedConcept": "Every cylinder has a cube behind it."
 }

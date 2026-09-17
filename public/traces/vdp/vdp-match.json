@@ -1486,5 +1486,6 @@
     "status": "sat",
     "formula": "Exists q0: cube. Exists q1: cube. left(q1,q0) AND gray(q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "There is a red sphere to the left of a green sphere."
 }

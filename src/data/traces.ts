@@ -321,6 +321,11 @@ export interface VDPGroundTruth {
 
 export interface VDPScene {
   sceneId: string;
+  /** "train" = one of the paper's Example images E (the discriminator must hold in
+   * all of them); "test" = one of the Candidate images C (the discriminator must
+   * hold in exactly one). Kept as "train"/"test" to match the solver_ir directory
+   * split the data was built from -- rendered as "Example"/"Candidate" in the UI,
+   * the paper's own terms (Definition 3). */
   role: "train" | "test";
   /** Static path to the real rendered CLEVR scene image this scene's predictions came from. */
   image: string;
@@ -339,6 +344,11 @@ export interface VDPSynthesisResult {
 export interface VDPTrace {
   id: string;
   title: string;
+  /** The real English sentence the paper's own puzzle generator (vendor/vdp/utils/
+   * common.py's intended_concept) built this puzzle's ground-truth discriminator
+   * from -- e.g. "Every sphere has a cylinder to its right." The paper's Table 2
+   * concept-class schema, not something inferred or paraphrased here. */
+  intendedConcept: string;
   scenes: VDPScene[];
   accuracy: { color: number | null; material: number | null; size: number | null; shape: number | null };
   detectedCount: number;

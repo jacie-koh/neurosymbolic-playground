@@ -1196,5 +1196,6 @@
     "status": "sat",
     "formula": "Exists q0: cube. Exists q1: sphere. right(q0,q1) AND large(q1)",
     "candidate": "1.json"
-  }
+  },
+  "intendedConcept": "There is a sphere to the right of every cylinder."
 }

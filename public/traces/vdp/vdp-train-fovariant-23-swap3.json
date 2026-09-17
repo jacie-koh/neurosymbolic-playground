@@ -1486,5 +1486,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Forall q1: cube. metal(q0) AND left(q0,q1)",
     "candidate": "3.json"
-  }
+  },
+  "intendedConcept": "There is a metal cube to the left of all cylinders."
 }

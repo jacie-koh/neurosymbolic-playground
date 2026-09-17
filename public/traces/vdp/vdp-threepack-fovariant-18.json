@@ -1634,5 +1634,6 @@
     "status": "unknown",
     "formula": null,
     "candidate": null
-  }
+  },
+  "intendedConcept": "There are three cylinders of the same color."
 }

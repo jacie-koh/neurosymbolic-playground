@@ -1492,5 +1492,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Exists q1: sphere. Forall q2: cylinder. right(q2,q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "There is a cube and there is a cylinder to the left of all cubes."
 }

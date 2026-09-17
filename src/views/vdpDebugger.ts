@@ -19,6 +19,15 @@
  * pipeline offline (standalone/reports/debugger/vdp_fresh/run_100.py) and are
  * browsable here via a randomizer + a real difficulty slider — object count and
  * the paper's own per-pattern formula-complexity bound (see VDPManifestEntry).
+ *
+ * Vocabulary and layout follow Murali et al. (IJCAI 2022) directly, not just the
+ * solver's internal terms: a puzzle is Example images E (must all satisfy the
+ * discriminator, Definition 3's D1) and Candidate images C (exactly one must,
+ * D2+D3) — rendered here as an overview board mirroring the paper's Figure 1,
+ * not a flat "scene 0/1/2..." tab list. Each puzzle also carries the real English
+ * sentence its ground-truth concept was built from (vendor/vdp/utils/common.py's
+ * intended_concept, e.g. "Every sphere has a cylinder to its right"), shown before
+ * the raw FO-SL formula so the puzzle reads the way the paper poses it.
  */
 
 import { el, clear } from "../dom";
@@ -172,15 +181,91 @@ export function renderVDPDebugger(root: HTMLElement): void {
     );
   }
 
+  /** "0.json" (the solver's own candidate identifier, a scene filename) -> "Candidate 2"
+   * (that scene's position among this puzzle's candidates) -- human-readable, not the
+   * raw solver_ir filename the formula's JSON literally names. */
+  function candidateLabel(t: VDPTrace, raw: string | null): string | null {
+    if (!raw) return null;
+    const sceneId = raw.replace(/\.json$/, "");
+    const candidates = t.scenes.filter((s) => s.role === "test");
+    const idx = candidates.findIndex((s) => s.sceneId === sceneId);
+    return idx >= 0 ? `Candidate ${idx + 1}` : raw;
+  }
+
+  /**
+   * The paper (Murali et al., IJCAI 2022, Definition 3) poses a VDP as: Example
+   * images E, all of which the discriminator must hold in, and Candidate images
+   * C, of which exactly one must satisfy it. This module's data was built with a
+   * train/test split matching that exactly (see traces.ts's VDPScene.role doc) --
+   * "Example"/"Candidate" here is just rendering that in the paper's own words
+   * instead of the solver's internal train/test labels.
+   */
+  function roleLabel(role: "train" | "test"): string {
+    return role === "train" ? "Example" : "Candidate";
+  }
+
+  /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail
+   * together, every Candidate thumbnail together, with whichever candidate fresh
+   * perception and the reference each picked marked -- so the puzzle's actual
+   * question ("which candidate matches?") is visible before diving into any one
+   * scene's perception detail. */
+  function drawOverview(panel: HTMLElement, t: VDPTrace): void {
+    clear(panel);
+    const examples = t.scenes.filter((s) => s.role === "train");
+    const candidates = t.scenes.filter((s) => s.role === "test");
+    const freshPick = t.freshResult.candidate?.replace(/\.json$/, "") ?? null;
+    const refPick = t.referenceResult.candidate?.replace(/\.json$/, "") ?? null;
+
+    function thumb(s: VDPScene, indexLabel: string): HTMLElement {
+      const marks = [freshPick === s.sceneId ? "fresh" : null, refPick === s.sceneId ? "reference" : null].filter(Boolean);
+      return el(
+        "div",
+        {
+          style: { cursor: "pointer", width: "110px" },
+          onclick: () => { stopPlaying(); revealCount = null; resultsRevealed = true; selectedScene = s.sceneId; drawBody(); },
+        },
+        el("img", {
+          src: s.image,
+          alt: `${indexLabel} scene`,
+          style: {
+            width: "100%",
+            borderRadius: "6px",
+            border: s.sceneId === selectedScene ? "3px solid #0877bd" : marks.length ? "3px solid #f59322" : "1px solid var(--line)",
+            display: "block",
+          },
+        }),
+        el("div", { style: { fontSize: "11px", marginTop: "3px", textAlign: "center" } }, indexLabel),
+        marks.length ? el("div", { style: { fontSize: "10px", textAlign: "center", color: "#f59322" } }, `picked by ${marks.join(" & ")}`) : ""
+      );
+    }
+
+    panel.append(
+      el("div", { style: { fontSize: "12px", marginBottom: "4px" } }, el("b", {}, "Examples "), el("span", { class: "muted" }, "— the discriminator must hold in all of these")),
+      el("div", { style: { display: "flex", gap: "10px", marginBottom: "12px" } }, ...examples.map((s, i) => thumb(s, `Example ${i + 1}`))),
+      el("div", { style: { fontSize: "12px", marginBottom: "4px" } }, el("b", {}, "Candidates "), el("span", { class: "muted" }, "— exactly one should satisfy it")),
+      el("div", { style: { display: "flex", gap: "10px" } }, ...candidates.map((s, i) => thumb(s, `Candidate ${i + 1}`)))
+    );
+  }
+
   function drawBody(): void {
     if (!trace) return;
     const t = trace;
     clear(body);
 
+    const conceptNote = el(
+      "div",
+      { class: "note", style: { marginTop: "10px" } },
+      el("b", {}, "Intended concept (ground truth, from the paper's own puzzle generator): "),
+      `"${t.intendedConcept}"`
+    );
+
+    const overview = el("div", { style: { marginTop: "12px" } });
+    drawOverview(overview, t);
+
     const acc = t.accuracy;
     const accRow = el(
       "div",
-      { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
+      { class: "flow-payload", style: { marginTop: "12px", display: "block" } },
       `detected ${t.detectedCount}/${t.trueCount} objects · ` +
         ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
     );
@@ -229,7 +314,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
             el("b", {}, "Fresh perception → real FO-SL solve: "),
             t.freshResult.status,
             t.freshResult.formula ? el("div", { class: "flow-payload", style: { marginTop: "6px", display: "block" } }, t.freshResult.formula) : "",
-            t.freshResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${t.freshResult.candidate}`) : ""
+            t.freshResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${candidateLabel(t, t.freshResult.candidate)}`) : ""
           ),
           el(
             "div",
@@ -237,11 +322,15 @@ export function renderVDPDebugger(root: HTMLElement): void {
             el("b", {}, "Reference (authors' replayed perception, same images): "),
             t.referenceResult.status,
             t.referenceResult.formula ? el("div", { class: "flow-payload", style: { marginTop: "6px", display: "block" } }, t.referenceResult.formula) : "",
-            t.referenceResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${t.referenceResult.candidate}`) : ""
+            t.referenceResult.candidate ? el("div", { style: { marginTop: "4px", fontSize: "12px" } }, `→ picks ${candidateLabel(t, t.referenceResult.candidate)}`) : ""
           ),
           disagreementExplanation(t) ?? ""
         );
 
+    const groupIndex = new Map<string, number>();
+    for (const role of ["train", "test"] as const) {
+      t.scenes.filter((s) => s.role === role).forEach((s, i) => groupIndex.set(s.sceneId, i + 1));
+    }
     const sceneTabs = el(
       "div",
       { class: "seg", style: { marginTop: "16px" } },
@@ -252,8 +341,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
             class: "seg-btn" + (s.sceneId === selectedScene ? " active" : ""),
             onclick: () => { stopPlaying(); revealCount = null; resultsRevealed = true; selectedScene = s.sceneId; drawBody(); },
           },
-          el("span", { class: "seg-flow" }, `scene ${s.sceneId}`),
-          el("span", { class: "seg-name" }, s.role)
+          el("span", { class: "seg-flow" }, `${roleLabel(s.role)} ${groupIndex.get(s.sceneId)}`),
+          el("span", { class: "seg-name" }, s.role === "train" ? "must satisfy" : "candidate")
         )
       )
     );
@@ -271,7 +360,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
         : [];
     const logBox = renderLiveLog(logLines);
 
-    body.append(accRow, playRow, stepRow, logBox, resultsPanel, sceneTabs, scenePanel);
+    body.append(conceptNote, overview, accRow, playRow, stepRow, logBox, resultsPanel, sceneTabs, scenePanel);
   }
 
   function revealedCount(scene: VDPScene): number {
@@ -397,8 +486,13 @@ export function renderVDPDebugger(root: HTMLElement): void {
         )
       );
     });
+    const groupNum = trace ? trace.scenes.filter((s) => s.role === scene.role).findIndex((s) => s.sceneId === scene.sceneId) + 1 : "?";
     panel.append(
-      el("div", { style: { fontSize: "13px", marginBottom: "6px" } }, el("b", {}, `Scene ${scene.sceneId} (${scene.role}) — real rendered CLEVR scene, boxes from the actual detector:`)),
+      el(
+        "div",
+        { style: { fontSize: "13px", marginBottom: "6px" } },
+        el("b", {}, `${roleLabel(scene.role)} ${groupNum} — real rendered CLEVR scene, boxes from the actual detector:`)
+      ),
       imageBox,
       grid
     );

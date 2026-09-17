@@ -1640,5 +1640,6 @@
     "status": "sat",
     "formula": "Forall q0: cylinder. Exists q1: cylinder. same_color(q0,q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "There is no color such that there is only one sphere of that color."
 }

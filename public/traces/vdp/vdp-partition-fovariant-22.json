@@ -1714,5 +1714,6 @@
     "status": "sat",
     "formula": "Forall q0: cylinder. Forall q1: sphere. right(q1,q0)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "All cubes are to the left of all cylinders."
 }

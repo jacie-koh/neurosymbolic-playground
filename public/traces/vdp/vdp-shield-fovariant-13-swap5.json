@@ -2448,5 +2448,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Forall q1: cube. left(q1,q0)",
     "candidate": "5.json"
-  }
+  },
+  "intendedConcept": "Every cylinder has a cube to its right."
 }

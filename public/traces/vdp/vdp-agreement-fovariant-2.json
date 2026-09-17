@@ -1640,5 +1640,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Exists q1: cylinder. Forall q2: cube. left(q0,q2) AND left(q2,q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "For every cylinder there is a sphere to the left of it and to the right of it."
 }

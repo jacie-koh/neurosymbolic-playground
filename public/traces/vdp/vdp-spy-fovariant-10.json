@@ -1862,5 +1862,6 @@
     "status": "sat",
     "formula": "Exists q0: sphere. Exists q1: cylinder. front(q0,q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "Every cylinder has a cube behind it."
 }

@@ -1492,5 +1492,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Exists q1: cube. large(q0) AND right(q0,q1)",
     "candidate": "2.json"
-  }
+  },
+  "intendedConcept": "All cylinders and spheres have the same color."
 }

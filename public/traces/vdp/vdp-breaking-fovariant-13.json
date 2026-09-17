@@ -1640,5 +1640,6 @@
     "status": "sat",
     "formula": "Forall q0: cube. Exists q1: cube. same_color(q1,q0)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "There is no color such that there is only one sphere of that color."
 }

@@ -1492,5 +1492,6 @@
     "status": "sat",
     "formula": "Forall q0: sphere. Forall q1: cube. same_color(q0,q1)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "All cylinders and spheres have the same color."
 }

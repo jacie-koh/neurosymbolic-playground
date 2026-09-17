@@ -1936,5 +1936,6 @@
     "status": "unknown",
     "formula": null,
     "candidate": null
-  }
+  },
+  "intendedConcept": "All cubes are to the left of all cylinders and the rightmost cylinder is metal."
 }

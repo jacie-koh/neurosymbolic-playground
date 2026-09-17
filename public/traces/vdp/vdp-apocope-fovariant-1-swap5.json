@@ -1418,5 +1418,6 @@
     "status": "sat",
     "formula": "Exists q0: sphere. Exists q1: cube. yellow(q0) AND left(q1,q0)",
     "candidate": "1.json"
-  }
+  },
+  "intendedConcept": "Every sphere has a cylinder to its right."
 }

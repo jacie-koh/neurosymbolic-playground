@@ -1418,5 +1418,6 @@
     "status": "sat",
     "formula": "Exists q0: cube. Forall q1: cylinder. left(q1,q0) AND brown(q0)",
     "candidate": "0.json"
-  }
+  },
+  "intendedConcept": "All spheres are to the left of a green cylinder."
 }

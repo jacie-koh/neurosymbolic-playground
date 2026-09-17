@@ -1566,5 +1566,6 @@
     "status": "sat",
     "formula": "Exists q0: cylinder. Exists q1: cylinder. Forall q2: sphere. right(q0,q2) AND right(q2,q1)",
     "candidate": "5.json"
-  }
+  },
+  "intendedConcept": "There is a leftmost sphere and rightmost sphere."
 }
