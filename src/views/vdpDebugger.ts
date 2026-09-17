@@ -17,8 +17,7 @@
  *
  * 100 real puzzles (spanning all 15 relation patterns) were run through this exact
  * pipeline offline (standalone/reports/debugger/vdp_fresh/run_100.py) and are
- * browsable here via a randomizer + a real difficulty slider — object count and
- * the paper's own per-pattern formula-complexity bound (see VDPManifestEntry).
+ * browsable here via a randomizer filtered by relation pattern (see VDPManifestEntry).
  *
  * Vocabulary and layout follow Murali et al. (IJCAI 2022) directly, not just the
  * solver's internal terms: a puzzle is Example images E (must all satisfy the
@@ -44,9 +43,25 @@ export function renderVDPDebugger(root: HTMLElement): void {
   let activeFile = "vdp-match.json";
   let trace: VDPTrace | null = null;
   let running = false;
-  let hasRun = false;
   let runLines: string[] = [];
+  /** The full narration for the current trace, computed once by buildRunSteps() and
+   * then just replayed -- lets Step back/forward jump anywhere without recomputing. */
+  let runSteps: string[] = [];
+  let runIdx = 0;
+  /** Line counts at which the fresh/reference result becomes known -- the overview
+   * board's "picked by" marks reveal independently once runIdx reaches each, exactly
+   * where the log actually says so, not all at once. */
+  let freshRevealAt = 0;
+  let refRevealAt = 0;
   let runTimer: ReturnType<typeof setTimeout> | undefined;
+  /** Persistent containers filled in by drawBody(), so the auto-play tick (every
+   * 180ms) can refresh just the log/controls -- and the image-heavy overview board
+   * only on the rare tick that actually reveals a new pick -- instead of tearing
+   * down and rebuilding the whole page every tick. Recreating <img> elements that
+   * often (each with no reserved height) was both why Stop couldn't reliably keep
+   * up with clicks and why the page visibly jumped as images reflowed in and out. */
+  let overviewHost: HTMLElement | null = null;
+  let controlsHost: HTMLElement | null = null;
 
   function stopRunning(): void {
     running = false;
@@ -57,9 +72,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   const randomizerHost = el("div");
-  const difficultyNote = el("p", { class: "muted", style: { fontSize: "12px", marginTop: "-4px" } });
+  const patternNote = el("p", { class: "muted", style: { fontSize: "12px", marginTop: "-4px" } });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, difficultyNote, body);
+  root.append(randomizerHost, patternNote, body);
 
   let manifest: VDPManifestEntry[] = [];
 
@@ -69,15 +84,18 @@ export function renderVDPDebugger(root: HTMLElement): void {
 
   function selectTrace(file: string): void {
     stopRunning();
-    hasRun = false;
     runLines = [];
+    runSteps = [];
+    runIdx = 0;
+    freshRevealAt = 0;
+    refRevealAt = 0;
     activeFile = file;
     clear(body);
     body.append(el("p", { class: "muted" }, "Loading trace…"));
     loadVDPTrace(file)
       .then((t) => {
         trace = t;
-        drawDifficultyNote();
+        drawPatternNote();
         drawBody();
       })
       .catch(() => {
@@ -89,10 +107,10 @@ export function renderVDPDebugger(root: HTMLElement): void {
       });
   }
 
-  function drawDifficultyNote(): void {
+  function drawPatternNote(): void {
     const entry = currentEntry();
-    difficultyNote.textContent = entry
-      ? `${entry.pattern} · difficulty ${entry.difficulty}/5 · ~${entry.objectCount} objects/scene · ` +
+    patternNote.textContent = entry
+      ? `${entry.pattern} · ~${entry.objectCount} objects/scene · ` +
         `formula budget: ${entry.quantifierBound} quantifiers${entry.conjunctBound != null ? `, ${entry.conjunctBound} conjuncts` : ""}`
       : "";
   }
@@ -101,10 +119,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     manifest = m;
     const initial = m.find((e) => e.file === activeFile);
     renderRandomizer<VDPManifestEntry>(randomizerHost, m, {
-      fields: [
-        { key: "pattern", label: "Pattern", get: (e) => e.pattern },
-        { key: "difficulty", label: "Difficulty", get: (e) => e.difficulty, type: "range" },
-      ],
+      fields: [{ key: "pattern", label: "Pattern", get: (e) => e.pattern }],
       initial,
       onPick: (entry) => {
         if (!entry) {
@@ -115,7 +130,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
         selectTrace(entry.file);
       },
     });
-    drawDifficultyNote();
+    drawPatternNote();
   });
 
   /** "0.json" (the solver's own candidate identifier, a scene filename) -> "Candidate 2"
@@ -203,74 +218,104 @@ export function renderVDPDebugger(root: HTMLElement): void {
     return lines;
   }
 
-  function runFrom(t: VDPTrace): void {
-    stopRunning();
-    hasRun = false;
-    runLines = [];
-    running = true;
-
+  /** Builds the full narration once per trace: every line Run will reveal, in
+   * order, plus the line-counts at which the fresh/reference results become known
+   * (so Step back/forward can jump anywhere without recomputing, and the overview
+   * board can reveal each pick exactly where the log actually says so). */
+  function buildRunSteps(t: VDPTrace): { lines: string[]; freshAt: number; refAt: number } {
     const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
     const entry = currentEntry();
+    const groups: string[][] = [];
 
-    const steps: (() => void)[] = [];
-    examples.forEach((s, i) => steps.push(() => runLines.push(`Example ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`)));
-    candidates.forEach((s, i) => steps.push(() => runLines.push(`Candidate ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`)));
+    examples.forEach((s, i) => groups.push([`Example ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`]));
+    candidates.forEach((s, i) => groups.push([`Candidate ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`]));
 
-    steps.push(() => runLines.push("Deriving the relations the solver reasons over (left/behind, same_color/material/size):"));
+    groups.push(["Deriving the relations the solver reasons over (left/behind, same_color/material/size):"]);
     [...examples, ...candidates].forEach((s, i) => {
       const label = i < examples.length ? `Example ${i + 1}` : `Candidate ${i - examples.length + 1}`;
       const lines = relationLines(s);
-      if (lines.length > 0) {
-        steps.push(() => runLines.push(`  ${label}:`));
-        lines.forEach((line) => steps.push(() => runLines.push(line)));
-      }
+      if (lines.length > 0) groups.push([`  ${label}:`, ...lines]);
     });
 
-    steps.push(() =>
-      runLines.push(
-        `Searching for a discriminator: guarded FO-SL, ≤${entry?.quantifierBound ?? "?"} quantifiers` +
-          `${entry?.conjunctBound != null ? `, ≤${entry.conjunctBound} conjuncts` : ""} (real Z3 SAT search)…`
-      )
-    );
-    steps.push(() => {
-      runLines.push(
-        t.freshResult.status === "sat" && t.freshResult.formula
-          ? `Fresh perception → found: ${t.freshResult.formula}`
-          : `Fresh perception → ${t.freshResult.status}: no discriminator found within budget`
-      );
-      if (t.freshResult.status === "sat") {
-        runLines.push(`  → holds in all ${examples.length} examples, and in exactly ${candidateLabel(t, t.freshResult.candidate)} among the candidates.`);
-      }
-    });
-    steps.push(() => {
-      runLines.push(
-        t.referenceResult.status === "sat" && t.referenceResult.formula
-          ? `Reference (authors' replayed perception, same images) → found: ${t.referenceResult.formula}`
-          : `Reference → ${t.referenceResult.status}: no discriminator found`
-      );
-      if (t.referenceResult.status === "sat") runLines.push(`  → picks ${candidateLabel(t, t.referenceResult.candidate)}.`);
-    });
-    steps.push(() => {
-      const freshCand = t.freshResult.candidate;
-      const refCand = t.referenceResult.candidate;
-      const matches = t.freshResult.status === "sat" && freshCand != null && freshCand === refCand;
-      runLines.push(matches ? "✓ fresh matches the reference answer." : "✗ fresh disagrees with the reference answer.");
-      const reason = disagreementReason(t);
-      if (reason) runLines.push(reason);
-    });
-    steps.push(() => {
-      running = false;
-      hasRun = true;
-    });
+    groups.push([
+      `Searching for a discriminator: guarded FO-SL, ≤${entry?.quantifierBound ?? "?"} quantifiers` +
+        `${entry?.conjunctBound != null ? `, ≤${entry.conjunctBound} conjuncts` : ""} (real Z3 SAT search)…`,
+    ]);
 
-    let idx = 0;
+    const freshLines = [
+      t.freshResult.status === "sat" && t.freshResult.formula
+        ? `Fresh perception → found: ${t.freshResult.formula}`
+        : `Fresh perception → ${t.freshResult.status}: no discriminator found within budget`,
+    ];
+    if (t.freshResult.status === "sat") {
+      freshLines.push(`  → holds in all ${examples.length} examples, and in exactly ${candidateLabel(t, t.freshResult.candidate)} among the candidates.`);
+    }
+    groups.push(freshLines);
+    const freshAt = groups.reduce((n, g) => n + g.length, 0);
+
+    const refLines = [
+      t.referenceResult.status === "sat" && t.referenceResult.formula
+        ? `Reference (authors' replayed perception, same images) → found: ${t.referenceResult.formula}`
+        : `Reference → ${t.referenceResult.status}: no discriminator found`,
+    ];
+    if (t.referenceResult.status === "sat") refLines.push(`  → picks ${candidateLabel(t, t.referenceResult.candidate)}.`);
+    groups.push(refLines);
+    const refAt = groups.reduce((n, g) => n + g.length, 0);
+
+    const freshCand = t.freshResult.candidate;
+    const refCand = t.referenceResult.candidate;
+    const matches = t.freshResult.status === "sat" && freshCand != null && freshCand === refCand;
+    const verdictLines = [matches ? "✓ fresh matches the reference answer." : "✗ fresh disagrees with the reference answer."];
+    const reason = disagreementReason(t);
+    if (reason) verdictLines.push(reason);
+    groups.push(verdictLines);
+
+    return { lines: groups.flat(), freshAt, refAt };
+  }
+
+  function ensureRunSteps(t: VDPTrace): void {
+    if (runSteps.length > 0) return;
+    const built = buildRunSteps(t);
+    runSteps = built.lines;
+    freshRevealAt = built.freshAt;
+    refRevealAt = built.refAt;
+  }
+
+  function stepRunTo(t: VDPTrace, idx: number): void {
+    stopRunning();
+    ensureRunSteps(t);
+    runIdx = Math.max(0, Math.min(runSteps.length, idx));
+    runLines = runSteps.slice(0, runIdx);
+    drawBody();
+  }
+
+  function runFrom(t: VDPTrace): void {
+    stopRunning();
+    const built = buildRunSteps(t);
+    runSteps = built.lines;
+    freshRevealAt = built.freshAt;
+    refRevealAt = built.refAt;
+    runIdx = 0;
+    runLines = [];
+    running = true;
     const tick = () => {
-      if (idx >= steps.length) return;
-      steps[idx]();
-      idx++;
-      drawBody();
-      if (idx < steps.length) runTimer = setTimeout(tick, 180);
+      if (!running) return;
+      if (runIdx >= runSteps.length) {
+        running = false;
+        if (controlsHost) drawControls(controlsHost, t);
+        return;
+      }
+      const prevIdx = runIdx;
+      runIdx++;
+      runLines = runSteps.slice(0, runIdx);
+      // Cheap every tick: just text and a couple of buttons, no images.
+      if (controlsHost) drawControls(controlsHost, t);
+      // Expensive, so only when a pick actually just became known: the overview's
+      // thumbnails (real <img> elements) get rebuilt.
+      const justRevealed = (prevIdx < freshRevealAt && runIdx >= freshRevealAt) || (prevIdx < refRevealAt && runIdx >= refRevealAt);
+      if (justRevealed && overviewHost) drawOverview(overviewHost, t);
+      runTimer = setTimeout(tick, 180);
     };
     drawBody();
     runTimer = setTimeout(tick, 180);
@@ -278,14 +323,14 @@ export function renderVDPDebugger(root: HTMLElement): void {
 
   /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail together,
    * every Candidate thumbnail together. Which candidate fresh perception and the
-   * reference each picked is marked only once Run has actually revealed it -- not
-   * upfront, so the board poses the same question a human solver would face. */
+   * reference each picked is marked only once Run has actually revealed that result
+   * -- not upfront, so the board poses the same question a human solver would face. */
   function drawOverview(panel: HTMLElement, t: VDPTrace): void {
     clear(panel);
     const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
-    const freshPick = hasRun ? t.freshResult.candidate?.replace(/\.json$/, "") ?? null : null;
-    const refPick = hasRun ? t.referenceResult.candidate?.replace(/\.json$/, "") ?? null : null;
+    const freshPick = runIdx >= freshRevealAt && freshRevealAt > 0 ? t.freshResult.candidate?.replace(/\.json$/, "") ?? null : null;
+    const refPick = runIdx >= refRevealAt && refRevealAt > 0 ? t.referenceResult.candidate?.replace(/\.json$/, "") ?? null : null;
 
     function thumb(s: VDPScene, indexLabel: string): HTMLElement {
       const marks = [freshPick === s.sceneId ? "fresh" : null, refPick === s.sceneId ? "reference" : null].filter(Boolean);
@@ -315,6 +360,31 @@ export function renderVDPDebugger(root: HTMLElement): void {
     );
   }
 
+  /** Just the Run/Stop button, the Step back/forward row, and the log -- all cheap
+   * (text + buttons, no images) -- so the auto-play tick can refresh this alone. */
+  function drawControls(host: HTMLElement, t: VDPTrace): void {
+    clear(host);
+    const runRow = el(
+      "div",
+      { class: "btn-row" },
+      running
+        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); if (controlsHost) drawControls(controlsHost, t); } }, "⏸ Stop")
+        : el("button", { class: "btn primary", onclick: () => runFrom(t) }, runIdx > 0 ? "▶ Replay" : "▶ Run"),
+      running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `running… line ${runIdx}/${runSteps.length}`) : ""
+    );
+
+    const stepRow = el(
+      "div",
+      { class: "btn-row", style: { marginTop: "8px" } },
+      el("button", { class: "btn", disabled: running || runIdx <= 0, onclick: () => stepRunTo(t, runIdx - 1) }, "◀ Step back"),
+      el("button", { class: "btn", disabled: running || (runSteps.length > 0 && runIdx >= runSteps.length), onclick: () => stepRunTo(t, runIdx + 1) }, "Step forward ▶"),
+      runSteps.length > 0 ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `line ${runIdx}/${runSteps.length}`) : ""
+    );
+
+    const logBox = renderLiveLog(runLines);
+    host.append(runRow, stepRow, logBox);
+  }
+
   function drawBody(): void {
     if (!trace) return;
     const t = trace;
@@ -327,31 +397,30 @@ export function renderVDPDebugger(root: HTMLElement): void {
       `"${t.intendedConcept}"`
     );
 
-    const overview = el("div", { style: { marginTop: "12px" } });
-    drawOverview(overview, t);
+    overviewHost = el("div", { style: { marginTop: "12px" } });
+    drawOverview(overviewHost, t);
 
     const acc = t.accuracy;
+    // detectedCount can genuinely exceed trueCount: it's the detector's raw box
+    // count across all 6 scenes, not a "correct out of total" fraction, and this
+    // detector's NMS occasionally lets two overlapping boxes for the same object
+    // both through (confirmed by inspecting the actual box coordinates on affected
+    // puzzles -- nested/near-identical boxes, not two real distinct objects).
+    const extra = t.detectedCount - t.trueCount;
+    const detectionSummary =
+      extra > 0
+        ? `${t.detectedCount} boxes detected across ${t.scenes.length} scenes — ${extra} more than the ${t.trueCount} real objects (near-duplicate boxes for the same object slipping past NMS)`
+        : `${t.detectedCount} boxes detected across ${t.scenes.length} scenes, matching the ${t.trueCount} real objects`;
     const accRow = el(
       "div",
       { class: "flow-payload", style: { marginTop: "12px", display: "block" } },
-      `detected ${t.detectedCount}/${t.trueCount} objects · ` +
-        ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
+      `${detectionSummary} · ` + ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
     );
 
-    const runRow = el(
-      "div",
-      { class: "btn-row", style: { marginTop: "12px" } },
-      el(
-        "button",
-        { class: "btn primary", disabled: running, onclick: () => runFrom(t) },
-        running ? "Running…" : hasRun ? "↺ Run again" : "▶ Run"
-      ),
-      running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, "perceiving, deriving relations, solving…") : ""
-    );
+    controlsHost = el("div", { style: { marginTop: "12px" } });
+    drawControls(controlsHost, t);
 
-    const logBox = renderLiveLog(runLines);
-
-    body.append(conceptNote, overview, accRow, runRow, logBox);
+    body.append(conceptNote, overviewHost, accRow, controlsHost);
   }
 
   selectTrace(activeFile);

@@ -389,9 +389,6 @@ export interface VDPManifestEntry {
   /** Whether fresh perception's top discriminator candidate matches the authors' replayed-perception one. */
   matches: boolean;
   freshStatus: string | null;
-  /** 1..5, combining objectCount and quantifierBound into one real, comparable difficulty axis
-   * (computed offline in trim_100.py by quintiles over the whole pool). */
-  difficulty: number;
 }
 
 export function loadVDPManifest(): Promise<VDPManifestEntry[]> {

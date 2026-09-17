@@ -8,8 +8,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-14",
@@ -20,8 +19,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-17",
@@ -32,8 +30,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-2",
@@ -44,8 +41,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-23",
@@ -56,8 +52,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-3",
@@ -68,8 +63,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-agreement-fovariant-4",
@@ -80,8 +74,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-match-2",
@@ -92,8 +85,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-10",
@@ -104,8 +96,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-11",
@@ -116,8 +107,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-15",
@@ -128,8 +118,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-17",
@@ -140,8 +129,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-19",
@@ -152,8 +140,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-2",
@@ -164,8 +151,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternate-color-fovariant-9",
@@ -176,8 +162,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-match",
@@ -188,8 +173,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-1-swap4",
@@ -200,8 +184,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-10-swap5",
@@ -212,8 +195,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-20-swap3",
@@ -224,8 +206,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-21-swap3",
@@ -236,8 +217,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-23",
@@ -248,8 +228,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-4",
@@ -260,8 +239,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-alternation-fovariant-9-swap3",
@@ -272,8 +250,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-1",
@@ -284,8 +261,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-12",
@@ -296,8 +272,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-15",
@@ -308,8 +283,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-19",
@@ -320,8 +294,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-22",
@@ -332,8 +305,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-24",
@@ -344,8 +316,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-aphaeresis-fovariant-3",
@@ -356,8 +327,7 @@
     "quantifierBound": 3,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-1-swap5",
@@ -368,8 +338,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-14",
@@ -380,8 +349,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-15-swap4",
@@ -392,8 +360,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-16-swap5",
@@ -404,8 +371,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-23-swap5",
@@ -416,8 +382,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-24-swap4",
@@ -428,8 +393,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-apocope-fovariant-4-swap4",
@@ -440,8 +404,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 1
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-wrong-candidate",
@@ -452,8 +415,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": false,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-11-swap4",
@@ -464,8 +426,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-11-swap5",
@@ -476,8 +437,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-23-swap5",
@@ -488,8 +448,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-3",
@@ -500,8 +459,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-4-swap4",
@@ -512,8 +470,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-6-swap3",
@@ -524,8 +481,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-assimilation-fovariant-8",
@@ -536,8 +492,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-13",
@@ -548,8 +503,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-15-swap3",
@@ -560,8 +514,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-17",
@@ -572,8 +525,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-2",
@@ -584,8 +536,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-20-swap3",
@@ -596,8 +547,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-4",
@@ -608,8 +558,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-breaking-fovariant-7",
@@ -620,8 +569,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-17-swap5",
@@ -632,8 +580,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-21-swap5",
@@ -644,8 +591,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-23-swap5",
@@ -656,8 +602,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-3-swap5",
@@ -668,8 +613,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-4",
@@ -680,8 +624,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-5-swap5",
@@ -692,8 +635,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-circle-at-ends-fovariant-9-swap5",
@@ -704,8 +646,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-devoicing-fovariant-1-swap4",
@@ -716,8 +657,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-10-swap4",
@@ -728,8 +668,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-17",
@@ -740,8 +679,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-21",
@@ -752,8 +690,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-23",
@@ -764,8 +701,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-23-swap4",
@@ -776,8 +712,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-devoicing-fovariant-3-swap4",
@@ -788,8 +723,7 @@
     "quantifierBound": 3,
     "conjunctBound": null,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 5
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-meeussen-fovariant-10",
@@ -800,8 +734,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-11",
@@ -812,8 +745,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-15",
@@ -824,8 +756,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-21",
@@ -836,8 +767,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-6",
@@ -848,8 +778,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-8",
@@ -860,8 +789,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-meeussen-fovariant-9",
@@ -872,8 +800,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-1",
@@ -884,8 +811,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-10",
@@ -896,8 +822,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-16",
@@ -908,8 +833,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-19",
@@ -920,8 +844,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-22",
@@ -932,8 +855,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-partition-fovariant-6",
@@ -944,8 +866,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-0-swap3",
@@ -956,8 +877,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-13-swap5",
@@ -968,8 +888,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 4
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-18-swap5",
@@ -980,8 +899,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-24-swap4",
@@ -992,8 +910,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-3-swap5",
@@ -1004,8 +921,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-shield-fovariant-7-swap5",
@@ -1016,8 +932,7 @@
     "quantifierBound": 2,
     "conjunctBound": 1,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 5
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-1-swap3",
@@ -1028,8 +943,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-10",
@@ -1040,8 +954,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-11",
@@ -1052,8 +965,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-15-swap4",
@@ -1064,8 +976,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-19-swap4",
@@ -1076,8 +987,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-spy-fovariant-21-swap4",
@@ -1088,8 +998,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 3
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-threepack-fovariant-15",
@@ -1100,8 +1009,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-threepack-fovariant-18",
@@ -1112,8 +1020,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-threepack-fovariant-20-swap5",
@@ -1124,8 +1031,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-threepack-fovariant-21",
@@ -1136,8 +1042,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-threepack-fovariant-22-swap5",
@@ -1148,8 +1053,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-threepack-fovariant-23",
@@ -1160,8 +1064,7 @@
     "quantifierBound": 3,
     "conjunctBound": 2,
     "matches": false,
-    "freshStatus": "unknown",
-    "difficulty": 4
+    "freshStatus": "unknown"
   },
   {
     "id": "vdp-train-fovariant-10",
@@ -1172,8 +1075,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-train-fovariant-17",
@@ -1184,8 +1086,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-train-fovariant-19",
@@ -1196,8 +1097,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-train-fovariant-23-swap3",
@@ -1208,8 +1108,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-train-fovariant-24-swap3",
@@ -1220,8 +1119,7 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   },
   {
     "id": "vdp-train-fovariant-8-swap3",
@@ -1232,7 +1130,6 @@
     "quantifierBound": 2,
     "conjunctBound": 2,
     "matches": true,
-    "freshStatus": "sat",
-    "difficulty": 2
+    "freshStatus": "sat"
   }
 ]

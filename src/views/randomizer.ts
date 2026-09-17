@@ -9,9 +9,6 @@ export interface FilterField<T> {
   get: (entry: T) => string | number | null | undefined;
   /** Preferred option order; anything not listed is appended, sorted. */
   order?: (string | number)[];
-  /** "select" (default) renders a dropdown of every distinct value; "range" renders a slider
-   * across the field's numeric min..max, with one step below the minimum meaning "Any". */
-  type?: "select" | "range";
 }
 
 export interface RandomizerOptions<T> {
@@ -20,10 +17,6 @@ export interface RandomizerOptions<T> {
   onPick: (entry: T | null) => void;
   /** Called for the initially selected entry (e.g. the first curated example) so the UI matches the current state. */
   initial?: T;
-}
-
-function describeRange(label: string, value: number, anySentinel: number): string {
-  return value === anySentinel ? `Any ${label.toLowerCase()}` : `${label}: ${value}`;
 }
 
 export function renderRandomizer<T extends { id: string }>(
@@ -69,28 +62,6 @@ export function renderRandomizer<T extends { id: string }>(
   }
 
   const controls = opts.fields.map((f) => {
-    if (f.type === "range") {
-      const values = optionsFor(f).map(Number);
-      const min = Math.min(...values);
-      const max = Math.max(...values);
-      const anySentinel = min - 1;
-      const current = selected[f.key] ? Number(selected[f.key]) : anySentinel;
-      const labelSpan = el("span", { class: "muted", style: { fontSize: "12px", minWidth: "110px" } }, describeRange(f.label, current, anySentinel));
-      const slider = el("input", {
-        type: "range",
-        min: String(anySentinel),
-        max: String(max),
-        step: "1",
-        value: String(current),
-        style: { verticalAlign: "middle" },
-        oninput: (e: Event) => {
-          const v = Number((e.target as HTMLInputElement).value);
-          selected[f.key] = v === anySentinel ? "" : String(v);
-          labelSpan.textContent = describeRange(f.label, v, anySentinel);
-        },
-      });
-      return el("span", { style: { display: "inline-flex", alignItems: "center", gap: "6px" } }, labelSpan, slider);
-    }
     return el(
       "select",
       {
