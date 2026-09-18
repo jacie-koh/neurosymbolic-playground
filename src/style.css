@@ -302,13 +302,18 @@ select:hover {
   transition: width 0.3s ease;
 }
 .note {
-  background: rgba(255, 170, 0, 0.08);
-  border: 1px solid rgba(255, 170, 0, 0.28);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
   border-radius: 10px;
   padding: 14px 16px;
   font-size: 13px;
-  color: #ffc861;
+  color: var(--ink);
   line-height: 1.5;
+}
+.note.warn {
+  background: rgba(255, 170, 0, 0.08);
+  border-color: rgba(255, 170, 0, 0.28);
+  color: #ffc861;
 }
 
 .flow-demo {
