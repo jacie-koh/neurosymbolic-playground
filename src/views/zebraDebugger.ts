@@ -96,7 +96,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
         fields: [
           { key: "houses", label: "Houses", get: (e) => e.houses },
           { key: "hasBacktrack", label: "Backtracks", get: (e) => (e.hasBacktrack ? "yes" : "no") },
-          { key: "hasDeadClue", label: "Dead clue", get: (e) => (e.hasDeadClue ? "yes" : "no") },
+          { key: "hasDeadClue", label: "Dead rule", get: (e) => (e.hasDeadClue ? "yes" : "no") },
           { key: "hasConflictRetry", label: "Real conflict retry", get: (e) => (e.hasConflictRetry ? "yes" : "no") },
         ],
         onPick: (entry) => {
@@ -252,7 +252,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
         ? el(
             "div",
             { class: "note", style: { marginTop: "10px", borderLeft: "3px solid var(--accent)" } },
-            el("span", { class: "badge badge-strong" }, "redundant clue"),
+            el("span", { class: "badge badge-strong" }, "dead rule"),
             ` clue ${deadClueIdx + 1} ("${t.clues[deadClueIdx].source}") is logically redundant here — every other clue together still pins down this exact solution uniquely, with or without it. ` +
               "The solver isn't given a chance to skip it or treat it specially -- it's included like every other clue; this redundancy is discovered by re-solving afterward, not acted on during solving."
           )
