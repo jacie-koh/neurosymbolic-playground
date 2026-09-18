@@ -283,16 +283,8 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row" },
       playing
-        ? el(
-            "button",
-            { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } },
-            "⏸ Stop"
-          )
-        : el(
-            "button",
-            { class: "btn primary", onclick: () => playFrom(t) },
-            deductionIdx >= 0 ? "▶ Replay solve in real time" : "▶ Watch it solve in real time"
-          ),
+        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Pause")
+        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Play"),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… ${Math.max(deductionIdx + 1, 0)}/${t.deductions.length}`)
         : ""

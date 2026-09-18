@@ -205,14 +205,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row", style: { marginTop: "12px" } },
       playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el(
-            "button",
-            { class: "btn primary", onclick: () => playFrom(t) },
-            canShowRealSolution(t)
-              ? livePositions ? "▶ Replay the real verified answer" : "▶ Reveal the real verified answer"
-              : livePositions ? "▶ Replay independent re-solve" : "▶ Watch independent re-solve (not MINIEXACT-verified)"
-          ),
+        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Pause")
+        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Play"),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
         : ""

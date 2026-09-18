@@ -244,14 +244,8 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row", style: { marginTop: "12px" } },
       playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el(
-            "button",
-            { class: "btn primary", onclick: () => playFrom(t) },
-            canShowRealSolution(t)
-              ? liveGrid ? "▶ Replay the real verified answer" : "▶ Reveal the real verified answer"
-              : liveGrid ? "▶ Replay independent re-solve" : "▶ Watch independent re-solve (not Z3-verified)"
-          ),
+        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Pause")
+        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Play"),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
         : ""

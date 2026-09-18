@@ -41,10 +41,6 @@ interface Pipeline {
    * since a literal feedback arrow isn't part of the flow-node vocabulary this
    * reuses (the same one the app's now-removed builder page used). */
   loopNote?: string;
-  /** Additional real detail (e.g. a handwritten-vs-printed robustness split)
-   * shown under the diagram, when there's something more to say than what's
-   * already on the Output box. */
-  caption?: string;
 }
 
 interface PatternRow {
@@ -71,9 +67,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Perception", kind: "neural", text: "CNN reads each digit, once" },
           { label: "Reasoning", kind: "symbolic", text: "Z3 solves once from the raw reading" },
-          { label: "Output", kind: "output", text: "91.1% baseline_correct — a sat result is a checkable Z3 model" },
+          { label: "Output", kind: "output", text: "91.1% baseline_correct — a sat result is a checkable Z3 model (82.2% handwritten-only vs. 100% printed)" },
         ],
-        caption: "Robustness (handwritten only): 82.2%, vs. 100% on printed.",
       },
       symbolicOnly: {
         stages: [
@@ -99,10 +94,9 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Perception", kind: "neural", text: "CNN reads each digit, ranks alternatives" },
           { label: "Reasoning", kind: "symbolic", text: "Z3 solves; on conflict, retries a ranked alternative" },
-          { label: "Output", kind: "output", text: "95.5% answer_correct — bounded correction loop" },
+          { label: "Output", kind: "output", text: "95.5% answer_correct — bounded correction loop (handwritten-only: 82.2% → 91.0%, exactly where the loop earns its keep)" },
         ],
         loopNote: "When Z3 hits a conflict, it retries the next-ranked CNN alternative for the disputed cell until sat or the retry budget runs out.",
-        caption: "Robustness (handwritten only): 82.2% → 91.0% — this is exactly where the loop earns its keep.",
       },
       symbolicOnly: {
         stages: [
@@ -119,9 +113,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Perception", kind: "neural", text: "CV cage detection + CNN reads once" },
           { label: "Reasoning", kind: "symbolic", text: "Exact arithmetic solver runs once, no correction" },
-          { label: "Output", kind: "output", text: "66.9% baseline_correct (1,400/1,400 real cases)" },
+          { label: "Output", kind: "output", text: "66.9% baseline_correct (1,400/1,400 real cases; handwritten-only: 34.6% vs. 99.3% printed — the real source of KenKen's size-degradation trend)" },
         ],
-        caption: "Robustness (handwritten only): 34.6%, vs. 99.3% on printed — the real source of KenKen's size-degradation trend.",
       },
       symbolicOnly: {
         stages: [
@@ -142,10 +135,9 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Perception", kind: "neural", text: "CV cage detection + CNN reads, ranks alternatives" },
           { label: "Reasoning", kind: "symbolic", text: "Solver runs; on conflict, retries alternatives prioritized by unsat cores" },
-          { label: "Output", kind: "output", text: "83.9% answer_correct — bounded joint-cage correction loop" },
+          { label: "Output", kind: "output", text: "83.9% answer_correct — bounded joint-cage correction loop (handwritten-only: 34.6% → 68.4% — real ground recovered, though a real ceiling remains)" },
         ],
         loopNote: "On an unsat conflict, the loop retries ranked CNN alternatives for the cages the unsat core actually implicates, not every cage.",
-        caption: "Robustness (handwritten only): 34.6% → 68.4% — real ground recovered, though a real ceiling remains.",
       },
       symbolicOnly: {
         stages: [
@@ -192,9 +184,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Parse", kind: "neural", text: "Local Qwen3-4B translates numbered clues into typed relations" },
           { label: "Reasoning", kind: "symbolic", text: "Colored Exact Cover / MINIEXACT solves" },
-          { label: "Output", kind: "output", text: "100% (6/6 original ZebraLogic puzzles) — independently checked against the real answer" },
+          { label: "Output", kind: "output", text: "100% (6/6 of the 1,000 downloaded ZebraLogic puzzles tested) — independently checked against the real answer; too small a sample to also split out a robustness slice" },
         ],
-        caption: "Only 6 puzzles sampled from the 1,000 downloaded — too small to also split out a separate robustness slice without overstating it.",
       },
       symbolicOnly: {
         stages: [
@@ -215,10 +206,9 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Parse", kind: "neural", text: "Local LLM parses clues" },
           { label: "Reasoning", kind: "symbolic", text: "MINIEXACT solves; on unsat, re-prompts the LLM with the solver's own conflict" },
-          { label: "Output", kind: "output", text: "1/1 real test — stayed unsat on both attempts, an honest negative result" },
+          { label: "Output", kind: "output", text: "1/1 real test (known-hard puzzle lgp-test-6x6-5) — stayed unsat on both attempts: a real solver conflict fed back to the LLM doesn't guarantee a better re-parse, an honest negative result, not a bug in the loop" },
         ],
         loopNote: "run_with_conflict_retry() genuinely re-prompts the LLM with the real solver's unsat result and re-solves from scratch — mechanically real, not simulated.",
-        caption: "Tested on one known-hard puzzle (real id lgp-test-6x6-5): a real solver conflict fed back to the LLM doesn't guarantee a better re-parse. That's a genuine finding, not a bug in the loop.",
       },
       symbolicOnly: {
         stages: [
@@ -240,13 +230,11 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
         stages: [
           { label: "Perception", kind: "neural", text: "From-scratch Faster R-CNN + MobileNetV3-Small attribute classifier" },
           { label: "Reasoning", kind: "symbolic", text: "Authors' unmodified FO-SL/Z3 synthesizer searches for a discriminator" },
-          { label: "Output", kind: "output", text: "83% (5/6 held-out puzzles) — a sat result is a checkable FO-SL formula" },
+          { label: "Output", kind: "output", text: "83% (5/6 held-out puzzles) — a sat result is a checkable FO-SL formula (wider 15-puzzle check against the paper's own saved/replayed perception: 12/15 sat)" },
         ],
-        caption: "Robustness check: the same real synthesizer against the paper's own saved/replayed perception across a wider 15-puzzle sample — 12/15 sat.",
       },
       symbolicOnly: {
-        stages: [{ label: "Reasoning", kind: "symbolic", text: "FO-SL/Z3 synthesizer alone" }],
-        caption: "Not measured standalone here — this module has no ground-truth scene models to feed it directly; it's always paired with perception.",
+        stages: [{ label: "Reasoning", kind: "symbolic", text: "FO-SL/Z3 synthesizer alone — not measured standalone here; this module has no ground-truth scene models to feed it directly, always paired with perception" }],
       },
     },
     "reasoning-for-learning": {
@@ -328,8 +316,7 @@ function flowDiagram(row: PatternRow): HTMLElement {
     "div",
     {},
     el("div", { class: "flow-demo", style: { display: "grid", gridTemplateColumns: columns, alignItems: "stretch", gap: "10px" } }, ...nodes),
-    main.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, main.loopNote) : "",
-    main.caption ? el("div", { style: { fontSize: "12px", marginTop: "8px", color: "var(--muted)" } }, main.caption) : ""
+    main.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, main.loopNote) : ""
   );
 }
 
@@ -361,8 +348,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
             class: "seg-btn" + (p === pattern ? " active" : ""),
             onclick: () => { store.set({ pattern: p }); onPatternChange(); },
           },
-          el("span", { class: "seg-flow" }, PATTERNS[p].flow),
-          el("span", { class: "seg-name" }, PATTERNS[p].taxonomy)
+          el("span", { class: "seg-flow" }, PATTERNS[p].flow)
         )
       )
     );
@@ -370,8 +356,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
     const diagram = el(
       "div",
       { class: "metric-card", style: { marginTop: "14px" } },
-      el("div", { class: "label" }, `${PATTERNS[pattern].flow} — real pipeline`),
-      el("div", { style: { fontSize: "13px", color: "var(--muted)", margin: "2px 0 14px" } }, PATTERNS[pattern].taxonomy),
+      el("div", { class: "label" }, PATTERNS[pattern].flow),
       flowDiagram(row)
     );
 
@@ -384,7 +369,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
     el(
       "div",
       { class: "metric-card" },
-      el("div", { class: "label" }, "Results & trade-offs — real architecture, real numbers"),
+      el("div", { class: "label" }, "Results & trade-offs"),
       body
     )
   );

@@ -685,10 +685,6 @@ button.lab-token { cursor: pointer; }
   font-size: 13px;
   color: var(--ink, #183d4e);
 }
-.seg-name {
-  font-size: 11px;
-  color: var(--muted);
-}
 .badge {
   display: inline-block;
   padding: 2px 9px;
