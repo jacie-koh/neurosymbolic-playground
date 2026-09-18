@@ -178,7 +178,7 @@ export interface ZebraSolveTrace extends ZebraSolveResult {
  * original version of this function) can generate millions of steps on a 6-house+
  * puzzle — measured 25.8M on one real puzzle, which would hang the animation for
  * hours — so this uses the same MRV ordering solveZebra() does. */
-export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
+export function solveZebraWithSteps(ir: ZebraIR, explain: boolean = true): ZebraSolveTrace {
   const positions: Record<string, number> = {};
   const usedByGroup: Record<string, Set<number>> = {};
   for (const group of Object.keys(ir.groups)) usedByGroup[group] = new Set();
@@ -268,14 +268,14 @@ export function solveZebraWithSteps(ir: ZebraIR): ZebraSolveTrace {
     if (!picked) return false;
     const { group, entity, candidates } = picked;
     if (candidates.length === 0) {
-      steps.push({ entity, house: 0, deadEnd: true, reason: explainDeadEnd(group, entity) });
+      steps.push({ entity, house: 0, deadEnd: true, ...(explain ? { reason: explainDeadEnd(group, entity) } : {}) });
       return false;
     }
     for (const house of candidates) {
-      const explain = explainPlacement(group, entity, house, candidates);
+      const explanation = explain ? explainPlacement(group, entity, house, candidates) : undefined;
       positions[entity] = house;
       usedByGroup[group].add(house);
-      steps.push({ entity, house, explain });
+      steps.push({ entity, house, explain: explanation });
       if (backtrack(remaining - 1)) return true;
       usedByGroup[group].delete(house);
       delete positions[entity];

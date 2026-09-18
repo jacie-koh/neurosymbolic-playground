@@ -26,6 +26,18 @@ import { ZEBRA_TRACE_MANIFEST, loadZebraTrace, loadZebraManifest, type ZebraTrac
 import { solveZebra, solveZebraWithSteps, explainRevealSteps, type Relation, type ZebraSolveStep, type ZebraStepReason } from "../neural/genericZebra";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
+import { store } from "../state";
+
+/** Whether the chosen stacking pattern (set on the builder page) is the real bounded
+ * correction loop. Zebra has no live client-side correction search the way Sudoku/
+ * KenKen do -- its real Neural<->Symbolic loop is the offline conflict-retry feature
+ * (conflictRetryPanel below) and the reveal-mode explanation of the MINIEXACT-
+ * verified answer. Neither belongs under Neural->Symbolic: a one-shot parse+solve
+ * never loops back to the LLM, so it gets a plain brute-force solve with no
+ * narrated reasoning, exactly like Sudoku/KenKen's one-shot mode. */
+function loopActive(): boolean {
+  return store.get().pattern === "learning-reasoning";
+}
 
 const RELATIONS: Relation[] = [
   "at",
@@ -247,8 +259,11 @@ export function renderZebraDebugger(root: HTMLElement): void {
     // solving does anything differently for.
     const manifestEntry = manifestByFile.get(activeFile);
     const deadClueIdx = manifestEntry?.deadClueIndex;
+    // Neural <-> Symbolic only: recognizing/explaining a dead rule is a form of
+    // explainability Neural -> Symbolic's one-shot parse+solve never earns, since it
+    // never loops back to the LLM.
     const deadClueNote =
-      manifestEntry?.hasDeadClue && deadClueIdx != null
+      loopActive() && manifestEntry?.hasDeadClue && deadClueIdx != null
         ? el(
             "div",
             { class: "note", style: { marginTop: "10px", borderLeft: "3px solid var(--accent)" } },
@@ -282,7 +297,10 @@ export function renderZebraDebugger(root: HTMLElement): void {
 
     const logBox = renderLiveLog(logLines);
 
-    const conflictRetryPanel = t.conflictRetry
+    // Neural <-> Symbolic only: this literally IS the real Neural<->Symbolic loop --
+    // Neural -> Symbolic's one-shot parse+solve is exactly attempt 1 alone, with no
+    // conflict feedback and no second attempt, so it never earns this panel either.
+    const conflictRetryPanel = loopActive() && t.conflictRetry
       ? el(
           "div",
           { class: "note", style: { marginTop: "16px", borderLeft: "3px solid var(--accent)" } },
@@ -327,10 +345,15 @@ export function renderZebraDebugger(root: HTMLElement): void {
     );
   }
 
-  /** True only when nothing's been edited and the offline MINIEXACT pass actually found an answer — the only case where there's a real, verified solution to show. */
+  /** True only under Neural<->Symbolic, with nothing edited, and the offline
+   * MINIEXACT pass actually found an answer -- the only case where there's a real,
+   * verified solution to show with reasoning. Gated to loopActive() the same way
+   * Sudoku/KenKen's canShowRealSolution is: revealing the verified answer cell-by-
+   * cell with "why" is a form of explainability, and Neural->Symbolic's one-shot
+   * parse+solve never loops back to the LLM to earn that framing. */
   function canShowRealSolution(t: ZebraTrace): boolean {
     const edited = clues.some((c, i) => JSON.stringify(c) !== JSON.stringify(t.clues[i]));
-    return !edited && t.result.status === "sat" && !!t.result.solution;
+    return loopActive() && !edited && t.result.status === "sat" && !!t.result.solution;
   }
 
   /** Whether the current playSteps reveal the real MINIEXACT-verified assignment
@@ -342,10 +365,18 @@ export function renderZebraDebugger(root: HTMLElement): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
       playSteps = explainRevealSteps({ size: t.size, groups: t.groups, clues: t.clues }, t.result.solution!);
-    } else {
-      // Edited clues (or the offline baseline itself was unsat): MINIEXACT never verified
-      // this exact state, so fall back to an independent client-side search instead.
+    } else if (loopActive()) {
+      // Neural <-> Symbolic, but not revealable (edited, or the offline baseline
+      // itself was unsat): still the pattern that's allowed to explain itself, so
+      // keep the narrated client-side search.
       playSteps = solveZebraWithSteps({ size: t.size, groups: t.groups, clues }).steps;
+    } else {
+      // Neural -> Symbolic (one-shot): parse once, solve once -- a plain brute-force
+      // search from the clues with no narrated "why" a house was ruled out or a dead
+      // end happened. It never loops back to the LLM, so it doesn't earn that
+      // explainability; explain:false keeps the mechanical try/backtrack trace but
+      // drops the reasoning.
+      playSteps = solveZebraWithSteps({ size: t.size, groups: t.groups, clues }, false).steps;
     }
     playIdx = 0;
   }
@@ -385,7 +416,11 @@ export function renderZebraDebugger(root: HTMLElement): void {
       logLines.push(`${entityLabel(step.entity)}: real verified house = ${step.house}`);
       if (step.explain) logLines.push(...explainLines(step.explain));
     } else if (step.deadEnd) {
-      logLines.push(`dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`);
+      logLines.push(
+        step.reason
+          ? `dead end: ${entityLabel(step.entity)} — ${step.reason} — backtracking`
+          : `dead end: ${entityLabel(step.entity)} — backtracking`
+      );
     } else {
       if (step.house === 0) delete livePositions[step.entity];
       else livePositions[step.entity] = step.house;
