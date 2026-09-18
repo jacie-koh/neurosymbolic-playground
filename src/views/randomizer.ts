@@ -68,7 +68,7 @@ export function renderRandomizer<T extends { id: string }>(
     return all;
   }
 
-  const row = el("div", { style: { display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", marginBottom: "10px" } });
+  const row = el("div", { style: { display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center", marginTop: "16px", marginBottom: "10px" } });
   root.append(row);
 
   function render(): void {
@@ -89,7 +89,14 @@ export function renderRandomizer<T extends { id: string }>(
         el(
           "select",
           {
-            style: { fontSize: "12px", padding: "4px 8px" },
+            style: {
+              fontSize: "13px",
+              padding: "8px 10px",
+              borderRadius: "8px",
+              border: "1px solid var(--line-strong)",
+              background: "#fff",
+              color: "var(--ink)",
+            },
             onchange: (e: Event) => {
               selected[f.key] = (e.target as HTMLSelectElement).value;
               render();
