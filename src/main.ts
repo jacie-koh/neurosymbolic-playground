@@ -49,7 +49,7 @@ function topbar(): HTMLElement {
   return el(
     "header",
     { class: "topbar" },
-    el("span", { class: "brand-mark" }, "◈"),
+    el("img", { src: "/logo-mark.png", alt: "", class: "brand-mark" }),
     el("h1", {}, "Neurosymbolic Playground"),
     el("div", { class: "stepper" }, ...steps),
     el("div", { class: "spacer" })

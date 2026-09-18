@@ -18,7 +18,7 @@ export function mountDebuggerPage(title: string, tagline: string): HTMLElement {
     el(
       "header",
       { class: "topbar" },
-      el("span", { class: "brand-mark" }, "◈"),
+      el("img", { src: "/logo-mark.png", alt: "", class: "brand-mark" }),
       el("h1", {}, `${title}: Reasoning Debugger`),
       el("div", { class: "spacer" }),
       el(

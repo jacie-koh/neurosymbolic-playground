@@ -63,7 +63,10 @@ button {
   letter-spacing: 0.3px;
 }
 .topbar .brand-mark {
-  font-size: 22px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
 }
 .topbar .spacer {
   flex: 1;
