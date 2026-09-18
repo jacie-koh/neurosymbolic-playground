@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-23",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-23)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@grilled-cheese",
+      "g1@spaghetti",
+      "g1@pizza",
+      "g1@stew"
+    ],
+    "g2": [
+      "g2@iphone-13",
+      "g2@google-pixel-6",
+      "g2@samsung-galaxy-s21",
+      "g2@oneplus-9"
+    ],
+    "g3": [
+      "g3@painting",
+      "g3@cooking",
+      "g3@photography",
+      "g3@gardening"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Peter is the person who is a pizza lover.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g1@pizza"
+    },
+    {
+      "source": "The person who is a pizza lover and the person who loves the spaghetti eater are next to each other.",
+      "relation": "next_to",
+      "a": "g1@pizza",
+      "b": "g1@spaghetti"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is directly left of Eric.",
+      "relation": "immediately_left",
+      "a": "g1@grilled-cheese",
+      "b": "g0@eric"
+    },
+    {
+      "source": "Eric is the person who loves cooking.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g3@cooking"
+    },
+    {
+      "source": "The person who uses a Google Pixel 6 is in the fourth house.",
+      "relation": "at",
+      "a": "g2@google-pixel-6",
+      "position": 4
+    },
+    {
+      "source": "The photography enthusiast is in the second house.",
+      "relation": "at",
+      "a": "g3@photography",
+      "position": 2
+    },
+    {
+      "source": "The person who is a pizza lover is the person who uses a OnePlus 9.",
+      "relation": "same",
+      "a": "g1@pizza",
+      "b": "g2@oneplus-9"
+    },
+    {
+      "source": "The person who uses a Samsung Galaxy S21 is in the third house.",
+      "relation": "at",
+      "a": "g2@samsung-galaxy-s21",
+      "position": 3
+    },
+    {
+      "source": "Arnold is directly left of the person who enjoys gardening.",
+      "relation": "immediately_left",
+      "a": "g0@arnold",
+      "b": "g3@gardening"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@google-pixel-6": 4,
+      "g3@photography": 2,
+      "g2@samsung-galaxy-s21": 3,
+      "g2@oneplus-9": 1,
+      "g2@iphone-13": 2,
+      "g1@pizza": 1,
+      "g0@peter": 1,
+      "g1@spaghetti": 2,
+      "g1@grilled-cheese": 3,
+      "g1@stew": 4,
+      "g0@eric": 4,
+      "g3@cooking": 4,
+      "g0@arnold": 2,
+      "g0@alice": 3,
+      "g3@gardening": 3,
+      "g3@painting": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Food",
+    "g2": "PhoneModel",
+    "g3": "Hobby"
+  }
+}

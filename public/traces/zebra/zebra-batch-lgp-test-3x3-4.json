@@ -1,0 +1,83 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-4",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-4)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@gardening",
+      "g1@cooking",
+      "g1@photography"
+    ],
+    "g2": [
+      "g2@milk",
+      "g2@water",
+      "g2@tea"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Arnold is somewhere to the left of the person who likes milk.",
+      "relation": "left",
+      "a": "g0@arnold",
+      "b": "g2@milk"
+    },
+    {
+      "source": "The photography enthusiast is the tea drinker.",
+      "relation": "same",
+      "a": "g1@photography",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The person who loves cooking is Peter.",
+      "relation": "same",
+      "a": "g1@cooking",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Eric is not in the third house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 3
+    },
+    {
+      "source": "Arnold is the person who enjoys gardening.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@gardening"
+    },
+    {
+      "source": "The photography enthusiast and the person who likes milk are next to each other.",
+      "relation": "next_to",
+      "a": "g1@photography",
+      "b": "g2@milk"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 2,
+      "g0@arnold": 1,
+      "g0@peter": 3,
+      "g1@cooking": 3,
+      "g1@gardening": 1,
+      "g1@photography": 2,
+      "g2@tea": 2,
+      "g2@water": 1,
+      "g2@milk": 3
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Hobby",
+    "g2": "Drink"
+  }
+}
