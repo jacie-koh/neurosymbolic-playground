@@ -157,7 +157,12 @@ button {
   box-shadow: 0 0 0 2px rgba(8, 119, 189, 0.25), var(--shadow);
 }
 .situation-card .icon {
-  font-size: 30px;
+  color: var(--accent);
+}
+.situation-card .icon svg {
+  width: 30px;
+  height: 30px;
+  display: block;
 }
 .situation-card h3 {
   margin: 0;

@@ -12,12 +12,7 @@ export function renderSituations(root: HTMLElement): void {
     "div",
     { class: "view-head" },
     el("h2", {}, "Choose a situation"),
-    el(
-      "p",
-      {},
-      "Pick a problem where perception meets reasoning. Each one highlights a " +
-        "different symbolic method and shows where neural and symbolic differ."
-    )
+    el("p", {}, "Pick a problem where perception meets reasoning.")
   );
 
   const cards = SITUATIONS.map((s) => {
@@ -32,7 +27,7 @@ export function renderSituations(root: HTMLElement): void {
           store.set({ situationId: s.id, pattern: s.suggestedPattern });
         },
       },
-      el("div", { class: "icon" }, s.icon),
+      el("div", { class: "icon", html: s.icon }),
       el("h3", {}, s.title),
       el("p", { class: "tagline" }, s.tagline),
       el(
