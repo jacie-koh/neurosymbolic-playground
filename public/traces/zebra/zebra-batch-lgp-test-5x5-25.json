@@ -1,0 +1,193 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-25",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-25)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@peter",
+      "g0@alice",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@meredith",
+      "g1@bella",
+      "g1@samantha",
+      "g1@fred",
+      "g1@timothy"
+    ],
+    "g2": [
+      "g2@classical",
+      "g2@hip-hop",
+      "g2@pop",
+      "g2@jazz",
+      "g2@rock"
+    ],
+    "g3": [
+      "g3@watermelon",
+      "g3@lime",
+      "g3@dragonfruit",
+      "g3@cherry",
+      "g3@desert"
+    ],
+    "g4": [
+      "g4@beach",
+      "g4@mountain",
+      "g4@city",
+      "g4@cruise",
+      "g4@camping"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves rock music is somewhere to the left of the person who loves classical music.",
+      "relation": "left",
+      "a": "g2@rock",
+      "b": "g2@classical"
+    },
+    {
+      "source": "The person who loves beach vacations and the person who loves rock music are next to each other.",
+      "relation": "next_to",
+      "a": "g4@beach",
+      "b": "g2@rock"
+    },
+    {
+      "source": "Eric is the person who is the mother of Timothy.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@timothy"
+    },
+    {
+      "source": "The person who drinks Lime smoothies is not in the second house.",
+      "relation": "not_at",
+      "a": "g3@lime",
+      "position": 2
+    },
+    {
+      "source": "The Watermelon smoothie lover is somewhere to the left of the person who loves rock music.",
+      "relation": "left",
+      "a": "g3@watermelon",
+      "b": "g2@rock"
+    },
+    {
+      "source": "Alice is the person who loves beach vacations.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g4@beach"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is somewhere to the right of Peter.",
+      "relation": "right",
+      "a": "g3@dragonfruit",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves jazz music is the person's child is named Samantha.",
+      "relation": "same",
+      "a": "g2@jazz",
+      "b": "g1@samantha"
+    },
+    {
+      "source": "Bob is the person's child is named Samantha.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g1@samantha"
+    },
+    {
+      "source": "Alice is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g0@alice",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves pop music is the person who likes going on cruises.",
+      "relation": "same",
+      "a": "g2@pop",
+      "b": "g4@cruise"
+    },
+    {
+      "source": "The person's child is named Fred is in the fifth house.",
+      "relation": "at",
+      "a": "g1@fred",
+      "position": 5
+    },
+    {
+      "source": "The person who prefers city breaks is the person who loves jazz music.",
+      "relation": "same",
+      "a": "g4@city",
+      "b": "g2@jazz"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is the person's child is named Samantha.",
+      "relation": "same",
+      "a": "g3@dragonfruit",
+      "b": "g1@samantha"
+    },
+    {
+      "source": "The person's child is named Meredith is the person who likes going on cruises.",
+      "relation": "same",
+      "a": "g1@meredith",
+      "b": "g4@cruise"
+    },
+    {
+      "source": "The Desert smoothie lover is somewhere to the left of the person who likes Cherry smoothies.",
+      "relation": "left",
+      "a": "g3@desert",
+      "b": "g3@cherry"
+    },
+    {
+      "source": "The person who enjoys mountain retreats is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g4@mountain",
+      "position": 5
+    },
+    {
+      "source": "The person who drinks Lime smoothies is directly left of the Desert smoothie lover.",
+      "relation": "immediately_left",
+      "a": "g3@lime",
+      "b": "g3@desert"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@fred": 5,
+      "g1@meredith": 1,
+      "g4@cruise": 1,
+      "g2@pop": 1,
+      "g1@samantha": 2,
+      "g2@jazz": 2,
+      "g0@bob": 2,
+      "g4@city": 2,
+      "g3@dragonfruit": 2,
+      "g0@peter": 1,
+      "g1@bella": 3,
+      "g1@timothy": 4,
+      "g0@eric": 4,
+      "g0@alice": 3,
+      "g0@arnold": 5,
+      "g4@beach": 3,
+      "g4@mountain": 4,
+      "g4@camping": 5,
+      "g2@rock": 4,
+      "g2@classical": 5,
+      "g2@hip-hop": 3,
+      "g3@watermelon": 1,
+      "g3@lime": 3,
+      "g3@desert": 4,
+      "g3@cherry": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Children",
+    "g2": "MusicGenre",
+    "g3": "Smoothie",
+    "g4": "Vacation"
+  }
+}

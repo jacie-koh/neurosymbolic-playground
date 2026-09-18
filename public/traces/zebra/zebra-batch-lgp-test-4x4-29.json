@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-29",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-29)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@short",
+      "g1@very-short",
+      "g1@tall",
+      "g1@average"
+    ],
+    "g2": [
+      "g2@fish",
+      "g2@cat",
+      "g2@dog",
+      "g2@bird"
+    ],
+    "g3": [
+      "g3@pizza",
+      "g3@spaghetti",
+      "g3@stew",
+      "g3@grilled-cheese"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves the stew is in the second house.",
+      "relation": "at",
+      "a": "g3@stew",
+      "position": 2
+    },
+    {
+      "source": "The person who is very short is somewhere to the right of Eric.",
+      "relation": "right",
+      "a": "g1@very-short",
+      "b": "g0@eric"
+    },
+    {
+      "source": "Arnold is the person who is tall.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@tall"
+    },
+    {
+      "source": "The person with an aquarium of fish is directly left of Arnold.",
+      "relation": "immediately_left",
+      "a": "g2@fish",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Peter is somewhere to the left of the person who is short.",
+      "relation": "left",
+      "a": "g0@peter",
+      "b": "g1@short"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is directly left of the person who is a pizza lover.",
+      "relation": "immediately_left",
+      "a": "g3@grilled-cheese",
+      "b": "g3@pizza"
+    },
+    {
+      "source": "The person who has a cat is Arnold.",
+      "relation": "same",
+      "a": "g2@cat",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person with an aquarium of fish is the person who has an average height.",
+      "relation": "same",
+      "a": "g2@fish",
+      "b": "g1@average"
+    },
+    {
+      "source": "Peter is the person who keeps a pet bird.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@bird"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@stew": 2,
+      "g3@spaghetti": 1,
+      "g3@grilled-cheese": 3,
+      "g3@pizza": 4,
+      "g2@fish": 1,
+      "g0@arnold": 2,
+      "g1@tall": 2,
+      "g2@cat": 2,
+      "g1@average": 1,
+      "g1@very-short": 3,
+      "g1@short": 4,
+      "g2@bird": 3,
+      "g2@dog": 4,
+      "g0@peter": 3,
+      "g0@eric": 1,
+      "g0@alice": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Height",
+    "g2": "Pet",
+    "g3": "Food"
+  }
+}

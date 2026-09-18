@@ -1,0 +1,149 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-37",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-37)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@alice",
+      "g0@peter",
+      "g0@bob",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@hamster",
+      "g1@fish",
+      "g1@cat",
+      "g1@dog",
+      "g1@bird"
+    ],
+    "g2": [
+      "g2@doctor",
+      "g2@engineer",
+      "g2@artist",
+      "g2@lawyer",
+      "g2@teacher"
+    ],
+    "g3": [
+      "g3@green",
+      "g3@blue",
+      "g3@yellow",
+      "g3@red",
+      "g3@white"
+    ],
+    "g4": [
+      "g4@bird",
+      "g4@cat",
+      "g4@horse",
+      "g4@fish",
+      "g4@dog"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who owns a dog is Arnold.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@dog"
+    },
+    {
+      "source": "The bird keeper is in the fourth house.",
+      "relation": "at",
+      "a": "g1@bird",
+      "position": 4
+    },
+    {
+      "source": "The person who keeps a pet bird is directly left of the dog owner.",
+      "relation": "immediately_left",
+      "a": "g1@bird",
+      "b": "g1@dog"
+    },
+    {
+      "source": "The person who loves white is somewhere to the left of the person who is a lawyer.",
+      "relation": "left",
+      "a": "g3@white",
+      "b": "g2@lawyer"
+    },
+    {
+      "source": "The person who loves yellow is directly left of the person whose favorite color is green.",
+      "relation": "immediately_left",
+      "a": "g3@yellow",
+      "b": "g3@green"
+    },
+    {
+      "source": "The cat lover is Bob.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g1@cat"
+    },
+    {
+      "source": "The cat lover is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g1@cat",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who keeps horses is in the fifth house.",
+      "relation": "at",
+      "a": "g1@hamster",
+      "position": 5
+    },
+    {
+      "source": "The person who is a lawyer is directly left of the person who is a teacher.",
+      "relation": "immediately_left",
+      "a": "g2@lawyer",
+      "b": "g2@teacher"
+    },
+    {
+      "source": "The person who is a doctor is in the first house.",
+      "relation": "at",
+      "a": "g2@doctor",
+      "position": 1
+    },
+    {
+      "source": "Alice is the person who loves yellow.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g3@yellow"
+    },
+    {
+      "source": "The person who loves blue is directly left of the person with an aquarium of fish.",
+      "relation": "immediately_left",
+      "a": "g3@blue",
+      "b": "g4@fish"
+    },
+    {
+      "source": "The person who loves yellow is in the first house.",
+      "relation": "at",
+      "a": "g3@yellow",
+      "position": 1
+    },
+    {
+      "source": "The person with a pet hamster is the person who is an artist.",
+      "relation": "same",
+      "a": "g1@hamster",
+      "b": "g2@artist"
+    },
+    {
+      "source": "Eric is the dog owner.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@dog"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "unsat",
+    "solution": null,
+    "unique": null
+  },
+  "referenceMatch": null,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Pet",
+    "g2": "Occupation",
+    "g3": "Color",
+    "g4": "Animal"
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-2",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-2)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@carol",
+      "g0@alice",
+      "g0@eric",
+      "g0@peter",
+      "g0@arnold",
+      "g0@bob"
+    ],
+    "g1": [
+      "g1@penny",
+      "g1@janelle",
+      "g1@aniya",
+      "g1@sarah",
+      "g1@holly",
+      "g1@kailyn"
+    ],
+    "g2": [
+      "g2@blends",
+      "g2@dunhill",
+      "g2@blue-master",
+      "g2@prince",
+      "g2@yellow-monster",
+      "g2@pall-mall"
+    ],
+    "g3": [
+      "g3@cat",
+      "g3@dog",
+      "g3@rabbit",
+      "g3@hamster",
+      "g3@bird",
+      "g3@fish"
+    ],
+    "g4": [
+      "g4@bird",
+      "g4@horse",
+      "g4@cat",
+      "g4@rabbit",
+      "g4@dog",
+      "g4@fish"
+    ],
+    "g5": [
+      "g5@desert",
+      "g5@watermelon",
+      "g5@lime",
+      "g5@cherry",
+      "g5@blueberry",
+      "g5@dragonfruit"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The dog owner is not in the third house.",
+      "relation": "not_at",
+      "a": "g3@dog",
+      "position": 3
+    },
+    {
+      "source": "The fish enthusiast is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g3@fish",
+      "position": 4
+    },
+    {
+      "source": "The person who owns a dog is Eric.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g3@dog"
+    },
+    {
+      "source": "The cat lover is not in the second house.",
+      "relation": "not_at",
+      "a": "g3@cat",
+      "position": 2
+    },
+    {
+      "source": "The person who smokes Blue Master is somewhere to the right of The person whose mother's name is Sarah.",
+      "relation": "right",
+      "a": "g2@blue-master",
+      "b": "g1@sarah"
+    },
+    {
+      "source": "The cat lover is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g3@cat",
+      "position": 4
+    },
+    {
+      "source": "There are two houses between Carol and the person who owns a rabbit.",
+      "relation": "distance",
+      "a": "g0@carol",
+      "b": "g3@rabbit",
+      "distance": 2
+    },
+    {
+      "source": "The person whose mother's name is Penny is the person with a pet hamster.",
+      "relation": "same",
+      "a": "g1@penny",
+      "b": "g3@hamster"
+    },
+    {
+      "source": "The person whose mother's name is Kailyn is somewhere to the right of the person with a pet hamster.",
+      "relation": "right",
+      "a": "g1@kailyn",
+      "b": "g3@hamster"
+    },
+    {
+      "source": "The dog owner and the person who drinks Lime smoothies are next to each other.",
+      "relation": "next_to",
+      "a": "g3@dog",
+      "b": "g5@lime"
+    },
+    {
+      "source": "The Prince smoker is somewhere to the right of The person whose mother's name is Janelle.",
+      "relation": "right",
+      "a": "g2@prince",
+      "b": "g1@janelle"
+    },
+    {
+      "source": "There is one house between The person whose mother's name is Penny and Bob.",
+      "relation": "distance",
+      "a": "g1@penny",
+      "b": "g0@bob",
+      "distance": 1
+    },
+    {
+      "source": "There are two houses between the person partial to Pall Mall and The person whose mother's name is Penny.",
+      "relation": "distance",
+      "a": "g2@pall-mall",
+      "b": "g1@penny",
+      "distance": 2
+    },
+    {
+      "source": "Peter is somewhere to the left of the person who drinks Lime smoothies.",
+      "relation": "left",
+      "a": "g0@peter",
+      "b": "g5@lime"
+    },
+    {
+      "source": "The bird keeper is the Watermelon smoothie lover.",
+      "relation": "same",
+      "a": "g3@bird",
+      "b": "g5@watermelon"
+    },
+    {
+      "source": "The person with a pet hamster is the Prince smoker.",
+      "relation": "same",
+      "a": "g3@hamster",
+      "b": "g2@prince"
+    },
+    {
+      "source": "The person who smokes Yellow Monster is the person who drinks Lime smoothies.",
+      "relation": "same",
+      "a": "g2@yellow-monster",
+      "b": "g5@lime"
+    },
+    {
+      "source": "The person whose mother's name is Sarah is the person who smokes Yellow Monster.",
+      "relation": "same",
+      "a": "g1@sarah",
+      "b": "g2@yellow-monster"
+    },
+    {
+      "source": "The Dunhill smoker is somewhere to the left of the Watermelon smoothie lover.",
+      "relation": "left",
+      "a": "g2@dunhill",
+      "b": "g5@watermelon"
+    },
+    {
+      "source": "The person whose mother's name is Holly is directly left of the person who owns a dog.",
+      "relation": "immediately_left",
+      "a": "g1@holly",
+      "b": "g3@dog"
+    },
+    {
+      "source": "The bird keeper is The person whose mother's name is Kailyn.",
+      "relation": "same",
+      "a": "g3@bird",
+      "b": "g1@kailyn"
+    },
+    {
+      "source": "The person whose mother's name is Sarah is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@sarah",
+      "position": 3
+    },
+    {
+      "source": "The person who smokes many unique blends is the rabbit owner.",
+      "relation": "same",
+      "a": "g2@blends",
+      "b": "g3@rabbit"
+    },
+    {
+      "source": "The person who has a cat is somewhere to the right of the person with an aquarium of fish.",
+      "relation": "right",
+      "a": "g3@cat",
+      "b": "g3@fish"
+    },
+    {
+      "source": "The person who smokes Yellow Monster is Eric.",
+      "relation": "same",
+      "a": "g2@yellow-monster",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who keeps a pet bird is the Desert smoothie lover.",
+      "relation": "same",
+      "a": "g3@bird",
+      "b": "g5@desert"
+    },
+    {
+      "source": "Alice is The person whose mother's name is Kailyn.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g1@kailyn"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is Carol.",
+      "relation": "same",
+      "a": "g5@dragonfruit",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person who keeps horses is the person who likes Cherry smoothies.",
+      "relation": "same",
+      "a": "g3@hamster",
+      "b": "g5@cherry"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "unsat",
+    "solution": null,
+    "unique": null
+  },
+  "referenceMatch": null,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Mother",
+    "g2": "Cigar",
+    "g3": "Pet",
+    "g4": "Animal",
+    "g5": "Smoothie"
+  }
+}

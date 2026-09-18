@@ -1,0 +1,261 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-15",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-15)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@carol",
+      "g0@bob",
+      "g0@peter",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@ranch",
+      "g1@victorian",
+      "g1@modern",
+      "g1@colonial",
+      "g1@craftsman",
+      "g1@mediterranean"
+    ],
+    "g2": [
+      "g2@coffee",
+      "g2@water",
+      "g2@root-beer",
+      "g2@tea",
+      "g2@milk",
+      "g2@boba-tea"
+    ],
+    "g3": [
+      "g3@engineer",
+      "g3@nurse",
+      "g3@doctor",
+      "g3@artist",
+      "g3@lawyer",
+      "g3@teacher"
+    ],
+    "g4": [
+      "g4@horse",
+      "g4@fish",
+      "g4@dog",
+      "g4@cat",
+      "g4@rabbit",
+      "g4@bird"
+    ],
+    "g5": [
+      "g5@red",
+      "g5@purple",
+      "g5@white",
+      "g5@green",
+      "g5@yellow",
+      "g5@blue"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The fish enthusiast is in the first house.",
+      "relation": "at",
+      "a": "g4@fish",
+      "position": 1
+    },
+    {
+      "source": "Carol is somewhere to the left of the person in a Mediterranean-style villa.",
+      "relation": "left",
+      "a": "g0@carol",
+      "b": "g1@mediterranean"
+    },
+    {
+      "source": "The bird keeper is the person who loves purple.",
+      "relation": "same",
+      "a": "g4@bird",
+      "b": "g5@purple"
+    },
+    {
+      "source": "The person in a ranch-style home is the one who only drinks water.",
+      "relation": "same",
+      "a": "g1@ranch",
+      "b": "g2@water"
+    },
+    {
+      "source": "The coffee drinker is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g2@coffee",
+      "position": 4
+    },
+    {
+      "source": "The person living in a colonial-style house and the boba tea drinker are next to each other.",
+      "relation": "next_to",
+      "a": "g1@colonial",
+      "b": "g2@boba-tea"
+    },
+    {
+      "source": "The cat lover is the person who is a teacher.",
+      "relation": "same",
+      "a": "g4@cat",
+      "b": "g3@teacher"
+    },
+    {
+      "source": "The person in a modern-style house is in the third house.",
+      "relation": "at",
+      "a": "g1@modern",
+      "position": 3
+    },
+    {
+      "source": "The person who is an engineer and Peter are next to each other.",
+      "relation": "next_to",
+      "a": "g3@engineer",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Arnold is the person who is an artist.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@artist"
+    },
+    {
+      "source": "The person whose favorite color is red is Arnold.",
+      "relation": "same",
+      "a": "g5@red",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The coffee drinker is somewhere to the right of the person who is a teacher.",
+      "relation": "right",
+      "a": "g2@coffee",
+      "b": "g3@teacher"
+    },
+    {
+      "source": "The bird keeper is the person in a ranch-style home.",
+      "relation": "same",
+      "a": "g4@bird",
+      "b": "g1@ranch"
+    },
+    {
+      "source": "The rabbit owner is in the sixth house.",
+      "relation": "at",
+      "a": "g4@rabbit",
+      "position": 6
+    },
+    {
+      "source": "The boba tea drinker is Peter.",
+      "relation": "same",
+      "a": "g2@boba-tea",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Eric is the cat lover.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g4@cat"
+    },
+    {
+      "source": "The person who is a nurse is directly left of the person in a modern-style house.",
+      "relation": "immediately_left",
+      "a": "g3@nurse",
+      "b": "g1@modern"
+    },
+    {
+      "source": "The bird keeper is Carol.",
+      "relation": "same",
+      "a": "g4@bird",
+      "b": "g0@carol"
+    },
+    {
+      "source": "There are two houses between the cat lover and the boba tea drinker.",
+      "relation": "distance",
+      "a": "g4@cat",
+      "b": "g2@boba-tea",
+      "distance": 2
+    },
+    {
+      "source": "Bob is the tea drinker.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The person residing in a Victorian house is the dog owner.",
+      "relation": "same",
+      "a": "g1@victorian",
+      "b": "g4@dog"
+    },
+    {
+      "source": "The person whose favorite color is green is in the fourth house.",
+      "relation": "at",
+      "a": "g5@green",
+      "position": 4
+    },
+    {
+      "source": "The person who loves blue is the root beer lover.",
+      "relation": "same",
+      "a": "g5@blue",
+      "b": "g2@root-beer"
+    },
+    {
+      "source": "The person who loves white is not in the sixth house.",
+      "relation": "not_at",
+      "a": "g5@white",
+      "position": 6
+    },
+    {
+      "source": "Peter is the person who is a doctor.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g3@doctor"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@fish": 1,
+      "g1@modern": 3,
+      "g4@rabbit": 6,
+      "g3@nurse": 2,
+      "g5@green": 4,
+      "g4@bird": 2,
+      "g5@purple": 2,
+      "g1@ranch": 2,
+      "g2@water": 2,
+      "g0@carol": 2,
+      "g4@cat": 3,
+      "g3@teacher": 3,
+      "g0@eric": 3,
+      "g4@horse": 4,
+      "g4@dog": 5,
+      "g1@victorian": 5,
+      "g2@boba-tea": 5,
+      "g0@peter": 5,
+      "g3@doctor": 5,
+      "g1@colonial": 4,
+      "g1@craftsman": 1,
+      "g1@mediterranean": 6,
+      "g3@engineer": 4,
+      "g3@artist": 1,
+      "g3@lawyer": 6,
+      "g0@arnold": 1,
+      "g5@red": 1,
+      "g0@bob": 4,
+      "g0@alice": 6,
+      "g2@tea": 4,
+      "g2@milk": 1,
+      "g2@root-beer": 3,
+      "g2@coffee": 6,
+      "g5@blue": 3,
+      "g5@white": 5,
+      "g5@yellow": 6
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HouseStyle",
+    "g2": "Drink",
+    "g3": "Occupation",
+    "g4": "Animal",
+    "g5": "Color"
+  }
+}

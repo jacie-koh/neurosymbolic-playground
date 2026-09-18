@@ -1,0 +1,255 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-33",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-33)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@carol",
+      "g0@bob",
+      "g0@peter",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@lilies",
+      "g1@tulips",
+      "g1@roses",
+      "g1@daffodils",
+      "g1@iris",
+      "g1@carnations"
+    ],
+    "g2": [
+      "g2@norwegian",
+      "g2@dane",
+      "g2@swede",
+      "g2@german",
+      "g2@brit",
+      "g2@chinese"
+    ],
+    "g3": [
+      "g3@cherry",
+      "g3@watermelon",
+      "g3@desert",
+      "g3@dragonfruit",
+      "g3@blueberry",
+      "g3@lime"
+    ],
+    "g4": [
+      "g4@photography",
+      "g4@cooking",
+      "g4@knitting",
+      "g4@woodworking",
+      "g4@painting",
+      "g4@gardening"
+    ],
+    "g5": [
+      "g5@rabbit",
+      "g5@hamster",
+      "g5@fish",
+      "g5@cat",
+      "g5@bird",
+      "g5@dog"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The Swedish person is the person who loves cooking.",
+      "relation": "same",
+      "a": "g2@swede",
+      "b": "g4@cooking"
+    },
+    {
+      "source": "The person who drinks Blueberry smoothies is Alice.",
+      "relation": "same",
+      "a": "g3@blueberry",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person who loves the rose bouquet is not in the sixth house.",
+      "relation": "not_at",
+      "a": "g1@roses",
+      "position": 6
+    },
+    {
+      "source": "The photography enthusiast is somewhere to the right of the Dragonfruit smoothie lover.",
+      "relation": "right",
+      "a": "g4@photography",
+      "b": "g3@dragonfruit"
+    },
+    {
+      "source": "The person who loves cooking is the person who loves a bouquet of daffodils.",
+      "relation": "same",
+      "a": "g4@cooking",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person who loves the boquet of lilies and the person who loves the boquet of iris are next to each other.",
+      "relation": "next_to",
+      "a": "g1@lilies",
+      "b": "g1@iris"
+    },
+    {
+      "source": "The person who paints as a hobby is Alice.",
+      "relation": "same",
+      "a": "g4@painting",
+      "b": "g0@alice"
+    },
+    {
+      "source": "Arnold is somewhere to the right of the Watermelon smoothie lover.",
+      "relation": "right",
+      "a": "g0@arnold",
+      "b": "g3@watermelon"
+    },
+    {
+      "source": "The woodworking hobbyist is somewhere to the right of the German.",
+      "relation": "right",
+      "a": "g4@woodworking",
+      "b": "g2@german"
+    },
+    {
+      "source": "The woodworking hobbyist is somewhere to the left of the person who loves a bouquet of daffodils.",
+      "relation": "left",
+      "a": "g4@woodworking",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The Dane is the Watermelon smoothie lover.",
+      "relation": "same",
+      "a": "g2@dane",
+      "b": "g3@watermelon"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is Peter.",
+      "relation": "same",
+      "a": "g3@dragonfruit",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who drinks Lime smoothies is the woodworking hobbyist.",
+      "relation": "same",
+      "a": "g3@lime",
+      "b": "g4@woodworking"
+    },
+    {
+      "source": "There is one house between the Watermelon smoothie lover and the person who likes Cherry smoothies.",
+      "relation": "distance",
+      "a": "g3@watermelon",
+      "b": "g3@cherry",
+      "distance": 2
+    },
+    {
+      "source": "The person who keeps a pet bird is the person who drinks Blueberry smoothies.",
+      "relation": "same",
+      "a": "g5@bird",
+      "b": "g3@blueberry"
+    },
+    {
+      "source": "The Desert smoothie lover is the person who enjoys gardening.",
+      "relation": "same",
+      "a": "g3@desert",
+      "b": "g4@gardening"
+    },
+    {
+      "source": "The person with a pet hamster is in the fifth house.",
+      "relation": "at",
+      "a": "g5@hamster",
+      "position": 5
+    },
+    {
+      "source": "The person who owns a dog is the Norwegian.",
+      "relation": "same",
+      "a": "g5@dog",
+      "b": "g2@norwegian"
+    },
+    {
+      "source": "The person who has a cat is somewhere to the right of Bob.",
+      "relation": "right",
+      "a": "g5@cat",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The British person is directly left of Carol.",
+      "relation": "immediately_left",
+      "a": "g2@brit",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person who loves the boquet of iris is Arnold.",
+      "relation": "same",
+      "a": "g1@iris",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The German is somewhere to the right of the person who loves a carnations arrangement.",
+      "relation": "right",
+      "a": "g2@german",
+      "b": "g1@carnations"
+    },
+    {
+      "source": "Bob is the photography enthusiast.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g4@photography"
+    },
+    {
+      "source": "The person with an aquarium of fish is Arnold.",
+      "relation": "same",
+      "a": "g5@fish",
+      "b": "g0@arnold"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g5@hamster": 5,
+      "g5@dog": 1,
+      "g2@norwegian": 1,
+      "g5@bird": 2,
+      "g3@blueberry": 2,
+      "g0@alice": 2,
+      "g4@painting": 2,
+      "g5@rabbit": 3,
+      "g5@fish": 4,
+      "g5@cat": 6,
+      "g0@arnold": 4,
+      "g1@iris": 4,
+      "g1@lilies": 3,
+      "g3@watermelon": 3,
+      "g2@dane": 3,
+      "g3@cherry": 5,
+      "g3@dragonfruit": 1,
+      "g0@peter": 1,
+      "g3@lime": 4,
+      "g3@desert": 6,
+      "g4@woodworking": 4,
+      "g4@gardening": 6,
+      "g1@daffodils": 5,
+      "g4@cooking": 5,
+      "g2@swede": 5,
+      "g4@knitting": 1,
+      "g4@photography": 3,
+      "g0@bob": 3,
+      "g0@carol": 5,
+      "g0@eric": 6,
+      "g2@brit": 4,
+      "g2@german": 2,
+      "g2@chinese": 6,
+      "g1@carnations": 1,
+      "g1@roses": 2,
+      "g1@tulips": 6
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "Nationality",
+    "g3": "Smoothie",
+    "g4": "Hobby",
+    "g5": "Pet"
+  }
+}

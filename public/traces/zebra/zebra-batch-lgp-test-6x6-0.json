@@ -1,0 +1,261 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-0",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-0)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@eric",
+      "g0@alice",
+      "g0@bob",
+      "g0@arnold",
+      "g0@carol"
+    ],
+    "g1": [
+      "g1@mystery",
+      "g1@fantasy",
+      "g1@romance",
+      "g1@historical-fiction",
+      "g1@science-fiction",
+      "g1@biography"
+    ],
+    "g2": [
+      "g2@cherry",
+      "g2@desert",
+      "g2@lime",
+      "g2@watermelon",
+      "g2@blueberry",
+      "g2@dragonfruit"
+    ],
+    "g3": [
+      "g3@fish",
+      "g3@rabbit",
+      "g3@bird",
+      "g3@cat",
+      "g3@horse",
+      "g3@dog"
+    ],
+    "g4": [
+      "g4@classical",
+      "g4@hip-hop",
+      "g4@country",
+      "g4@jazz",
+      "g4@rock",
+      "g4@pop"
+    ],
+    "g5": [
+      "g5@prince",
+      "g5@dunhill",
+      "g5@blends",
+      "g5@pall-mall",
+      "g5@blue-master",
+      "g5@yellow-monster"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who smokes many unique blends is the person who loves fantasy books.",
+      "relation": "same",
+      "a": "g5@blends",
+      "b": "g1@fantasy"
+    },
+    {
+      "source": "The person who loves biography books is the Desert smoothie lover.",
+      "relation": "same",
+      "a": "g1@biography",
+      "b": "g2@desert"
+    },
+    {
+      "source": "There are two houses between the person who loves pop music and the person who loves country music.",
+      "relation": "distance",
+      "a": "g4@pop",
+      "b": "g4@country",
+      "distance": 3
+    },
+    {
+      "source": "The rabbit owner is in the third house.",
+      "relation": "at",
+      "a": "g3@rabbit",
+      "position": 3
+    },
+    {
+      "source": "Arnold is the bird keeper.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@bird"
+    },
+    {
+      "source": "The person who loves country music is in the fifth house.",
+      "relation": "at",
+      "a": "g4@country",
+      "position": 5
+    },
+    {
+      "source": "The person who loves mystery books is not in the first house.",
+      "relation": "not_at",
+      "a": "g1@mystery",
+      "position": 1
+    },
+    {
+      "source": "The person who drinks Lime smoothies is not in the third house.",
+      "relation": "not_at",
+      "a": "g2@lime",
+      "position": 3
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the right of the person who loves rock music.",
+      "relation": "right",
+      "a": "g3@fish",
+      "b": "g4@rock"
+    },
+    {
+      "source": "The Prince smoker is somewhere to the left of the person who likes Cherry smoothies.",
+      "relation": "left",
+      "a": "g5@prince",
+      "b": "g2@cherry"
+    },
+    {
+      "source": "Bob is the cat lover.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g3@cat"
+    },
+    {
+      "source": "Eric is the person who likes Cherry smoothies.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@cherry"
+    },
+    {
+      "source": "The person who smokes Yellow Monster is in the sixth house.",
+      "relation": "at",
+      "a": "g5@yellow-monster",
+      "position": 6
+    },
+    {
+      "source": "The Prince smoker is the Dragonfruit smoothie lover.",
+      "relation": "same",
+      "a": "g5@prince",
+      "b": "g2@dragonfruit"
+    },
+    {
+      "source": "Carol is directly left of Arnold.",
+      "relation": "immediately_left",
+      "a": "g0@carol",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who smokes Blue Master is directly left of the person who loves classical music.",
+      "relation": "immediately_left",
+      "a": "g5@blue-master",
+      "b": "g4@classical"
+    },
+    {
+      "source": "The person who loves classical music is the person who loves historical fiction books.",
+      "relation": "same",
+      "a": "g4@classical",
+      "b": "g1@historical-fiction"
+    },
+    {
+      "source": "The Dunhill smoker and the person who loves science fiction books are next to each other.",
+      "relation": "next_to",
+      "a": "g5@dunhill",
+      "b": "g1@science-fiction"
+    },
+    {
+      "source": "The person who keeps horses is directly left of Peter.",
+      "relation": "immediately_left",
+      "a": "g3@horse",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The Watermelon smoothie lover is the cat lover.",
+      "relation": "same",
+      "a": "g2@watermelon",
+      "b": "g3@cat"
+    },
+    {
+      "source": "The person who smokes many unique blends is directly left of the person who loves jazz music.",
+      "relation": "immediately_left",
+      "a": "g5@blends",
+      "b": "g4@jazz"
+    },
+    {
+      "source": "The cat lover is in the first house.",
+      "relation": "at",
+      "a": "g3@cat",
+      "position": 1
+    },
+    {
+      "source": "The Desert smoothie lover is the person who loves jazz music.",
+      "relation": "same",
+      "a": "g2@desert",
+      "b": "g4@jazz"
+    },
+    {
+      "source": "The person who drinks Lime smoothies is directly left of the fish enthusiast.",
+      "relation": "immediately_left",
+      "a": "g2@lime",
+      "b": "g3@fish"
+    },
+    {
+      "source": "The person who smokes Blue Master is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g5@blue-master",
+      "position": 5
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@rabbit": 3,
+      "g4@country": 5,
+      "g4@pop": 2,
+      "g5@yellow-monster": 6,
+      "g3@cat": 1,
+      "g0@bob": 1,
+      "g2@watermelon": 1,
+      "g3@horse": 2,
+      "g0@peter": 3,
+      "g3@dog": 4,
+      "g3@bird": 5,
+      "g3@fish": 6,
+      "g0@arnold": 5,
+      "g0@carol": 4,
+      "g2@lime": 5,
+      "g0@alice": 2,
+      "g0@eric": 6,
+      "g2@cherry": 6,
+      "g2@blueberry": 2,
+      "g2@desert": 3,
+      "g2@dragonfruit": 4,
+      "g1@biography": 3,
+      "g5@prince": 4,
+      "g4@jazz": 3,
+      "g5@blends": 2,
+      "g1@fantasy": 2,
+      "g4@rock": 1,
+      "g4@classical": 4,
+      "g4@hip-hop": 6,
+      "g5@blue-master": 3,
+      "g1@historical-fiction": 4,
+      "g5@pall-mall": 1,
+      "g5@dunhill": 5,
+      "g1@science-fiction": 6,
+      "g1@romance": 1,
+      "g1@mystery": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "BookGenre",
+    "g2": "Smoothie",
+    "g3": "Animal",
+    "g4": "MusicGenre",
+    "g5": "Cigar"
+  }
+}

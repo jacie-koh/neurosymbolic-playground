@@ -1,0 +1,125 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-13",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-13)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@prince",
+      "g1@dunhill",
+      "g1@blue-master",
+      "g1@pall-mall"
+    ],
+    "g2": [
+      "g2@swimming",
+      "g2@basketball",
+      "g2@soccer",
+      "g2@tennis"
+    ],
+    "g3": [
+      "g3@coffee",
+      "g3@water",
+      "g3@milk",
+      "g3@tea"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Peter is in the fourth house.",
+      "relation": "at",
+      "a": "g0@peter",
+      "position": 4
+    },
+    {
+      "source": "The tea drinker is the person who loves basketball.",
+      "relation": "same",
+      "a": "g3@tea",
+      "b": "g2@basketball"
+    },
+    {
+      "source": "Arnold is the person who smokes Blue Master.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@blue-master"
+    },
+    {
+      "source": "The person who loves basketball is Eric.",
+      "relation": "same",
+      "a": "g2@basketball",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves tennis is the person who smokes Blue Master.",
+      "relation": "same",
+      "a": "g2@tennis",
+      "b": "g1@blue-master"
+    },
+    {
+      "source": "There are two houses between the one who only drinks water and Peter.",
+      "relation": "distance",
+      "a": "g3@water",
+      "b": "g0@peter",
+      "distance": 3
+    },
+    {
+      "source": "The coffee drinker is Arnold.",
+      "relation": "same",
+      "a": "g3@coffee",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who loves basketball is in the third house.",
+      "relation": "at",
+      "a": "g2@basketball",
+      "position": 3
+    },
+    {
+      "source": "The Prince smoker is the person who loves soccer.",
+      "relation": "same",
+      "a": "g1@prince",
+      "b": "g2@soccer"
+    },
+    {
+      "source": "Peter is the person partial to Pall Mall.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g1@pall-mall"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@peter": 4,
+      "g3@water": 1,
+      "g2@basketball": 3,
+      "g3@tea": 3,
+      "g0@eric": 3,
+      "g1@pall-mall": 4,
+      "g0@alice": 1,
+      "g0@arnold": 2,
+      "g1@blue-master": 2,
+      "g2@tennis": 2,
+      "g3@coffee": 2,
+      "g3@milk": 4,
+      "g1@prince": 1,
+      "g1@dunhill": 3,
+      "g2@soccer": 1,
+      "g2@swimming": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Cigar",
+    "g2": "FavoriteSport",
+    "g3": "Drink"
+  }
+}

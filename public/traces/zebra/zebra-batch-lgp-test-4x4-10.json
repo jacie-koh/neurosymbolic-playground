@@ -1,0 +1,124 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-10",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-10)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@rock",
+      "g1@jazz",
+      "g1@pop",
+      "g1@classical"
+    ],
+    "g2": [
+      "g2@janelle",
+      "g2@aniya",
+      "g2@kailyn",
+      "g2@holly"
+    ],
+    "g3": [
+      "g3@master",
+      "g3@high-school",
+      "g3@bachelor",
+      "g3@associate"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Alice is the person who loves jazz music.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g1@jazz"
+    },
+    {
+      "source": "The person with a master's degree is somewhere to the left of The person whose mother's name is Aniya.",
+      "relation": "left",
+      "a": "g3@master",
+      "b": "g2@aniya"
+    },
+    {
+      "source": "Alice is not in the second house.",
+      "relation": "not_at",
+      "a": "g0@alice",
+      "position": 2
+    },
+    {
+      "source": "The person with a high school diploma is the person who loves classical music.",
+      "relation": "same",
+      "a": "g3@high-school",
+      "b": "g1@classical"
+    },
+    {
+      "source": "The person with a master's degree is in the third house.",
+      "relation": "at",
+      "a": "g3@master",
+      "position": 3
+    },
+    {
+      "source": "The person whose mother's name is Janelle is Eric.",
+      "relation": "same",
+      "a": "g2@janelle",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person with a master's degree is Arnold.",
+      "relation": "same",
+      "a": "g3@master",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person whose mother's name is Holly is in the second house.",
+      "relation": "at",
+      "a": "g2@holly",
+      "position": 2
+    },
+    {
+      "source": "Peter is the person with a high school diploma.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g3@high-school"
+    },
+    {
+      "source": "The person with an associate's degree is the person who loves rock music.",
+      "relation": "same",
+      "a": "g3@associate",
+      "b": "g1@rock"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@master": 3,
+      "g2@aniya": 4,
+      "g0@arnold": 3,
+      "g2@holly": 2,
+      "g2@janelle": 1,
+      "g2@kailyn": 3,
+      "g0@eric": 1,
+      "g0@peter": 2,
+      "g0@alice": 4,
+      "g1@jazz": 4,
+      "g3@high-school": 2,
+      "g1@classical": 2,
+      "g1@rock": 1,
+      "g1@pop": 3,
+      "g3@associate": 1,
+      "g3@bachelor": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "MusicGenre",
+    "g2": "Mother",
+    "g3": "Education"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-28",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-28)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@bob",
+      "g0@eric",
+      "g0@peter",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@hamster",
+      "g1@bird",
+      "g1@fish",
+      "g1@dog",
+      "g1@cat"
+    ],
+    "g2": [
+      "g2@coffee",
+      "g2@milk",
+      "g2@root-beer",
+      "g2@water",
+      "g2@tea"
+    ],
+    "g3": [
+      "g3@soccer",
+      "g3@swimming",
+      "g3@tennis",
+      "g3@baseball",
+      "g3@basketball"
+    ],
+    "g4": [
+      "g4@oneplus-9",
+      "g4@google-pixel-6",
+      "g4@iphone-13",
+      "g4@huawei-p50",
+      "g4@samsung-galaxy-s21"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The root beer lover is the person who owns a dog.",
+      "relation": "same",
+      "a": "g2@root-beer",
+      "b": "g1@dog"
+    },
+    {
+      "source": "The person who uses an iPhone 13 is the root beer lover.",
+      "relation": "same",
+      "a": "g4@iphone-13",
+      "b": "g2@root-beer"
+    },
+    {
+      "source": "There is one house between the person who owns a dog and the person who uses a Google Pixel 6.",
+      "relation": "distance",
+      "a": "g1@dog",
+      "b": "g4@google-pixel-6",
+      "distance": 2
+    },
+    {
+      "source": "Bob is somewhere to the right of the person who uses a OnePlus 9.",
+      "relation": "right",
+      "a": "g0@bob",
+      "b": "g4@oneplus-9"
+    },
+    {
+      "source": "Alice is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g0@alice",
+      "position": 4
+    },
+    {
+      "source": "Eric is in the fifth house.",
+      "relation": "at",
+      "a": "g0@eric",
+      "position": 5
+    },
+    {
+      "source": "The person who likes milk is the person who uses a Samsung Galaxy S21.",
+      "relation": "same",
+      "a": "g2@milk",
+      "b": "g4@samsung-galaxy-s21"
+    },
+    {
+      "source": "The person who loves baseball is the person who uses a Google Pixel 6.",
+      "relation": "same",
+      "a": "g3@baseball",
+      "b": "g4@google-pixel-6"
+    },
+    {
+      "source": "The coffee drinker is in the third house.",
+      "relation": "at",
+      "a": "g2@coffee",
+      "position": 3
+    },
+    {
+      "source": "Peter is the tea drinker.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The person who loves basketball is the person who owns a dog.",
+      "relation": "same",
+      "a": "g3@basketball",
+      "b": "g1@dog"
+    },
+    {
+      "source": "The person with a pet hamster is the person who loves tennis.",
+      "relation": "same",
+      "a": "g1@hamster",
+      "b": "g3@tennis"
+    },
+    {
+      "source": "There are two houses between Alice and the tea drinker.",
+      "relation": "distance",
+      "a": "g0@alice",
+      "b": "g2@tea",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves soccer is the tea drinker.",
+      "relation": "same",
+      "a": "g3@soccer",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The person who keeps a pet bird is directly left of the person with an aquarium of fish.",
+      "relation": "immediately_left",
+      "a": "g1@bird",
+      "b": "g1@fish"
+    },
+    {
+      "source": "The person with an aquarium of fish is the person who likes milk.",
+      "relation": "same",
+      "a": "g1@fish",
+      "b": "g2@milk"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 5,
+      "g2@coffee": 3,
+      "g0@peter": 1,
+      "g2@tea": 1,
+      "g0@alice": 3,
+      "g3@soccer": 1,
+      "g0@bob": 2,
+      "g0@arnold": 4,
+      "g4@oneplus-9": 1,
+      "g2@milk": 2,
+      "g4@samsung-galaxy-s21": 2,
+      "g1@fish": 2,
+      "g1@bird": 1,
+      "g2@water": 4,
+      "g2@root-beer": 5,
+      "g1@dog": 5,
+      "g4@iphone-13": 5,
+      "g4@google-pixel-6": 3,
+      "g4@huawei-p50": 4,
+      "g3@baseball": 3,
+      "g3@basketball": 5,
+      "g1@cat": 3,
+      "g1@hamster": 4,
+      "g3@tennis": 4,
+      "g3@swimming": 2
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Pet",
+    "g2": "Drink",
+    "g3": "FavoriteSport",
+    "g4": "PhoneModel"
+  }
+}

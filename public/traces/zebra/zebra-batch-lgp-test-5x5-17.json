@@ -1,0 +1,161 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-17",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-17)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@peter",
+      "g0@eric",
+      "g0@arnold",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@dog",
+      "g1@fish",
+      "g1@bird",
+      "g1@horse",
+      "g1@cat"
+    ],
+    "g2": [
+      "g2@dane",
+      "g2@swede",
+      "g2@brit",
+      "g2@german",
+      "g2@norwegian"
+    ],
+    "g3": [
+      "g3@meredith",
+      "g3@bella",
+      "g3@timothy",
+      "g3@samantha",
+      "g3@fred"
+    ],
+    "g4": [
+      "g4@bird",
+      "g4@fish",
+      "g4@hamster",
+      "g4@cat",
+      "g4@dog"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The dog owner is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@dog",
+      "position": 3
+    },
+    {
+      "source": "The person who keeps a pet bird is in the fourth house.",
+      "relation": "at",
+      "a": "g1@bird",
+      "position": 4
+    },
+    {
+      "source": "The German is Eric.",
+      "relation": "same",
+      "a": "g2@german",
+      "b": "g0@eric"
+    },
+    {
+      "source": "Bob is somewhere to the left of the person's child is named Fred.",
+      "relation": "left",
+      "a": "g0@bob",
+      "b": "g3@fred"
+    },
+    {
+      "source": "The person with a pet hamster is Arnold.",
+      "relation": "same",
+      "a": "g1@horse",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The British person is the dog owner.",
+      "relation": "same",
+      "a": "g2@brit",
+      "b": "g1@dog"
+    },
+    {
+      "source": "The person's child is named Meredith is not in the third house.",
+      "relation": "not_at",
+      "a": "g3@meredith",
+      "position": 3
+    },
+    {
+      "source": "The fish enthusiast is the person's child is named Samantha.",
+      "relation": "same",
+      "a": "g1@fish",
+      "b": "g3@samantha"
+    },
+    {
+      "source": "The person who is the mother of Timothy is the German.",
+      "relation": "same",
+      "a": "g3@timothy",
+      "b": "g2@german"
+    },
+    {
+      "source": "The person who has a cat is in the fifth house.",
+      "relation": "at",
+      "a": "g1@cat",
+      "position": 5
+    },
+    {
+      "source": "Peter is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g0@peter",
+      "position": 4
+    },
+    {
+      "source": "The Swedish person and the person's child is named Samantha are next to each other.",
+      "relation": "next_to",
+      "a": "g2@swede",
+      "b": "g3@samantha"
+    },
+    {
+      "source": "The Swedish person is Peter.",
+      "relation": "same",
+      "a": "g2@swede",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The Dane is in the second house.",
+      "relation": "at",
+      "a": "g2@dane",
+      "position": 2
+    },
+    {
+      "source": "Eric and the cat lover are next to each other.",
+      "relation": "next_to",
+      "a": "g0@eric",
+      "b": "g1@cat"
+    },
+    {
+      "source": "The German is in the first house.",
+      "relation": "at",
+      "a": "g2@german",
+      "position": 1
+    },
+    {
+      "source": "The person with an aquarium of fish is somewhere to the right of the bird keeper.",
+      "relation": "right",
+      "a": "g1@fish",
+      "b": "g1@bird"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "unsat",
+    "solution": null,
+    "unique": null
+  },
+  "referenceMatch": null,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Animal",
+    "g2": "Nationality",
+    "g3": "Children",
+    "g4": "Pet"
+  }
+}

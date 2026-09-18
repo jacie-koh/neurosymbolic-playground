@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-2",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-2)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@eric",
+      "g0@alice",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@brown",
+      "g1@blonde",
+      "g1@red",
+      "g1@black"
+    ],
+    "g2": [
+      "g2@short",
+      "g2@average",
+      "g2@tall",
+      "g2@very-short"
+    ],
+    "g3": [
+      "g3@green",
+      "g3@yellow",
+      "g3@white",
+      "g3@red"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Eric is the person who has an average height.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@average"
+    },
+    {
+      "source": "The person whose favorite color is red is the person who is tall.",
+      "relation": "same",
+      "a": "g3@red",
+      "b": "g2@tall"
+    },
+    {
+      "source": "The person whose favorite color is green is somewhere to the left of Peter.",
+      "relation": "left",
+      "a": "g3@green",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Arnold is in the fourth house.",
+      "relation": "at",
+      "a": "g0@arnold",
+      "position": 4
+    },
+    {
+      "source": "The person who has an average height is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@average",
+      "position": 1
+    },
+    {
+      "source": "The person who is very short is in the fourth house.",
+      "relation": "at",
+      "a": "g2@very-short",
+      "position": 4
+    },
+    {
+      "source": "The person who loves white is the person who has black hair.",
+      "relation": "same",
+      "a": "g3@white",
+      "b": "g1@black"
+    },
+    {
+      "source": "The person who is tall is directly left of the person who has brown hair.",
+      "relation": "immediately_left",
+      "a": "g2@tall",
+      "b": "g1@brown"
+    },
+    {
+      "source": "The person who has blonde hair is the person who has an average height.",
+      "relation": "same",
+      "a": "g1@blonde",
+      "b": "g2@average"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@arnold": 4,
+      "g2@very-short": 4,
+      "g0@alice": 1,
+      "g0@eric": 2,
+      "g0@peter": 3,
+      "g2@average": 2,
+      "g1@blonde": 2,
+      "g2@short": 1,
+      "g2@tall": 3,
+      "g3@red": 3,
+      "g1@brown": 4,
+      "g1@black": 1,
+      "g1@red": 3,
+      "g3@white": 1,
+      "g3@green": 2,
+      "g3@yellow": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HairColor",
+    "g2": "Height",
+    "g3": "Color"
+  }
+}

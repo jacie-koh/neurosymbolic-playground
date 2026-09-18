@@ -1,0 +1,187 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-24",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-24)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@peter",
+      "g0@arnold",
+      "g0@alice",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@blue-master",
+      "g1@dunhill",
+      "g1@prince",
+      "g1@blends",
+      "g1@pall-mall"
+    ],
+    "g2": [
+      "g2@rock",
+      "g2@classical",
+      "g2@hip-hop",
+      "g2@pop",
+      "g2@jazz"
+    ],
+    "g3": [
+      "g3@feb",
+      "g3@april",
+      "g3@sept",
+      "g3@jan",
+      "g3@mar"
+    ],
+    "g4": [
+      "g4@romance",
+      "g4@science-fiction",
+      "g4@mystery",
+      "g4@biography",
+      "g4@fantasy"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves pop music is the person who loves romance books.",
+      "relation": "same",
+      "a": "g2@pop",
+      "b": "g4@romance"
+    },
+    {
+      "source": "The person who loves fantasy books is in the second house.",
+      "relation": "at",
+      "a": "g4@fantasy",
+      "position": 2
+    },
+    {
+      "source": "The person who smokes Blue Master is the person who loves science fiction books.",
+      "relation": "same",
+      "a": "g1@blue-master",
+      "b": "g4@science-fiction"
+    },
+    {
+      "source": "The person who loves hip-hop music is the person whose birthday is in September.",
+      "relation": "same",
+      "a": "g2@hip-hop",
+      "b": "g3@sept"
+    },
+    {
+      "source": "The person who loves biography books is Arnold.",
+      "relation": "same",
+      "a": "g4@biography",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Alice is the person who loves science fiction books.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g4@science-fiction"
+    },
+    {
+      "source": "The person who loves jazz music is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g2@jazz",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who smokes Blue Master is the person whose birthday is in April.",
+      "relation": "same",
+      "a": "g1@blue-master",
+      "b": "g3@april"
+    },
+    {
+      "source": "The person who smokes many unique blends is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@blends",
+      "position": 3
+    },
+    {
+      "source": "The Dunhill smoker is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g1@dunhill",
+      "b": "g3@feb"
+    },
+    {
+      "source": "The person who loves science fiction books is in the fifth house.",
+      "relation": "at",
+      "a": "g4@science-fiction",
+      "position": 5
+    },
+    {
+      "source": "The person who loves classical music is Bob.",
+      "relation": "same",
+      "a": "g2@classical",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who loves pop music is Eric.",
+      "relation": "same",
+      "a": "g2@pop",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves mystery books is the person partial to Pall Mall.",
+      "relation": "same",
+      "a": "g4@mystery",
+      "b": "g1@pall-mall"
+    },
+    {
+      "source": "Peter is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g3@feb"
+    },
+    {
+      "source": "The person whose birthday is in March is the person who smokes many unique blends.",
+      "relation": "same",
+      "a": "g3@mar",
+      "b": "g1@blends"
+    },
+    {
+      "source": "The person who loves classical music is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@classical",
+      "position": 1
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@fantasy": 2,
+      "g4@science-fiction": 5,
+      "g1@blue-master": 5,
+      "g0@alice": 5,
+      "g3@april": 5,
+      "g4@biography": 1,
+      "g0@arnold": 1,
+      "g4@mystery": 3,
+      "g4@romance": 4,
+      "g2@pop": 4,
+      "g0@eric": 4,
+      "g1@pall-mall": 3,
+      "g0@peter": 2,
+      "g0@bob": 3,
+      "g2@classical": 3,
+      "g3@feb": 2,
+      "g1@dunhill": 2,
+      "g1@prince": 1,
+      "g1@blends": 4,
+      "g3@mar": 4,
+      "g3@sept": 1,
+      "g3@jan": 3,
+      "g2@hip-hop": 1,
+      "g2@jazz": 2,
+      "g2@rock": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Cigar",
+    "g2": "MusicGenre",
+    "g3": "Birthday",
+    "g4": "BookGenre"
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-36",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-36)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@peter",
+      "g0@bob",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@hamster",
+      "g1@bird",
+      "g1@fish",
+      "g1@cat",
+      "g1@dog"
+    ],
+    "g2": [
+      "g2@doctor",
+      "g2@engineer",
+      "g2@lawyer",
+      "g2@artist",
+      "g2@teacher"
+    ],
+    "g3": [
+      "g3@colonial",
+      "g3@modern",
+      "g3@ranch",
+      "g3@craftsman",
+      "g3@victorian"
+    ],
+    "g4": [
+      "g4@high-school",
+      "g4@bachelor",
+      "g4@master",
+      "g4@doctorate",
+      "g4@associate"
+    ]
+  },
+  "clues": [
+    {
+      "source": "There are two houses between the person with a master's degree and the person in a modern-style house.",
+      "relation": "distance",
+      "a": "g4@master",
+      "b": "g3@modern",
+      "distance": 3
+    },
+    {
+      "source": "The person with an aquarium of fish is the person who is an artist.",
+      "relation": "same",
+      "a": "g1@fish",
+      "b": "g2@artist"
+    },
+    {
+      "source": "The person who has a cat is the person who is an engineer.",
+      "relation": "same",
+      "a": "g1@cat",
+      "b": "g2@engineer"
+    },
+    {
+      "source": "The person with a bachelor's degree is the person with an aquarium of fish.",
+      "relation": "same",
+      "a": "g4@bachelor",
+      "b": "g1@fish"
+    },
+    {
+      "source": "The person who has a cat is somewhere to the right of the person with an associate's degree.",
+      "relation": "right",
+      "a": "g1@cat",
+      "b": "g4@associate"
+    },
+    {
+      "source": "The person with a master's degree is the person who is a lawyer.",
+      "relation": "same",
+      "a": "g4@master",
+      "b": "g2@lawyer"
+    },
+    {
+      "source": "The person who is a teacher is somewhere to the right of the person who keeps a pet bird.",
+      "relation": "right",
+      "a": "g2@teacher",
+      "b": "g1@bird"
+    },
+    {
+      "source": "The person with an associate's degree is the person living in a colonial-style house.",
+      "relation": "same",
+      "a": "g4@associate",
+      "b": "g3@colonial"
+    },
+    {
+      "source": "Peter is the person in a Craftsman-style house.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g3@craftsman"
+    },
+    {
+      "source": "The person residing in a Victorian house is in the second house.",
+      "relation": "at",
+      "a": "g3@victorian",
+      "position": 2
+    },
+    {
+      "source": "The person who is a teacher is Bob.",
+      "relation": "same",
+      "a": "g2@teacher",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person with an associate's degree is in the fourth house.",
+      "relation": "at",
+      "a": "g4@associate",
+      "position": 4
+    },
+    {
+      "source": "The person with a bachelor's degree is somewhere to the right of the person with a high school diploma.",
+      "relation": "right",
+      "a": "g4@bachelor",
+      "b": "g4@high-school"
+    },
+    {
+      "source": "There is one house between the person who owns a dog and the person in a ranch-style home.",
+      "relation": "distance",
+      "a": "g1@dog",
+      "b": "g3@ranch",
+      "distance": 2
+    },
+    {
+      "source": "Bob is somewhere to the right of Alice.",
+      "relation": "right",
+      "a": "g0@bob",
+      "b": "g0@alice"
+    },
+    {
+      "source": "Eric is the person with a bachelor's degree.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g4@bachelor"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@victorian": 2,
+      "g4@associate": 4,
+      "g1@cat": 5,
+      "g2@engineer": 5,
+      "g3@colonial": 4,
+      "g3@craftsman": 1,
+      "g0@peter": 1,
+      "g3@ranch": 3,
+      "g3@modern": 5,
+      "g4@master": 2,
+      "g2@lawyer": 2,
+      "g1@dog": 1,
+      "g1@bird": 2,
+      "g1@fish": 3,
+      "g1@hamster": 4,
+      "g2@artist": 3,
+      "g4@bachelor": 3,
+      "g0@eric": 3,
+      "g2@doctor": 1,
+      "g2@teacher": 4,
+      "g0@bob": 4,
+      "g0@alice": 2,
+      "g0@arnold": 5,
+      "g4@high-school": 1,
+      "g4@doctorate": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Pet",
+    "g2": "Occupation",
+    "g3": "HouseStyle",
+    "g4": "Education"
+  }
+}

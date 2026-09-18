@@ -1,0 +1,46 @@
+{
+  "id": "zebra-batch-lgp-test-2x2-20",
+  "title": "ZebraLogic 2-house puzzle (id lgp-test-2x2-20)",
+  "size": 2,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@fred",
+      "g1@bella"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person's child is named Fred is Arnold.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@fred"
+    },
+    {
+      "source": "Eric is in the second house.",
+      "relation": "at",
+      "a": "g0@eric",
+      "position": 2
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@eric": 2,
+      "g0@arnold": 1,
+      "g1@fred": 1,
+      "g1@bella": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Children"
+  }
+}

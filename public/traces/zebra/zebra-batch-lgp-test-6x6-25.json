@@ -1,0 +1,266 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-25",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-25)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@bob",
+      "g0@alice",
+      "g0@peter",
+      "g0@arnold",
+      "g0@carol"
+    ],
+    "g1": [
+      "g1@daffodils",
+      "g1@carnations",
+      "g1@roses",
+      "g1@tulips",
+      "g1@iris",
+      "g1@lilies"
+    ],
+    "g2": [
+      "g2@very-tall",
+      "g2@super-tall",
+      "g2@average",
+      "g2@short",
+      "g2@very-short",
+      "g2@tall"
+    ],
+    "g3": [
+      "g3@blue",
+      "g3@yellow",
+      "g3@purple",
+      "g3@red",
+      "g3@green",
+      "g3@white"
+    ],
+    "g4": [
+      "g4@yellow-monster",
+      "g4@pall-mall",
+      "g4@prince",
+      "g4@blue-master",
+      "g4@blends",
+      "g4@dunhill"
+    ],
+    "g5": [
+      "g5@google-pixel-6",
+      "g5@iphone-13",
+      "g5@xiaomi-mi-11",
+      "g5@samsung-galaxy-s21",
+      "g5@huawei-p50",
+      "g5@oneplus-9"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who uses an iPhone 13 is the person who loves white.",
+      "relation": "same",
+      "a": "g3@white",
+      "b": "g5@iphone-13"
+    },
+    {
+      "source": "Peter is the person whose favorite color is red.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g3@red"
+    },
+    {
+      "source": "The Prince smoker is directly left of the person partial to Pall Mall.",
+      "relation": "immediately_left",
+      "a": "g4@prince",
+      "b": "g4@pall-mall"
+    },
+    {
+      "source": "The person who smokes Blue Master and the Dunhill smoker are next to each other.",
+      "relation": "next_to",
+      "a": "g4@blue-master",
+      "b": "g4@dunhill"
+    },
+    {
+      "source": "The person who loves blue is the person who uses a Xiaomi Mi 11.",
+      "relation": "same",
+      "a": "g3@blue",
+      "b": "g5@xiaomi-mi-11"
+    },
+    {
+      "source": "The person who loves white is Alice.",
+      "relation": "same",
+      "a": "g3@white",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person who uses a OnePlus 9 is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g5@oneplus-9",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who is tall is the person who smokes Blue Master.",
+      "relation": "same",
+      "a": "g2@tall",
+      "b": "g4@blue-master"
+    },
+    {
+      "source": "The person who uses a Samsung Galaxy S21 is the Dunhill smoker.",
+      "relation": "same",
+      "a": "g5@samsung-galaxy-s21",
+      "b": "g4@dunhill"
+    },
+    {
+      "source": "Bob is directly left of the person who is very short.",
+      "relation": "immediately_left",
+      "a": "g0@bob",
+      "b": "g2@very-short"
+    },
+    {
+      "source": "The person who loves a bouquet of daffodils is Eric.",
+      "relation": "same",
+      "a": "g1@daffodils",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves the boquet of iris is the person who uses a OnePlus 9.",
+      "relation": "same",
+      "a": "g1@iris",
+      "b": "g5@oneplus-9"
+    },
+    {
+      "source": "The person who uses a Huawei P50 is the person who is very short.",
+      "relation": "same",
+      "a": "g5@huawei-p50",
+      "b": "g2@very-short"
+    },
+    {
+      "source": "The person who smokes many unique blends is directly left of Peter.",
+      "relation": "immediately_left",
+      "a": "g4@blends",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The Prince smoker is not in the first house.",
+      "relation": "not_at",
+      "a": "g4@prince",
+      "position": 1
+    },
+    {
+      "source": "The person who is very tall is the person who loves a bouquet of daffodils.",
+      "relation": "same",
+      "a": "g2@very-tall",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person who uses a Google Pixel 6 is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g5@google-pixel-6",
+      "position": 5
+    },
+    {
+      "source": "The person who is tall is not in the third house.",
+      "relation": "not_at",
+      "a": "g2@tall",
+      "position": 3
+    },
+    {
+      "source": "The person who uses a Huawei P50 is somewhere to the left of the person who uses a Samsung Galaxy S21.",
+      "relation": "left",
+      "a": "g5@huawei-p50",
+      "b": "g5@samsung-galaxy-s21"
+    },
+    {
+      "source": "Arnold is somewhere to the left of the person who is short.",
+      "relation": "left",
+      "a": "g0@arnold",
+      "b": "g2@short"
+    },
+    {
+      "source": "The person who loves the vase of tulips is not in the first house.",
+      "relation": "not_at",
+      "a": "g1@tulips",
+      "position": 1
+    },
+    {
+      "source": "The person who loves the boquet of lilies is directly left of the person who loves yellow.",
+      "relation": "immediately_left",
+      "a": "g1@lilies",
+      "b": "g3@yellow"
+    },
+    {
+      "source": "Arnold is the person who loves purple.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@purple"
+    },
+    {
+      "source": "The person who uses a OnePlus 9 and the person who uses a Samsung Galaxy S21 are next to each other.",
+      "relation": "next_to",
+      "a": "g5@oneplus-9",
+      "b": "g5@samsung-galaxy-s21"
+    },
+    {
+      "source": "The person who has an average height is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@average",
+      "position": 1
+    },
+    {
+      "source": "The person who loves the rose bouquet is Alice.",
+      "relation": "same",
+      "a": "g1@roses",
+      "b": "g0@alice"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@prince": 2,
+      "g4@pall-mall": 3,
+      "g4@blends": 1,
+      "g0@peter": 2,
+      "g3@red": 2,
+      "g4@blue-master": 4,
+      "g2@tall": 4,
+      "g4@dunhill": 5,
+      "g4@yellow-monster": 6,
+      "g5@samsung-galaxy-s21": 5,
+      "g5@oneplus-9": 4,
+      "g1@iris": 4,
+      "g0@arnold": 5,
+      "g2@short": 6,
+      "g3@purple": 5,
+      "g0@bob": 1,
+      "g2@very-short": 2,
+      "g5@huawei-p50": 2,
+      "g0@eric": 3,
+      "g1@daffodils": 3,
+      "g2@very-tall": 3,
+      "g0@carol": 4,
+      "g0@alice": 6,
+      "g3@white": 6,
+      "g5@iphone-13": 6,
+      "g1@roses": 6,
+      "g2@super-tall": 1,
+      "g2@average": 5,
+      "g5@xiaomi-mi-11": 1,
+      "g5@google-pixel-6": 3,
+      "g3@blue": 1,
+      "g3@yellow": 3,
+      "g3@green": 4,
+      "g1@lilies": 2,
+      "g1@carnations": 1,
+      "g1@tulips": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "Height",
+    "g3": "Color",
+    "g4": "Cigar",
+    "g5": "PhoneModel"
+  }
+}

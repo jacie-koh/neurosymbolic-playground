@@ -1,0 +1,136 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-11",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-11)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@bella",
+      "g1@fred",
+      "g1@samantha",
+      "g1@meredith"
+    ],
+    "g2": [
+      "g2@cat",
+      "g2@horse",
+      "g2@fish",
+      "g2@bird"
+    ],
+    "g3": [
+      "g3@bachelor",
+      "g3@associate",
+      "g3@master",
+      "g3@high-school"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Arnold is not in the first house.",
+      "relation": "not_at",
+      "a": "g0@arnold",
+      "position": 1
+    },
+    {
+      "source": "The bird keeper is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g2@bird",
+      "position": 4
+    },
+    {
+      "source": "The person with a high school diploma is the cat lover.",
+      "relation": "same",
+      "a": "g3@high-school",
+      "b": "g2@cat"
+    },
+    {
+      "source": "The person's child is named Bella is the cat lover.",
+      "relation": "same",
+      "a": "g1@bella",
+      "b": "g2@cat"
+    },
+    {
+      "source": "The person with a high school diploma is not in the first house.",
+      "relation": "not_at",
+      "a": "g3@high-school",
+      "position": 1
+    },
+    {
+      "source": "Arnold is the person with a master's degree.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@master"
+    },
+    {
+      "source": "The person who keeps horses is directly left of the fish enthusiast.",
+      "relation": "immediately_left",
+      "a": "g2@horse",
+      "b": "g2@fish"
+    },
+    {
+      "source": "The person with a bachelor's degree is Peter.",
+      "relation": "same",
+      "a": "g3@bachelor",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person's child is named Fred is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g1@fred",
+      "position": 4
+    },
+    {
+      "source": "Eric is somewhere to the right of the cat lover.",
+      "relation": "right",
+      "a": "g0@eric",
+      "b": "g2@cat"
+    },
+    {
+      "source": "Eric is not in the third house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 3
+    },
+    {
+      "source": "The person's child is named Samantha is Arnold.",
+      "relation": "same",
+      "a": "g1@samantha",
+      "b": "g0@arnold"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@arnold": 3,
+      "g3@master": 3,
+      "g1@samantha": 3,
+      "g0@peter": 1,
+      "g3@bachelor": 1,
+      "g0@alice": 2,
+      "g0@eric": 4,
+      "g3@high-school": 2,
+      "g3@associate": 4,
+      "g2@cat": 2,
+      "g1@bella": 2,
+      "g1@fred": 1,
+      "g1@meredith": 4,
+      "g2@bird": 1,
+      "g2@horse": 3,
+      "g2@fish": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Children",
+    "g2": "Animal",
+    "g3": "Education"
+  }
+}

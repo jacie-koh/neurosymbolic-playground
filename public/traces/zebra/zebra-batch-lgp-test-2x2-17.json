@@ -1,0 +1,46 @@
+{
+  "id": "zebra-batch-lgp-test-2x2-17",
+  "title": "ZebraLogic 2-house puzzle (id lgp-test-2x2-17)",
+  "size": 2,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@pall-mall",
+      "g1@prince"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person partial to Pall Mall is Arnold.",
+      "relation": "same",
+      "a": "g1@pall-mall",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Arnold is in the first house.",
+      "relation": "at",
+      "a": "g0@arnold",
+      "position": 1
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@arnold": 1,
+      "g0@eric": 2,
+      "g1@pall-mall": 1,
+      "g1@prince": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Cigar"
+  }
+}

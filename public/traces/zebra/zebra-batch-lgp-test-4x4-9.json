@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-9",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-9)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@basketball",
+      "g1@soccer",
+      "g1@tennis",
+      "g1@swimming"
+    ],
+    "g2": [
+      "g2@craftsman",
+      "g2@victorian",
+      "g2@ranch",
+      "g2@colonial"
+    ],
+    "g3": [
+      "g3@mystery",
+      "g3@science-fiction",
+      "g3@romance",
+      "g3@fantasy"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person in a Craftsman-style house is somewhere to the left of the person who loves science fiction books.",
+      "relation": "left",
+      "a": "g2@craftsman",
+      "b": "g3@science-fiction"
+    },
+    {
+      "source": "The person residing in a Victorian house is somewhere to the right of the person living in a colonial-style house.",
+      "relation": "right",
+      "a": "g2@victorian",
+      "b": "g2@colonial"
+    },
+    {
+      "source": "Eric is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g0@eric",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who loves basketball is the person who loves romance books.",
+      "relation": "same",
+      "a": "g1@basketball",
+      "b": "g3@romance"
+    },
+    {
+      "source": "The person who loves soccer is somewhere to the right of Arnold.",
+      "relation": "right",
+      "a": "g1@soccer",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Alice is the person who loves tennis.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g1@tennis"
+    },
+    {
+      "source": "The person who loves science fiction books is the person in a ranch-style home.",
+      "relation": "same",
+      "a": "g3@science-fiction",
+      "b": "g2@ranch"
+    },
+    {
+      "source": "The person who loves tennis is somewhere to the left of the person in a Craftsman-style house.",
+      "relation": "left",
+      "a": "g1@tennis",
+      "b": "g2@craftsman"
+    },
+    {
+      "source": "Arnold is directly left of the person who loves mystery books.",
+      "relation": "immediately_left",
+      "a": "g0@arnold",
+      "b": "g3@mystery"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@arnold": 3,
+      "g3@mystery": 4,
+      "g1@soccer": 4,
+      "g0@eric": 2,
+      "g0@alice": 1,
+      "g0@peter": 4,
+      "g1@tennis": 1,
+      "g1@basketball": 2,
+      "g1@swimming": 3,
+      "g3@romance": 2,
+      "g3@fantasy": 1,
+      "g3@science-fiction": 3,
+      "g2@ranch": 3,
+      "g2@craftsman": 2,
+      "g2@colonial": 1,
+      "g2@victorian": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "FavoriteSport",
+    "g2": "HouseStyle",
+    "g3": "BookGenre"
+  }
+}

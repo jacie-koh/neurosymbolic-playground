@@ -1,0 +1,185 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-20",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-20)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@peter",
+      "g0@bob",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@tulips",
+      "g1@daffodils",
+      "g1@lilies",
+      "g1@roses",
+      "g1@carnations"
+    ],
+    "g2": [
+      "g2@fred",
+      "g2@bella",
+      "g2@timothy",
+      "g2@meredith",
+      "g2@samantha"
+    ],
+    "g3": [
+      "g3@high-school",
+      "g3@bachelor",
+      "g3@doctorate",
+      "g3@master",
+      "g3@associate"
+    ],
+    "g4": [
+      "g4@cat",
+      "g4@fish",
+      "g4@dog",
+      "g4@horse",
+      "g4@bird"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Peter is somewhere to the right of the dog owner.",
+      "relation": "left",
+      "a": "g0@peter",
+      "b": "g4@dog"
+    },
+    {
+      "source": "There is one house between the person who loves a carnations arrangement and the person with a bachelor's degree.",
+      "relation": "distance",
+      "a": "g1@carnations",
+      "b": "g3@bachelor",
+      "distance": 2
+    },
+    {
+      "source": "There is one house between the person with a doctorate and the cat lover.",
+      "relation": "distance",
+      "a": "g3@doctorate",
+      "b": "g4@cat",
+      "distance": 2
+    },
+    {
+      "source": "The person with an associate's degree is directly left of the person who loves the vase of tulips.",
+      "relation": "immediately_left",
+      "a": "g3@associate",
+      "b": "g1@tulips"
+    },
+    {
+      "source": "There is one house between the cat lover and the person who keeps horses.",
+      "relation": "distance",
+      "a": "g4@cat",
+      "b": "g4@horse",
+      "distance": 2
+    },
+    {
+      "source": "The person's child is named Fred is somewhere to the left of the person with a bachelor's degree.",
+      "relation": "left",
+      "a": "g2@fred",
+      "b": "g3@bachelor"
+    },
+    {
+      "source": "The person's child is named Meredith is not in the third house.",
+      "relation": "not_at",
+      "a": "g2@meredith",
+      "position": 3
+    },
+    {
+      "source": "The person with a master's degree is the person's child is named Bella.",
+      "relation": "same",
+      "a": "g3@master",
+      "b": "g2@bella"
+    },
+    {
+      "source": "The person with a bachelor's degree is Bob.",
+      "relation": "same",
+      "a": "g3@bachelor",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is the mother of Timothy is the person who loves a bouquet of daffodils.",
+      "relation": "same",
+      "a": "g2@timothy",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person's child is named Samantha is Bob.",
+      "relation": "same",
+      "a": "g2@samantha",
+      "b": "g0@bob"
+    },
+    {
+      "source": "Arnold is directly left of Peter.",
+      "relation": "immediately_left",
+      "a": "g0@arnold",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The bird keeper is directly left of the person who loves a bouquet of daffodils.",
+      "relation": "immediately_left",
+      "a": "g4@bird",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person who loves the rose bouquet is the bird keeper.",
+      "relation": "same",
+      "a": "g1@roses",
+      "b": "g4@bird"
+    },
+    {
+      "source": "There is one house between the dog owner and the fish enthusiast.",
+      "relation": "distance",
+      "a": "g4@dog",
+      "b": "g4@fish",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves the vase of tulips is Eric.",
+      "relation": "same",
+      "a": "g1@tulips",
+      "b": "g0@eric"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@associate": 3,
+      "g1@tulips": 4,
+      "g0@eric": 4,
+      "g0@alice": 1,
+      "g0@arnold": 2,
+      "g0@peter": 3,
+      "g0@bob": 5,
+      "g3@bachelor": 5,
+      "g1@carnations": 3,
+      "g2@samantha": 5,
+      "g4@dog": 4,
+      "g4@fish": 2,
+      "g1@roses": 1,
+      "g4@bird": 1,
+      "g1@daffodils": 2,
+      "g1@lilies": 5,
+      "g2@timothy": 2,
+      "g4@cat": 3,
+      "g4@horse": 5,
+      "g3@doctorate": 1,
+      "g3@high-school": 2,
+      "g3@master": 4,
+      "g2@bella": 4,
+      "g2@meredith": 1,
+      "g2@fred": 3
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "Children",
+    "g3": "Education",
+    "g4": "Animal"
+  }
+}

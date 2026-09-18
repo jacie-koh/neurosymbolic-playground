@@ -1,0 +1,255 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-24",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-24)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@bob",
+      "g0@carol",
+      "g0@peter",
+      "g0@eric",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@classical",
+      "g1@hip-hop",
+      "g1@jazz",
+      "g1@pop",
+      "g1@rock",
+      "g1@country"
+    ],
+    "g2": [
+      "g2@soup",
+      "g2@stir-fry",
+      "g2@grilled-cheese",
+      "g2@spaghetti",
+      "g2@stew",
+      "g2@pizza"
+    ],
+    "g3": [
+      "g3@craftsman",
+      "g3@ranch",
+      "g3@mediterranean",
+      "g3@modern",
+      "g3@colonial",
+      "g3@victorian"
+    ],
+    "g4": [
+      "g4@feb",
+      "g4@sept",
+      "g4@april",
+      "g4@may",
+      "g4@jan",
+      "g4@mar"
+    ],
+    "g5": [
+      "g5@red",
+      "g5@black",
+      "g5@blonde",
+      "g5@brown",
+      "g5@gray",
+      "g5@auburn"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in April is Bob.",
+      "relation": "same",
+      "a": "g4@april",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person residing in a Victorian house is the person who loves stir fry.",
+      "relation": "same",
+      "a": "g3@victorian",
+      "b": "g2@stir-fry"
+    },
+    {
+      "source": "There are two houses between the person who loves jazz music and the person who has auburn hair.",
+      "relation": "distance",
+      "a": "g1@jazz",
+      "b": "g5@auburn",
+      "distance": 3
+    },
+    {
+      "source": "The person who loves the stew is in the second house.",
+      "relation": "at",
+      "a": "g2@stew",
+      "position": 2
+    },
+    {
+      "source": "The person who loves stir fry is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g2@stir-fry",
+      "b": "g4@feb"
+    },
+    {
+      "source": "The person who loves classical music is in the fifth house.",
+      "relation": "at",
+      "a": "g1@classical",
+      "position": 5
+    },
+    {
+      "source": "The person who loves jazz music is Alice.",
+      "relation": "same",
+      "a": "g1@jazz",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person living in a colonial-style house is in the fifth house.",
+      "relation": "at",
+      "a": "g3@colonial",
+      "position": 5
+    },
+    {
+      "source": "The person who has gray hair is the person who loves the stew.",
+      "relation": "same",
+      "a": "g5@gray",
+      "b": "g2@stew"
+    },
+    {
+      "source": "The person whose birthday is in March is the person who has red hair.",
+      "relation": "same",
+      "a": "g4@mar",
+      "b": "g5@red"
+    },
+    {
+      "source": "The person who loves country music is directly left of the person whose birthday is in September.",
+      "relation": "immediately_left",
+      "a": "g1@country",
+      "b": "g4@sept"
+    },
+    {
+      "source": "The person whose birthday is in May is somewhere to the left of the person who loves country music.",
+      "relation": "left",
+      "a": "g4@may",
+      "b": "g1@country"
+    },
+    {
+      "source": "The person in a ranch-style home is the person who loves the soup.",
+      "relation": "same",
+      "a": "g3@ranch",
+      "b": "g2@soup"
+    },
+    {
+      "source": "The person whose birthday is in January is the person who loves the stew.",
+      "relation": "same",
+      "a": "g4@jan",
+      "b": "g2@stew"
+    },
+    {
+      "source": "The person who has blonde hair is the person in a Mediterranean-style villa.",
+      "relation": "same",
+      "a": "g5@blonde",
+      "b": "g3@mediterranean"
+    },
+    {
+      "source": "Arnold is somewhere to the right of the person whose birthday is in April.",
+      "relation": "right",
+      "a": "g0@arnold",
+      "b": "g4@april"
+    },
+    {
+      "source": "The person whose birthday is in February is the person who loves hip-hop music.",
+      "relation": "same",
+      "a": "g4@feb",
+      "b": "g1@hip-hop"
+    },
+    {
+      "source": "The person who has blonde hair is somewhere to the left of Eric.",
+      "relation": "left",
+      "a": "g5@blonde",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person residing in a Victorian house is Carol.",
+      "relation": "same",
+      "a": "g3@victorian",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person who has black hair is the person in a ranch-style home.",
+      "relation": "same",
+      "a": "g5@black",
+      "b": "g3@ranch"
+    },
+    {
+      "source": "The person in a modern-style house is not in the second house.",
+      "relation": "not_at",
+      "a": "g3@modern",
+      "position": 2
+    },
+    {
+      "source": "The person who loves the spaghetti eater is somewhere to the left of the person who loves country music.",
+      "relation": "left",
+      "a": "g2@spaghetti",
+      "b": "g1@country"
+    },
+    {
+      "source": "The person who is a pizza lover is Bob.",
+      "relation": "same",
+      "a": "g2@pizza",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who loves pop music is somewhere to the left of the person whose birthday is in September.",
+      "relation": "left",
+      "a": "g1@pop",
+      "b": "g4@sept"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@stew": 2,
+      "g1@classical": 5,
+      "g3@colonial": 5,
+      "g5@gray": 2,
+      "g4@jan": 2,
+      "g1@pop": 1,
+      "g1@country": 2,
+      "g4@sept": 3,
+      "g4@may": 1,
+      "g2@spaghetti": 1,
+      "g1@jazz": 3,
+      "g5@auburn": 6,
+      "g0@alice": 3,
+      "g1@rock": 4,
+      "g1@hip-hop": 6,
+      "g4@feb": 6,
+      "g2@stir-fry": 6,
+      "g3@victorian": 6,
+      "g0@carol": 6,
+      "g4@april": 4,
+      "g4@mar": 5,
+      "g0@bob": 4,
+      "g5@red": 5,
+      "g2@pizza": 4,
+      "g2@soup": 3,
+      "g2@grilled-cheese": 5,
+      "g3@ranch": 3,
+      "g5@black": 3,
+      "g5@blonde": 1,
+      "g5@brown": 4,
+      "g3@mediterranean": 1,
+      "g3@craftsman": 2,
+      "g3@modern": 4,
+      "g0@arnold": 5,
+      "g0@peter": 1,
+      "g0@eric": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "MusicGenre",
+    "g2": "Food",
+    "g3": "HouseStyle",
+    "g4": "Birthday",
+    "g5": "HairColor"
+  }
+}

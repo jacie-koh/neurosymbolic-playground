@@ -1,0 +1,125 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-19",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-19)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@yellow",
+      "g1@red",
+      "g1@white",
+      "g1@green"
+    ],
+    "g2": [
+      "g2@dunhill",
+      "g2@blue-master",
+      "g2@pall-mall",
+      "g2@prince"
+    ],
+    "g3": [
+      "g3@high-school",
+      "g3@associate",
+      "g3@master",
+      "g3@bachelor"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose favorite color is green is somewhere to the left of the person with a high school diploma.",
+      "relation": "left",
+      "a": "g1@green",
+      "b": "g3@high-school"
+    },
+    {
+      "source": "Eric is the person whose favorite color is red.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@red"
+    },
+    {
+      "source": "There are two houses between Alice and the person who loves white.",
+      "relation": "distance",
+      "a": "g0@alice",
+      "b": "g1@white",
+      "distance": 3
+    },
+    {
+      "source": "The person who smokes Blue Master and the person partial to Pall Mall are next to each other.",
+      "relation": "next_to",
+      "a": "g2@blue-master",
+      "b": "g2@pall-mall"
+    },
+    {
+      "source": "The person who loves white is the person with a master's degree.",
+      "relation": "same",
+      "a": "g1@white",
+      "b": "g3@master"
+    },
+    {
+      "source": "Arnold is in the fourth house.",
+      "relation": "at",
+      "a": "g0@arnold",
+      "position": 4
+    },
+    {
+      "source": "The person who loves yellow is the person who smokes Blue Master.",
+      "relation": "same",
+      "a": "g1@yellow",
+      "b": "g2@blue-master"
+    },
+    {
+      "source": "The Dunhill smoker is Alice.",
+      "relation": "same",
+      "a": "g2@dunhill",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person partial to Pall Mall is the person with a master's degree.",
+      "relation": "same",
+      "a": "g2@pall-mall",
+      "b": "g3@master"
+    },
+    {
+      "source": "The person who loves yellow is the person with a bachelor's degree.",
+      "relation": "same",
+      "a": "g1@yellow",
+      "b": "g3@bachelor"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@arnold": 4,
+      "g0@alice": 1,
+      "g1@white": 4,
+      "g3@master": 4,
+      "g2@dunhill": 1,
+      "g2@pall-mall": 4,
+      "g2@blue-master": 3,
+      "g2@prince": 2,
+      "g1@yellow": 3,
+      "g3@bachelor": 3,
+      "g0@eric": 2,
+      "g0@peter": 3,
+      "g1@red": 2,
+      "g1@green": 1,
+      "g3@associate": 1,
+      "g3@high-school": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Color",
+    "g2": "Cigar",
+    "g3": "Education"
+  }
+}

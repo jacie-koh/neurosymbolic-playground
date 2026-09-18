@@ -1,0 +1,175 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-6",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-6)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@bob",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@black",
+      "g1@red",
+      "g1@brown",
+      "g1@gray",
+      "g1@blonde"
+    ],
+    "g2": [
+      "g2@bachelor",
+      "g2@associate",
+      "g2@high-school",
+      "g2@master",
+      "g2@doctorate"
+    ],
+    "g3": [
+      "g3@bella",
+      "g3@timothy",
+      "g3@samantha",
+      "g3@meredith",
+      "g3@fred"
+    ],
+    "g4": [
+      "g4@horse",
+      "g4@cat",
+      "g4@fish",
+      "g4@bird",
+      "g4@dog"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who has red hair is directly left of the bird keeper.",
+      "relation": "immediately_left",
+      "a": "g1@red",
+      "b": "g4@bird"
+    },
+    {
+      "source": "Peter is the person with a doctorate.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@doctorate"
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the right of the person who has brown hair.",
+      "relation": "right",
+      "a": "g4@fish",
+      "b": "g1@brown"
+    },
+    {
+      "source": "The cat lover is the person with a bachelor's degree.",
+      "relation": "same",
+      "a": "g4@cat",
+      "b": "g2@bachelor"
+    },
+    {
+      "source": "The person's child is named Samantha is somewhere to the right of the person who has black hair.",
+      "relation": "right",
+      "a": "g3@samantha",
+      "b": "g1@black"
+    },
+    {
+      "source": "The fish enthusiast is the person's child is named Bella.",
+      "relation": "same",
+      "a": "g4@fish",
+      "b": "g3@bella"
+    },
+    {
+      "source": "Arnold and the person with an associate's degree are next to each other.",
+      "relation": "next_to",
+      "a": "g0@arnold",
+      "b": "g2@associate"
+    },
+    {
+      "source": "The person who keeps horses is the person who is the mother of Timothy.",
+      "relation": "same",
+      "a": "g4@horse",
+      "b": "g3@timothy"
+    },
+    {
+      "source": "The person who has brown hair is somewhere to the right of Bob.",
+      "relation": "right",
+      "a": "g1@brown",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who has blonde hair is the bird keeper.",
+      "relation": "same",
+      "a": "g1@blonde",
+      "b": "g4@bird"
+    },
+    {
+      "source": "The person with a master's degree is the fish enthusiast.",
+      "relation": "same",
+      "a": "g2@master",
+      "b": "g4@fish"
+    },
+    {
+      "source": "The person with a high school diploma is the person's child is named Fred.",
+      "relation": "same",
+      "a": "g2@high-school",
+      "b": "g3@fred"
+    },
+    {
+      "source": "The person with a high school diploma is Eric.",
+      "relation": "same",
+      "a": "g2@high-school",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person with a bachelor's degree is the person who has red hair.",
+      "relation": "same",
+      "a": "g2@bachelor",
+      "b": "g1@red"
+    },
+    {
+      "source": "The person who has gray hair is the person with an associate's degree.",
+      "relation": "same",
+      "a": "g1@gray",
+      "b": "g2@associate"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@red": 1,
+      "g4@bird": 2,
+      "g1@blonde": 2,
+      "g2@bachelor": 1,
+      "g4@cat": 1,
+      "g1@brown": 3,
+      "g1@black": 4,
+      "g1@gray": 5,
+      "g3@samantha": 5,
+      "g2@associate": 5,
+      "g0@arnold": 4,
+      "g4@fish": 4,
+      "g3@bella": 4,
+      "g2@master": 4,
+      "g2@high-school": 2,
+      "g2@doctorate": 3,
+      "g0@peter": 3,
+      "g3@fred": 2,
+      "g0@eric": 2,
+      "g0@bob": 1,
+      "g0@alice": 5,
+      "g3@meredith": 1,
+      "g3@timothy": 3,
+      "g4@horse": 3,
+      "g4@dog": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HairColor",
+    "g2": "Education",
+    "g3": "Children",
+    "g4": "Animal"
+  }
+}

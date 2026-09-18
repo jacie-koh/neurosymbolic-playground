@@ -1,0 +1,77 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-9",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-9)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@peter",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@spaghetti",
+      "g1@grilled-cheese",
+      "g1@pizza"
+    ],
+    "g2": [
+      "g2@yellow",
+      "g2@white",
+      "g2@red"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose favorite color is red and the person who loves yellow are next to each other.",
+      "relation": "next_to",
+      "a": "g2@red",
+      "b": "g2@yellow"
+    },
+    {
+      "source": "The person who loves the spaghetti eater is the person who loves yellow.",
+      "relation": "same",
+      "a": "g1@spaghetti",
+      "b": "g2@yellow"
+    },
+    {
+      "source": "The person who is a pizza lover and the person whose favorite color is red are next to each other.",
+      "relation": "next_to",
+      "a": "g1@pizza",
+      "b": "g2@red"
+    },
+    {
+      "source": "Peter is directly left of the person who loves the spaghetti eater.",
+      "relation": "immediately_left",
+      "a": "g0@peter",
+      "b": "g1@spaghetti"
+    },
+    {
+      "source": "The person who loves the spaghetti eater is Eric.",
+      "relation": "same",
+      "a": "g1@spaghetti",
+      "b": "g0@eric"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@peter": 2,
+      "g1@spaghetti": 3,
+      "g2@yellow": 3,
+      "g2@red": 2,
+      "g2@white": 1,
+      "g0@eric": 3,
+      "g0@arnold": 1,
+      "g1@pizza": 1,
+      "g1@grilled-cheese": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Food",
+    "g2": "Color"
+  }
+}

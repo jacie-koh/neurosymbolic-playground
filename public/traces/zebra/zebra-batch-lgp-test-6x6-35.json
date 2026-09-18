@@ -1,0 +1,255 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-35",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-35)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@carol",
+      "g0@alice",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric"
+    ],
+    "g1": [
+      "g1@average",
+      "g1@super-tall",
+      "g1@very-short",
+      "g1@short",
+      "g1@very-tall",
+      "g1@tall"
+    ],
+    "g2": [
+      "g2@coffee",
+      "g2@milk",
+      "g2@boba-tea",
+      "g2@root-beer",
+      "g2@tea",
+      "g2@water"
+    ],
+    "g3": [
+      "g3@blue",
+      "g3@yellow",
+      "g3@red",
+      "g3@green",
+      "g3@purple",
+      "g3@white"
+    ],
+    "g4": [
+      "g4@mediterranean",
+      "g4@colonial",
+      "g4@modern",
+      "g4@ranch",
+      "g4@victorian",
+      "g4@craftsman"
+    ],
+    "g5": [
+      "g5@lilies",
+      "g5@roses",
+      "g5@iris",
+      "g5@daffodils",
+      "g5@carnations",
+      "g5@tulips"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Eric is not in the second house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 2
+    },
+    {
+      "source": "The coffee drinker is somewhere to the right of the person residing in a Victorian house.",
+      "relation": "right",
+      "a": "g2@coffee",
+      "b": "g4@victorian"
+    },
+    {
+      "source": "The person who is very tall is directly left of the person in a Craftsman-style house.",
+      "relation": "immediately_left",
+      "a": "g1@very-tall",
+      "b": "g4@craftsman"
+    },
+    {
+      "source": "The person living in a colonial-style house is the person who likes milk.",
+      "relation": "same",
+      "a": "g4@colonial",
+      "b": "g2@milk"
+    },
+    {
+      "source": "The root beer lover is directly left of the person whose favorite color is green.",
+      "relation": "immediately_left",
+      "a": "g2@root-beer",
+      "b": "g3@green"
+    },
+    {
+      "source": "The person who loves yellow is the person who loves the boquet of lilies.",
+      "relation": "same",
+      "a": "g3@yellow",
+      "b": "g5@lilies"
+    },
+    {
+      "source": "Arnold is the person whose favorite color is red.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@red"
+    },
+    {
+      "source": "The person who loves the rose bouquet is Bob.",
+      "relation": "same",
+      "a": "g5@roses",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is very tall is the root beer lover.",
+      "relation": "same",
+      "a": "g1@very-tall",
+      "b": "g2@root-beer"
+    },
+    {
+      "source": "Alice is somewhere to the left of the person who loves a bouquet of daffodils.",
+      "relation": "left",
+      "a": "g0@alice",
+      "b": "g5@daffodils"
+    },
+    {
+      "source": "The boba tea drinker is Carol.",
+      "relation": "same",
+      "a": "g2@boba-tea",
+      "b": "g0@carol"
+    },
+    {
+      "source": "There is one house between the person in a ranch-style home and the person who loves the boquet of iris.",
+      "relation": "distance",
+      "a": "g4@ranch",
+      "b": "g5@iris",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves a carnations arrangement is the tea drinker.",
+      "relation": "same",
+      "a": "g5@carnations",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The boba tea drinker is the person in a Mediterranean-style villa.",
+      "relation": "same",
+      "a": "g2@boba-tea",
+      "b": "g4@mediterranean"
+    },
+    {
+      "source": "The person who loves a bouquet of daffodils is in the second house.",
+      "relation": "at",
+      "a": "g5@daffodils",
+      "position": 2
+    },
+    {
+      "source": "The person who is tall and the person who loves the vase of tulips are next to each other.",
+      "relation": "next_to",
+      "a": "g1@tall",
+      "b": "g5@tulips"
+    },
+    {
+      "source": "Carol is somewhere to the left of the person who loves the boquet of iris.",
+      "relation": "left",
+      "a": "g0@carol",
+      "b": "g5@iris"
+    },
+    {
+      "source": "The person who has an average height is directly left of Arnold.",
+      "relation": "immediately_left",
+      "a": "g1@average",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who is super tall and Eric are next to each other.",
+      "relation": "next_to",
+      "a": "g1@super-tall",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves the vase of tulips is somewhere to the right of the person who loves the boquet of lilies.",
+      "relation": "right",
+      "a": "g5@tulips",
+      "b": "g5@lilies"
+    },
+    {
+      "source": "The person who is super tall is the tea drinker.",
+      "relation": "same",
+      "a": "g1@super-tall",
+      "b": "g2@tea"
+    },
+    {
+      "source": "The person who is short is Carol.",
+      "relation": "same",
+      "a": "g1@short",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The coffee drinker is the person who loves purple.",
+      "relation": "same",
+      "a": "g2@coffee",
+      "b": "g3@purple"
+    },
+    {
+      "source": "The person who loves blue is somewhere to the right of the person who loves a carnations arrangement.",
+      "relation": "right",
+      "a": "g3@blue",
+      "b": "g5@carnations"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g5@daffodils": 2,
+      "g0@alice": 1,
+      "g0@peter": 2,
+      "g0@carol": 3,
+      "g2@boba-tea": 3,
+      "g4@mediterranean": 3,
+      "g1@short": 3,
+      "g0@bob": 4,
+      "g5@roses": 4,
+      "g0@arnold": 5,
+      "g0@eric": 6,
+      "g3@red": 5,
+      "g1@average": 4,
+      "g1@super-tall": 5,
+      "g2@tea": 5,
+      "g5@carnations": 5,
+      "g3@blue": 6,
+      "g1@very-tall": 1,
+      "g4@craftsman": 2,
+      "g2@root-beer": 1,
+      "g3@green": 2,
+      "g1@tall": 2,
+      "g1@very-short": 6,
+      "g5@tulips": 3,
+      "g5@lilies": 1,
+      "g5@iris": 6,
+      "g3@yellow": 1,
+      "g4@ranch": 4,
+      "g3@white": 3,
+      "g3@purple": 4,
+      "g2@coffee": 4,
+      "g2@water": 2,
+      "g2@milk": 6,
+      "g4@colonial": 6,
+      "g4@victorian": 1,
+      "g4@modern": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Height",
+    "g2": "Drink",
+    "g3": "Color",
+    "g4": "HouseStyle",
+    "g5": "Flower"
+  }
+}

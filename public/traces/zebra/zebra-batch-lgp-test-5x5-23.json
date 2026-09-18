@@ -1,0 +1,187 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-23",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-23)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@tennis",
+      "g1@baseball",
+      "g1@basketball",
+      "g1@soccer",
+      "g1@swimming"
+    ],
+    "g2": [
+      "g2@fred",
+      "g2@bella",
+      "g2@meredith",
+      "g2@timothy",
+      "g2@samantha"
+    ],
+    "g3": [
+      "g3@kailyn",
+      "g3@holly",
+      "g3@penny",
+      "g3@janelle",
+      "g3@aniya"
+    ],
+    "g4": [
+      "g4@horse",
+      "g4@cat",
+      "g4@dog",
+      "g4@bird",
+      "g4@fish"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose mother's name is Penny is in the fourth house.",
+      "relation": "at",
+      "a": "g3@penny",
+      "position": 4
+    },
+    {
+      "source": "Eric is The person whose mother's name is Penny.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g3@penny"
+    },
+    {
+      "source": "The person who keeps horses is the person who loves swimming.",
+      "relation": "same",
+      "a": "g4@horse",
+      "b": "g1@swimming"
+    },
+    {
+      "source": "The person who loves baseball is the person's child is named Meredith.",
+      "relation": "same",
+      "a": "g1@baseball",
+      "b": "g2@meredith"
+    },
+    {
+      "source": "The dog owner is directly left of the person who loves basketball.",
+      "relation": "immediately_left",
+      "a": "g4@dog",
+      "b": "g1@basketball"
+    },
+    {
+      "source": "The person who loves soccer is the bird keeper.",
+      "relation": "same",
+      "a": "g1@soccer",
+      "b": "g4@bird"
+    },
+    {
+      "source": "The person who loves swimming is directly left of the person's child is named Fred.",
+      "relation": "immediately_left",
+      "a": "g1@swimming",
+      "b": "g2@fred"
+    },
+    {
+      "source": "The person who loves tennis is The person whose mother's name is Kailyn.",
+      "relation": "same",
+      "a": "g1@tennis",
+      "b": "g3@kailyn"
+    },
+    {
+      "source": "The person who is the mother of Timothy is The person whose mother's name is Aniya.",
+      "relation": "same",
+      "a": "g2@timothy",
+      "b": "g3@aniya"
+    },
+    {
+      "source": "Eric is somewhere to the right of the person's child is named Samantha.",
+      "relation": "right",
+      "a": "g0@eric",
+      "b": "g2@samantha"
+    },
+    {
+      "source": "The person who loves basketball is Bob.",
+      "relation": "same",
+      "a": "g1@basketball",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is the mother of Timothy is the fish enthusiast.",
+      "relation": "same",
+      "a": "g2@timothy",
+      "b": "g4@fish"
+    },
+    {
+      "source": "The person's child is named Meredith is somewhere to the right of Peter.",
+      "relation": "right",
+      "a": "g2@meredith",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves basketball is somewhere to the left of the person who keeps horses.",
+      "relation": "left",
+      "a": "g1@basketball",
+      "b": "g4@horse"
+    },
+    {
+      "source": "The bird keeper is Alice.",
+      "relation": "same",
+      "a": "g4@bird",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person whose mother's name is Holly is the bird keeper.",
+      "relation": "same",
+      "a": "g3@holly",
+      "b": "g4@bird"
+    },
+    {
+      "source": "Bob is not in the third house.",
+      "relation": "not_at",
+      "a": "g0@bob",
+      "position": 3
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@penny": 4,
+      "g0@eric": 4,
+      "g2@samantha": 1,
+      "g0@peter": 1,
+      "g0@bob": 2,
+      "g1@basketball": 2,
+      "g4@dog": 1,
+      "g0@arnold": 3,
+      "g0@alice": 5,
+      "g4@bird": 5,
+      "g1@soccer": 5,
+      "g3@holly": 5,
+      "g1@tennis": 1,
+      "g3@kailyn": 1,
+      "g1@baseball": 3,
+      "g1@swimming": 4,
+      "g4@horse": 4,
+      "g2@meredith": 3,
+      "g2@fred": 5,
+      "g2@timothy": 2,
+      "g2@bella": 4,
+      "g3@aniya": 2,
+      "g3@janelle": 3,
+      "g4@fish": 2,
+      "g4@cat": 3
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "FavoriteSport",
+    "g2": "Children",
+    "g3": "Mother",
+    "g4": "Animal"
+  }
+}

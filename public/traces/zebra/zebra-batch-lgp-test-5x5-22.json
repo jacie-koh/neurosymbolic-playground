@@ -1,0 +1,187 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-22",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-22)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@peter",
+      "g0@eric",
+      "g0@alice",
+      "g0@bob"
+    ],
+    "g1": [
+      "g1@beach",
+      "g1@mountain",
+      "g1@cruise",
+      "g1@city",
+      "g1@camping"
+    ],
+    "g2": [
+      "g2@ranch",
+      "g2@modern",
+      "g2@craftsman",
+      "g2@colonial",
+      "g2@victorian"
+    ],
+    "g3": [
+      "g3@bachelor",
+      "g3@doctorate",
+      "g3@master",
+      "g3@associate",
+      "g3@high-school"
+    ],
+    "g4": [
+      "g4@aniya",
+      "g4@kailyn",
+      "g4@janelle",
+      "g4@penny",
+      "g4@holly"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose mother's name is Aniya is the person in a ranch-style home.",
+      "relation": "same",
+      "a": "g4@aniya",
+      "b": "g2@ranch"
+    },
+    {
+      "source": "The person in a Craftsman-style house is Bob.",
+      "relation": "same",
+      "a": "g2@craftsman",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person with a high school diploma is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g3@high-school",
+      "position": 4
+    },
+    {
+      "source": "Arnold and the person in a Craftsman-style house are next to each other.",
+      "relation": "next_to",
+      "a": "g0@arnold",
+      "b": "g2@craftsman"
+    },
+    {
+      "source": "Arnold is The person whose mother's name is Penny.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g4@penny"
+    },
+    {
+      "source": "The person with an associate's degree is somewhere to the left of the person with a master's degree.",
+      "relation": "left",
+      "a": "g3@associate",
+      "b": "g3@master"
+    },
+    {
+      "source": "Bob and Peter are next to each other.",
+      "relation": "next_to",
+      "a": "g0@bob",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person living in a colonial-style house is The person whose mother's name is Penny.",
+      "relation": "same",
+      "a": "g2@colonial",
+      "b": "g4@penny"
+    },
+    {
+      "source": "The person whose mother's name is Holly is the person who enjoys camping trips.",
+      "relation": "same",
+      "a": "g4@holly",
+      "b": "g1@camping"
+    },
+    {
+      "source": "The person with a doctorate is the person who prefers city breaks.",
+      "relation": "same",
+      "a": "g3@doctorate",
+      "b": "g1@city"
+    },
+    {
+      "source": "The person with a bachelor's degree is The person whose mother's name is Aniya.",
+      "relation": "same",
+      "a": "g3@bachelor",
+      "b": "g4@aniya"
+    },
+    {
+      "source": "The person with an associate's degree is somewhere to the right of Eric.",
+      "relation": "right",
+      "a": "g0@eric",
+      "b": "g3@associate"
+    },
+    {
+      "source": "Arnold is directly left of the person who likes going on cruises.",
+      "relation": "immediately_left",
+      "a": "g0@arnold",
+      "b": "g1@cruise"
+    },
+    {
+      "source": "The person who enjoys camping trips is somewhere to the right of the person residing in a Victorian house.",
+      "relation": "right",
+      "a": "g2@victorian",
+      "b": "g1@camping"
+    },
+    {
+      "source": "The person who enjoys mountain retreats is in the first house.",
+      "relation": "at",
+      "a": "g1@mountain",
+      "position": 1
+    },
+    {
+      "source": "The person whose mother's name is Janelle is the person with an associate's degree.",
+      "relation": "same",
+      "a": "g4@janelle",
+      "b": "g3@associate"
+    },
+    {
+      "source": "The person with an associate's degree is directly left of Arnold.",
+      "relation": "immediately_left",
+      "a": "g3@associate",
+      "b": "g0@arnold"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@mountain": 1,
+      "g1@camping": 2,
+      "g4@holly": 2,
+      "g1@beach": 3,
+      "g1@city": 4,
+      "g1@cruise": 5,
+      "g3@doctorate": 4,
+      "g0@arnold": 4,
+      "g4@penny": 4,
+      "g2@colonial": 4,
+      "g3@associate": 3,
+      "g4@janelle": 3,
+      "g4@aniya": 1,
+      "g4@kailyn": 5,
+      "g2@ranch": 1,
+      "g3@bachelor": 1,
+      "g3@high-school": 2,
+      "g3@master": 5,
+      "g2@craftsman": 3,
+      "g0@bob": 3,
+      "g2@modern": 2,
+      "g2@victorian": 5,
+      "g0@peter": 2,
+      "g0@alice": 1,
+      "g0@eric": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Vacation",
+    "g2": "HouseStyle",
+    "g3": "Education",
+    "g4": "Mother"
+  }
+}

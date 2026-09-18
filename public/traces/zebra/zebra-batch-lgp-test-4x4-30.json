@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-30",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-30)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@alice",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@lilies",
+      "g1@carnations",
+      "g1@roses",
+      "g1@daffodils"
+    ],
+    "g2": [
+      "g2@teacher",
+      "g2@engineer",
+      "g2@artist",
+      "g2@doctor"
+    ],
+    "g3": [
+      "g3@desert",
+      "g3@dragonfruit",
+      "g3@watermelon",
+      "g3@cherry"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The Dragonfruit smoothie lover is in the first house.",
+      "relation": "at",
+      "a": "g3@dragonfruit",
+      "position": 1
+    },
+    {
+      "source": "The person who is a doctor is somewhere to the right of Eric.",
+      "relation": "right",
+      "a": "g2@doctor",
+      "b": "g0@eric"
+    },
+    {
+      "source": "Eric is the person who likes Cherry smoothies.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g3@cherry"
+    },
+    {
+      "source": "Peter is directly left of the person who is an artist.",
+      "relation": "immediately_left",
+      "a": "g0@peter",
+      "b": "g2@artist"
+    },
+    {
+      "source": "The Desert smoothie lover is the person who loves a carnations arrangement.",
+      "relation": "same",
+      "a": "g3@desert",
+      "b": "g1@carnations"
+    },
+    {
+      "source": "The person who is a teacher is directly left of the Desert smoothie lover.",
+      "relation": "immediately_left",
+      "a": "g2@teacher",
+      "b": "g3@desert"
+    },
+    {
+      "source": "The person who loves the boquet of lilies is directly left of the person who likes Cherry smoothies.",
+      "relation": "immediately_left",
+      "a": "g1@lilies",
+      "b": "g3@cherry"
+    },
+    {
+      "source": "The person who is a teacher is the person who loves the rose bouquet.",
+      "relation": "same",
+      "a": "g2@teacher",
+      "b": "g1@roses"
+    },
+    {
+      "source": "The person who is an engineer is Alice.",
+      "relation": "same",
+      "a": "g2@engineer",
+      "b": "g0@alice"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@dragonfruit": 1,
+      "g3@cherry": 2,
+      "g0@eric": 2,
+      "g1@lilies": 1,
+      "g3@desert": 3,
+      "g3@watermelon": 4,
+      "g1@carnations": 3,
+      "g2@teacher": 2,
+      "g1@roses": 2,
+      "g1@daffodils": 4,
+      "g2@doctor": 3,
+      "g2@engineer": 1,
+      "g2@artist": 4,
+      "g0@peter": 3,
+      "g0@alice": 1,
+      "g0@arnold": 4
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "Occupation",
+    "g3": "Smoothie"
+  }
+}

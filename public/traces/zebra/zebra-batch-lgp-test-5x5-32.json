@@ -1,0 +1,163 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-32",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-32)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric",
+      "g0@peter",
+      "g0@bob",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@watermelon",
+      "g1@lime",
+      "g1@cherry",
+      "g1@dragonfruit",
+      "g1@desert"
+    ],
+    "g2": [
+      "g2@fish",
+      "g2@bird",
+      "g2@horse",
+      "g2@cat",
+      "g2@dog"
+    ],
+    "g3": [
+      "g3@camping",
+      "g3@beach",
+      "g3@mountain",
+      "g3@city",
+      "g3@cruise"
+    ],
+    "g4": [
+      "g4@root-beer",
+      "g4@water",
+      "g4@milk",
+      "g4@tea",
+      "g4@coffee"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who keeps horses is the person who drinks Lime smoothies.",
+      "relation": "same",
+      "a": "g2@horse",
+      "b": "g1@lime"
+    },
+    {
+      "source": "There is one house between the Watermelon smoothie lover and the person who likes Cherry smoothies.",
+      "relation": "distance",
+      "a": "g1@watermelon",
+      "b": "g1@cherry",
+      "distance": 2
+    },
+    {
+      "source": "Bob and the coffee drinker are next to each other.",
+      "relation": "next_to",
+      "a": "g0@bob",
+      "b": "g4@coffee"
+    },
+    {
+      "source": "The fish enthusiast is the one who only drinks water.",
+      "relation": "same",
+      "a": "g2@fish",
+      "b": "g4@water"
+    },
+    {
+      "source": "The bird keeper is Bob.",
+      "relation": "same",
+      "a": "g2@bird",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who enjoys mountain retreats is directly left of the root beer lover.",
+      "relation": "immediately_left",
+      "a": "g3@mountain",
+      "b": "g4@root-beer"
+    },
+    {
+      "source": "The person who loves beach vacations is somewhere to the left of the dog owner.",
+      "relation": "left",
+      "a": "g3@beach",
+      "b": "g2@dog"
+    },
+    {
+      "source": "Eric is the person who likes Cherry smoothies.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@cherry"
+    },
+    {
+      "source": "The tea drinker is Alice.",
+      "relation": "same",
+      "a": "g4@tea",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person who prefers city breaks is somewhere to the right of the person who enjoys mountain retreats.",
+      "relation": "right",
+      "a": "g3@city",
+      "b": "g3@mountain"
+    },
+    {
+      "source": "Peter is somewhere to the left of the coffee drinker.",
+      "relation": "left",
+      "a": "g0@peter",
+      "b": "g4@coffee"
+    },
+    {
+      "source": "Eric is the person who loves beach vacations.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g3@beach"
+    },
+    {
+      "source": "The person who enjoys mountain retreats is Alice.",
+      "relation": "same",
+      "a": "g3@mountain",
+      "b": "g0@alice"
+    },
+    {
+      "source": "There are two houses between the Watermelon smoothie lover and Alice.",
+      "relation": "distance",
+      "a": "g1@watermelon",
+      "b": "g0@alice",
+      "distance": 2
+    },
+    {
+      "source": "The person who enjoys camping trips is not in the first house.",
+      "relation": "not_at",
+      "a": "g3@camping",
+      "position": 1
+    },
+    {
+      "source": "The dog owner is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g2@dog",
+      "position": 5
+    },
+    {
+      "source": "The fish enthusiast and the Dragonfruit smoothie lover are next to each other.",
+      "relation": "next_to",
+      "a": "g2@fish",
+      "b": "g1@dragonfruit"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "unsat",
+    "solution": null,
+    "unique": null
+  },
+  "referenceMatch": null,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Smoothie",
+    "g2": "Animal",
+    "g3": "Vacation",
+    "g4": "Drink"
+  }
+}

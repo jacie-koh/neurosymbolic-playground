@@ -1,0 +1,77 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-35",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-35)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@pop",
+      "g1@rock",
+      "g1@classical"
+    ],
+    "g2": [
+      "g2@fred",
+      "g2@bella",
+      "g2@meredith"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves rock music is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@rock",
+      "position": 3
+    },
+    {
+      "source": "Eric is the person's child is named Meredith.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@meredith"
+    },
+    {
+      "source": "Arnold is the person who loves rock music.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@rock"
+    },
+    {
+      "source": "Peter is in the first house.",
+      "relation": "at",
+      "a": "g0@peter",
+      "position": 1
+    },
+    {
+      "source": "The person who loves pop music is the person's child is named Fred.",
+      "relation": "same",
+      "a": "g1@pop",
+      "b": "g2@fred"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@peter": 1,
+      "g0@arnold": 2,
+      "g0@eric": 3,
+      "g2@meredith": 3,
+      "g1@rock": 2,
+      "g1@pop": 1,
+      "g1@classical": 3,
+      "g2@fred": 1,
+      "g2@bella": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "MusicGenre",
+    "g2": "Children"
+  }
+}

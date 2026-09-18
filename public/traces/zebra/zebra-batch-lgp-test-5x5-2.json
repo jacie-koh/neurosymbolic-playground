@@ -1,0 +1,181 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-2",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-2)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@bob",
+      "g0@arnold",
+      "g0@eric",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@romance",
+      "g1@mystery",
+      "g1@biography",
+      "g1@fantasy",
+      "g1@science-fiction"
+    ],
+    "g2": [
+      "g2@sept",
+      "g2@feb",
+      "g2@jan",
+      "g2@mar",
+      "g2@april"
+    ],
+    "g3": [
+      "g3@mountain",
+      "g3@beach",
+      "g3@city",
+      "g3@camping",
+      "g3@cruise"
+    ],
+    "g4": [
+      "g4@horse",
+      "g4@bird",
+      "g4@fish",
+      "g4@dog",
+      "g4@cat"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in April is the person who loves mystery books.",
+      "relation": "same",
+      "a": "g2@april",
+      "b": "g1@mystery"
+    },
+    {
+      "source": "The person whose birthday is in March is somewhere to the left of the person who loves mystery books.",
+      "relation": "left",
+      "a": "g2@mar",
+      "b": "g1@mystery"
+    },
+    {
+      "source": "The person who loves beach vacations is Arnold.",
+      "relation": "same",
+      "a": "g3@beach",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who loves beach vacations is the person whose birthday is in January.",
+      "relation": "same",
+      "a": "g3@beach",
+      "b": "g2@jan"
+    },
+    {
+      "source": "The bird keeper is directly left of Peter.",
+      "relation": "immediately_left",
+      "a": "g4@bird",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves science fiction books is somewhere to the left of the person whose birthday is in February.",
+      "relation": "left",
+      "a": "g1@science-fiction",
+      "b": "g2@feb"
+    },
+    {
+      "source": "The fish enthusiast is somewhere to the right of Bob.",
+      "relation": "right",
+      "a": "g4@fish",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The fish enthusiast is Eric.",
+      "relation": "same",
+      "a": "g4@fish",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The fish enthusiast is the person who loves fantasy books.",
+      "relation": "same",
+      "a": "g4@fish",
+      "b": "g1@fantasy"
+    },
+    {
+      "source": "The person who enjoys mountain retreats is directly left of the person whose birthday is in April.",
+      "relation": "immediately_left",
+      "a": "g3@mountain",
+      "b": "g2@april"
+    },
+    {
+      "source": "The person whose birthday is in April is the person who enjoys camping trips.",
+      "relation": "same",
+      "a": "g2@april",
+      "b": "g3@camping"
+    },
+    {
+      "source": "The person whose birthday is in September is the person who loves science fiction books.",
+      "relation": "same",
+      "a": "g2@sept",
+      "b": "g1@science-fiction"
+    },
+    {
+      "source": "The cat lover is the person who prefers city breaks.",
+      "relation": "same",
+      "a": "g4@cat",
+      "b": "g3@city"
+    },
+    {
+      "source": "The person who loves romance books is somewhere to the right of the person who loves science fiction books.",
+      "relation": "right",
+      "a": "g1@romance",
+      "b": "g1@science-fiction"
+    },
+    {
+      "source": "The cat lover is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g4@cat",
+      "b": "g2@feb"
+    },
+    {
+      "source": "The person who keeps horses is Peter.",
+      "relation": "same",
+      "a": "g4@horse",
+      "b": "g0@peter"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g4@bird": 1,
+      "g0@peter": 2,
+      "g4@horse": 2,
+      "g4@cat": 3,
+      "g3@city": 3,
+      "g2@feb": 3,
+      "g4@fish": 4,
+      "g4@dog": 5,
+      "g0@eric": 4,
+      "g1@fantasy": 4,
+      "g1@science-fiction": 2,
+      "g2@sept": 2,
+      "g0@arnold": 1,
+      "g3@beach": 1,
+      "g2@jan": 1,
+      "g0@bob": 3,
+      "g0@alice": 5,
+      "g2@mar": 4,
+      "g2@april": 5,
+      "g1@mystery": 5,
+      "g3@mountain": 4,
+      "g3@camping": 5,
+      "g3@cruise": 2,
+      "g1@biography": 1,
+      "g1@romance": 3
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "BookGenre",
+    "g2": "Birthday",
+    "g3": "Vacation",
+    "g4": "Animal"
+  }
+}

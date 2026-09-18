@@ -1,0 +1,124 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-14",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-14)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@kailyn",
+      "g1@holly",
+      "g1@aniya",
+      "g1@janelle"
+    ],
+    "g2": [
+      "g2@dragonfruit",
+      "g2@desert",
+      "g2@watermelon",
+      "g2@cherry"
+    ],
+    "g3": [
+      "g3@fantasy",
+      "g3@romance",
+      "g3@mystery",
+      "g3@science-fiction"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The Dragonfruit smoothie lover is The person whose mother's name is Janelle.",
+      "relation": "same",
+      "a": "g2@dragonfruit",
+      "b": "g1@janelle"
+    },
+    {
+      "source": "Alice is directly left of the person who loves science fiction books.",
+      "relation": "immediately_left",
+      "a": "g0@alice",
+      "b": "g3@science-fiction"
+    },
+    {
+      "source": "The Desert smoothie lover is directly left of the Watermelon smoothie lover.",
+      "relation": "immediately_left",
+      "a": "g2@desert",
+      "b": "g2@watermelon"
+    },
+    {
+      "source": "The person whose mother's name is Holly is the person who loves mystery books.",
+      "relation": "same",
+      "a": "g1@holly",
+      "b": "g3@mystery"
+    },
+    {
+      "source": "Alice is somewhere to the left of Peter.",
+      "relation": "left",
+      "a": "g0@alice",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves fantasy books is Peter.",
+      "relation": "same",
+      "a": "g3@fantasy",
+      "b": "g0@peter"
+    },
+    {
+      "source": "Peter and the person who likes Cherry smoothies are next to each other.",
+      "relation": "next_to",
+      "a": "g0@peter",
+      "b": "g2@cherry"
+    },
+    {
+      "source": "The person who loves romance books is not in the first house.",
+      "relation": "not_at",
+      "a": "g3@romance",
+      "position": 1
+    },
+    {
+      "source": "The person whose mother's name is Aniya is somewhere to the right of the Dragonfruit smoothie lover.",
+      "relation": "right",
+      "a": "g1@aniya",
+      "b": "g2@dragonfruit"
+    },
+    {
+      "source": "The person who loves science fiction books is Arnold.",
+      "relation": "same",
+      "a": "g3@science-fiction",
+      "b": "g0@arnold"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g0@alice": 1,
+      "g3@science-fiction": 2,
+      "g0@arnold": 2,
+      "g0@peter": 3,
+      "g0@eric": 4,
+      "g3@fantasy": 3,
+      "g3@mystery": 1,
+      "g3@romance": 4,
+      "g1@holly": 1,
+      "g2@cherry": 4,
+      "g1@kailyn": 2,
+      "g1@janelle": 3,
+      "g1@aniya": 4,
+      "g2@dragonfruit": 3,
+      "g2@desert": 1,
+      "g2@watermelon": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Mother",
+    "g2": "Smoothie",
+    "g3": "BookGenre"
+  }
+}

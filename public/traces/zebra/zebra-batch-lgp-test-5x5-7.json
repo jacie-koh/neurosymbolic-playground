@@ -1,0 +1,182 @@
+{
+  "id": "zebra-batch-lgp-test-5x5-7",
+  "title": "ZebraLogic 5-house puzzle (id lgp-test-5x5-7)",
+  "size": 5,
+  "groups": {
+    "g0": [
+      "g0@alice",
+      "g0@eric",
+      "g0@arnold",
+      "g0@bob",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@lilies",
+      "g1@roses",
+      "g1@carnations",
+      "g1@tulips",
+      "g1@daffodils"
+    ],
+    "g2": [
+      "g2@sept",
+      "g2@april",
+      "g2@feb",
+      "g2@mar",
+      "g2@jan"
+    ],
+    "g3": [
+      "g3@pizza",
+      "g3@grilled-cheese",
+      "g3@spaghetti",
+      "g3@stir-fry",
+      "g3@stew"
+    ],
+    "g4": [
+      "g4@colonial",
+      "g4@craftsman",
+      "g4@victorian",
+      "g4@ranch",
+      "g4@modern"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose birthday is in September is the person who loves the spaghetti eater.",
+      "relation": "same",
+      "a": "g2@sept",
+      "b": "g3@spaghetti"
+    },
+    {
+      "source": "The person whose birthday is in February is Alice.",
+      "relation": "same",
+      "a": "g2@feb",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person in a Craftsman-style house is Eric.",
+      "relation": "same",
+      "a": "g4@craftsman",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The person who loves the stew is the person in a modern-style house.",
+      "relation": "same",
+      "a": "g3@stew",
+      "b": "g4@modern"
+    },
+    {
+      "source": "The person who loves the vase of tulips is somewhere to the left of the person who is a pizza lover.",
+      "relation": "left",
+      "a": "g1@tulips",
+      "b": "g3@pizza"
+    },
+    {
+      "source": "The person who loves the stew is in the fourth house.",
+      "relation": "at",
+      "a": "g3@stew",
+      "position": 4
+    },
+    {
+      "source": "The person whose birthday is in March is in the third house.",
+      "relation": "at",
+      "a": "g2@mar",
+      "position": 3
+    },
+    {
+      "source": "The person whose birthday is in September is in the first house.",
+      "relation": "at",
+      "a": "g2@sept",
+      "position": 1
+    },
+    {
+      "source": "The person who loves the boquet of lilies is the person whose birthday is in February.",
+      "relation": "same",
+      "a": "g1@lilies",
+      "b": "g2@feb"
+    },
+    {
+      "source": "The person residing in a Victorian house is directly left of the person who is a pizza lover.",
+      "relation": "immediately_left",
+      "a": "g4@victorian",
+      "b": "g3@pizza"
+    },
+    {
+      "source": "The person whose birthday is in January is the person who loves a carnations arrangement.",
+      "relation": "same",
+      "a": "g2@jan",
+      "b": "g1@carnations"
+    },
+    {
+      "source": "The person who loves eating grilled cheese is directly left of the person who loves the stew.",
+      "relation": "immediately_left",
+      "a": "g3@grilled-cheese",
+      "b": "g3@stew"
+    },
+    {
+      "source": "The person living in a colonial-style house is the person whose birthday is in March.",
+      "relation": "same",
+      "a": "g4@colonial",
+      "b": "g2@mar"
+    },
+    {
+      "source": "The person who is a pizza lover is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g3@pizza",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "There is one house between the person who loves the rose bouquet and the person whose birthday is in April.",
+      "relation": "distance",
+      "a": "g1@roses",
+      "b": "g2@april",
+      "distance": 2
+    },
+    {
+      "source": "The person in a modern-style house is Peter.",
+      "relation": "same",
+      "a": "g4@modern",
+      "b": "g0@peter"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g3@stew": 4,
+      "g4@modern": 4,
+      "g2@mar": 3,
+      "g2@sept": 1,
+      "g3@spaghetti": 1,
+      "g3@grilled-cheese": 3,
+      "g4@colonial": 3,
+      "g0@peter": 4,
+      "g3@pizza": 2,
+      "g3@stir-fry": 5,
+      "g1@tulips": 1,
+      "g4@victorian": 1,
+      "g4@ranch": 2,
+      "g4@craftsman": 5,
+      "g0@eric": 5,
+      "g0@bob": 1,
+      "g0@alice": 2,
+      "g0@arnold": 3,
+      "g2@feb": 2,
+      "g1@lilies": 2,
+      "g2@jan": 4,
+      "g2@april": 5,
+      "g1@carnations": 4,
+      "g1@roses": 3,
+      "g1@daffodils": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "Birthday",
+    "g3": "Food",
+    "g4": "HouseStyle"
+  }
+}

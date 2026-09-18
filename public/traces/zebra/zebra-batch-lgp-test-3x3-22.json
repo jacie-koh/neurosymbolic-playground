@@ -1,0 +1,78 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-22",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-22)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@black",
+      "g1@brown",
+      "g1@blonde"
+    ],
+    "g2": [
+      "g2@cat",
+      "g2@horse",
+      "g2@bird"
+    ]
+  },
+  "clues": [
+    {
+      "source": "Eric and the person who keeps horses are next to each other.",
+      "relation": "next_to",
+      "a": "g0@eric",
+      "b": "g2@horse"
+    },
+    {
+      "source": "The person who keeps horses is in the third house.",
+      "relation": "at",
+      "a": "g2@horse",
+      "position": 3
+    },
+    {
+      "source": "The person who has blonde hair is the bird keeper.",
+      "relation": "same",
+      "a": "g1@blonde",
+      "b": "g2@bird"
+    },
+    {
+      "source": "The person who has black hair is somewhere to the left of the person who has brown hair.",
+      "relation": "left",
+      "a": "g1@black",
+      "b": "g1@brown"
+    },
+    {
+      "source": "There is one house between the person who has black hair and Arnold.",
+      "relation": "distance",
+      "a": "g1@black",
+      "b": "g0@arnold",
+      "distance": 2
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@horse": 3,
+      "g0@eric": 2,
+      "g0@peter": 1,
+      "g0@arnold": 3,
+      "g1@black": 1,
+      "g1@blonde": 2,
+      "g1@brown": 3,
+      "g2@bird": 2,
+      "g2@cat": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HairColor",
+    "g2": "Animal"
+  }
+}

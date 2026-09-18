@@ -1,0 +1,255 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-27",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-27)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@peter",
+      "g0@bob",
+      "g0@arnold",
+      "g0@carol",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@cherry",
+      "g1@blueberry",
+      "g1@dragonfruit",
+      "g1@watermelon",
+      "g1@lime",
+      "g1@desert"
+    ],
+    "g2": [
+      "g2@bird",
+      "g2@cat",
+      "g2@dog",
+      "g2@rabbit",
+      "g2@horse",
+      "g2@fish"
+    ],
+    "g3": [
+      "g3@sarah",
+      "g3@holly",
+      "g3@janelle",
+      "g3@aniya",
+      "g3@kailyn",
+      "g3@penny"
+    ],
+    "g4": [
+      "g4@lilies",
+      "g4@iris",
+      "g4@carnations",
+      "g4@tulips",
+      "g4@roses",
+      "g4@daffodils"
+    ],
+    "g5": [
+      "g5@lawyer",
+      "g5@doctor",
+      "g5@teacher",
+      "g5@engineer",
+      "g5@artist",
+      "g5@nurse"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who loves a bouquet of daffodils is The person whose mother's name is Holly.",
+      "relation": "same",
+      "a": "g4@daffodils",
+      "b": "g3@holly"
+    },
+    {
+      "source": "The person who likes Cherry smoothies is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@cherry",
+      "position": 3
+    },
+    {
+      "source": "The person who is a nurse is directly left of Peter.",
+      "relation": "left",
+      "a": "g5@nurse",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who is an artist is the person who loves the rose bouquet.",
+      "relation": "same",
+      "a": "g5@artist",
+      "b": "g4@roses"
+    },
+    {
+      "source": "The person who drinks Lime smoothies is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g1@lime",
+      "position": 5
+    },
+    {
+      "source": "The cat lover is The person whose mother's name is Sarah.",
+      "relation": "same",
+      "a": "g2@cat",
+      "b": "g3@sarah"
+    },
+    {
+      "source": "Bob is the Desert smoothie lover.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g1@desert"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is in the sixth house.",
+      "relation": "at",
+      "a": "g1@dragonfruit",
+      "position": 6
+    },
+    {
+      "source": "The person who loves the boquet of lilies and The person whose mother's name is Penny are next to each other.",
+      "relation": "next_to",
+      "a": "g4@lilies",
+      "b": "g3@penny"
+    },
+    {
+      "source": "Peter is the bird keeper.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@bird"
+    },
+    {
+      "source": "The person whose mother's name is Kailyn is the person who loves the boquet of iris.",
+      "relation": "same",
+      "a": "g3@kailyn",
+      "b": "g4@iris"
+    },
+    {
+      "source": "Carol is somewhere to the left of the person who likes Cherry smoothies.",
+      "relation": "left",
+      "a": "g0@carol",
+      "b": "g1@cherry"
+    },
+    {
+      "source": "The person who is a doctor is directly left of The person whose mother's name is Holly.",
+      "relation": "left",
+      "a": "g5@doctor",
+      "b": "g3@holly"
+    },
+    {
+      "source": "Bob is The person whose mother's name is Janelle.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g3@janelle"
+    },
+    {
+      "source": "Arnold is in the third house.",
+      "relation": "at",
+      "a": "g0@arnold",
+      "position": 3
+    },
+    {
+      "source": "Alice is the person who is an engineer.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g5@engineer"
+    },
+    {
+      "source": "The Dragonfruit smoothie lover is the person who is an artist.",
+      "relation": "same",
+      "a": "g1@dragonfruit",
+      "b": "g5@artist"
+    },
+    {
+      "source": "The dog owner is directly left of the person who is a teacher.",
+      "relation": "left",
+      "a": "g2@dog",
+      "b": "g5@teacher"
+    },
+    {
+      "source": "The person who keeps horses is The person whose mother's name is Aniya.",
+      "relation": "same",
+      "a": "g2@horse",
+      "b": "g3@aniya"
+    },
+    {
+      "source": "The person who loves the boquet of lilies is directly left of the person who loves a carnations arrangement.",
+      "relation": "left",
+      "a": "g4@lilies",
+      "b": "g4@carnations"
+    },
+    {
+      "source": "There is one house between the Desert smoothie lover and the person who loves a carnations arrangement.",
+      "relation": "distance",
+      "a": "g1@desert",
+      "b": "g4@carnations",
+      "distance": 2
+    },
+    {
+      "source": "The person who drinks Lime smoothies is somewhere to the right of The person whose mother's name is Aniya.",
+      "relation": "right",
+      "a": "g1@lime",
+      "b": "g3@aniya"
+    },
+    {
+      "source": "The person whose mother's name is Kailyn is directly left of the fish enthusiast.",
+      "relation": "left",
+      "a": "g3@kailyn",
+      "b": "g2@fish"
+    },
+    {
+      "source": "The Watermelon smoothie lover is the rabbit owner.",
+      "relation": "same",
+      "a": "g1@watermelon",
+      "b": "g2@rabbit"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@dragonfruit": 6,
+      "g0@arnold": 3,
+      "g5@artist": 6,
+      "g4@roses": 6,
+      "g0@bob": 1,
+      "g1@desert": 1,
+      "g3@janelle": 1,
+      "g4@carnations": 3,
+      "g4@lilies": 1,
+      "g3@penny": 2,
+      "g4@tulips": 2,
+      "g4@iris": 4,
+      "g4@daffodils": 5,
+      "g3@holly": 5,
+      "g3@kailyn": 4,
+      "g3@aniya": 3,
+      "g3@sarah": 6,
+      "g2@cat": 6,
+      "g2@horse": 3,
+      "g2@fish": 5,
+      "g2@dog": 1,
+      "g2@rabbit": 2,
+      "g2@bird": 4,
+      "g0@peter": 4,
+      "g1@watermelon": 2,
+      "g0@carol": 2,
+      "g0@alice": 5,
+      "g0@eric": 6,
+      "g5@engineer": 5,
+      "g1@blueberry": 3,
+      "g1@lime": 4,
+      "g1@cherry": 5,
+      "g5@nurse": 1,
+      "g5@lawyer": 2,
+      "g5@doctor": 3,
+      "g5@teacher": 4
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Smoothie",
+    "g2": "Animal",
+    "g3": "Mother",
+    "g4": "Flower",
+    "g5": "Occupation"
+  }
+}

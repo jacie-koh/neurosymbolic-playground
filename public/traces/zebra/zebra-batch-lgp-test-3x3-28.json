@@ -1,0 +1,83 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-28",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-28)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@peter",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@toyota-camry",
+      "g1@ford-f150",
+      "g1@tesla-model-3"
+    ],
+    "g2": [
+      "g2@brit",
+      "g2@swede",
+      "g2@dane"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The Swedish person is the person who owns a Tesla Model 3.",
+      "relation": "same",
+      "a": "g2@swede",
+      "b": "g1@tesla-model-3"
+    },
+    {
+      "source": "The person who owns a Toyota Camry is not in the first house.",
+      "relation": "not_at",
+      "a": "g1@toyota-camry",
+      "position": 1
+    },
+    {
+      "source": "The person who owns a Tesla Model 3 is directly left of the person who owns a Ford F-150.",
+      "relation": "immediately_left",
+      "a": "g1@tesla-model-3",
+      "b": "g1@ford-f150"
+    },
+    {
+      "source": "The Swedish person and Peter are next to each other.",
+      "relation": "next_to",
+      "a": "g2@swede",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The Swedish person is Eric.",
+      "relation": "same",
+      "a": "g2@swede",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The British person is in the third house.",
+      "relation": "at",
+      "a": "g2@brit",
+      "position": 3
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@brit": 3,
+      "g2@swede": 1,
+      "g2@dane": 2,
+      "g1@tesla-model-3": 1,
+      "g1@ford-f150": 2,
+      "g1@toyota-camry": 3,
+      "g0@peter": 2,
+      "g0@eric": 1,
+      "g0@arnold": 3
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "CarModel",
+    "g2": "Nationality"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-17",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-17)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@arnold",
+      "g0@bob",
+      "g0@alice",
+      "g0@eric",
+      "g0@carol"
+    ],
+    "g1": [
+      "g1@holly",
+      "g1@aniya",
+      "g1@kailyn",
+      "g1@janelle",
+      "g1@penny",
+      "g1@sarah"
+    ],
+    "g2": [
+      "g2@stir-fry",
+      "g2@stew",
+      "g2@spaghetti",
+      "g2@soup",
+      "g2@pizza",
+      "g2@grilled-cheese"
+    ],
+    "g3": [
+      "g3@dog",
+      "g3@horse",
+      "g3@cat",
+      "g3@fish",
+      "g3@rabbit",
+      "g3@bird"
+    ],
+    "g4": [
+      "g4@watermelon",
+      "g4@desert",
+      "g4@lime",
+      "g4@cherry",
+      "g4@blueberry",
+      "g4@dragonfruit"
+    ],
+    "g5": [
+      "g5@mediterranean",
+      "g5@craftsman",
+      "g5@victorian",
+      "g5@colonial",
+      "g5@modern",
+      "g5@ranch"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person whose mother's name is Penny is the person residing in a Victorian house.",
+      "relation": "same",
+      "a": "g1@penny",
+      "b": "g5@victorian"
+    },
+    {
+      "source": "The person in a modern-style house is The person whose mother's name is Kailyn.",
+      "relation": "same",
+      "a": "g5@modern",
+      "b": "g1@kailyn"
+    },
+    {
+      "source": "The person in a modern-style house is somewhere to the right of the person residing in a Victorian house.",
+      "relation": "right",
+      "a": "g5@modern",
+      "b": "g5@victorian"
+    },
+    {
+      "source": "The person who drinks Blueberry smoothies is not in the sixth house.",
+      "relation": "not_at",
+      "a": "g4@blueberry",
+      "position": 6
+    },
+    {
+      "source": "The person whose mother's name is Sarah is the person who drinks Blueberry smoothies.",
+      "relation": "same",
+      "a": "g1@sarah",
+      "b": "g4@blueberry"
+    },
+    {
+      "source": "The person who likes Cherry smoothies is not in the third house.",
+      "relation": "not_at",
+      "a": "g4@cherry",
+      "position": 3
+    },
+    {
+      "source": "The person who likes Cherry smoothies is Eric.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g4@cherry"
+    },
+    {
+      "source": "The person whose mother's name is Janelle is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@janelle",
+      "position": 3
+    },
+    {
+      "source": "The person who loves the spaghetti eater is in the third house.",
+      "relation": "at",
+      "a": "g2@spaghetti",
+      "position": 3
+    },
+    {
+      "source": "The fish enthusiast is The person whose mother's name is Holly.",
+      "relation": "same",
+      "a": "g3@fish",
+      "b": "g1@holly"
+    },
+    {
+      "source": "The person who keeps horses is in the first house.",
+      "relation": "at",
+      "a": "g3@horse",
+      "position": 1
+    },
+    {
+      "source": "The person in a Mediterranean-style villa is the person who loves the stew.",
+      "relation": "same",
+      "a": "g5@mediterranean",
+      "b": "g2@stew"
+    },
+    {
+      "source": "The bird keeper is in the third house.",
+      "relation": "at",
+      "a": "g3@bird",
+      "position": 3
+    },
+    {
+      "source": "The person living in a colonial-style house is the person who drinks Blueberry smoothies.",
+      "relation": "same",
+      "a": "g5@colonial",
+      "b": "g4@blueberry"
+    },
+    {
+      "source": "Carol is the person who keeps horses.",
+      "relation": "same",
+      "a": "g0@carol",
+      "b": "g3@horse"
+    },
+    {
+      "source": "There are two houses between the Desert smoothie lover and Peter.",
+      "relation": "distance",
+      "a": "g4@desert",
+      "b": "g0@peter",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves eating grilled cheese is the Dragonfruit smoothie lover.",
+      "relation": "same",
+      "a": "g2@grilled-cheese",
+      "b": "g4@dragonfruit"
+    },
+    {
+      "source": "The person who is a pizza lover is somewhere to the right of the Dragonfruit smoothie lover.",
+      "relation": "right",
+      "a": "g2@pizza",
+      "b": "g4@dragonfruit"
+    },
+    {
+      "source": "The person whose mother's name is Janelle is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g1@janelle",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Carol is directly left of The person whose mother's name is Aniya.",
+      "relation": "immediately_left",
+      "a": "g0@carol",
+      "b": "g1@aniya"
+    },
+    {
+      "source": "The person in a ranch-style home is The person whose mother's name is Aniya.",
+      "relation": "same",
+      "a": "g5@ranch",
+      "b": "g1@aniya"
+    },
+    {
+      "source": "Arnold is somewhere to the right of the person in a Craftsman-style house.",
+      "relation": "right",
+      "a": "g0@arnold",
+      "b": "g5@craftsman"
+    },
+    {
+      "source": "The cat lover is Bob.",
+      "relation": "same",
+      "a": "g0@bob",
+      "b": "g3@cat"
+    },
+    {
+      "source": "There is one house between the Watermelon smoothie lover and the person who is a pizza lover.",
+      "relation": "distance",
+      "a": "g4@watermelon",
+      "b": "g2@pizza",
+      "distance": 1
+    },
+    {
+      "source": "There are two houses between the cat lover and the person who loves stir fry.",
+      "relation": "distance",
+      "a": "g0@bob",
+      "b": "g2@stir-fry",
+      "distance": 2
+    },
+    {
+      "source": "Arnold is the rabbit owner.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g3@rabbit"
+    },
+    {
+      "source": "Peter is The person whose mother's name is Janelle.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g1@janelle"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@spaghetti": 3,
+      "g3@horse": 1,
+      "g3@bird": 3,
+      "g0@carol": 1,
+      "g1@aniya": 2,
+      "g5@ranch": 2,
+      "g3@cat": 2,
+      "g0@bob": 2,
+      "g2@stir-fry": 4,
+      "g3@dog": 4,
+      "g3@rabbit": 5,
+      "g3@fish": 6,
+      "g1@holly": 6,
+      "g0@arnold": 5,
+      "g0@alice": 3,
+      "g0@peter": 4,
+      "g0@eric": 6,
+      "g4@cherry": 6,
+      "g1@janelle": 4,
+      "g4@desert": 2,
+      "g1@penny": 1,
+      "g5@victorian": 1,
+      "g1@kailyn": 3,
+      "g1@sarah": 5,
+      "g5@modern": 3,
+      "g4@blueberry": 5,
+      "g5@colonial": 5,
+      "g5@craftsman": 4,
+      "g5@mediterranean": 6,
+      "g2@stew": 6,
+      "g2@grilled-cheese": 1,
+      "g4@dragonfruit": 1,
+      "g2@soup": 2,
+      "g2@pizza": 5,
+      "g4@lime": 3,
+      "g4@watermelon": 4
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Mother",
+    "g2": "Food",
+    "g3": "Animal",
+    "g4": "Smoothie",
+    "g5": "HouseStyle"
+  }
+}

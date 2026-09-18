@@ -1,0 +1,83 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-11",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-11)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@arnold",
+      "g0@eric",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@grilled-cheese",
+      "g1@spaghetti",
+      "g1@pizza"
+    ],
+    "g2": [
+      "g2@blonde",
+      "g2@black",
+      "g2@brown"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who has brown hair is not in the second house.",
+      "relation": "not_at",
+      "a": "g2@brown",
+      "position": 2
+    },
+    {
+      "source": "The person who is a pizza lover is not in the third house.",
+      "relation": "not_at",
+      "a": "g1@pizza",
+      "position": 3
+    },
+    {
+      "source": "The person who has brown hair is not in the first house.",
+      "relation": "not_at",
+      "a": "g2@brown",
+      "position": 1
+    },
+    {
+      "source": "Peter is somewhere to the left of the person who has blonde hair.",
+      "relation": "left",
+      "a": "g0@peter",
+      "b": "g2@blonde"
+    },
+    {
+      "source": "The person who loves the spaghetti eater is Arnold.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@spaghetti"
+    },
+    {
+      "source": "Eric is the person who is a pizza lover.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g1@pizza"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@brown": 3,
+      "g2@black": 1,
+      "g2@blonde": 2,
+      "g0@peter": 1,
+      "g0@eric": 2,
+      "g0@arnold": 3,
+      "g1@spaghetti": 3,
+      "g1@pizza": 2,
+      "g1@grilled-cheese": 1
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Food",
+    "g2": "HairColor"
+  }
+}

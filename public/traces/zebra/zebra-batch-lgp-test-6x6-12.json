@@ -1,0 +1,280 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-12",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-12)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@arnold",
+      "g0@carol",
+      "g0@alice",
+      "g0@eric",
+      "g0@bob"
+    ],
+    "g1": [
+      "g1@pop",
+      "g1@hip-hop",
+      "g1@rock",
+      "g1@jazz",
+      "g1@classical",
+      "g1@country"
+    ],
+    "g2": [
+      "g2@fish",
+      "g2@dog",
+      "g2@cat",
+      "g2@rabbit",
+      "g2@horse",
+      "g2@bird"
+    ],
+    "g3": [
+      "g3@modern",
+      "g3@colonial",
+      "g3@mediterranean",
+      "g3@ranch",
+      "g3@victorian",
+      "g3@craftsman"
+    ],
+    "g4": [
+      "g4@gardening",
+      "g4@woodworking",
+      "g4@knitting",
+      "g4@cooking",
+      "g4@painting",
+      "g4@photography"
+    ],
+    "g5": [
+      "g5@brit",
+      "g5@german",
+      "g5@norwegian",
+      "g5@swede",
+      "g5@dane",
+      "g5@chinese"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The cat lover is the person in a Mediterranean-style villa.",
+      "relation": "same",
+      "a": "g2@cat",
+      "b": "g3@mediterranean"
+    },
+    {
+      "source": "The person who loves country music is somewhere to the right of the rabbit owner.",
+      "relation": "right",
+      "a": "g1@country",
+      "b": "g2@rabbit"
+    },
+    {
+      "source": "The person who loves pop music is not in the second house.",
+      "relation": "not_at",
+      "a": "g1@pop",
+      "position": 2
+    },
+    {
+      "source": "Alice is somewhere to the right of Arnold.",
+      "relation": "right",
+      "a": "g0@alice",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who loves jazz music and the photography enthusiast are next to each other.",
+      "relation": "next_to",
+      "a": "g1@jazz",
+      "b": "g4@photography"
+    },
+    {
+      "source": "The person who loves rock music is the German.",
+      "relation": "same",
+      "a": "g1@rock",
+      "b": "g5@german"
+    },
+    {
+      "source": "The woodworking hobbyist is somewhere to the right of the person in a modern-style house.",
+      "relation": "right",
+      "a": "g4@woodworking",
+      "b": "g3@modern"
+    },
+    {
+      "source": "The person who loves hip-hop music is the Norwegian.",
+      "relation": "same",
+      "a": "g1@hip-hop",
+      "b": "g5@norwegian"
+    },
+    {
+      "source": "The cat lover is somewhere to the left of the woodworking hobbyist.",
+      "relation": "left",
+      "a": "g2@cat",
+      "b": "g4@woodworking"
+    },
+    {
+      "source": "Alice is the person who paints as a hobby.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g4@painting"
+    },
+    {
+      "source": "The person in a Craftsman-style house is Carol.",
+      "relation": "same",
+      "a": "g3@craftsman",
+      "b": "g0@carol"
+    },
+    {
+      "source": "Peter is the fish enthusiast.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g2@fish"
+    },
+    {
+      "source": "The person who loves hip-hop music is not in the fifth house.",
+      "relation": "not_at",
+      "a": "g1@hip-hop",
+      "position": 5
+    },
+    {
+      "source": "The person who loves pop music is not in the sixth house.",
+      "relation": "not_at",
+      "a": "g1@pop",
+      "position": 6
+    },
+    {
+      "source": "The person who loves cooking is somewhere to the left of the Swedish person.",
+      "relation": "left",
+      "a": "g4@cooking",
+      "b": "g5@swede"
+    },
+    {
+      "source": "The Dane is directly left of the person who keeps horses.",
+      "relation": "immediately_left",
+      "a": "g5@dane",
+      "b": "g2@horse"
+    },
+    {
+      "source": "The rabbit owner is somewhere to the left of the British person.",
+      "relation": "left",
+      "a": "g2@rabbit",
+      "b": "g5@brit"
+    },
+    {
+      "source": "There is one house between Alice and the person who loves country music.",
+      "relation": "distance",
+      "a": "g0@alice",
+      "b": "g1@country",
+      "distance": 2
+    },
+    {
+      "source": "The person who paints as a hobby is the person living in a colonial-style house.",
+      "relation": "same",
+      "a": "g4@painting",
+      "b": "g3@colonial"
+    },
+    {
+      "source": "The German is somewhere to the left of the photography enthusiast.",
+      "relation": "left",
+      "a": "g5@german",
+      "b": "g4@photography"
+    },
+    {
+      "source": "Eric is the Norwegian.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g5@norwegian"
+    },
+    {
+      "source": "The person residing in a Victorian house is directly left of the person who enjoys gardening.",
+      "relation": "immediately_left",
+      "a": "g3@victorian",
+      "b": "g4@gardening"
+    },
+    {
+      "source": "There are two houses between the person who loves cooking and the person who loves classical music.",
+      "relation": "distance",
+      "a": "g4@cooking",
+      "b": "g1@classical",
+      "distance": 2
+    },
+    {
+      "source": "The bird keeper is the person who loves cooking.",
+      "relation": "same",
+      "a": "g2@bird",
+      "b": "g4@cooking"
+    },
+    {
+      "source": "The cat lover is directly left of Bob.",
+      "relation": "immediately_left",
+      "a": "g2@cat",
+      "b": "g0@bob"
+    },
+    {
+      "source": "Eric is not in the first house.",
+      "relation": "not_at",
+      "a": "g0@eric",
+      "position": 1
+    },
+    {
+      "source": "Carol is somewhere to the right of the German.",
+      "relation": "right",
+      "a": "g0@carol",
+      "b": "g5@german"
+    },
+    {
+      "source": "The rabbit owner is directly left of the person in a modern-style house.",
+      "relation": "immediately_left",
+      "a": "g2@rabbit",
+      "b": "g3@modern"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@pop": 1,
+      "g1@hip-hop": 2,
+      "g5@norwegian": 2,
+      "g0@eric": 2,
+      "g1@rock": 3,
+      "g5@german": 3,
+      "g1@jazz": 4,
+      "g1@classical": 5,
+      "g1@country": 6,
+      "g0@alice": 4,
+      "g4@painting": 4,
+      "g3@colonial": 4,
+      "g4@cooking": 3,
+      "g2@bird": 3,
+      "g4@photography": 5,
+      "g4@knitting": 1,
+      "g4@gardening": 2,
+      "g4@woodworking": 6,
+      "g3@victorian": 1,
+      "g0@arnold": 1,
+      "g0@bob": 3,
+      "g2@cat": 2,
+      "g3@mediterranean": 2,
+      "g0@peter": 5,
+      "g0@carol": 6,
+      "g3@craftsman": 6,
+      "g2@fish": 5,
+      "g3@ranch": 3,
+      "g3@modern": 5,
+      "g2@rabbit": 4,
+      "g2@dog": 1,
+      "g2@horse": 6,
+      "g5@dane": 5,
+      "g5@brit": 6,
+      "g5@chinese": 1,
+      "g5@swede": 4
+    },
+    "unique": false
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "MusicGenre",
+    "g2": "Animal",
+    "g3": "HouseStyle",
+    "g4": "Hobby",
+    "g5": "Nationality"
+  }
+}

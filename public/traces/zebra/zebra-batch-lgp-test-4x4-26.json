@@ -1,0 +1,118 @@
+{
+  "id": "zebra-batch-lgp-test-4x4-26",
+  "title": "ZebraLogic 4-house puzzle (id lgp-test-4x4-26)",
+  "size": 4,
+  "groups": {
+    "g0": [
+      "g0@eric",
+      "g0@arnold",
+      "g0@peter",
+      "g0@alice"
+    ],
+    "g1": [
+      "g1@spaghetti",
+      "g1@pizza",
+      "g1@stew",
+      "g1@grilled-cheese"
+    ],
+    "g2": [
+      "g2@tesla-model-3",
+      "g2@honda-civic",
+      "g2@toyota-camry",
+      "g2@ford-f150"
+    ],
+    "g3": [
+      "g3@fish",
+      "g3@cat",
+      "g3@bird",
+      "g3@horse"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The cat lover is somewhere to the right of the fish enthusiast.",
+      "relation": "right",
+      "a": "g3@cat",
+      "b": "g3@fish"
+    },
+    {
+      "source": "Eric is the person who owns a Ford F-150.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@ford-f150"
+    },
+    {
+      "source": "The person who owns a Honda Civic is in the fourth house.",
+      "relation": "at",
+      "a": "g2@honda-civic",
+      "position": 4
+    },
+    {
+      "source": "The person who is a pizza lover is the fish enthusiast.",
+      "relation": "same",
+      "a": "g1@pizza",
+      "b": "g3@fish"
+    },
+    {
+      "source": "The person who keeps horses is somewhere to the left of Arnold.",
+      "relation": "left",
+      "a": "g3@horse",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Arnold is the person who loves the spaghetti eater.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@spaghetti"
+    },
+    {
+      "source": "The person who owns a Toyota Camry is the person who loves the stew.",
+      "relation": "same",
+      "a": "g2@toyota-camry",
+      "b": "g1@stew"
+    },
+    {
+      "source": "Alice and Arnold are next to each other.",
+      "relation": "next_to",
+      "a": "g0@alice",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "Alice is in the first house.",
+      "relation": "at",
+      "a": "g0@alice",
+      "position": 1
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@honda-civic": 4,
+      "g0@alice": 1,
+      "g0@arnold": 2,
+      "g3@horse": 1,
+      "g1@spaghetti": 2,
+      "g0@eric": 3,
+      "g0@peter": 4,
+      "g2@ford-f150": 3,
+      "g2@toyota-camry": 1,
+      "g2@tesla-model-3": 2,
+      "g1@stew": 1,
+      "g1@pizza": 3,
+      "g1@grilled-cheese": 4,
+      "g3@fish": 3,
+      "g3@cat": 4,
+      "g3@bird": 2
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Food",
+    "g2": "CarModel",
+    "g3": "Animal"
+  }
+}

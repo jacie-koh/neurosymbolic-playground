@@ -1,0 +1,275 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-1",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-1)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@bob",
+      "g0@peter",
+      "g0@arnold",
+      "g0@eric",
+      "g0@alice",
+      "g0@carol"
+    ],
+    "g1": [
+      "g1@red",
+      "g1@gray",
+      "g1@auburn",
+      "g1@blonde",
+      "g1@brown",
+      "g1@black"
+    ],
+    "g2": [
+      "g2@historical-fiction",
+      "g2@biography",
+      "g2@romance",
+      "g2@fantasy",
+      "g2@mystery",
+      "g2@science-fiction"
+    ],
+    "g3": [
+      "g3@very-short",
+      "g3@very-tall",
+      "g3@tall",
+      "g3@short",
+      "g3@super-tall",
+      "g3@average"
+    ],
+    "g4": [
+      "g4@associate",
+      "g4@doctorate",
+      "g4@high-school",
+      "g4@trade-school",
+      "g4@bachelor",
+      "g4@master"
+    ],
+    "g5": [
+      "g5@boba-tea",
+      "g5@milk",
+      "g5@water",
+      "g5@root-beer",
+      "g5@coffee",
+      "g5@tea"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person with a doctorate and Bob are next to each other.",
+      "relation": "next_to",
+      "a": "g0@peter",
+      "b": "g0@bob"
+    },
+    {
+      "source": "There is one house between Carol and the person who has black hair.",
+      "relation": "distance",
+      "a": "g0@carol",
+      "b": "g1@black",
+      "distance": 2
+    },
+    {
+      "source": "Peter is the person with a doctorate.",
+      "relation": "same",
+      "a": "g0@peter",
+      "b": "g4@doctorate"
+    },
+    {
+      "source": "The person who loves science fiction books is Eric.",
+      "relation": "same",
+      "a": "g2@science-fiction",
+      "b": "g0@eric"
+    },
+    {
+      "source": "The one who only drinks water is the person who has an average height.",
+      "relation": "same",
+      "a": "g5@water",
+      "b": "g3@average"
+    },
+    {
+      "source": "Alice is the person who loves mystery books.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g2@mystery"
+    },
+    {
+      "source": "The person who loves romance books is Bob.",
+      "relation": "same",
+      "a": "g2@romance",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who has brown hair is in the second house.",
+      "relation": "at",
+      "a": "g1@brown",
+      "position": 2
+    },
+    {
+      "source": "The person who has an average height is in the fourth house.",
+      "relation": "at",
+      "a": "g3@average",
+      "position": 4
+    },
+    {
+      "source": "The boba tea drinker is the person who is very tall.",
+      "relation": "same",
+      "a": "g5@boba-tea",
+      "b": "g3@very-tall"
+    },
+    {
+      "source": "The person with a high school diploma is Bob.",
+      "relation": "same",
+      "a": "g4@high-school",
+      "b": "g0@bob"
+    },
+    {
+      "source": "The person who is short is somewhere to the left of the person who is super tall.",
+      "relation": "left",
+      "a": "g3@short",
+      "b": "g3@super-tall"
+    },
+    {
+      "source": "The person who loves historical fiction books and the person with a bachelor's degree are next to each other.",
+      "relation": "next_to",
+      "a": "g2@historical-fiction",
+      "b": "g4@bachelor"
+    },
+    {
+      "source": "The person who attended trade school is the person who has red hair.",
+      "relation": "same",
+      "a": "g4@trade-school",
+      "b": "g1@red"
+    },
+    {
+      "source": "Carol is the person who has auburn hair.",
+      "relation": "same",
+      "a": "g0@carol",
+      "b": "g1@auburn"
+    },
+    {
+      "source": "There are two houses between Eric and the person who loves fantasy books.",
+      "relation": "distance",
+      "a": "g0@eric",
+      "b": "g2@fantasy",
+      "distance": 2
+    },
+    {
+      "source": "There are two houses between the tea drinker and the person who is very short.",
+      "relation": "distance",
+      "a": "g5@tea",
+      "b": "g3@very-short",
+      "distance": 2
+    },
+    {
+      "source": "Eric is somewhere to the left of the person with a bachelor's degree.",
+      "relation": "left",
+      "a": "g0@eric",
+      "b": "g4@bachelor"
+    },
+    {
+      "source": "The root beer lover is Alice.",
+      "relation": "same",
+      "a": "g5@root-beer",
+      "b": "g0@alice"
+    },
+    {
+      "source": "The person with an associate's degree is Arnold.",
+      "relation": "same",
+      "a": "g4@associate",
+      "b": "g0@arnold"
+    },
+    {
+      "source": "The person who is tall is not in the second house.",
+      "relation": "not_at",
+      "a": "g3@tall",
+      "position": 2
+    },
+    {
+      "source": "The person who loves science fiction books is the boba tea drinker.",
+      "relation": "same",
+      "a": "g2@science-fiction",
+      "b": "g5@boba-tea"
+    },
+    {
+      "source": "The person who has black hair is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g1@black",
+      "position": 4
+    },
+    {
+      "source": "The person who is short is the coffee drinker.",
+      "relation": "same",
+      "a": "g3@short",
+      "b": "g5@coffee"
+    },
+    {
+      "source": "The coffee drinker and the person with a high school diploma are next to each other.",
+      "relation": "next_to",
+      "a": "g5@coffee",
+      "b": "g4@high-school"
+    },
+    {
+      "source": "The coffee drinker is not in the second house.",
+      "relation": "not_at",
+      "a": "g5@coffee",
+      "position": 2
+    },
+    {
+      "source": "The person who is very short is somewhere to the right of the person who has gray hair.",
+      "relation": "right",
+      "a": "g3@very-short",
+      "b": "g1@gray"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g1@brown": 2,
+      "g3@average": 4,
+      "g5@water": 4,
+      "g1@gray": 1,
+      "g1@red": 3,
+      "g4@trade-school": 3,
+      "g1@auburn": 4,
+      "g0@carol": 4,
+      "g1@blonde": 5,
+      "g1@black": 6,
+      "g0@arnold": 1,
+      "g4@associate": 1,
+      "g0@eric": 2,
+      "g2@science-fiction": 2,
+      "g2@fantasy": 4,
+      "g5@boba-tea": 2,
+      "g3@very-tall": 2,
+      "g0@alice": 3,
+      "g2@mystery": 3,
+      "g5@root-beer": 3,
+      "g0@peter": 5,
+      "g0@bob": 6,
+      "g4@doctorate": 5,
+      "g2@romance": 6,
+      "g4@high-school": 6,
+      "g5@coffee": 5,
+      "g3@short": 5,
+      "g3@super-tall": 6,
+      "g2@biography": 1,
+      "g2@historical-fiction": 5,
+      "g3@tall": 1,
+      "g3@very-short": 3,
+      "g4@master": 2,
+      "g4@bachelor": 4,
+      "g5@tea": 1,
+      "g5@milk": 6
+    },
+    "unique": true
+  },
+  "referenceMatch": false,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HairColor",
+    "g2": "BookGenre",
+    "g3": "Height",
+    "g4": "Education",
+    "g5": "Drink"
+  }
+}

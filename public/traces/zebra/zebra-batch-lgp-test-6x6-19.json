@@ -1,0 +1,268 @@
+{
+  "id": "zebra-batch-lgp-test-6x6-19",
+  "title": "ZebraLogic 6-house puzzle (id lgp-test-6x6-19)",
+  "size": 6,
+  "groups": {
+    "g0": [
+      "g0@carol",
+      "g0@arnold",
+      "g0@bob",
+      "g0@alice",
+      "g0@eric",
+      "g0@peter"
+    ],
+    "g1": [
+      "g1@carnations",
+      "g1@tulips",
+      "g1@lilies",
+      "g1@roses",
+      "g1@daffodils",
+      "g1@iris"
+    ],
+    "g2": [
+      "g2@science-fiction",
+      "g2@fantasy",
+      "g2@romance",
+      "g2@mystery",
+      "g2@biography",
+      "g2@historical-fiction"
+    ],
+    "g3": [
+      "g3@huawei-p50",
+      "g3@oneplus-9",
+      "g3@iphone-13",
+      "g3@xiaomi-mi-11",
+      "g3@samsung-galaxy-s21",
+      "g3@google-pixel-6"
+    ],
+    "g4": [
+      "g4@black",
+      "g4@gray",
+      "g4@red",
+      "g4@auburn",
+      "g4@blonde",
+      "g4@brown"
+    ],
+    "g5": [
+      "g5@yellow",
+      "g5@green",
+      "g5@red",
+      "g5@white",
+      "g5@blue",
+      "g5@purple"
+    ]
+  },
+  "clues": [
+    {
+      "source": "There is one house between the person who has gray hair and the person who uses an iPhone 13.",
+      "relation": "distance",
+      "a": "g4@gray",
+      "b": "g3@iphone-13",
+      "distance": 2
+    },
+    {
+      "source": "The person who loves the rose bouquet is the person who has blonde hair.",
+      "relation": "same",
+      "a": "g1@roses",
+      "b": "g4@blonde"
+    },
+    {
+      "source": "There is one house between the person who has gray hair and the person who loves yellow.",
+      "relation": "distance",
+      "a": "g4@gray",
+      "b": "g5@yellow",
+      "distance": 2
+    },
+    {
+      "source": "Carol is somewhere to the right of the person who loves a bouquet of daffodils.",
+      "relation": "right",
+      "a": "g0@carol",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person who loves white is somewhere to the left of Peter.",
+      "relation": "left",
+      "a": "g5@white",
+      "b": "g0@peter"
+    },
+    {
+      "source": "The person who loves white is somewhere to the left of the person who loves science fiction books.",
+      "relation": "left",
+      "a": "g5@white",
+      "b": "g2@science-fiction"
+    },
+    {
+      "source": "Arnold is directly left of the person who loves historical fiction books.",
+      "relation": "immediately_left",
+      "a": "g0@arnold",
+      "b": "g2@historical-fiction"
+    },
+    {
+      "source": "The person who uses a Huawei P50 is the person who loves a bouquet of daffodils.",
+      "relation": "same",
+      "a": "g3@huawei-p50",
+      "b": "g1@daffodils"
+    },
+    {
+      "source": "The person who loves purple is somewhere to the left of the person who loves fantasy books.",
+      "relation": "left",
+      "a": "g5@purple",
+      "b": "g2@fantasy"
+    },
+    {
+      "source": "Eric is the person who loves science fiction books.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@science-fiction"
+    },
+    {
+      "source": "The person who loves a bouquet of daffodils is the person who has auburn hair.",
+      "relation": "same",
+      "a": "g1@daffodils",
+      "b": "g4@auburn"
+    },
+    {
+      "source": "Alice is the person whose favorite color is green.",
+      "relation": "same",
+      "a": "g0@alice",
+      "b": "g5@green"
+    },
+    {
+      "source": "The person who loves fantasy books is in the second house.",
+      "relation": "at",
+      "a": "g2@fantasy",
+      "position": 2
+    },
+    {
+      "source": "The person who uses a Samsung Galaxy S21 is Carol.",
+      "relation": "same",
+      "a": "g3@samsung-galaxy-s21",
+      "b": "g0@carol"
+    },
+    {
+      "source": "The person who uses a Xiaomi Mi 11 is not in the fourth house.",
+      "relation": "not_at",
+      "a": "g3@xiaomi-mi-11",
+      "position": 4
+    },
+    {
+      "source": "Eric is the person who has auburn hair.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g4@auburn"
+    },
+    {
+      "source": "The person who loves the rose bouquet is somewhere to the left of the person who has red hair.",
+      "relation": "left",
+      "a": "g1@roses",
+      "b": "g4@red"
+    },
+    {
+      "source": "The person who loves historical fiction books is the person who loves the rose bouquet.",
+      "relation": "same",
+      "a": "g2@historical-fiction",
+      "b": "g1@roses"
+    },
+    {
+      "source": "The person who uses a Xiaomi Mi 11 is somewhere to the right of the person who loves white.",
+      "relation": "right",
+      "a": "g3@xiaomi-mi-11",
+      "b": "g5@white"
+    },
+    {
+      "source": "The person who has black hair is in the fourth house.",
+      "relation": "at",
+      "a": "g4@black",
+      "position": 4
+    },
+    {
+      "source": "The person whose favorite color is red is the person who loves mystery books.",
+      "relation": "same",
+      "a": "g5@red",
+      "b": "g2@mystery"
+    },
+    {
+      "source": "The person who loves historical fiction books and the person who loves the vase of tulips are next to each other.",
+      "relation": "next_to",
+      "a": "g2@historical-fiction",
+      "b": "g1@tulips"
+    },
+    {
+      "source": "The person who has brown hair is the person who uses a OnePlus 9.",
+      "relation": "same",
+      "a": "g4@brown",
+      "b": "g3@oneplus-9"
+    },
+    {
+      "source": "The person who loves romance books is somewhere to the left of the person who loves fantasy books.",
+      "relation": "left",
+      "a": "g2@romance",
+      "b": "g2@fantasy"
+    },
+    {
+      "source": "The person who loves the boquet of lilies is in the second house.",
+      "relation": "at",
+      "a": "g1@lilies",
+      "position": 2
+    },
+    {
+      "source": "The person who loves the boquet of iris is somewhere to the right of the person whose favorite color is green.",
+      "relation": "right",
+      "a": "g1@iris",
+      "b": "g5@green"
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@fantasy": 2,
+      "g5@purple": 1,
+      "g4@black": 4,
+      "g2@romance": 1,
+      "g1@lilies": 2,
+      "g2@historical-fiction": 3,
+      "g0@arnold": 2,
+      "g1@roses": 3,
+      "g4@blonde": 3,
+      "g1@tulips": 4,
+      "g1@carnations": 1,
+      "g1@daffodils": 5,
+      "g1@iris": 6,
+      "g0@carol": 6,
+      "g3@huawei-p50": 5,
+      "g4@auburn": 5,
+      "g3@samsung-galaxy-s21": 6,
+      "g0@eric": 5,
+      "g2@science-fiction": 5,
+      "g2@biography": 4,
+      "g2@mystery": 6,
+      "g5@red": 6,
+      "g0@bob": 1,
+      "g0@alice": 3,
+      "g0@peter": 4,
+      "g5@green": 3,
+      "g4@brown": 1,
+      "g3@oneplus-9": 1,
+      "g4@gray": 2,
+      "g4@red": 6,
+      "g3@iphone-13": 4,
+      "g5@yellow": 4,
+      "g3@google-pixel-6": 2,
+      "g3@xiaomi-mi-11": 3,
+      "g5@white": 2,
+      "g5@blue": 5
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Flower",
+    "g2": "BookGenre",
+    "g3": "PhoneModel",
+    "g4": "HairColor",
+    "g5": "Color"
+  }
+}

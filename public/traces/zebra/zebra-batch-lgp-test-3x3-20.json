@@ -1,0 +1,77 @@
+{
+  "id": "zebra-batch-lgp-test-3x3-20",
+  "title": "ZebraLogic 3-house puzzle (id lgp-test-3x3-20)",
+  "size": 3,
+  "groups": {
+    "g0": [
+      "g0@peter",
+      "g0@eric",
+      "g0@arnold"
+    ],
+    "g1": [
+      "g1@gardening",
+      "g1@photography",
+      "g1@cooking"
+    ],
+    "g2": [
+      "g2@dog",
+      "g2@fish",
+      "g2@cat"
+    ]
+  },
+  "clues": [
+    {
+      "source": "The person who owns a dog is in the first house.",
+      "relation": "at",
+      "a": "g2@dog",
+      "position": 1
+    },
+    {
+      "source": "The person who loves cooking is in the second house.",
+      "relation": "at",
+      "a": "g1@cooking",
+      "position": 2
+    },
+    {
+      "source": "Eric is the person who has a cat.",
+      "relation": "same",
+      "a": "g0@eric",
+      "b": "g2@cat"
+    },
+    {
+      "source": "Arnold is the person who enjoys gardening.",
+      "relation": "same",
+      "a": "g0@arnold",
+      "b": "g1@gardening"
+    },
+    {
+      "source": "The person who enjoys gardening is in the third house.",
+      "relation": "at",
+      "a": "g1@gardening",
+      "position": 3
+    }
+  ],
+  "parseAttempts": 1,
+  "result": {
+    "status": "sat",
+    "solution": {
+      "g2@dog": 1,
+      "g1@cooking": 2,
+      "g1@gardening": 3,
+      "g1@photography": 1,
+      "g0@arnold": 3,
+      "g0@peter": 1,
+      "g0@eric": 2,
+      "g2@cat": 2,
+      "g2@fish": 3
+    },
+    "unique": true
+  },
+  "referenceMatch": true,
+  "verification": "encoded_constraints_only; cross-checked against the real ZebraLogic recorded solution",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "Hobby",
+    "g2": "Pet"
+  }
+}
