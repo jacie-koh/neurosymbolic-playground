@@ -176,7 +176,6 @@ button {
   line-height: 1.45;
 }
 .fit-card {
-  margin-top: 2px;
   padding: 7px 10px;
   background: var(--bg);
   border: 1px solid var(--line);
