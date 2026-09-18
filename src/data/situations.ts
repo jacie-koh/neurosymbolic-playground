@@ -93,7 +93,7 @@ export const SITUATIONS: Situation[] = [
   {
     id: "sudoku",
     title: "Sudoku Solver",
-    tagline: "Read each cell digit from a grid image, then satisfy all constraints.",
+    tagline: "Read each cell digit from a grid image, then satisfy every row, column, and box constraint.",
     icon: ICON_SUDOKU,
     perception: "Recognize each digit in a 9×9 grid from pixel-rendered images.",
     reasoning: "Apply Sudoku constraints: each row, column, and 3×3 box must contain digits 1–9 exactly once.",
@@ -115,7 +115,7 @@ export const SITUATIONS: Situation[] = [
   {
     id: "hitori",
     title: "Hitori Puzzle Solver",
-    tagline: "Read a grid of numbers, mark cells to block duplicates and isolate groups.",
+    tagline: "Shade cells to remove every duplicate in each row and column, while keeping the rest connected.",
     icon: ICON_HITORI,
     perception: "N/A — the grid is given directly; there is no perception stage for this puzzle.",
     reasoning: "Prove each cell's value is forced by contradiction, then explain the proof in prose.",
@@ -157,7 +157,7 @@ export const SITUATIONS: Situation[] = [
   {
     id: "visual-discrimination",
     title: "Visual Discrimination Puzzle",
-    tagline: "Look at example and candidate scenes, then find the rule that picks out the right one.",
+    tagline: "Compare example and candidate scenes to find the rule that picks out the right one.",
     icon: ICON_VDP,
     perception: "Detect objects and their attributes/relations (shape, color, size, material, left-of, etc.) in each scene.",
     reasoning: "Search a bounded first-order logic fragment for a discriminating rule, verified independently.",
@@ -177,7 +177,7 @@ export const SITUATIONS: Situation[] = [
   {
     id: "zebra-puzzle",
     title: "Zebra Puzzle",
-    tagline: "Read clues describing 5 people and their attributes; deduce who owns the zebra.",
+    tagline: "Read numbered clues about people and their attributes, then deduce who has what.",
     icon: ICON_ZEBRA,
     perception: "Parse written clues and encode them as logical predicates.",
     reasoning: "Apply constraint propagation and backtracking to find the unique consistent assignment.",

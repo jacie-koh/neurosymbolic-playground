@@ -31,9 +31,10 @@ export function renderSituations(root: HTMLElement): void {
       el("h3", {}, s.title),
       el("p", { class: "tagline" }, s.tagline),
       el(
-        "p",
-        { class: "tagline", style: { fontSize: "12px" } },
-        `Symbolic fit: ${METHODS[s.suggestedMethod].label}`
+        "div",
+        { class: "fit-card" },
+        el("div", { class: "fit-card-label" }, "Symbolic fit"),
+        el("div", { class: "fit-card-value" }, METHODS[s.suggestedMethod].label)
       )
     );
   });

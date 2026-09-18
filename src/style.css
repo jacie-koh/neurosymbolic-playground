@@ -175,6 +175,26 @@ button {
   color: var(--muted);
   line-height: 1.45;
 }
+.fit-card {
+  margin-top: 2px;
+  padding: 7px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.fit-card-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.fit-card-value {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
 .complexity {
   display: inline-flex;
   gap: 3px;
