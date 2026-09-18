@@ -286,5 +286,17 @@
     "hasDeadClue": false,
     "deadClueIndex": null,
     "hasConflictRetry": true
+  },
+  {
+    "id": "zebra-dead-rule-demo",
+    "file": "zebra-dead-rule-demo.json",
+    "houses": 3,
+    "categories": 2,
+    "status": "sat",
+    "parseAttempts": null,
+    "hasBacktrack": false,
+    "hasDeadClue": true,
+    "deadClueIndex": 4,
+    "hasConflictRetry": false
   }
 ]
