@@ -376,7 +376,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         ? el(
             "button",
             { class: "btn", style: { padding: "3px 8px", fontSize: "11px" }, onclick: () => { evidenceExpanded = !evidenceExpanded; drawBody(); } },
-            evidenceExpanded ? "Show fewer" : `Show all ${evidence.length} (this cell's unsat core grew as more of the grid became known)`
+            evidenceExpanded ? "Show fewer" : `Show all ${evidence.length} lines`
           )
         : "";
     return el("div", {}, list, toggle);
@@ -451,17 +451,17 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       el(
         "div",
         { class: "muted", style: { fontSize: "11px", marginTop: "6px" } },
-        "The unsat core above names WHICH assertions are jointly unsatisfiable; the real Z3 derivation below shows HOW -- z3.Solver.proof() itself, not a gloss of it:"
+        "Above: which assertions conflict. Below: the actual proof of how."
       ),
       coreBox,
       proofBox,
-      el(
-        "div",
-        { class: "muted", style: { fontSize: "11px", marginTop: "4px" } },
-        truncated
-          ? `This is Z3's actual resolution proof (unit-resolution/asserted/mp steps), shown up to ${d.z3_proof.length.toLocaleString()} of its real ${d.z3_proof_full_length.toLocaleString()} characters -- connectivity-kind deductions genuinely produce proofs this large (Z3's arithmetic-reasoning proofs are inherently verbose), so it trails off here rather than shipping the whole thing.`
-          : "This is Z3's actual resolution proof (unit-resolution/asserted/mp steps) in full, not a gloss of it."
-      )
+      truncated
+        ? el(
+            "div",
+            { class: "muted", style: { fontSize: "11px", marginTop: "4px" } },
+            `Shown up to ${d.z3_proof.length.toLocaleString()} of ${d.z3_proof_full_length.toLocaleString()} characters -- connectivity-kind deductions genuinely produce proofs this large, so it trails off here.`
+          )
+        : ""
     );
   }
 
