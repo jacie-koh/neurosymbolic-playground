@@ -128,7 +128,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         sourceImage = el(
           "div",
           { style: { flex: "0 0 auto" } },
-          el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
+          el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, "Source image"),
           el("img", {
             src: t.imageUrl,
             alt: `Real ${t.style} photo of ${t.title}`,
@@ -262,7 +262,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     const status = el(
       "div",
       { class: "note", style: { marginTop: "16px" } },
-      el("b", {}, "Client-side re-solve: "),
+      el("b", {}, "Current grid: "),
       solve.status === "sat"
         ? `satisfiable${conflicts.length === 0 ? "" : " (conflicts remain in the given clues)"}. ` +
           "Solver-filled cells are shown in gray on the grid above."
@@ -273,10 +273,10 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       "div",
       { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
       loopActive()
-        ? `${t.title} · ${t.style} · Neural ↔ Symbolic (correction loop) · offline pipeline result: ${t.result.status}` +
+        ? `${t.title} · Neural ↔ Symbolic (correction loop) · offline pipeline result: ${t.result.status}` +
           (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
           (t.correctionAttempts ? ` · ${t.corrections.length} correction(s) applied over ${t.correctionAttempts} attempt(s)` : " · no corrections needed")
-        : `${t.title} · ${t.style} · one-shot reading (no correction loop) — showing what the CNN read before any correction was tried` +
+        : `${t.title} · one-shot reading (no correction loop)` +
           (t.corrections.length ? `; the real pipeline's correction loop fixed ${t.corrections.length} cell(s) from here` : "")
     );
 

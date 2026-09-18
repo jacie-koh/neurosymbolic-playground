@@ -117,9 +117,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
   // pressing Run/Stop never shifts the page around them.
   const controlsHost = el("div");
   const randomizerHost = el("div");
-  const patternNote = el("p", { class: "muted", style: { fontSize: "12px", marginTop: "-4px" } });
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(controlsHost, randomizerHost, patternNote, body);
+  root.append(controlsHost, randomizerHost, body);
 
   let manifest: VDPManifestEntry[] = [];
 
@@ -139,7 +138,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
     loadVDPTrace(file)
       .then((t) => {
         trace = t;
-        drawPatternNote();
         drawBody();
       })
       .catch(() => {
@@ -149,14 +147,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
           el("button", { class: "btn", onclick: () => selectTrace(file) }, "Retry")
         );
       });
-  }
-
-  function drawPatternNote(): void {
-    const entry = currentEntry();
-    patternNote.textContent = entry
-      ? `${entry.pattern} · ~${entry.objectCount} objects/scene · ` +
-        `formula budget: ${entry.quantifierBound} quantifiers${entry.conjunctBound != null ? `, ${entry.conjunctBound} conjuncts` : ""}`
-      : "";
   }
 
   loadVDPManifest().then((m) => {
@@ -174,7 +164,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
         selectTrace(entry.file);
       },
     });
-    drawPatternNote();
   });
 
   /** "0.json" (the solver's own candidate identifier, a scene filename) -> "Candidate 2"
@@ -385,7 +374,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     const conceptNote = el(
       "div",
       { class: "note", style: { marginTop: "10px" } },
-      el("b", {}, "Intended concept (ground truth, from the paper's own puzzle generator): "),
+      el("b", {}, "What the puzzle is testing for: "),
       `"${t.intendedConcept}"`
     );
 
