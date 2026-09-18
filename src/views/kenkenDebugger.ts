@@ -204,7 +204,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
 
         let liveBg: string | null = null;
         if (isLiveCorrectionTarget) {
-          liveBg = liveCorrectionKind === "corrected" ? "#e3f6e8" : liveCorrectionKind === "revert" ? "#fdecec" : "#fff4d6";
+          liveBg = liveCorrectionKind === "corrected" ? "rgba(46, 204, 113, 0.16)" : liveCorrectionKind === "revert" ? "rgba(255, 68, 68, 0.16)" : "rgba(255, 170, 0, 0.16)";
         }
 
         grid.append(
@@ -219,7 +219,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
                 borderRight: right !== cageIdx ? "3px solid var(--line-strong)" : baseBorder,
                 borderBottom: down !== cageIdx ? "3px solid var(--line-strong)" : baseBorder,
                 borderRadius: "4px",
-                background: liveBg ?? (isCorrected ? "#fdecdc" : "var(--panel)"),
+                background: liveBg ?? (isCorrected ? "rgba(245, 147, 34, 0.16)" : "var(--panel)"),
                 fontWeight: "700",
                 fontSize: "16px",
                 cursor: "pointer",

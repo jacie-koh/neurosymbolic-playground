@@ -325,7 +325,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
           style: {
             width: "100%",
             borderRadius: "6px",
-            border: isFreshPick ? "3px solid #f59322" : "1px solid var(--line)",
+            border: isFreshPick ? "3px solid var(--neural)" : "1px solid var(--line)",
             display: "block",
           },
         }),

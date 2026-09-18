@@ -139,10 +139,10 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         const isShaded = shaded[r][c];
         let background = "var(--panel)";
         let color = "inherit";
-        if (key === deducedCell) { background = "#0877bd"; color = "#fff"; }
-        else if (highlighted.has(key)) { background = "#eef5fb"; }
-        else if (isShaded) { background = "#263238"; color = "#fff"; }
-        else if (dupCells.has(key) || adjCells.has(key)) { background = "#fdecec"; color = "#b3261e"; }
+        if (key === deducedCell) { background = "var(--symbolic)"; color = "#fff"; }
+        else if (highlighted.has(key)) { background = "rgba(8, 119, 189, 0.16)"; }
+        else if (isShaded) { background = "#000000"; color = "#fff"; }
+        else if (dupCells.has(key) || adjCells.has(key)) { background = "rgba(255, 68, 68, 0.16)"; color = "#ff6b6b"; }
 
         grid.append(
           el(

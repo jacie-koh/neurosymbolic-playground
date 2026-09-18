@@ -1,25 +1,30 @@
-/* TensorFlow-Playground-inspired theme for the Neurosymbolic Playground. */
+/* Dark, terminal-inspired theme for the Neurosymbolic Playground. */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  /* Signed-weight colors, identical to TF Playground. */
-  --pos: #0877bd; /* blue  / positive */
-  --neg: #f59322; /* orange / negative */
-  --neural: #0877bd;
-  --symbolic: #8e44ad; /* purple to distinguish the symbolic side */
-  --accent: #183d4e;
+  /* Pipeline-stage colors: neural/symbolic/output, each with its own identity. */
+  --neural: #f59322; /* orange */
+  --symbolic: #0877bd; /* blue */
+  --output: #8e44ad; /* purple */
+  --pos: #c8f135; /* acid green -- selection/active accent */
+  --accent: #0877bd;
+  --acid: #c8f135;
 
-  --bg: #f7f7f7;
-  --panel: #ffffff;
-  --ink: #233138;
-  --muted: #777f86;
-  --line: #e4e7ea;
-  --line-strong: #cfd5da;
+  --bg: #080810;
+  --panel: #0e0e22;
+  --panel-2: #13132e;
+  --ink: #e0e0f4;
+  --muted: #7878b0;
+  --line: #1e1e3c;
+  --line-strong: #2e2e52;
 
   --radius: 10px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.14);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 
-  font-family: Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  font-family: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color: var(--ink);
   background: var(--bg);
 }
@@ -50,15 +55,20 @@ button {
 .topbar {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 24px;
-  background: var(--accent);
-  color: #fff;
-  box-shadow: var(--shadow);
+  gap: 12px;
+  height: 52px;
+  padding: 0 24px;
+  background: #111128;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 .topbar h1 {
-  font-size: 18px;
-  font-weight: 400;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
   margin: 0;
   letter-spacing: 0.3px;
 }
@@ -141,14 +151,14 @@ button {
 .situation-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
-  border-color: var(--line-strong);
+  border-color: var(--symbolic);
 }
 .situation-card.selected {
-  border-color: var(--neural);
+  border-color: var(--symbolic);
   box-shadow: 0 0 0 2px rgba(8, 119, 189, 0.25), var(--shadow);
 }
 .situation-card .icon {
-  color: var(--accent);
+  color: var(--symbolic);
 }
 .situation-card .icon svg {
   width: 30px;
@@ -168,7 +178,7 @@ button {
 }
 .fit-card {
   padding: 7px 10px;
-  background: var(--bg);
+  background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: 8px;
 }
@@ -183,11 +193,11 @@ button {
   margin-top: 2px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--symbolic);
 }
 .how-to-play {
   font-size: 12px;
-  color: var(--neural);
+  color: var(--symbolic);
   text-decoration: none;
 }
 .how-to-play:hover {
@@ -208,13 +218,13 @@ button {
   background: var(--line-strong);
 }
 .complexity .dot.on {
-  background: var(--neural);
+  background: var(--symbolic);
 }
 
 /* ---------- randomizer filter selects ---------- */
 select {
   border: 1px solid var(--line-strong);
-  background: #fff;
+  background: var(--panel);
   color: var(--ink);
   border-radius: 8px;
   padding: 6px 10px;
@@ -222,13 +232,13 @@ select {
   font-family: inherit;
 }
 select:hover {
-  background: #f0f3f5;
+  background: var(--panel-2);
 }
 
 /* ---------- generic buttons ---------- */
 .btn {
   border: 1px solid var(--line-strong);
-  background: #fff;
+  background: var(--panel);
   color: var(--ink);
   border-radius: 8px;
   padding: 9px 18px;
@@ -236,14 +246,14 @@ select:hover {
   transition: background 0.12s, border-color 0.12s, transform 0.06s;
 }
 .btn:hover {
-  background: #f0f3f5;
+  background: var(--panel-2);
 }
 .btn:active {
   transform: translateY(1px);
 }
 .btn.primary {
-  background: var(--neural);
-  border-color: var(--neural);
+  background: var(--symbolic);
+  border-color: var(--symbolic);
   color: #fff;
 }
 .btn.primary:hover {
@@ -258,289 +268,6 @@ select:hover {
   gap: 12px;
   margin-top: 24px;
   align-items: center;
-}
-
-/* ---------- builder canvas ---------- */
-.builder {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 24px;
-  align-items: start;
-}
-.canvas {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 24px;
-  min-height: 360px;
-}
-.flow-row {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.flow-row.reverse {
-  flex-direction: row-reverse;
-}
-
-/* the two draggable blocks */
-.block {
-  width: 220px;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  padding: 16px;
-  background: #fff;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
-  position: relative;
-}
-.block:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-.block.neural {
-  border-color: var(--neural);
-}
-.block.symbolic {
-  border-color: var(--symbolic);
-}
-.block .block-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  font-size: 15px;
-  margin-bottom: 8px;
-}
-.block .block-head .tag {
-  margin-left: auto;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 1px 7px;
-}
-.block .mini {
-  height: 78px;
-  border-radius: 8px;
-  background: #fafbfc;
-  border: 1px dashed var(--line-strong);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.block .hint {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 8px;
-  text-align: center;
-}
-.block.dragging {
-  opacity: 0.5;
-}
-.block.drop-target {
-  border-style: dashed;
-}
-
-/* connector between blocks */
-.connector {
-  display: flex;
-  align-items: center;
-  padding: 0 6px;
-  color: var(--muted);
-  font-size: 26px;
-  user-select: none;
-}
-
-/* side panel */
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 18px;
-}
-.panel h4 {
-  margin: 0 0 12px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--muted);
-}
-.field {
-  margin-bottom: 16px;
-}
-.field label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 6px;
-  color: var(--ink);
-}
-.field select,
-.field input[type="number"] {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 8px;
-  font-size: 14px;
-  background: #fff;
-}
-.field input[type="range"] {
-  width: 100%;
-}
-
-/* pattern chooser */
-.pattern-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.pattern-opt {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px;
-  cursor: pointer;
-  transition: border-color 0.12s, background 0.12s;
-}
-.pattern-opt:hover {
-  background: #f6f8fa;
-}
-.pattern-opt.selected {
-  border-color: var(--neural);
-  background: rgba(8, 119, 189, 0.05);
-}
-.pattern-opt .flow {
-  font-weight: 500;
-  font-size: 14px;
-}
-.pattern-opt .taxo {
-  font-size: 11px;
-  color: var(--symbolic);
-  margin-top: 2px;
-}
-.pattern-opt .sum {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 6px;
-  line-height: 1.4;
-}
-
-/* ---------- modal (expand to customize) ---------- */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(20, 28, 33, 0.45);
-  display: grid;
-  place-items: center;
-  z-index: 50;
-  padding: 24px;
-}
-.modal {
-  background: var(--panel);
-  border-radius: 14px;
-  box-shadow: var(--shadow-lg);
-  width: min(960px, 96vw);
-  max-height: 92vh;
-  overflow: auto;
-  padding: 22px 24px;
-}
-.modal-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.modal-head h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 500;
-}
-.modal-head .close {
-  margin-left: auto;
-  border: none;
-  background: none;
-  font-size: 22px;
-  color: var(--muted);
-  cursor: pointer;
-  line-height: 1;
-}
-
-/* ---------- TensorFlow-Playground neural editor ---------- */
-.tf-modal {
-  width: min(1180px, 97vw);
-  height: 90vh;
-  max-height: 94vh;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.tf-modal .modal-head {
-  flex: 0 0 auto;
-  margin: 0;
-  padding: 16px 20px 14px;
-  border-bottom: 1px solid var(--line);
-}
-.tf-sub {
-  font-size: 11px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 2px 8px;
-  margin-left: 4px;
-}
-.tf-frame {
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  border: 0;
-  display: block;
-  background: #f7f7f7;
-}
-
-/* ---------- proportion mode ---------- */
-.prop-wrap {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 28px;
-}
-.prop-bar {
-  height: 46px;
-  border-radius: 24px;
-  overflow: hidden;
-  display: flex;
-  border: 1px solid var(--line-strong);
-  margin: 20px 0 8px;
-}
-.prop-bar .seg-neural {
-  background: var(--neural);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-size: 13px;
-  transition: width 0.15s ease;
-}
-.prop-bar .seg-symbolic {
-  background: var(--symbolic);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-size: 13px;
-  transition: width 0.15s ease;
-}
-.prop-scale {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--muted);
 }
 
 /* ---------- results / tradeoff ---------- */
@@ -575,12 +302,12 @@ select:hover {
   transition: width 0.3s ease;
 }
 .note {
-  background: #fbf7ef;
-  border: 1px solid #f0e3c8;
+  background: rgba(255, 170, 0, 0.08);
+  border: 1px solid rgba(255, 170, 0, 0.28);
   border-radius: 10px;
   padding: 14px 16px;
   font-size: 13px;
-  color: #7a6314;
+  color: #ffc861;
   line-height: 1.5;
 }
 
@@ -611,26 +338,26 @@ select:hover {
 .flow-node.neural {
   background: rgba(245, 147, 34, 0.1);
   border-color: rgba(245, 147, 34, 0.4);
-  color: #8a4d00;
+  color: var(--neural);
 }
 .flow-node.symbolic {
-  background: rgba(8, 119, 189, 0.08);
-  border-color: rgba(8, 119, 189, 0.35);
-  color: #0d4e7e;
+  background: rgba(8, 119, 189, 0.12);
+  border-color: rgba(8, 119, 189, 0.4);
+  color: #4db4f0;
 }
 .flow-node.output {
-  background: rgba(142, 68, 173, 0.08);
-  border-color: rgba(142, 68, 173, 0.35);
-  color: #5c2b76;
+  background: rgba(142, 68, 173, 0.12);
+  border-color: rgba(142, 68, 173, 0.4);
+  color: #d19ae8;
 }
 .flow-payload {
   display: block;
   width: 100%;
   padding: 8px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(16, 24, 40, 0.08);
-  font-family: "SFMono-Regular", SFMono-Regular, ui-monospace, monospace;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono), "SFMono-Regular", ui-monospace, monospace;
   font-size: 11px;
   line-height: 1.5;
   font-weight: 600;
@@ -701,12 +428,12 @@ button.lab-token { cursor: pointer; }
 }
 .seg-btn.active {
   border-color: var(--pos);
-  background: #eef5fb;
+  background: rgba(200, 241, 53, 0.08);
 }
 .seg-flow {
   font-weight: 600;
   font-size: 13px;
-  color: var(--ink, #183d4e);
+  color: var(--ink);
 }
 .badge {
   display: inline-block;
@@ -716,25 +443,25 @@ button.lab-token { cursor: pointer; }
   font-weight: 600;
 }
 .badge-strong {
-  background: #fdecdc;
-  color: #b5651d;
-  border: 1px solid #f3cda3;
+  background: rgba(245, 147, 34, 0.14);
+  color: #f5a94e;
+  border: 1px solid rgba(245, 147, 34, 0.35);
 }
 .badge-weak {
-  background: #e7f3ea;
-  color: #2f7d46;
-  border: 1px solid #b9ddc4;
+  background: rgba(46, 204, 113, 0.14);
+  color: #4ed98a;
+  border: 1px solid rgba(46, 204, 113, 0.35);
 }
 /* distinct from strong/weak (supervision) — these mark a train/held-out pair */
 .badge-seen {
-  background: #eef2f5;
-  color: #51606b;
-  border: 1px solid #d7dee3;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
 }
 .badge-heldout {
-  background: #eaf3fb;
-  color: #0b5a8c;
-  border: 1px solid #bcdcf2;
+  background: rgba(8, 119, 189, 0.14);
+  color: #4db4f0;
+  border: 1px solid rgba(8, 119, 189, 0.35);
 }
 
 /* ---------- digit-sum: digit picker ---------- */
@@ -754,7 +481,7 @@ button.lab-token { cursor: pointer; }
   padding: 2px;
   border: 2px solid var(--line-strong);
   border-radius: 6px;
-  background: #fff;
+  background: var(--panel);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -769,7 +496,7 @@ button.lab-token { cursor: pointer; }
 }
 .digit-thumb.active {
   border-color: var(--pos);
-  background: #eef5fb;
+  background: rgba(200, 241, 53, 0.08);
 }
 
 /* ---------- drug-discovery: compound picker ---------- */
@@ -787,14 +514,14 @@ button.lab-token { cursor: pointer; }
   padding: 8px 12px;
   border: 2px solid var(--line-strong);
   border-radius: 8px;
-  background: #fff;
+  background: var(--panel);
   cursor: pointer;
   text-align: left;
 }
 .compound-token .name {
   font-weight: 600;
   font-size: 13px;
-  color: var(--ink, #183d4e);
+  color: var(--ink);
 }
 .compound-token .note {
   font-size: 11px;
@@ -805,5 +532,107 @@ button.lab-token { cursor: pointer; }
 }
 .compound-token.active {
   border-color: var(--pos);
-  background: #eef5fb;
+  background: rgba(200, 241, 53, 0.08);
+}
+
+/* ---------- landing splash ---------- */
+.landing {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.landing-grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(rgba(8, 119, 189, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 119, 189, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.landing-content {
+  position: relative;
+  z-index: 1;
+}
+.landing-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 40px;
+  height: 60px;
+  border-bottom: 1px solid var(--line);
+}
+.landing-nav-mark {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.landing-nav-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: #c0c0e0;
+}
+.landing-hero {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 96px 40px 80px;
+}
+.landing-hero h1 {
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 5vw, 50px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: #f0f0ff;
+  margin: 0 0 24px;
+  letter-spacing: -0.03em;
+}
+.landing-hero h1 .acid {
+  color: var(--acid);
+}
+.landing-hero p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 0 36px;
+}
+.landing-cta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--bg);
+  background: var(--acid);
+  border: none;
+  border-radius: 6px;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.landing-cta:hover {
+  box-shadow: 0 0 0 4px rgba(200, 241, 53, 0.18);
+}
+.landing-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.landing-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #30306a;
+}
+.landing-footer-brand img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  opacity: 0.45;
+}
+.landing-footer span:last-child {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #20204a;
 }

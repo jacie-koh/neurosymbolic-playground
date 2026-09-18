@@ -100,6 +100,7 @@ export const SITUATIONS: Situation[] = [
     title: "Sudoku Solver",
     tagline: "Read each cell digit from a grid image, then satisfy every row, column, and box constraint.",
     icon: ICON_SUDOKU,
+    howToPlayUrl: "https://www.sudoku.com/how-to-play/sudoku-rules-for-complete-beginners/",
     perception: "Recognize each digit in a 9×9 grid from pixel-rendered images.",
     reasoning: "Apply Sudoku constraints: each row, column, and 3×3 box must contain digits 1–9 exactly once.",
     neuralWeakness:
@@ -145,6 +146,7 @@ export const SITUATIONS: Situation[] = [
     title: "KenKen Solver",
     tagline: "Read digits, operators, and cage boundaries from a grid image, then satisfy row/column and cage arithmetic.",
     icon: ICON_KENKEN,
+    howToPlayUrl: "https://www.kenkenpuzzle.com/howto",
     perception: "Detect cage boundaries and read each cage's target number and operator from the image.",
     reasoning: "Apply row/column uniqueness plus each cage's arithmetic (sum, product, difference, or quotient).",
     neuralWeakness:
@@ -185,6 +187,7 @@ export const SITUATIONS: Situation[] = [
     title: "Zebra Puzzle",
     tagline: "Read numbered clues about people and their attributes, then deduce who has what.",
     icon: ICON_ZEBRA,
+    howToPlayUrl: "https://www.brainzilla.com/logic/zebra/",
     perception: "Parse written clues and encode them as logical predicates.",
     reasoning: "Apply constraint propagation and backtracking to find the unique consistent assignment.",
     neuralWeakness:

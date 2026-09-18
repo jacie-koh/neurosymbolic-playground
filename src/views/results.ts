@@ -28,11 +28,11 @@ export function renderResults(root: HTMLElement): void {
   const debuggerRenderer = st.situationId ? DEBUGGER_RENDERERS[st.situationId] : undefined;
   if (!debuggerRenderer || !st.situationId) {
     root.append(
-      el("p", { class: "note" }, "Pick a situation first."),
+      el("p", { class: "note" }, "Pick a puzzle first."),
       el(
         "div",
         { class: "btn-row", style: { marginTop: "16px" } },
-        el("button", { class: "btn", onclick: () => store.set({ view: "situations" }) }, "← New situation")
+        el("button", { class: "btn", onclick: () => store.set({ view: "situations" }) }, "← New puzzle")
       )
     );
     return;
@@ -48,7 +48,7 @@ export function renderResults(root: HTMLElement): void {
     el(
       "div",
       { class: "btn-row", style: { marginTop: "16px" } },
-      el("button", { class: "btn", onclick: () => store.set({ view: "situations" }) }, "← New situation")
+      el("button", { class: "btn", onclick: () => store.set({ view: "situations" }) }, "← New puzzle")
     )
   );
 }

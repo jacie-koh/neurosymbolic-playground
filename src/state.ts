@@ -1,11 +1,11 @@
 /**
  * Global application state + a tiny observable store.
  *
- * The whole app is a single page that swaps between two "views":
- *   situations -> results
+ * The whole app is a single page that swaps between three "views":
+ *   landing -> situations -> results
  */
 
-export type ViewName = "situations" | "results";
+export type ViewName = "landing" | "situations" | "results";
 
 /** The three symbolic engines the user can choose for the symbolic block. */
 export type SymbolicMethod = "kg" | "rules" | "forward-chaining";
@@ -54,7 +54,7 @@ export interface AppState {
 
 function defaultState(): AppState {
   return {
-    view: "situations",
+    view: "landing",
     situationId: null,
     pattern: "learning-for-reasoning",
     neural: {

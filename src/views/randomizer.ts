@@ -94,7 +94,7 @@ export function renderRandomizer<T extends { id: string }>(
               padding: "8px 10px",
               borderRadius: "8px",
               border: "1px solid var(--line-strong)",
-              background: "#fff",
+              background: "var(--panel)",
               color: "var(--ink)",
             },
             onchange: (e: Event) => {

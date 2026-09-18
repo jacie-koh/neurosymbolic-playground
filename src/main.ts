@@ -2,6 +2,7 @@ import "./style.css";
 import { store, type ViewName } from "./state";
 import { el, clear } from "./dom";
 import { getSituation } from "./data/situations";
+import { renderLanding } from "./views/landing";
 import { renderSituations } from "./views/situations";
 import { renderResults } from "./views/results";
 
@@ -58,12 +59,18 @@ function render(): void {
   const st = store.get();
 
   // Friendly guard: if a situation is required but missing, fall back.
-  if (st.view !== "situations" && !getSituation(st.situationId)) {
+  if (st.view === "results" && !getSituation(st.situationId)) {
     store.set({ view: "situations" });
     return;
   }
 
   clear(app);
+
+  if (st.view === "landing") {
+    renderLanding(app);
+    return;
+  }
+
   app.append(topbar());
 
   const container = el("main", { class: "view" });

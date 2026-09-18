@@ -196,21 +196,21 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         let background = "var(--panel)";
         let color = "inherit";
         if (isLiveCorrectionTarget && (liveCorrectionKind === "try" || liveCorrectionKind === "corrected" || liveCorrectionKind === "revert")) {
-          if (liveCorrectionKind === "corrected") { background = "#e3f6e8"; color = "#1a7a3d"; }
-          else if (liveCorrectionKind === "revert") { background = "#fdecec"; color = "#b3261e"; }
-          else { background = "#fff4d6"; color = "#8a6100"; }
+          if (liveCorrectionKind === "corrected") { background = "rgba(46, 204, 113, 0.16)"; color = "#4ed98a"; }
+          else if (liveCorrectionKind === "revert") { background = "rgba(255, 68, 68, 0.16)"; color = "#ff6b6b"; }
+          else { background = "rgba(255, 170, 0, 0.16)"; color = "#ffc861"; }
         } else if (isConflict) {
-          background = "#fdecec";
-          color = "#b3261e";
+          background = "rgba(255, 68, 68, 0.16)";
+          color = "#ff6b6b";
         } else if (isOverridden) {
-          background = "#eef5fb";
+          background = "rgba(8, 119, 189, 0.16)";
         } else if (isAmbiguous) {
-          background = "#f3e8ff";
-          color = "#6b21a8";
+          background = "rgba(142, 68, 173, 0.18)";
+          color = "#d19ae8";
         } else if (isCorrected) {
-          background = "#fdecdc";
+          background = "rgba(245, 147, 34, 0.16)";
         } else if (!given) {
-          background = "#f4f6f7";
+          background = "var(--panel-2)";
           color = "var(--muted)";
         }
 
@@ -525,7 +525,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         el(
           "div",
           { style: { marginTop: "6px" } },
-          el("span", { class: "badge", style: { background: "#f3e8ff", color: "#6b21a8", border: "1px solid #d9b8f5" } }, "sat but possibly wrong"),
+          el("span", { class: "badge", style: { background: "rgba(142, 68, 173, 0.18)", color: "#d19ae8", border: "1px solid rgba(142, 68, 173, 0.4)" } }, "sat but possibly wrong"),
           ` the offline pipeline never flagged this cell — it only reacts to outright conflicts — but its reading (${ambiguous.given}, ` +
             `${(ambiguous.confidence * 100).toFixed(1)}%) is far from certain, and the alternative ${ambiguous.alternative} ` +
             `(${ambiguous.alternativeConfidence != null ? (ambiguous.alternativeConfidence * 100).toFixed(1) : "?"}%) also solves the ` +
