@@ -94,15 +94,6 @@ button {
   color: #fff;
   background: rgba(255, 255, 255, 0.22);
 }
-.stepper .step .num {
-  display: inline-grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  font-size: 11px;
-}
 .stepper .sep {
   color: rgba(255, 255, 255, 0.4);
 }

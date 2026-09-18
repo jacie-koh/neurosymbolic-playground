@@ -2,7 +2,7 @@
 
 import { store } from "../state";
 import { el } from "../dom";
-import { SITUATIONS, getSituation } from "../data/situations";
+import { SITUATIONS } from "../data/situations";
 import { METHODS } from "../data/patterns";
 
 export function renderSituations(root: HTMLElement): void {
@@ -22,9 +22,10 @@ export function renderSituations(root: HTMLElement): void {
       {
         class: "situation-card" + (selected ? " selected" : ""),
         onclick: () => {
-          // selecting a situation also seeds its suggested method + pattern
+          // selecting a situation also seeds its suggested method + pattern,
+          // then goes straight to the puzzle -- no separate confirm step.
           store.setSymbolic({ method: s.suggestedMethod });
-          store.set({ situationId: s.id, pattern: s.suggestedPattern });
+          store.set({ situationId: s.id, pattern: s.suggestedPattern, view: "results" });
         },
       },
       el("div", { class: "icon", html: s.icon }),
@@ -52,23 +53,6 @@ export function renderSituations(root: HTMLElement): void {
     );
   });
 
-  const chosen = getSituation(st.situationId);
-
-  const cont = el(
-    "div",
-    { class: "btn-row" },
-    el(
-      "button",
-      {
-        class: "btn primary",
-        disabled: !chosen,
-        onclick: () => store.set({ view: "results" }),
-      },
-      "Continue \u2192"
-    ),
-    !chosen ? el("span", { class: "muted" }, "Select a puzzle to continue") : null
-  );
-
-  root.append(head, el("div", { class: "card-grid" }, ...cards), cont);
+  root.append(head, el("div", { class: "card-grid" }, ...cards));
 }
 

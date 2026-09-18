@@ -9,13 +9,12 @@ const app = document.querySelector<HTMLDivElement>("#app")!;
 
 interface StepDef {
   view: ViewName;
-  num: number;
   label: string;
 }
 
 const STEPS: StepDef[] = [
-  { view: "situations", num: 1, label: "Puzzle" },
-  { view: "results", num: 2, label: "Results" },
+  { view: "situations", label: "Home" },
+  { view: "results", label: "Puzzle" },
 ];
 
 function canVisit(view: ViewName): boolean {
@@ -38,7 +37,6 @@ function topbar(): HTMLElement {
           if (canVisit(s.view)) store.set({ view: s.view });
         },
       },
-      el("span", { class: "num" }, String(s.num)),
       el("span", {}, s.label)
     );
     const sep =
