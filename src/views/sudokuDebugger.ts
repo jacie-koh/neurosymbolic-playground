@@ -364,10 +364,11 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       playSteps = [...correction.steps, ...fillSteps];
     } else {
       // Neural -> Symbolic (one-shot): CNN reads once, Z3 solves once -- no
-      // correction, no reworking a given reading. If the givens conflict, the only
-      // honest thing to show is the dead end itself, not an alternative-reading
-      // search that pattern never performs.
-      playSteps = solveGenericWithSteps(working).steps;
+      // correction, no reworking a given reading, and no narrated "why" a dead end
+      // happened -- that explanatory reasoning belongs to the correction-loop
+      // pattern only. explain:false keeps the mechanical try/backtrack trace but
+      // drops the per-dead-end reason text.
+      playSteps = solveGenericWithSteps(working, false).steps;
     }
     playIdx = 0;
   }
@@ -389,7 +390,11 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           return `correction loop gave up: ${step.reason}`;
       }
     }
-    if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
+    if (step.deadEnd) {
+      return step.reason
+        ? `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`
+        : `dead end at (${step.row + 1},${step.col + 1}) — backtracking`;
+    }
     if (revealMode) {
       const base = `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`;
       return step.reason ? `${base} — ${step.reason}` : base;

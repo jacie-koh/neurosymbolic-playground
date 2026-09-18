@@ -348,8 +348,11 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       playSteps = [...correction.steps, ...fillSteps];
     } else {
       // Neural -> Symbolic (one-shot): CV cage detection + CNN reads once, solver
-      // runs once -- no correction, no reworking a cage's reading.
-      playSteps = solveKenKenWithSteps(t.size, cages).steps;
+      // runs once -- no correction, no reworking a cage's reading, and no narrated
+      // "why" a dead end happened -- that belongs to the correction-loop pattern
+      // only. explain:false keeps the mechanical try/backtrack trace but drops the
+      // per-dead-end reason text.
+      playSteps = solveKenKenWithSteps(t.size, cages, false).steps;
     }
     playIdx = 0;
   }
@@ -372,7 +375,11 @@ export function renderKenKenDebugger(root: HTMLElement): void {
           return `correction loop gave up: ${step.reason}`;
       }
     }
-    if (step.deadEnd) return `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`;
+    if (step.deadEnd) {
+      return step.reason
+        ? `dead end at (${step.row + 1},${step.col + 1}): ${step.reason} — backtracking`
+        : `dead end at (${step.row + 1},${step.col + 1}) — backtracking`;
+    }
     if (revealMode) {
       const base = `(${step.row + 1},${step.col + 1}): real Z3-verified answer = ${step.digit}`;
       return step.reason ? `${base} — ${step.reason}` : base;

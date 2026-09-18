@@ -118,7 +118,7 @@ export interface SolveTrace extends SolveResult {
  * to animate live even on a 16x16 board — naive row-major order can thrash for
  * thousands of trial placements on sparser boards.
  */
-export function solveGenericWithSteps(input: Grid): SolveTrace {
+export function solveGenericWithSteps(input: Grid, explain: boolean = true): SolveTrace {
   const size = input.length;
   const grid = input.map((row) => [...row]);
   const steps: SolveStep[] = [];
@@ -172,7 +172,7 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
     if (!picked) return true;
     const { row, col, candidates } = picked;
     if (candidates.length === 0) {
-      steps.push({ row, col, digit: 0, deadEnd: true, reason: explainDeadEnd(row, col) });
+      steps.push({ row, col, digit: 0, deadEnd: true, ...(explain ? { reason: explainDeadEnd(row, col) } : {}) });
       return false;
     }
     for (const digit of candidates) {
@@ -194,7 +194,11 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
       col: first.col,
       digit: 0,
       deadEnd: true,
-      reason: `digit ${first.digit} at (${first.row + 1},${first.col + 1}) already conflicts with the given at (${first.with[0] + 1},${first.with[1] + 1}) in this ${kindLabel} — the given readings themselves disagree, no cell left to fill.`,
+      ...(explain
+        ? {
+            reason: `digit ${first.digit} at (${first.row + 1},${first.col + 1}) already conflicts with the given at (${first.with[0] + 1},${first.with[1] + 1}) in this ${kindLabel} — the given readings themselves disagree, no cell left to fill.`,
+          }
+        : {}),
     });
     return { status: "unsat", solution: null, steps };
   }

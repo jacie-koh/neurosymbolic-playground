@@ -83,7 +83,7 @@ export interface KenKenSolveTrace extends KenKenSolveResult {
  * live — plain row-major backtracking on a 6x6+ handwritten grid can run into the
  * hundreds of thousands of trial placements, useless for a real-time playback.
  */
-export function solveKenKenWithSteps(size: number, cages: Cage[]): KenKenSolveTrace {
+export function solveKenKenWithSteps(size: number, cages: Cage[], explain: boolean = true): KenKenSolveTrace {
   const grid: Grid = Array.from({ length: size }, () => Array(size).fill(0));
   const cageOf = new Map<string, Cage>();
   for (const cage of cages) for (const [r, c] of cage.cells) cageOf.set(`${r},${c}`, cage);
@@ -179,7 +179,7 @@ export function solveKenKenWithSteps(size: number, cages: Cage[]): KenKenSolveTr
     if (!picked) return false;
     const { row, col, candidates } = picked;
     if (candidates.length === 0) {
-      steps.push({ row, col, digit: 0, deadEnd: true, reason: explainDeadEnd(row, col) });
+      steps.push({ row, col, digit: 0, deadEnd: true, ...(explain ? { reason: explainDeadEnd(row, col) } : {}) });
       return false;
     }
     for (const digit of candidates) {
