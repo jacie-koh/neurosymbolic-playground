@@ -44,6 +44,15 @@ function entityLabel(id: string): string {
   return value.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/** Real category name (e.g. "Name", "MusicGenre") recovered from the puzzle's own
+ * source, split into words -- falls back to the raw parser key ("g0") only for a
+ * trace that predates groupLabels being backfilled. */
+function groupLabel(t: ZebraTrace, g: string): string {
+  const raw = t.groupLabels?.[g];
+  if (!raw) return g;
+  return raw.replace(/([a-z])([A-Z])/g, "$1 $2");
+}
+
 export function renderZebraDebugger(root: HTMLElement): void {
   clear(root);
 
@@ -169,7 +178,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
     const groupKeys = Object.keys(t.groups);
     const positions = livePositions ?? solve.solution;
     const grid = el("table", { class: "lab-grid", style: { display: "table", gridTemplateColumns: "none", borderCollapse: "collapse" } });
-    const headRow = el("tr", {}, el("th", { style: cellStyle(true) }, "House"), ...groupKeys.map((g) => el("th", { style: cellStyle(true) }, g)));
+    const headRow = el("tr", {}, el("th", { style: cellStyle(true) }, "House"), ...groupKeys.map((g) => el("th", { style: cellStyle(true) }, groupLabel(t, g))));
     grid.append(headRow);
     for (const house of houses) {
       const row = el("tr", {}, el("td", { style: cellStyle(true) }, String(house)));
@@ -227,18 +236,27 @@ export function renderZebraDebugger(root: HTMLElement): void {
           : "")
     );
 
-    // Real, offline-computed (build_manifests.py): removing this clue and re-solving
-    // still gives the identical solution -- it was never actually needed to pin the
-    // answer down, a "dead rule" in the sense that survives even though the puzzle
-    // as authored includes it.
-    const deadClueNote = manifestByFile.get(activeFile)?.hasDeadClue
-      ? el(
-          "div",
-          { class: "note", style: { marginTop: "10px", borderLeft: "3px solid var(--accent)" } },
-          el("span", { class: "badge badge-strong" }, "dead rule"),
-          " at least one clue in this puzzle is logically redundant — solving with it removed still reaches the exact same solution, verified by re-solving without it."
-        )
-      : "";
+    // Real, offline-computed (build_manifests.py): removing this clue leaves the
+    // OTHER clues still uniquely determining the exact same solution -- verified by
+    // both re-solving without it AND confirming no second, different solution also
+    // fits the remaining clues (a redundant clue and a genuinely under-constrained
+    // puzzle can otherwise look identical to a deterministic search, since it'll
+    // just find the same solution first either way). The solver itself never skips
+    // or special-cases this clue -- MINIEXACT is given every clue exactly as
+    // authored; "redundant" is a property discovered afterward, not something
+    // solving does anything differently for.
+    const manifestEntry = manifestByFile.get(activeFile);
+    const deadClueIdx = manifestEntry?.deadClueIndex;
+    const deadClueNote =
+      manifestEntry?.hasDeadClue && deadClueIdx != null
+        ? el(
+            "div",
+            { class: "note", style: { marginTop: "10px", borderLeft: "3px solid var(--accent)" } },
+            el("span", { class: "badge badge-strong" }, "redundant clue"),
+            ` clue ${deadClueIdx + 1} ("${t.clues[deadClueIdx].source}") is logically redundant here — every other clue together still pins down this exact solution uniquely, with or without it. ` +
+              "The solver isn't given a chance to skip it or treat it specially -- it's included like every other clue; this redundancy is discovered by re-solving afterward, not acted on during solving."
+          )
+        : "";
 
     const panel = el("div", { class: "note", style: { marginTop: "16px" } });
     drawPanel(panel, t);

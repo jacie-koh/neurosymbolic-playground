@@ -118,5 +118,11 @@
     },
     "unique": true
   },
-  "verification": "encoded_constraints_only; semantic translation is not proved"
+  "verification": "encoded_constraints_only; semantic translation is not proved",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "HairColor",
+    "g2": "Occupation",
+    "g3": "Drink"
+  }
 }

@@ -237,6 +237,11 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     body.append(grid, status, controls);
   }
 
+  /** O(1): stepForward only ever advances by exactly one deduction, so there's no
+   * need for applyDeduction's full from-scratch replay here -- just set the one
+   * newly-forced cell. Auto-play's tick calls this every 700ms; replaying the whole
+   * history so far on every tick was needless work on the hot loop, the same class
+   * of bug already fixed for the other four debuggers' auto-play. */
   function stepForward(t: HitoriTrace): boolean {
     if (deductionIdx < 0) {
       shaded = t.grid.map((row) => row.map(() => false));
@@ -246,7 +251,8 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     deductionIdx = deductionIdx < 0 ? 0 : deductionIdx + 1;
     evidenceExpanded = false;
     proofExpanded = false;
-    applyDeduction(t);
+    const d = t.deductions[deductionIdx];
+    shaded[d.row][d.col] = d.shaded;
     return true;
   }
 
@@ -396,7 +402,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       proofExpanded ? "Hide real Z3 proof" : "Show real Z3 proof"
     );
     if (!proofExpanded) return el("div", {}, toggle);
-    const box = el(
+    const coreBox = el(
       "pre",
       {
         style: {
@@ -410,17 +416,59 @@ export function renderHitoriDebugger(root: HTMLElement): void {
           whiteSpace: "pre",
         },
       },
-      `unsat_core() for shaded_${d.row}_${d.col} == ${!d.shaded}:\n` + d.constraint_ids.map((id) => `  ${id}`).join("\n")
+      `unsat core for shaded_${d.row}_${d.col} == ${!d.shaded}:\n` + d.constraint_ids.map((id) => `  ${id}`).join("\n")
+    );
+    // z3_proof/z3_proof_full_length are only present on traces the offline backfill
+    // has already reached -- don't let a not-yet-backfilled trace throw mid-render
+    // (which was blanking the whole panel) just because this field is missing.
+    if (d.z3_proof == null) {
+      return el(
+        "div",
+        {},
+        toggle,
+        coreBox,
+        el(
+          "div",
+          { class: "muted", style: { fontSize: "11px", marginTop: "4px" } },
+          "The full Z3 derivation isn't backfilled onto this trace yet -- showing the unsat core above in the meantime."
+        )
+      );
+    }
+    const truncated = d.z3_proof.length < d.z3_proof_full_length;
+    const proofBox = el(
+      "pre",
+      {
+        style: {
+          marginTop: "10px",
+          padding: "8px",
+          fontSize: "10px",
+          maxHeight: "300px",
+          background: "var(--panel)",
+          border: "1px solid var(--line)",
+          borderRadius: "6px",
+          overflow: "auto",
+          whiteSpace: "pre",
+        },
+      },
+      d.z3_proof + (truncated ? "\n\n... (still way more — see note below)" : "")
     );
     return el(
       "div",
       {},
       toggle,
-      box,
+      el(
+        "div",
+        { class: "muted", style: { fontSize: "11px", marginTop: "6px" } },
+        "The unsat core above names WHICH assertions are jointly unsatisfiable; the real Z3 derivation below shows HOW -- z3.Solver.proof() itself, not a gloss of it:"
+      ),
+      coreBox,
+      proofBox,
       el(
         "div",
         { class: "muted", style: { fontSize: "11px", marginTop: "4px" } },
-        `These are the exact named Z3 assertions Z3 itself reported as jointly unsatisfiable with shaded_${d.row}_${d.col} == ${!d.shaded} -- the real proof the English evidence above is a gloss of, one line per constraint_ids[i] ↔ evidence[i].`
+        truncated
+          ? `This is Z3's actual resolution proof (unit-resolution/asserted/mp steps), shown up to ${d.z3_proof.length.toLocaleString()} of its real ${d.z3_proof_full_length.toLocaleString()} characters -- connectivity-kind deductions genuinely produce proofs this large (Z3's arithmetic-reasoning proofs are inherently verbose), so it trails off here rather than shipping the whole thing.`
+          : "This is Z3's actual resolution proof (unit-resolution/asserted/mp steps) in full, not a gloss of it."
       )
     );
   }

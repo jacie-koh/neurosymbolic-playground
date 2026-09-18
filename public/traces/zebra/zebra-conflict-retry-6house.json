@@ -514,5 +514,13 @@
       }
     ]
   },
-  "verification": "encoded_constraints_only; semantic translation is not proved; every attempt independently solved by the real MINIEXACT encoding; puzzle id lgp-test-6x6-5 from the real downloaded ZebraLogic dataset"
+  "verification": "encoded_constraints_only; semantic translation is not proved; every attempt independently solved by the real MINIEXACT encoding; puzzle id lgp-test-6x6-5 from the real downloaded ZebraLogic dataset",
+  "groupLabels": {
+    "g0": "Name",
+    "g1": "MusicGenre",
+    "g2": "Mother",
+    "g3": "Children",
+    "g4": "Height",
+    "g5": "Pet"
+  }
 }

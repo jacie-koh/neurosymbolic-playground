@@ -7,7 +7,8 @@
     "status": "sat",
     "parseAttempts": null,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -18,7 +19,8 @@
     "status": "sat",
     "parseAttempts": null,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -29,7 +31,8 @@
     "status": "sat",
     "parseAttempts": null,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -40,7 +43,8 @@
     "status": "sat",
     "parseAttempts": null,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -51,7 +55,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -63,6 +68,7 @@
     "parseAttempts": 1,
     "hasBacktrack": false,
     "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -73,7 +79,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -84,7 +91,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -95,7 +103,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -106,7 +115,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -117,7 +127,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -128,7 +139,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": false,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -139,7 +151,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -151,6 +164,7 @@
     "parseAttempts": 1,
     "hasBacktrack": true,
     "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -161,7 +175,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -172,7 +187,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -184,6 +200,7 @@
     "parseAttempts": 1,
     "hasBacktrack": true,
     "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -194,7 +211,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -205,7 +223,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -216,7 +235,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -227,7 +247,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -239,6 +260,7 @@
     "parseAttempts": 1,
     "hasBacktrack": true,
     "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -249,7 +271,8 @@
     "status": "sat",
     "parseAttempts": 1,
     "hasBacktrack": true,
-    "hasDeadClue": true,
+    "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": false
   },
   {
@@ -261,6 +284,7 @@
     "parseAttempts": null,
     "hasBacktrack": true,
     "hasDeadClue": false,
+    "deadClueIndex": null,
     "hasConflictRetry": true
   }
 ]

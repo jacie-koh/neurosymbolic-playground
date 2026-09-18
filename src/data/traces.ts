@@ -133,6 +133,11 @@ export interface ZebraTrace {
   size: number;
   /** category id -> its "category@value" entity ids, e.g. g0 -> [g0@arnold, g0@eric]. */
   groups: Record<string, string[]>;
+  /** category id -> its real human-readable name (e.g. g0 -> "Name"), recovered from
+   * the puzzle's own source (the ZebraLogic dataset's solution table header for
+   * batch-generated puzzles; the puzzle text itself for the hand-curated ones) --
+   * the parser's own group keys are just "g0","g1",... and were being shown as-is. */
+  groupLabels: Record<string, string>;
   clues: ZebraClueRecord[];
   /** How many LLM attempts real parsing took (1 = succeeded first try; 2 = a schema-validation retry was needed). Absent on traces generated before this was tracked. */
   parseAttempts?: number | null;
@@ -167,7 +172,15 @@ export interface ZebraManifestEntry {
   /** Computed once offline at manifest-build time (standalone/reports/debugger/build_manifests.py)
    * — never re-solved in the browser, which was slow enough on 6-house puzzles to freeze the page. */
   hasBacktrack: boolean;
+  /** hasDeadClue is only true when removing that one clue leaves the OTHERS still
+   * uniquely determining the exact same solution (verified by searching for a
+   * second, different solution too) -- not just "re-solving without it happens to
+   * land on the same answer first," which a deterministic search will often do even
+   * when the clue was genuinely necessary for uniqueness. */
   hasDeadClue: boolean;
+  /** Index into this trace's `clues` array of the specific redundant clue, when
+   * hasDeadClue is true. */
+  deadClueIndex: number | null;
   hasConflictRetry: boolean;
 }
 
@@ -256,11 +269,23 @@ export interface HitoriDeduction {
   shaded: boolean;
   kind: "local" | "connectivity";
   evidence: string[];
-  /** The real Z3 proof: names of the exact tracked assertions z3.Solver.unsat_core()
-   * returned for this cell (e.g. "separation_0_2_0_3") -- assigning the opposite value
-   * makes exactly these assertions jointly unsatisfiable. `evidence[i]` is the plain-
-   * English gloss of `constraint_ids[i]`. See standalone/puzzlelab/hitori.py:build(). */
+  /** The real unsat CORE, not the full proof: names of the exact tracked assertions
+   * z3.Solver.unsat_core() returned for this cell (e.g. "separation_0_2_0_3") --
+   * assigning the opposite value makes exactly these assertions jointly
+   * unsatisfiable, but this is only the flat list of *which* assertions were
+   * involved, not the derivation of *how* they combine to force a contradiction.
+   * `evidence[i]` is the plain-English gloss of `constraint_ids[i]`. See
+   * standalone/puzzlelab/hitori.py:build(). */
   constraint_ids: string[];
+  /** The real Z3 resolution proof (z3.Solver.proof().sexpr()): the actual derivation
+   * (unit-resolution/asserted/mp steps) showing HOW unsatisfiability follows from the
+   * tracked assertions above -- not just which ones were involved. Connectivity-kind
+   * deductions on anything but the smallest boards produce proofs from hundreds of KB
+   * to several MB (Z3's arithmetic-reasoning proofs are inherently this verbose), so
+   * this is truncated to a fixed character budget at export time; `z3_proof_full_length`
+   * is the untruncated length, so the UI can show how much was cut. */
+  z3_proof: string;
+  z3_proof_full_length: number;
 }
 
 export interface HitoriTrace {

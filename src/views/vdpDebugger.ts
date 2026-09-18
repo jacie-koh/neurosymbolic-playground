@@ -91,11 +91,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
    * then just replayed -- lets Step back/forward jump anywhere without recomputing. */
   let runSteps: string[] = [];
   let runIdx = 0;
-  /** Line counts at which the fresh/reference result becomes known -- the overview
-   * board's "picked by" marks reveal independently once runIdx reaches each, exactly
-   * where the log actually says so, not all at once. */
+  /** Line count at which the model's result becomes known -- the overview board's
+   * pick mark reveals exactly where the log actually says so, not upfront. */
   let freshRevealAt = 0;
-  let refRevealAt = 0;
   let runTimer: ReturnType<typeof setTimeout> | undefined;
   /** Persistent containers filled in by drawBody(), so the auto-play tick (every
    * 180ms) can refresh just the log/controls -- and the image-heavy overview board
@@ -135,7 +133,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
     runSteps = [];
     runIdx = 0;
     freshRevealAt = 0;
-    refRevealAt = 0;
     activeFile = file;
     clear(body);
     body.append(el("p", { class: "muted" }, "Loading trace…"));
@@ -191,46 +188,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
     return idx >= 0 ? `Candidate ${idx + 1}` : raw;
   }
 
-  /**
-   * There's no retry/correction loop for this module (unlike Sudoku's Z3 correction
-   * loop or Zebra's conflict-retry) -- puzzlelab.vdp.run() is a single subprocess
-   * call, real search, no second attempt. So when fresh disagrees with the
-   * reference, this explains *why* from the trace's own real numbers instead of
-   * pretending something got "fixed":
-   *   - low per-attribute accuracy -> a real misclassification steered the search
-   *     toward a different (but still individually verified) discriminator.
-   *   - 100% attribute accuracy -> every color/material/size/shape read correctly,
-   *     so the disagreement traces to the *derived* left/right/front/behind
-   *     relations instead: those come from a depth-regressed 3D position
-   *     estimate, not a classifier output, and a small position drift can flip
-   *     which relations hold even when every attribute is right.
-   */
-  function disagreementReason(t: VDPTrace): string | null {
-    const freshCand = t.freshResult.candidate;
-    const refCand = t.referenceResult.candidate;
-    if (t.freshResult.status === "sat" && freshCand && refCand && freshCand === refCand) return null;
-
-    if (t.freshResult.status !== "sat") {
-      return "Why: the real search found no discriminator that uniquely picks one candidate within its quantifier/conjunct budget — a search-budget limit, not necessarily a perception error.";
-    }
-
-    const acc = t.accuracy;
-    const misreadRates = ATTRS.map((a) => ({ attr: a, rate: acc[a] })).filter((x) => x.rate != null && x.rate < 1);
-    if (misreadRates.length > 0) {
-      const worst = misreadRates.sort((a, b) => (a.rate as number) - (b.rate as number))[0];
-      return (
-        `Why: fresh perception misread ${worst.attr} on ${(100 - (worst.rate as number) * 100).toFixed(1)}% of objects across this puzzle's scenes` +
-        " — a real classification error that steered the search toward a different, but still independently verified, discriminator."
-      );
-    }
-
-    return (
-      "Why: every color/material/size/shape read was correct here — the disagreement instead comes from estimated 3D position " +
-      "(regressed from box size/depth, not classified), which feeds the left/right/front/behind relations the formula quantifies over. " +
-      "A small position drift can flip which relations hold even with perfect attributes."
-    );
-  }
-
   function objectSummary(scene: VDPScene): string {
     return dedupPredictions(scene.predictions)
       .map((p) => `${p.shape.value}(${p.color.value},${p.material.value},${p.size.value})`)
@@ -268,10 +225,10 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   /** Builds the full narration once per trace: every line Run will reveal, in
-   * order, plus the line-counts at which the fresh/reference results become known
-   * (so Step back/forward can jump anywhere without recomputing, and the overview
-   * board can reveal each pick exactly where the log actually says so). */
-  function buildRunSteps(t: VDPTrace): { lines: string[]; freshAt: number; refAt: number } {
+   * order, plus the line-count at which the model's result becomes known (so Step
+   * back/forward can jump anywhere without recomputing, and the overview board can
+   * reveal the pick exactly where the log actually says so). */
+  function buildRunSteps(t: VDPTrace): { lines: string[]; freshAt: number } {
     const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
     const entry = currentEntry();
@@ -294,8 +251,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
 
     const freshLines = [
       t.freshResult.status === "sat" && t.freshResult.formula
-        ? `Fresh perception → found: ${t.freshResult.formula}`
-        : `Fresh perception → ${t.freshResult.status}: no discriminator found within budget`,
+        ? `The model → found: ${t.freshResult.formula}`
+        : `The model → ${t.freshResult.status}: no discriminator found within budget`,
     ];
     if (t.freshResult.status === "sat") {
       freshLines.push(`  → holds in all ${examples.length} examples, and in exactly ${candidateLabel(t, t.freshResult.candidate)} among the candidates.`);
@@ -303,24 +260,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     groups.push(freshLines);
     const freshAt = groups.reduce((n, g) => n + g.length, 0);
 
-    const refLines = [
-      t.referenceResult.status === "sat" && t.referenceResult.formula
-        ? `Reference (authors' replayed perception, same images) → found: ${t.referenceResult.formula}`
-        : `Reference → ${t.referenceResult.status}: no discriminator found`,
-    ];
-    if (t.referenceResult.status === "sat") refLines.push(`  → picks ${candidateLabel(t, t.referenceResult.candidate)}.`);
-    groups.push(refLines);
-    const refAt = groups.reduce((n, g) => n + g.length, 0);
-
-    const freshCand = t.freshResult.candidate;
-    const refCand = t.referenceResult.candidate;
-    const matches = t.freshResult.status === "sat" && freshCand != null && freshCand === refCand;
-    const verdictLines = [matches ? "fresh matches the reference answer." : "fresh disagrees with the reference answer."];
-    const reason = disagreementReason(t);
-    if (reason) verdictLines.push(reason);
-    groups.push(verdictLines);
-
-    return { lines: groups.flat(), freshAt, refAt };
+    return { lines: groups.flat(), freshAt };
   }
 
   function ensureRunSteps(t: VDPTrace): void {
@@ -328,7 +268,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
     const built = buildRunSteps(t);
     runSteps = built.lines;
     freshRevealAt = built.freshAt;
-    refRevealAt = built.refAt;
   }
 
   function stepRunTo(t: VDPTrace, idx: number): void {
@@ -343,8 +282,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     // making the page visibly jump.
     drawControls(controlsHost, t);
     const crossedFresh = (prevIdx < freshRevealAt) !== (runIdx < freshRevealAt);
-    const crossedRef = (prevIdx < refRevealAt) !== (runIdx < refRevealAt);
-    if ((crossedFresh || crossedRef) && overviewHost) drawOverview(overviewHost, t);
+    if (crossedFresh && overviewHost) drawOverview(overviewHost, t);
   }
 
   function runFrom(t: VDPTrace): void {
@@ -352,7 +290,6 @@ export function renderVDPDebugger(root: HTMLElement): void {
     const built = buildRunSteps(t);
     runSteps = built.lines;
     freshRevealAt = built.freshAt;
-    refRevealAt = built.refAt;
     runIdx = 0;
     runLines = [];
     running = true;
@@ -368,9 +305,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
       runLines = runSteps.slice(0, runIdx);
       // Cheap every tick: just text and a couple of buttons, no images.
       drawControls(controlsHost, t);
-      // Expensive, so only when a pick actually just became known: the overview's
+      // Expensive, so only when the pick actually just became known: the overview's
       // thumbnails (real <img> elements) get rebuilt.
-      const justRevealed = (prevIdx < freshRevealAt && runIdx >= freshRevealAt) || (prevIdx < refRevealAt && runIdx >= refRevealAt);
+      const justRevealed = prevIdx < freshRevealAt && runIdx >= freshRevealAt;
       if (justRevealed && overviewHost) drawOverview(overviewHost, t);
       runTimer = setTimeout(tick, 180);
     };
@@ -379,11 +316,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail together,
-   * every Candidate thumbnail together. Which candidate the fresh perception model
-   * itself picked is marked (border only, no label) once Run has actually revealed
-   * that result -- not upfront, so the board poses the same question a human solver
-   * would face. Deliberately shows only fresh perception's own pick, not the
-   * reference baseline's -- this board is about what our model got. */
+   * every Candidate thumbnail together. Which candidate the model itself picked is
+   * marked (border only, no label) once Run has actually revealed that result --
+   * not upfront, so the board poses the same question a human solver would face. */
   function drawOverview(panel: HTMLElement, t: VDPTrace): void {
     clear(panel);
     const examples = t.scenes.filter((s) => s.role === "train");
