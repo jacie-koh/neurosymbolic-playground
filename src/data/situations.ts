@@ -15,9 +15,6 @@ export interface Situation {
   tagline: string;
   /** Emoji used on the situation card. */
   icon: string;
-  /** Longer description shown when the card is focused. */
-  description: string;
-
   /** What the neural net is asked to perceive (plain language). */
   perception: string;
   /** What the symbolic engine is asked to reason about (plain language). */
@@ -49,11 +46,6 @@ export const SITUATIONS: Situation[] = [
     title: "Sudoku Solver",
     tagline: "Read each cell digit from a grid image, then satisfy all constraints.",
     icon: "🔢",
-    description:
-      "A Sudoku board is shown as an image (digits rendered as MNIST samples). " +
-      "A CNN reads each cell; a constraint-satisfaction engine (SAT/CSP solver) " +
-      "applies the 27 Sudoku rules (row/column/box uniqueness) to find the solution. " +
-      "Training uses SATNet's dataset: real puzzles with guaranteed unique solutions.",
     perception: "Recognize each digit in a 9×9 grid from pixel-rendered images.",
     reasoning: "Apply Sudoku constraints: each row, column, and 3×3 box must contain digits 1–9 exactly once.",
     neuralWeakness:
@@ -76,12 +68,6 @@ export const SITUATIONS: Situation[] = [
     title: "Hitori Puzzle Solver",
     tagline: "Read a grid of numbers, mark cells to block duplicates and isolate groups.",
     icon: "◻️",
-    description:
-      "A Hitori puzzle shows a grid of numbers, given directly — there is no image or " +
-      "CNN here. The solver must shade some cells such that no two adjacent cells in the " +
-      "same row/column are both unshaded AND have the same value, and all unshaded cells " +
-      "form a single connected region. An exact solver proves each forced move by " +
-      "contradiction, then a local LLM explains that already-proven move in plain language.",
     perception: "N/A — the grid is given directly; there is no perception stage for this puzzle.",
     reasoning: "Prove each cell's value is forced by contradiction, then explain the proof in prose.",
     neuralWeakness:
@@ -104,10 +90,6 @@ export const SITUATIONS: Situation[] = [
     title: "KenKen Solver",
     tagline: "Read digits, operators, and cage boundaries from a grid image, then satisfy row/column and cage arithmetic.",
     icon: "🧮",
-    description:
-      "A KenKen board shows a grid partitioned into cages, each labeled with a target number and an operator. " +
-      "Computer vision finds the cage boundaries; a CNN reads each cage's target digits and operator; a " +
-      "constraint solver enforces row/column uniqueness plus every cage's arithmetic.",
     perception: "Detect cage boundaries and read each cage's target number and operator from the image.",
     reasoning: "Apply row/column uniqueness plus each cage's arithmetic (sum, product, difference, or quotient).",
     neuralWeakness:
@@ -128,10 +110,6 @@ export const SITUATIONS: Situation[] = [
     title: "Visual Discrimination Puzzle",
     tagline: "Look at example and candidate scenes, then find the rule that picks out the right one.",
     icon: "🧩",
-    description:
-      "Given a few example images sharing a hidden property and several candidate images, a vision model " +
-      "detects each scene's objects and attributes (shape, color, size, material) and their relations; a " +
-      "symbolic learner searches for a first-order logic rule true on every example and exactly one candidate.",
     perception: "Detect objects and their attributes/relations (shape, color, size, material, left-of, etc.) in each scene.",
     reasoning: "Search a bounded first-order logic fragment for a discriminating rule, verified independently.",
     neuralWeakness:
@@ -152,11 +130,6 @@ export const SITUATIONS: Situation[] = [
     title: "Zebra Puzzle",
     tagline: "Read clues describing 5 people and their attributes; deduce who owns the zebra.",
     icon: "🦓",
-    description:
-      "A logic puzzle: 5 people, 5 house colors, 5 pets, 5 drinks, 5 nationalities. " +
-      "Given clues like 'The Englishman lives in a red house' and 'The horse is next to...', " +
-      "a CNN reads the clues; a first-order-logic solver deduces the solution. " +
-      "Uses ZebraLogic benchmark (1K puzzles, variable difficulty).",
     perception: "Parse written clues and encode them as logical predicates.",
     reasoning: "Apply constraint propagation and backtracking to find the unique consistent assignment.",
     neuralWeakness:

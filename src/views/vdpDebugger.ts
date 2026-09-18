@@ -360,8 +360,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row" },
       running
-        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); drawControls(controlsHost, t); } }, "⏸ Pause")
-        : el("button", { class: "btn primary", onclick: () => runFrom(t) }, "▶ Play"),
+        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); drawControls(controlsHost, t); } }, "⏸ Stop")
+        : el("button", { class: "btn primary", onclick: () => runFrom(t) }, "▶ Start"),
       running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `running… line ${runIdx}/${runSteps.length}`) : ""
     );
 

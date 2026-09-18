@@ -44,14 +44,6 @@ export function renderSituations(root: HTMLElement): void {
   });
 
   const chosen = getSituation(st.situationId);
-  const detail = chosen
-    ? el(
-        "div",
-        { class: "note", style: { marginTop: "20px" } },
-        el("b", {}, chosen.title + " — "),
-        chosen.description
-      )
-    : null;
 
   const cont = el(
     "div",
@@ -63,11 +55,11 @@ export function renderSituations(root: HTMLElement): void {
         disabled: !chosen,
         onclick: () => store.set({ view: "results" }),
       },
-      "See real results \u2192"
+      "Continue \u2192"
     ),
     !chosen ? el("span", { class: "muted" }, "Select a situation to continue") : null
   );
 
-  root.append(head, el("div", { class: "card-grid" }, ...cards), detail ?? "", cont);
+  root.append(head, el("div", { class: "card-grid" }, ...cards), cont);
 }
 

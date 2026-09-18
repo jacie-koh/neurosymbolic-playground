@@ -65,6 +65,17 @@ function groupLabel(t: ZebraTrace, g: string): string {
   return raw.replace(/([a-z])([A-Z])/g, "$1 $2");
 }
 
+/** Plain-English readout of MINIEXACT's real offline result on the puzzle as
+ * originally authored -- "sat, unique=true" told you nothing about why a
+ * non-unique answer matters here (see canShowRealSolution): a puzzle it proved
+ * has more than one valid answer will still get revealed as if it had just one. */
+function describeOfflineResult(status: "sat" | "unsat" | "unknown", unique: boolean | null): string {
+  if (status !== "sat") return "the original puzzle: unsolvable as given";
+  if (unique === true) return "the original puzzle: solvable, with exactly one valid answer";
+  if (unique === false) return "the original puzzle: solvable, but more than one valid answer exists";
+  return "the original puzzle: solvable (uniqueness not checked)";
+}
+
 export function renderZebraDebugger(root: HTMLElement): void {
   clear(root);
 
@@ -210,8 +221,8 @@ export function renderZebraDebugger(root: HTMLElement): void {
       "div",
       { class: "btn-row", style: { marginTop: "12px" } },
       playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Pause")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Play"),
+        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
+        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Start"),
       playing
         ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
         : ""
@@ -245,8 +256,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
     const meta = el(
       "div",
       { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
-      `${t.title} · offline pipeline result: ${t.result.status}` +
-        (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
+      `${t.title} · ${describeOfflineResult(t.result.status, t.result.unique)}` +
         (t.parseAttempts
           ? t.parseAttempts > 1
             ? ` · LLM parse self-corrected: attempt 1's JSON failed schema validation, attempt ${t.parseAttempts} passed`
