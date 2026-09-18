@@ -16,6 +16,11 @@ export interface Situation {
   /** Inline SVG markup used on the situation card (not an emoji -- rendering
    * consistency and a less "generated" look, not decoration). */
   icon: string;
+  /** External link to the puzzle's own rules, when a real one exists -- shown as a
+   * "How to play" link on the card. Left unset rather than guessed for a puzzle
+   * with no established rules page of its own (e.g. Visual Discrimination, a
+   * task specific to one research paper, not a named puzzle genre). */
+  howToPlayUrl?: string;
   /** What the neural net is asked to perceive (plain language). */
   perception: string;
   /** What the symbolic engine is asked to reason about (plain language). */
@@ -117,6 +122,7 @@ export const SITUATIONS: Situation[] = [
     title: "Hitori Puzzle Solver",
     tagline: "Shade cells to remove every duplicate in each row and column, while keeping the rest connected.",
     icon: ICON_HITORI,
+    howToPlayUrl: "https://hitoriconquest.com/",
     perception: "N/A — the grid is given directly; there is no perception stage for this puzzle.",
     reasoning: "Prove each cell's value is forced by contradiction, then explain the proof in prose.",
     neuralWeakness:

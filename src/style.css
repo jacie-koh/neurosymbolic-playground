@@ -194,6 +194,14 @@ button {
   font-weight: 600;
   color: var(--accent);
 }
+.how-to-play {
+  font-size: 12px;
+  color: var(--neural);
+  text-decoration: none;
+}
+.how-to-play:hover {
+  text-decoration: underline;
+}
 .complexity {
   display: inline-flex;
   gap: 3px;

@@ -11,7 +11,7 @@ export function renderSituations(root: HTMLElement): void {
   const head = el(
     "div",
     { class: "view-head" },
-    el("h2", {}, "Choose a situation"),
+    el("h2", {}, "Choose a puzzle"),
     el("p", {}, "Pick a problem where perception meets reasoning.")
   );
 
@@ -35,7 +35,20 @@ export function renderSituations(root: HTMLElement): void {
         { class: "fit-card" },
         el("div", { class: "fit-card-label" }, "Symbolic fit"),
         el("div", { class: "fit-card-value" }, METHODS[s.suggestedMethod].label)
-      )
+      ),
+      s.howToPlayUrl
+        ? el(
+            "a",
+            {
+              class: "how-to-play",
+              href: s.howToPlayUrl,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              onclick: (e: Event) => e.stopPropagation(),
+            },
+            "How to play ↗"
+          )
+        : null
     );
   });
 
@@ -53,7 +66,7 @@ export function renderSituations(root: HTMLElement): void {
       },
       "Continue \u2192"
     ),
-    !chosen ? el("span", { class: "muted" }, "Select a situation to continue") : null
+    !chosen ? el("span", { class: "muted" }, "Select a puzzle to continue") : null
   );
 
   root.append(head, el("div", { class: "card-grid" }, ...cards), cont);

@@ -14,7 +14,7 @@ interface StepDef {
 }
 
 const STEPS: StepDef[] = [
-  { view: "situations", num: 1, label: "Situation" },
+  { view: "situations", num: 1, label: "Puzzle" },
   { view: "results", num: 2, label: "Results" },
 ];
 
