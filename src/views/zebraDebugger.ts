@@ -78,6 +78,11 @@ export function renderZebraDebugger(root: HTMLElement): void {
   let playIdx = 0;
   let livePositions: Record<string, number> | null = null;
   let logLines: string[] = [];
+  /** Set only by actually pressing Play after editing a clue -- null means "no
+   * re-solve attempted since the last edit," so the result box stays hidden
+   * instead of a technical status line sitting there unconditionally. Cleared by
+   * any further edit, a reset, or loading a new trace. */
+  let resolveResult: "sat" | "unsat" | null = null;
 
   function stopPlaying(): void {
     playing = false;
@@ -132,6 +137,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
     logLines = [];
     playSteps = [];
     playIdx = 0;
+    resolveResult = null;
     activeFile = file;
     selectedIdx = null;
     clear(body);
@@ -158,7 +164,6 @@ export function renderZebraDebugger(root: HTMLElement): void {
     clear(body);
 
     const solve = solveZebra({ size: t.size, groups: t.groups, clues });
-    const edited = clues.some((c, i) => JSON.stringify(c) !== JSON.stringify(t.clues[i]));
 
     const clueList = el("div", { style: { display: "flex", flexDirection: "column", gap: "8px", marginTop: "12px" } });
     clues.forEach((clue, i) => {
@@ -220,20 +225,27 @@ export function renderZebraDebugger(root: HTMLElement): void {
       livePositions ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `step ${playIdx}/${playSteps.length || "?"}`) : ""
     );
 
-    const status = el(
-      "div",
-      { class: "note", style: { marginTop: "16px" } },
-      el("b", {}, "Client-side re-solve: "),
-      solve.status === "sat"
-        ? `satisfiable — a consistent assignment exists for all ${clues.length} clues shown above.`
-        : `unsatisfiable — no assignment satisfies all ${clues.length} clues as currently edited.`,
-      edited ? " (clue set edited — this no longer matches the offline pipeline's original interpretation.)" : ""
-    );
+    // Only shown after actually pressing Play/Pause with an edited clue set --
+    // otherwise this would just repeat "offline pipeline result" below for the
+    // unedited case, or sit there as a technical status nobody asked to see yet.
+    const status =
+      resolveResult != null
+        ? el(
+            "div",
+            { class: "note", style: { marginTop: "16px" } },
+            resolveResult === "sat"
+              ? el("b", {}, "Re-solved successfully — ")
+              : el("b", {}, "Re-solve failed — "),
+            resolveResult === "sat"
+              ? `a consistent assignment exists for all ${clues.length} clues as edited.`
+              : `no assignment satisfies all ${clues.length} clues as edited.`
+          )
+        : "";
 
     const meta = el(
       "div",
       { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
-      `${t.title} · ${t.size} houses, ${groupKeys.length} categories · offline pipeline result: ${t.result.status}` +
+      `${t.title} · offline pipeline result: ${t.result.status}` +
         (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
         (t.parseAttempts
           ? t.parseAttempts > 1
@@ -281,6 +293,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
           logLines = [];
           playSteps = [];
           playIdx = 0;
+          resolveResult = null;
           clues = t.clues.map((c) => ({ ...c }));
           selectedIdx = null;
           drawBody();
@@ -444,6 +457,11 @@ export function renderZebraDebugger(root: HTMLElement): void {
     prepareSteps(t);
     playing = true;
     resetLive();
+    // Only worth reporting when something's actually been edited -- the offline
+    // pipeline result already covers the unedited case, so don't show a second,
+    // redundant verdict for that.
+    const edited = clues.some((c, i) => JSON.stringify(c) !== JSON.stringify(t.clues[i]));
+    resolveResult = edited ? solveZebra({ size: t.size, groups: t.groups, clues }).status : null;
     const delay = revealMode
       ? Math.max(120, Math.min(400, 3000 / Math.max(1, playSteps.length)))
       : Math.max(15, Math.min(120, 4000 / Math.max(1, playSteps.length)));
@@ -496,6 +514,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
         onchange: (e: Event) => {
           stopPlaying();
           livePositions = null;
+          resolveResult = null;
           const relation = (e.target as HTMLSelectElement).value as Relation;
           clue.relation = relation;
           if (relation === "at" || relation === "not_at") {
@@ -531,7 +550,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
             max: String(t.size),
             value: String(clue.position ?? 1),
             style: { width: "60px" },
-            onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; clue.position = Number((e.target as HTMLInputElement).value); drawBody(); },
+            onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; resolveResult = null; clue.position = Number((e.target as HTMLInputElement).value); drawBody(); },
           })
         )
       );
@@ -539,7 +558,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
       const bSelect = el(
         "select",
         {
-          onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; clue.b = (e.target as HTMLSelectElement).value; drawBody(); },
+          onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; resolveResult = null; clue.b = (e.target as HTMLSelectElement).value; drawBody(); },
         },
         ...entities.filter((x) => x !== clue.a).map((x) => el("option", { value: x, selected: x === clue.b }, entityLabel(x)))
       );
@@ -556,7 +575,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
               max: String(t.size - 1),
               value: String(clue.distance ?? 1),
               style: { width: "60px" },
-              onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; clue.distance = Number((e.target as HTMLInputElement).value); drawBody(); },
+              onchange: (e: Event) => { stopPlaying(); livePositions = null; logLines = []; resolveResult = null; clue.distance = Number((e.target as HTMLInputElement).value); drawBody(); },
             })
           )
         );
