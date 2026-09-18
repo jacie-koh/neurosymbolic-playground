@@ -289,6 +289,15 @@ function flowDiagram(row: PatternRow): HTMLElement {
   let attachedNeural = false;
   let attachedSymbolic = false;
 
+  // Every pattern's real pipeline is the same 3 stages (perception/parse,
+  // reasoning, output) -- a CSS grid with one equal-width column per stage (plus
+  // a narrow auto column per arrow) keeps all three boxes the same size and in the
+  // same position whether you're looking at Neural->Symbolic, Symbolic->Neural, or
+  // Neural<->Symbolic, instead of flex-wrap letting box widths drift with content
+  // length and making the three tabs look inconsistently laid out.
+  const n = main.stages.length;
+  const columns = Array(n).fill("minmax(0, 1fr)").join(" auto ");
+
   const nodes = main.stages.flatMap((stage, i) => {
     let compare: { label: string; text: string } | null = null;
     if (stage.kind === "neural" && !attachedNeural) {
@@ -298,29 +307,27 @@ function flowDiagram(row: PatternRow): HTMLElement {
       attachedSymbolic = true;
       if (symbolicOnlyText) compare = { label: "Symbolic alone (no perception)", text: symbolicOnlyText };
     }
-    return [
-      i > 0 ? el("div", { class: "flow-arrow" }, "→") : null,
-      el(
-        "div",
-        { class: `flow-node ${stage.kind}`, style: { flex: "1 1 210px", display: "block", textAlign: "left" } },
-        el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center" } }, stage.label),
-        el("div", { style: { textAlign: "center" } }, stage.text),
-        compare
-          ? el(
-              "div",
-              { style: { marginTop: "10px", paddingTop: "8px", borderTop: "1px dashed rgba(16,24,40,0.15)", fontSize: "10.5px", opacity: 0.85 } },
-              el("b", {}, `${compare.label}: `),
-              compare.text
-            )
-          : ""
-      ),
-    ];
+    const box = el(
+      "div",
+      { class: `flow-node ${stage.kind}`, style: { display: "flex", flexDirection: "column", textAlign: "left" } },
+      el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center" } }, stage.label),
+      el("div", { style: { textAlign: "center" } }, stage.text),
+      compare
+        ? el(
+            "div",
+            { style: { marginTop: "10px", paddingTop: "8px", borderTop: "1px dashed rgba(16,24,40,0.15)", fontSize: "10.5px", opacity: 0.85 } },
+            el("b", {}, `${compare.label}: `),
+            compare.text
+          )
+        : ""
+    );
+    return i > 0 ? [el("div", { class: "flow-arrow", style: { textAlign: "center" } }, "→"), box] : [box];
   });
 
   return el(
     "div",
     {},
-    el("div", { class: "flow-demo", style: { display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "stretch" } }, ...nodes),
+    el("div", { class: "flow-demo", style: { display: "grid", gridTemplateColumns: columns, alignItems: "stretch", gap: "10px" } }, ...nodes),
     main.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, main.loopNote) : "",
     main.caption ? el("div", { style: { fontSize: "12px", marginTop: "8px", color: "var(--muted)" } }, main.caption) : ""
   );

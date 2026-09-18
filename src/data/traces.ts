@@ -256,6 +256,11 @@ export interface HitoriDeduction {
   shaded: boolean;
   kind: "local" | "connectivity";
   evidence: string[];
+  /** The real Z3 proof: names of the exact tracked assertions z3.Solver.unsat_core()
+   * returned for this cell (e.g. "separation_0_2_0_3") -- assigning the opposite value
+   * makes exactly these assertions jointly unsatisfiable. `evidence[i]` is the plain-
+   * English gloss of `constraint_ids[i]`. See standalone/puzzlelab/hitori.py:build(). */
+  constraint_ids: string[];
 }
 
 export interface HitoriTrace {

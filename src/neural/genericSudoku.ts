@@ -185,7 +185,19 @@ export function solveGenericWithSteps(input: Grid): SolveTrace {
     return false;
   }
 
-  if (findConflicts(grid).length > 0) return { status: "unsat", solution: null, steps: [] };
+  const givenConflicts = findConflicts(grid);
+  if (givenConflicts.length > 0) {
+    const first = givenConflicts[0];
+    const kindLabel = first.kind === "box" ? "box" : first.kind;
+    steps.push({
+      row: first.row,
+      col: first.col,
+      digit: 0,
+      deadEnd: true,
+      reason: `digit ${first.digit} at (${first.row + 1},${first.col + 1}) already conflicts with the given at (${first.with[0] + 1},${first.with[1] + 1}) in this ${kindLabel} — the given readings themselves disagree, no cell left to fill.`,
+    });
+    return { status: "unsat", solution: null, steps };
+  }
   const ok = backtrack();
   return { status: ok ? "sat" : "unsat", solution: ok ? grid : null, steps };
 }

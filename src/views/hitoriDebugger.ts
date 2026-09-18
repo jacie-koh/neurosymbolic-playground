@@ -53,6 +53,9 @@ export function renderHitoriDebugger(root: HTMLElement): void {
   let locked = new Set<string>();
   let deductionIdx = -1; // -1 = free exploration, no deduction selected
   let evidenceExpanded = false;
+  /** Whether the current deduction's raw Z3 unsat-core (the actual assertion names,
+   * not their plain-English gloss) is shown. */
+  let proofExpanded = false;
   let solveMessage = "";
   let playing = false;
   let playTimer: ReturnType<typeof setTimeout> | undefined;
@@ -242,6 +245,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     if (deductionIdx >= t.deductions.length - 1) return false;
     deductionIdx = deductionIdx < 0 ? 0 : deductionIdx + 1;
     evidenceExpanded = false;
+    proofExpanded = false;
     applyDeduction(t);
     return true;
   }
@@ -295,7 +299,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         {
           class: "btn",
           disabled: playing || deductionIdx <= 0,
-          onclick: () => { deductionIdx = Math.max(0, deductionIdx - 1); evidenceExpanded = false; applyDeduction(t); drawBody(); },
+          onclick: () => { deductionIdx = Math.max(0, deductionIdx - 1); evidenceExpanded = false; proofExpanded = false; applyDeduction(t); drawBody(); },
         },
         "← Previous deduction"
       ),
@@ -308,6 +312,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
             if (deductionIdx < 0) { shaded = t.grid.map((row) => row.map(() => false)); locked = new Set(); }
             deductionIdx = deductionIdx < 0 ? 0 : Math.min(t.deductions.length - 1, deductionIdx + 1);
             evidenceExpanded = false;
+            proofExpanded = false;
             applyDeduction(t);
             drawBody();
           },
@@ -331,7 +336,8 @@ export function renderHitoriDebugger(root: HTMLElement): void {
           `cell (${d.row + 1}, ${d.col + 1}) must be ${d.shaded ? "shaded" : "unshaded"}. `,
           el("span", { class: "badge" + (d.kind === "local" ? " badge-weak" : " badge-strong") }, d.kind)
         ),
-        renderEvidence(d.evidence)
+        renderEvidence(d.evidence),
+        renderZ3Proof(d)
       );
       if (deductionIdx === 0 && t.explanation) {
         if (explanationActive()) {
@@ -376,6 +382,47 @@ export function renderHitoriDebugger(root: HTMLElement): void {
           )
         : "";
     return el("div", {}, list, toggle);
+  }
+
+  /** The plain-English evidence above is a gloss over a real Z3 unsat core: assigning
+   * this cell the opposite value makes exactly these tracked assertions jointly
+   * unsatisfiable (z3.Solver.unsat_core(), see standalone/puzzlelab/hitori.py:build/
+   * run). Shown collapsed by default -- these are raw solver-internal names, not
+   * meant to replace the English evidence, just to make the actual proof inspectable. */
+  function renderZ3Proof(d: HitoriDeduction): HTMLElement {
+    const toggle = el(
+      "button",
+      { class: "btn", style: { padding: "3px 8px", fontSize: "11px", marginTop: "6px" }, onclick: () => { proofExpanded = !proofExpanded; drawBody(); } },
+      proofExpanded ? "Hide real Z3 proof" : "Show real Z3 proof"
+    );
+    if (!proofExpanded) return el("div", {}, toggle);
+    const box = el(
+      "pre",
+      {
+        style: {
+          marginTop: "6px",
+          padding: "8px",
+          fontSize: "11px",
+          background: "var(--panel)",
+          border: "1px solid var(--line)",
+          borderRadius: "6px",
+          overflowX: "auto",
+          whiteSpace: "pre",
+        },
+      },
+      `unsat_core() for shaded_${d.row}_${d.col} == ${!d.shaded}:\n` + d.constraint_ids.map((id) => `  ${id}`).join("\n")
+    );
+    return el(
+      "div",
+      {},
+      toggle,
+      box,
+      el(
+        "div",
+        { class: "muted", style: { fontSize: "11px", marginTop: "4px" } },
+        `These are the exact named Z3 assertions Z3 itself reported as jointly unsatisfiable with shaded_${d.row}_${d.col} == ${!d.shaded} -- the real proof the English evidence above is a gloss of, one line per constraint_ids[i] ↔ evidence[i].`
+      )
+    );
   }
 
   function applyDeduction(t: HitoriTrace): void {

@@ -53,6 +53,10 @@ export function renderSudokuDebugger(root: HTMLElement): void {
   let playIdx = 0;
   let liveGrid: Grid | null = null;
   let logLines: string[] = [];
+  /** Built once per trace load, not per drawBody() -- rebuilding this <img> on every
+   * step/tick forced a relayout as it re-decoded, which is what was making the page
+   * visibly jump on Step forward/back (and during auto-play). */
+  let sourceImage: HTMLElement | null = null;
 
   function stopPlaying(): void {
     playing = false;
@@ -108,6 +112,16 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         trace = t;
         const source = loopActive() ? t.interpreted : t.recognized;
         working = source.map((row) => [...row]);
+        sourceImage = el(
+          "div",
+          { style: { flex: "0 0 auto" } },
+          el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
+          el("img", {
+            src: t.imageUrl,
+            alt: `Real ${t.style} photo of ${t.title}`,
+            style: { display: "block", maxWidth: "220px", width: "100%", height: "auto", borderRadius: "6px", border: "1px solid var(--line)" },
+          })
+        );
         drawBody();
       })
       .catch(() => {
@@ -143,21 +157,16 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     const conflictCells = new Set(conflicts.map((cf) => cellKey(cf.row, cf.col)));
     const solve = solveGeneric(working);
 
-    const sourceImage = el(
-      "div",
-      { style: { flex: "0 0 auto" } },
-      el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
-      el("img", {
-        src: t.imageUrl,
-        alt: `Real ${t.style} photo of ${t.title}`,
-        style: { display: "block", maxWidth: "220px", width: "100%", height: "auto", borderRadius: "6px", border: "1px solid var(--line)" },
-      })
-    );
-
     const grid = el("div", {
       class: "lab-grid",
       style: { gridTemplateColumns: `repeat(${t.size}, ${t.size > 9 ? 32 : 46}px)` },
     });
+
+    // The cell the LIVE correction loop is acting on right now (this playthrough),
+    // distinct from correctionFor()'s offline-precomputed correction badge -- so the
+    // grid visibly shows a cell being tried/reverted/fixed as the log narrates it.
+    const lastAppliedStep = playIdx > 0 ? playSteps[playIdx - 1] : null;
+    const liveCorrectionKind = lastAppliedStep?.correction?.kind ?? null;
 
     for (let r = 0; r < t.size; r++) {
       for (let c = 0; c < t.size; c++) {
@@ -168,11 +177,16 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         const isAmbiguous = !!ambiguousFor(t, r, c);
         const isOverridden = overridden.has(cellKey(r, c));
         const isConflict = conflictCells.has(cellKey(r, c));
+        const isLiveCorrectionTarget = !!liveCorrectionKind && lastAppliedStep!.row === r && lastAppliedStep!.col === c;
         const solverFill = !given ? (liveGrid ? liveGrid[r][c] || null : solve.solution ? solve.solution[r][c] : null) : null;
 
         let background = "var(--panel)";
         let color = "inherit";
-        if (isConflict) {
+        if (isLiveCorrectionTarget && (liveCorrectionKind === "try" || liveCorrectionKind === "corrected" || liveCorrectionKind === "revert")) {
+          if (liveCorrectionKind === "corrected") { background = "#e3f6e8"; color = "#1a7a3d"; }
+          else if (liveCorrectionKind === "revert") { background = "#fdecec"; color = "#b3261e"; }
+          else { background = "#fff4d6"; color = "#8a6100"; }
+        } else if (isConflict) {
           background = "#fdecec";
           color = "#b3261e";
         } else if (isOverridden) {
@@ -300,7 +314,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     controlsHost.append(playRow, stepRow, logBox);
 
     body.append(
-      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage, grid),
+      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage!, grid),
       meta,
       ambiguityNote,
       status,
@@ -327,14 +341,15 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
       playSteps = explainRevealSteps(working, t.result.solution!);
-    } else {
-      // Edited puzzle (or the offline baseline itself was unsat): Z3 never verified this
-      // exact state, so fall back to an independent client-side search instead. If the
-      // given digits directly conflict, first run a real confidence-ranked correction
-      // loop (client-side port of puzzlelab/visual.py's search) over every given cell's
-      // real CNN alternatives except ones the user explicitly locked in by overriding --
-      // exactly mirroring what the real offline pipeline does, using the real per-cell
-      // topK data this trace already carries.
+    } else if (loopActive()) {
+      // Neural <-> Symbolic: this is specifically the pattern with a real bounded
+      // correction loop. If the given digits directly conflict, run a real
+      // confidence-ranked correction loop (client-side port of puzzlelab/
+      // visual.py's search) over every given cell's real CNN alternatives except
+      // ones the user explicitly locked in by overriding -- exactly mirroring what
+      // the real offline pipeline does, using the real per-cell topK data this
+      // trace already carries. This is the only pattern that ever reworks a given
+      // reading; the log explains exactly why each changed cell was changed.
       const topKByCell: Record<string, [number, number][]> = {};
       for (const [key, pred] of Object.entries(t.predictions)) {
         if (!overridden.has(key)) topKByCell[key] = pred.topK;
@@ -347,6 +362,12 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       const giveUp = correction.engaged && correction.status === "unsat";
       const fillSteps = giveUp ? [] : solveGenericWithSteps(correction.correctedGiven).steps;
       playSteps = [...correction.steps, ...fillSteps];
+    } else {
+      // Neural -> Symbolic (one-shot): CNN reads once, Z3 solves once -- no
+      // correction, no reworking a given reading. If the givens conflict, the only
+      // honest thing to show is the dead end itself, not an alternative-reading
+      // search that pattern never performs.
+      playSteps = solveGenericWithSteps(working).steps;
     }
     playIdx = 0;
   }

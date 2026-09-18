@@ -178,6 +178,11 @@
         "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "duplicate_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2"
       ]
     },
     {
@@ -186,9 +191,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (1,2) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2"
       ]
     },
     {
@@ -197,9 +207,14 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (1,2) and (1,3) must be shaded: both contain 1.",
+        "Cells (1,1) and (1,2) cannot both be shaded.",
         "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
-        "Cells (1,1) and (1,2) cannot both be shaded."
+        "At least one of (1,2) and (1,3) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "duplicate_0_1_0_2"
       ]
     },
     {
@@ -208,9 +223,14 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
         "At least one of (2,4) and (7,4) must be shaded: both contain 2.",
+        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
         "Cells (7,4) and (8,4) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "duplicate_1_3_6_3",
+        "duplicate_1_3_7_3",
+        "separation_6_3_7_3"
       ]
     },
     {
@@ -220,8 +240,13 @@
       "kind": "local",
       "evidence": [
         "Cells (2,5) and (2,6) cannot both be shaded.",
-        "Cells (2,6) and (2,7) cannot both be shaded.",
-        "At least one of (2,5) and (2,7) must be shaded: both contain 5."
+        "At least one of (2,5) and (2,7) must be shaded: both contain 5.",
+        "Cells (2,6) and (2,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_4_1_5",
+        "duplicate_1_4_1_6",
+        "separation_1_5_1_6"
       ]
     },
     {
@@ -233,6 +258,11 @@
         "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
         "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
         "Cells (6,7) and (7,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_5_6_6_6"
       ]
     },
     {
@@ -244,6 +274,11 @@
         "Cells (3,1) and (3,2) cannot both be shaded.",
         "At least one of (3,1) and (3,3) must be shaded: both contain 2.",
         "Cells (3,2) and (3,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_2_0_2_1",
+        "duplicate_2_0_2_2",
+        "separation_2_1_2_2"
       ]
     },
     {
@@ -255,6 +290,11 @@
         "Cells (2,6) and (3,6) cannot both be shaded.",
         "At least one of (2,6) and (4,6) must be shaded: both contain 1.",
         "Cells (3,6) and (4,6) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_5_2_5",
+        "duplicate_1_5_3_5",
+        "separation_2_5_3_5"
       ]
     },
     {
@@ -263,9 +303,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "Cells (4,5) and (5,5) cannot both be shaded.",
         "Cells (3,5) and (4,5) cannot both be shaded.",
-        "At least one of (3,5) and (5,5) must be shaded: both contain 1."
+        "At least one of (3,5) and (5,5) must be shaded: both contain 1.",
+        "Cells (4,5) and (5,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_2_4_3_4",
+        "duplicate_2_4_4_4",
+        "separation_3_4_4_4"
       ]
     },
     {
@@ -274,9 +319,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (4,6) and (4,7) cannot both be shaded.",
         "At least one of (4,6) and (4,8) must be shaded: both contain 1.",
-        "Cells (4,7) and (4,8) cannot both be shaded.",
-        "Cells (4,6) and (4,7) cannot both be shaded."
+        "Cells (4,7) and (4,8) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_3_5_3_6",
+        "duplicate_3_5_3_7",
+        "separation_3_6_3_7"
       ]
     },
     {
@@ -285,9 +335,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
         "Cells (4,1) and (5,1) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
         "Cells (5,1) and (6,1) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_3_0_4_0",
+        "duplicate_3_0_5_0",
+        "separation_4_0_5_0"
       ]
     },
     {
@@ -299,6 +354,11 @@
         "Cells (5,5) and (5,6) cannot both be shaded.",
         "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
         "Cells (5,6) and (5,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_4_4_5",
+        "duplicate_4_4_4_6",
+        "separation_4_5_4_6"
       ]
     },
     {
@@ -307,9 +367,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (4,8) and (5,8) cannot both be shaded.",
         "At least one of (4,8) and (6,8) must be shaded: both contain 1.",
-        "Cells (5,8) and (6,8) cannot both be shaded.",
-        "Cells (4,8) and (5,8) cannot both be shaded."
+        "Cells (5,8) and (6,8) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_3_7_4_7",
+        "duplicate_3_7_5_7",
+        "separation_4_7_5_7"
       ]
     },
     {
@@ -318,9 +383,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (6,1) and (6,3) must be shaded: both contain 3.",
         "Cells (6,1) and (6,2) cannot both be shaded.",
+        "At least one of (6,1) and (6,3) must be shaded: both contain 3.",
         "Cells (6,2) and (6,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_5_0_5_1",
+        "duplicate_5_0_5_2",
+        "separation_5_1_5_2"
       ]
     },
     {
@@ -332,6 +402,11 @@
         "Cells (6,3) and (6,4) cannot both be shaded.",
         "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
         "Cells (6,4) and (6,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_5_2_5_3",
+        "duplicate_5_2_5_4",
+        "separation_5_3_5_4"
       ]
     },
     {
@@ -340,9 +415,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (5,5) and (6,5) cannot both be shaded.",
         "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "Cells (6,5) and (7,5) cannot both be shaded.",
-        "Cells (5,5) and (6,5) cannot both be shaded."
+        "Cells (6,5) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_4_5_4",
+        "duplicate_4_4_6_4",
+        "separation_5_4_6_4"
       ]
     },
     {
@@ -354,6 +434,11 @@
         "Cells (3,8) and (4,8) cannot both be shaded.",
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
         "At least one of (4,8) and (6,8) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_7_5_7"
       ]
     },
     {
@@ -362,9 +447,14 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
+        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
         "Cells (7,3) and (8,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_5_2_6_2",
+        "duplicate_5_2_7_2",
+        "separation_6_2_7_2"
       ]
     },
     {
@@ -373,10 +463,16 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (1,1) and (2,1) cannot both be shaded.",
         "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
-        "Cells (1,1) and (2,1) cannot both be shaded.",
         "Cells (1,2) and (1,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2"
       ]
     },
     {
@@ -385,10 +481,16 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
+        "Cells (2,4) and (2,5) cannot both be shaded.",
         "At least one of (2,4) and (7,4) must be shaded: both contain 2.",
-        "Cells (7,4) and (8,4) cannot both be shaded.",
-        "Cells (2,4) and (2,5) cannot both be shaded."
+        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
+        "Cells (7,4) and (8,4) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_3_1_4",
+        "duplicate_1_3_6_3",
+        "duplicate_1_3_7_3",
+        "separation_6_3_7_3"
       ]
     },
     {
@@ -397,10 +499,16 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
         "Cells (2,7) and (2,8) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
         "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
         "Cells (6,7) and (7,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_6_1_7",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_5_6_6_6"
       ]
     },
     {
@@ -409,10 +517,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
         "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
+        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
         "Cells (7,3) and (8,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "duplicate_2_2_6_2",
+        "separation_5_2_6_2",
+        "duplicate_5_2_7_2",
+        "separation_6_2_7_2"
       ]
     },
     {
@@ -422,9 +536,15 @@
       "kind": "local",
       "evidence": [
         "Cells (2,5) and (2,6) cannot both be shaded.",
+        "At least one of (2,5) and (2,7) must be shaded: both contain 5.",
         "Cells (2,6) and (2,7) cannot both be shaded.",
-        "At least one of (2,6) and (4,6) must be shaded: both contain 1.",
-        "At least one of (2,5) and (2,7) must be shaded: both contain 5."
+        "At least one of (2,6) and (4,6) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_1_4_1_5",
+        "duplicate_1_4_1_6",
+        "separation_1_5_1_6",
+        "duplicate_1_5_3_5"
       ]
     },
     {
@@ -433,10 +553,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (1,2) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
         "At least one of (1,2) and (5,2) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_0_1_4_1"
       ]
     },
     {
@@ -445,10 +571,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "Cells (6,5) and (7,5) cannot both be shaded.",
         "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
+        "At least one of (6,1) and (6,5) must be shaded: both contain 3.",
+        "Cells (6,5) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_4_5_4",
+        "duplicate_4_4_6_4",
+        "duplicate_5_0_5_4",
+        "separation_5_4_6_4"
       ]
     },
     {
@@ -457,10 +589,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
+        "Cells (5,5) and (6,5) cannot both be shaded.",
         "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
         "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
-        "Cells (6,5) and (7,5) cannot both be shaded.",
-        "Cells (5,5) and (6,5) cannot both be shaded."
+        "Cells (6,5) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_4_5_4",
+        "duplicate_4_4_6_4",
+        "duplicate_5_2_5_4",
+        "separation_5_4_6_4"
       ]
     },
     {
@@ -473,6 +611,12 @@
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
         "At least one of (4,8) and (6,8) must be shaded: both contain 1.",
         "Cells (6,7) and (6,8) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_7_5_7",
+        "separation_5_6_5_7"
       ]
     },
     {
@@ -481,10 +625,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
-        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
-        "Cells (7,3) and (8,3) cannot both be shaded."
+        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
+        "Cells (7,3) and (8,3) cannot both be shaded.",
+        "At least one of (7,3) and (7,4) must be shaded: both contain 2."
+      ],
+      "constraint_ids": [
+        "separation_5_2_6_2",
+        "duplicate_5_2_7_2",
+        "separation_6_2_7_2",
+        "duplicate_6_2_6_3"
       ]
     },
     {
@@ -497,6 +647,12 @@
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
         "At least one of (4,8) and (6,8) must be shaded: both contain 1.",
         "Cells (6,8) and (7,8) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_7_5_7",
+        "separation_5_7_6_7"
       ]
     },
     {
@@ -505,10 +661,16 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (1,2) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
         "At least one of (1,2) and (8,2) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_0_1_7_1"
       ]
     },
     {
@@ -517,11 +679,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
-        "Cells (1,4) and (2,4) cannot both be shaded.",
         "Cells (1,1) and (2,1) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,3) and (1,4) cannot both be shaded.",
+        "Cells (1,4) and (2,4) cannot both be shaded.",
         "At least one of (2,1) and (2,4) must be shaded: both contain 2."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_2",
+        "separation_0_2_0_3",
+        "separation_0_3_1_3",
+        "duplicate_1_0_1_3"
       ]
     },
     {
@@ -530,11 +699,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "Cells (6,6) and (6,7) cannot both be shaded.",
-        "Cells (1,7) and (2,7) cannot both be shaded.",
+        "Cells (1,6) and (1,7) cannot both be shaded.",
         "At least one of (1,6) and (6,6) must be shaded: both contain 2.",
-        "Cells (1,6) and (1,7) cannot both be shaded."
+        "Cells (1,7) and (2,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "Cells (6,6) and (6,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_5_0_6",
+        "duplicate_0_5_5_5",
+        "separation_0_6_1_6",
+        "duplicate_1_6_5_6",
+        "separation_5_5_5_6"
       ]
     },
     {
@@ -543,11 +719,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (2,1) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,3) and (2,3) cannot both be shaded.",
         "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
         "Cells (2,3) and (2,4) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_2",
+        "separation_0_2_1_2",
+        "duplicate_1_0_1_3",
+        "separation_1_2_1_3"
       ]
     },
     {
@@ -556,11 +739,18 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
+        "Cells (1,1) and (2,1) cannot both be shaded.",
         "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
-        "Cells (1,1) and (2,1) cannot both be shaded.",
-        "At least one of (2,1) and (3,1) must be shaded: both contain 2.",
-        "Cells (1,2) and (1,3) cannot both be shaded."
+        "Cells (1,2) and (1,3) cannot both be shaded.",
+        "At least one of (2,1) and (3,1) must be shaded: both contain 2."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_1_0_2_0"
       ]
     },
     {
@@ -569,11 +759,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
+        "Cells (2,4) and (3,4) cannot both be shaded.",
         "At least one of (2,4) and (7,4) must be shaded: both contain 2.",
-        "Cells (7,3) and (7,4) cannot both be shaded.",
         "Cells (3,3) and (3,4) cannot both be shaded.",
-        "Cells (2,4) and (3,4) cannot both be shaded."
+        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
+        "Cells (7,3) and (7,4) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_3_2_3",
+        "duplicate_1_3_6_3",
+        "separation_2_2_2_3",
+        "duplicate_2_2_6_2",
+        "separation_6_2_6_3"
       ]
     },
     {
@@ -582,11 +779,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (3,5) and (3,8) must be shaded: both contain 1.",
-        "Cells (3,7) and (3,8) cannot both be shaded.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
         "Cells (2,5) and (3,5) cannot both be shaded.",
-        "At least one of (2,5) and (2,7) must be shaded: both contain 5."
+        "At least one of (2,5) and (2,7) must be shaded: both contain 5.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (3,5) and (3,8) must be shaded: both contain 1.",
+        "Cells (3,7) and (3,8) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_4_2_4",
+        "duplicate_1_4_1_6",
+        "separation_1_6_2_6",
+        "duplicate_2_4_2_7",
+        "separation_2_6_2_7"
       ]
     },
     {
@@ -595,11 +799,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "Cells (3,8) and (4,8) cannot both be shaded.",
-        "Cells (3,7) and (3,8) cannot both be shaded.",
-        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
         "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "Cells (3,3) and (4,3) cannot both be shaded."
+        "Cells (3,7) and (3,8) cannot both be shaded.",
+        "Cells (3,8) and (4,8) cannot both be shaded.",
+        "At least one of (4,3) and (4,8) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "separation_2_6_2_7",
+        "separation_2_7_3_7",
+        "duplicate_3_2_3_7"
       ]
     },
     {
@@ -608,11 +819,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "Cells (4,2) and (4,3) cannot both be shaded.",
-        "Cells (4,2) and (5,2) cannot both be shaded.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
+        "At least one of (1,2) and (5,2) must be shaded: both contain 1.",
         "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
-        "At least one of (1,2) and (5,2) must be shaded: both contain 1."
+        "Cells (4,2) and (5,2) cannot both be shaded.",
+        "Cells (4,2) and (4,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_1_4_1",
+        "duplicate_0_2_3_2",
+        "separation_3_1_4_1",
+        "separation_3_1_3_2"
       ]
     },
     {
@@ -621,11 +839,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
-        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
         "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
+        "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
         "Cells (7,3) and (8,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_2_2_3_2",
+        "duplicate_2_2_6_2",
+        "separation_5_2_6_2",
+        "duplicate_5_2_7_2",
+        "separation_6_2_7_2"
       ]
     },
     {
@@ -634,11 +859,18 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "Cells (3,7) and (3,8) cannot both be shaded.",
-        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "Cells (3,3) and (4,3) cannot both be shaded.",
-        "At least one of (3,8) and (4,8) must be shaded: both contain 1."
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,7) and (3,8) cannot both be shaded.",
+        "At least one of (3,8) and (4,8) must be shaded: both contain 1.",
+        "At least one of (4,3) and (4,8) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "separation_2_6_2_7",
+        "duplicate_2_7_3_7",
+        "duplicate_3_2_3_7"
       ]
     },
     {
@@ -647,11 +879,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "Cells (5,3) and (6,3) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
-        "At least one of (5,2) and (5,5) must be shaded: both contain 1.",
         "Cells (5,2) and (5,3) cannot both be shaded.",
-        "Cells (5,5) and (6,5) cannot both be shaded."
+        "At least one of (5,2) and (5,5) must be shaded: both contain 1.",
+        "Cells (5,3) and (6,3) cannot both be shaded.",
+        "Cells (5,5) and (6,5) cannot both be shaded.",
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3."
+      ],
+      "constraint_ids": [
+        "separation_4_1_4_2",
+        "duplicate_4_1_4_4",
+        "separation_4_2_5_2",
+        "separation_4_4_5_4",
+        "duplicate_5_2_5_4"
       ]
     },
     {
@@ -660,11 +899,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (1,2) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
         "At least one of (1,2) and (8,2) must be shaded: both contain 1.",
         "Cells (7,2) and (8,2) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_0_1_7_1",
+        "separation_6_1_7_1"
       ]
     },
     {
@@ -673,11 +919,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
-        "Cells (7,4) and (7,5) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
-        "Cells (6,5) and (7,5) cannot both be shaded."
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
+        "Cells (6,5) and (7,5) cannot both be shaded.",
+        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
+        "Cells (7,4) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_5_2_6_2",
+        "duplicate_5_2_5_4",
+        "separation_5_4_6_4",
+        "duplicate_6_2_6_3",
+        "separation_6_3_6_4"
       ]
     },
     {
@@ -686,11 +939,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,1) and (1,2) cannot both be shaded.",
-        "Cells (8,1) and (8,2) cannot both be shaded.",
+        "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "At least one of (1,2) and (8,2) must be shaded: both contain 1."
+        "At least one of (1,2) and (8,2) must be shaded: both contain 1.",
+        "Cells (8,1) and (8,2) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_0_1_7_1",
+        "separation_7_0_7_1"
       ]
     },
     {
@@ -699,11 +959,18 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (6,3) and (7,3) cannot both be shaded.",
         "At least one of (6,3) and (8,3) must be shaded: both contain 3.",
-        "Cells (8,3) and (8,4) cannot both be shaded.",
-        "Cells (7,4) and (8,4) cannot both be shaded.",
         "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
-        "Cells (6,3) and (7,3) cannot both be shaded."
+        "Cells (7,4) and (8,4) cannot both be shaded.",
+        "Cells (8,3) and (8,4) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_5_2_6_2",
+        "duplicate_5_2_7_2",
+        "duplicate_6_2_6_3",
+        "separation_6_3_7_3",
+        "separation_7_2_7_3"
       ]
     },
     {
@@ -712,12 +979,20 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "Cells (3,8) and (4,8) cannot both be shaded.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "At least one of (3,5) and (3,8) must be shaded: both contain 1.",
         "Cells (3,7) and (3,8) cannot both be shaded.",
-        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "Cells (3,3) and (4,3) cannot both be shaded."
+        "Cells (3,8) and (4,8) cannot both be shaded.",
+        "At least one of (4,3) and (4,8) must be shaded: both contain 1."
+      ],
+      "constraint_ids": [
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "duplicate_2_4_2_7",
+        "separation_2_6_2_7",
+        "separation_2_7_3_7",
+        "duplicate_3_2_3_7"
       ]
     },
     {
@@ -726,12 +1001,20 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
+        "Cells (1,1) and (2,1) cannot both be shaded.",
         "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "At least one of (1,1) and (1,3) must be shaded: both contain 1.",
-        "Cells (1,1) and (2,1) cannot both be shaded.",
+        "Cells (1,2) and (1,3) cannot both be shaded.",
         "At least one of (2,1) and (3,1) must be shaded: both contain 2.",
-        "Cells (3,1) and (4,1) cannot both be shaded.",
-        "Cells (1,2) and (1,3) cannot both be shaded."
+        "Cells (3,1) and (4,1) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_1",
+        "duplicate_0_0_0_2",
+        "separation_0_1_0_2",
+        "duplicate_1_0_2_0",
+        "separation_2_0_3_0"
       ]
     },
     {
@@ -740,12 +1023,20 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
         "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "Cells (7,4) and (7,5) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
-        "Cells (6,5) and (7,5) cannot both be shaded."
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
+        "Cells (6,5) and (7,5) cannot both be shaded.",
+        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
+        "Cells (7,4) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "duplicate_4_4_6_4",
+        "separation_5_2_6_2",
+        "duplicate_5_2_5_4",
+        "separation_5_4_6_4",
+        "duplicate_6_2_6_3",
+        "separation_6_3_6_4"
       ]
     },
     {
@@ -754,13 +1045,22 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
-        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "Cells (7,4) and (7,5) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
         "Cells (5,4) and (5,5) cannot both be shaded.",
+        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
         "Cells (6,3) and (7,3) cannot both be shaded.",
-        "Cells (6,5) and (7,5) cannot both be shaded."
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
+        "Cells (6,5) and (7,5) cannot both be shaded.",
+        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
+        "Cells (7,4) and (7,5) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_3_4_4",
+        "duplicate_4_4_6_4",
+        "separation_5_2_6_2",
+        "duplicate_5_2_5_4",
+        "separation_5_4_6_4",
+        "duplicate_6_2_6_3",
+        "separation_6_3_6_4"
       ]
     },
     {
@@ -769,13 +1069,22 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
-        "Cells (7,1) and (8,1) cannot both be shaded.",
         "Cells (1,1) and (2,1) cannot both be shaded.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
         "At least one of (1,1) and (8,1) must be shaded: both contain 1.",
         "At least one of (2,1) and (3,1) must be shaded: both contain 2.",
-        "Cells (3,1) and (4,1) cannot both be shaded."
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "Cells (7,1) and (8,1) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_7_0",
+        "duplicate_1_0_2_0",
+        "separation_2_0_3_0",
+        "duplicate_3_0_5_0",
+        "separation_5_0_6_0",
+        "separation_6_0_7_0"
       ]
     },
     {
@@ -784,13 +1093,22 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "Cells (7,6) and (7,7) cannot both be shaded.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "Cells (7,5) and (7,6) cannot both be shaded.",
-        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
         "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "At least one of (6,1) and (6,5) must be shaded: both contain 3.",
+        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
+        "Cells (7,5) and (7,6) cannot both be shaded.",
+        "Cells (7,6) and (7,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_4_4_5_4",
+        "duplicate_4_4_6_4",
+        "separation_5_0_6_0",
+        "duplicate_5_0_5_4",
+        "duplicate_6_0_6_6",
+        "separation_6_4_6_5",
+        "separation_6_5_6_6"
       ]
     },
     {
@@ -799,13 +1117,22 @@
       "shaded": true,
       "kind": "local",
       "evidence": [
-        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
-        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
         "Cells (2,7) and (3,7) cannot both be shaded.",
         "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
         "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
         "At least one of (7,1) and (7,7) must be shaded: both contain 5."
+      ],
+      "constraint_ids": [
+        "separation_1_6_2_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "duplicate_3_0_5_0",
+        "separation_5_0_6_0",
+        "duplicate_6_0_6_6"
       ]
     },
     {
@@ -814,13 +1141,22 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "Cells (8,2) and (8,3) cannot both be shaded.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
         "At least one of (1,2) and (8,2) must be shaded: both contain 1.",
-        "Cells (7,3) and (8,3) cannot both be shaded."
+        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
+        "Cells (7,3) and (8,3) cannot both be shaded.",
+        "Cells (8,2) and (8,3) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_1_7_1",
+        "duplicate_0_2_3_2",
+        "separation_2_2_3_2",
+        "duplicate_2_2_6_2",
+        "separation_6_2_7_2",
+        "separation_7_1_7_2"
       ]
     },
     {
@@ -829,14 +1165,24 @@
       "shaded": false,
       "kind": "local",
       "evidence": [
-        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
-        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (7,7) and (8,7) cannot both be shaded.",
         "Cells (2,7) and (3,7) cannot both be shaded.",
         "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
         "Cells (3,1) and (4,1) cannot both be shaded.",
-        "At least one of (7,1) and (7,7) must be shaded: both contain 5."
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
+        "Cells (7,7) and (8,7) cannot both be shaded."
+      ],
+      "constraint_ids": [
+        "separation_1_6_2_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "duplicate_3_0_5_0",
+        "separation_5_0_6_0",
+        "duplicate_6_0_6_6",
+        "separation_6_6_7_6"
       ]
     },
     {
@@ -847,9 +1193,16 @@
       "evidence": [
         "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "Cells (1,2) and (2,2) cannot both be shaded.",
+        "Cells (2,1) and (2,2) cannot both be shaded.",
         "At least one of (2,1) and (3,1) must be shaded: both contain 2.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,1) and (2,2) cannot both be shaded."
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "duplicate_0_0_0_1",
+        "separation_0_1_1_1",
+        "separation_1_0_1_1",
+        "duplicate_1_0_2_0",
+        "connectivity"
       ]
     },
     {
@@ -858,17 +1211,30 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "Cells (3,8) and (4,8) cannot both be shaded.",
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "Cells (5,7) and (5,8) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
         "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "Cells (4,7) and (5,7) cannot both be shaded.",
-        "Cells (3,3) and (4,3) cannot both be shaded."
+        "Cells (5,7) and (6,7) cannot both be shaded.",
+        "Cells (5,7) and (5,8) cannot both be shaded.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_1_6_2_6",
+        "duplicate_1_6_5_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_2_3_7",
+        "separation_3_6_4_6",
+        "separation_4_6_5_6",
+        "separation_4_6_4_7",
+        "connectivity"
       ]
     },
     {
@@ -877,18 +1243,32 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
-        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
-        "Cells (2,1) and (3,1) cannot both be shaded.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "Cells (1,5) and (2,5) cannot both be shaded.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
         "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
         "Cells (1,4) and (1,5) cannot both be shaded.",
-        "At least one of (2,5) and (2,7) must be shaded: both contain 5."
+        "Cells (1,5) and (2,5) cannot both be shaded.",
+        "Cells (2,1) and (3,1) cannot both be shaded.",
+        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
+        "At least one of (2,5) and (2,7) must be shaded: both contain 5.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_2_3_2",
+        "separation_0_3_0_4",
+        "separation_0_4_1_4",
+        "separation_1_0_2_0",
+        "duplicate_1_0_1_3",
+        "duplicate_1_4_1_6",
+        "separation_1_6_2_6",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "connectivity"
       ]
     },
     {
@@ -897,19 +1277,34 @@
       "shaded": true,
       "kind": "connectivity",
       "evidence": [
-        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
-        "At least one of (1,5) and (1,6) must be shaded: both contain 2.",
-        "Cells (2,1) and (3,1) cannot both be shaded.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "Cells (1,5) and (2,5) cannot both be shaded.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
         "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
         "Cells (1,4) and (1,5) cannot both be shaded.",
-        "At least one of (2,5) and (2,7) must be shaded: both contain 5."
+        "Cells (1,5) and (2,5) cannot both be shaded.",
+        "At least one of (1,5) and (1,6) must be shaded: both contain 2.",
+        "Cells (2,1) and (3,1) cannot both be shaded.",
+        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
+        "At least one of (2,5) and (2,7) must be shaded: both contain 5.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_2_3_2",
+        "separation_0_3_0_4",
+        "separation_0_4_1_4",
+        "duplicate_0_4_0_5",
+        "separation_1_0_2_0",
+        "duplicate_1_0_1_3",
+        "duplicate_1_4_1_6",
+        "separation_1_6_2_6",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "connectivity"
       ]
     },
     {
@@ -918,23 +1313,40 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "Cells (3,8) and (4,8) cannot both be shaded.",
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "Cells (7,8) and (8,8) cannot both be shaded.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
         "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
         "Cells (6,7) and (7,7) cannot both be shaded.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
         "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
-        "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "Cells (7,8) and (8,8) cannot both be shaded.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_1_6_2_6",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_0_5_0",
+        "duplicate_3_2_3_7",
+        "separation_5_0_6_0",
+        "separation_5_6_6_6",
+        "duplicate_6_0_6_6",
+        "separation_6_7_7_7",
+        "connectivity"
       ]
     },
     {
@@ -943,25 +1355,44 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
         "Cells (3,8) and (4,8) cannot both be shaded.",
         "At least one of (3,8) and (6,8) must be shaded: both contain 1.",
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "Cells (7,6) and (8,6) cannot both be shaded.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
-        "Cells (8,6) and (8,7) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
         "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
         "Cells (6,7) and (7,7) cannot both be shaded.",
-        "Cells (7,7) and (7,8) cannot both be shaded.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
         "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
-        "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "Cells (7,6) and (8,6) cannot both be shaded.",
+        "Cells (7,7) and (7,8) cannot both be shaded.",
+        "Cells (8,6) and (8,7) cannot both be shaded.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_1_6_2_6",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "separation_2_7_3_7",
+        "duplicate_2_7_5_7",
+        "duplicate_3_0_5_0",
+        "duplicate_3_2_3_7",
+        "separation_5_0_6_0",
+        "separation_5_6_6_6",
+        "duplicate_6_0_6_6",
+        "separation_6_5_7_5",
+        "separation_6_6_6_7",
+        "separation_7_5_7_6",
+        "connectivity"
       ]
     },
     {
@@ -970,27 +1401,46 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (1,2) and (1,3) cannot both be shaded.",
+        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
         "Cells (1,4) and (2,4) cannot both be shaded.",
         "At least one of (1,5) and (1,6) must be shaded: both contain 2.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
-        "Cells (2,1) and (3,1) cannot both be shaded.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
-        "Cells (6,7) and (7,7) cannot both be shaded.",
-        "Cells (1,2) and (1,3) cannot both be shaded.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
-        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
         "Cells (1,7) and (1,8) cannot both be shaded.",
-        "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "Cells (2,1) and (3,1) cannot both be shaded.",
+        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "Cells (6,7) and (7,7) cannot both be shaded.",
+        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_2_3_2",
+        "separation_0_3_1_3",
+        "duplicate_0_4_0_5",
+        "separation_0_6_0_7",
+        "separation_1_0_2_0",
+        "duplicate_1_0_1_3",
+        "separation_1_6_2_6",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_2_6",
+        "duplicate_3_0_5_0",
+        "separation_5_0_6_0",
+        "separation_5_6_6_6",
+        "duplicate_6_0_6_6",
+        "connectivity"
       ]
     },
     {
@@ -999,28 +1449,50 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
-        "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
-        "Cells (3,8) and (4,8) cannot both be shaded.",
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "Cells (4,3) and (4,4) cannot both be shaded.",
-        "At least one of (3,5) and (3,8) must be shaded: both contain 1.",
         "Cells (1,1) and (2,1) cannot both be shaded.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
-        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "Cells (3,4) and (4,4) cannot both be shaded.",
-        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
-        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
-        "Cells (6,7) and (7,7) cannot both be shaded.",
+        "At least one of (1,1) and (1,2) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
         "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
+        "At least one of (2,1) and (2,4) must be shaded: both contain 2.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "At least one of (3,3) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,4) and (4,4) cannot both be shaded.",
+        "At least one of (3,5) and (3,8) must be shaded: both contain 1.",
+        "Cells (3,8) and (4,8) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "Cells (4,3) and (4,4) cannot both be shaded.",
+        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "Cells (6,7) and (7,7) cannot both be shaded.",
         "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
-        "Cells (5,5) and (6,5) cannot both be shaded.",
-        "At least one of (6,1) and (6,5) must be shaded: both contain 3."
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_0_1_0",
+        "duplicate_0_0_0_1",
+        "separation_0_1_0_2",
+        "duplicate_0_2_3_2",
+        "duplicate_1_0_1_3",
+        "separation_1_6_2_6",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "duplicate_2_2_2_6",
+        "separation_2_3_3_3",
+        "duplicate_2_4_2_7",
+        "separation_2_7_3_7",
+        "duplicate_3_0_5_0",
+        "separation_3_2_3_3",
+        "duplicate_3_2_3_7",
+        "separation_5_0_6_0",
+        "separation_5_6_6_6",
+        "duplicate_6_0_6_6",
+        "connectivity"
       ]
     },
     {
@@ -1029,32 +1501,64 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
-        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
-        "At least one of (7,4) and (8,4) must be shaded: both contain 2.",
-        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (7,5) and (8,5) cannot both be shaded.",
-        "Cells (7,3) and (7,4) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
-        "Cells (8,1) and (8,2) cannot both be shaded.",
-        "Cells (2,5) and (3,5) cannot both be shaded.",
-        "Cells (6,7) and (7,7) cannot both be shaded.",
-        "At least one of (3,5) and (7,5) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "Cells (6,1) and (6,2) cannot both be shaded.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "Cells (8,4) and (8,5) cannot both be shaded.",
-        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
         "At least one of (1,2) and (5,2) must be shaded: both contain 1.",
-        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
         "At least one of (1,2) and (8,2) must be shaded: both contain 1.",
+        "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
+        "Cells (3,4) and (3,5) cannot both be shaded.",
+        "At least one of (3,5) and (7,5) must be shaded: both contain 1.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
         "Cells (5,5) and (6,5) cannot both be shaded.",
+        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
+        "Cells (6,1) and (6,2) cannot both be shaded.",
         "At least one of (6,1) and (6,5) must be shaded: both contain 3.",
-        "Cells (7,2) and (8,2) cannot both be shaded."
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
+        "Cells (6,7) and (7,7) cannot both be shaded.",
+        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
+        "Cells (7,2) and (8,2) cannot both be shaded.",
+        "Cells (7,3) and (7,4) cannot both be shaded.",
+        "At least one of (7,4) and (8,4) must be shaded: both contain 2.",
+        "Cells (7,5) and (8,5) cannot both be shaded.",
+        "Cells (8,1) and (8,2) cannot both be shaded.",
+        "Cells (8,4) and (8,5) cannot both be shaded.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "duplicate_0_1_4_1",
+        "duplicate_0_1_7_1",
+        "duplicate_0_2_3_2",
+        "separation_1_6_2_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_6_2",
+        "separation_2_3_2_4",
+        "duplicate_2_4_6_4",
+        "duplicate_3_0_5_0",
+        "separation_4_4_5_4",
+        "duplicate_4_4_6_4",
+        "separation_5_0_6_0",
+        "separation_5_0_5_1",
+        "duplicate_5_0_5_4",
+        "duplicate_5_2_5_4",
+        "separation_5_6_6_6",
+        "duplicate_6_0_6_6",
+        "separation_6_1_7_1",
+        "separation_6_2_6_3",
+        "duplicate_6_3_7_3",
+        "separation_6_4_7_4",
+        "separation_7_0_7_1",
+        "separation_7_3_7_4",
+        "connectivity"
       ]
     },
     {
@@ -1063,46 +1567,88 @@
       "shaded": false,
       "kind": "connectivity",
       "evidence": [
-        "Cells (3,8) and (4,8) cannot both be shaded.",
-        "Cells (6,5) and (6,6) cannot both be shaded.",
-        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
-        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
-        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
-        "Cells (6,6) and (6,7) cannot both be shaded.",
-        "Cells (1,7) and (2,7) cannot both be shaded.",
-        "Cells (6,3) and (6,4) cannot both be shaded.",
-        "Cells (5,8) and (6,8) cannot both be shaded.",
-        "Cells (1,4) and (2,4) cannot both be shaded.",
-        "At least one of (1,5) and (1,6) must be shaded: both contain 2.",
-        "Cells (6,1) and (7,1) cannot both be shaded.",
-        "Cells (5,7) and (6,7) cannot both be shaded.",
-        "Cells (7,4) and (8,4) cannot both be shaded.",
-        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
-        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
-        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
-        "All unshaded cells must form one nonempty edge-connected region.",
-        "Cells (5,6) and (6,6) cannot both be shaded.",
-        "Cells (7,4) and (7,5) cannot both be shaded.",
-        "Cells (2,7) and (3,7) cannot both be shaded.",
-        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
-        "Cells (2,6) and (2,7) cannot both be shaded.",
-        "Cells (2,7) and (2,8) cannot both be shaded.",
-        "Cells (4,6) and (4,7) cannot both be shaded.",
-        "At least one of (3,5) and (7,5) must be shaded: both contain 1.",
         "Cells (1,2) and (1,3) cannot both be shaded.",
-        "At least one of (6,4) and (6,8) must be shaded: both contain 1.",
-        "At least one of (5,5) and (5,7) must be shaded: both contain 1.",
-        "Cells (3,3) and (4,3) cannot both be shaded.",
-        "Cells (6,3) and (7,3) cannot both be shaded.",
+        "Cells (1,3) and (1,4) cannot both be shaded.",
         "At least one of (1,3) and (4,3) must be shaded: both contain 1.",
-        "Cells (5,1) and (6,1) cannot both be shaded.",
-        "At least one of (6,7) and (7,7) must be shaded: both contain 5.",
-        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
-        "At least one of (2,6) and (4,6) must be shaded: both contain 1.",
+        "At least one of (1,5) and (1,6) must be shaded: both contain 2.",
+        "Cells (1,7) and (2,7) cannot both be shaded.",
         "Cells (2,4) and (2,5) cannot both be shaded.",
-        "Cells (5,5) and (6,5) cannot both be shaded.",
+        "At least one of (2,4) and (8,4) must be shaded: both contain 2.",
+        "Cells (2,6) and (2,7) cannot both be shaded.",
+        "At least one of (2,6) and (4,6) must be shaded: both contain 1.",
+        "Cells (2,7) and (3,7) cannot both be shaded.",
+        "Cells (2,7) and (2,8) cannot both be shaded.",
+        "At least one of (2,7) and (6,7) must be shaded: both contain 5.",
+        "At least one of (2,7) and (7,7) must be shaded: both contain 5.",
+        "Cells (3,1) and (4,1) cannot both be shaded.",
+        "At least one of (3,1) and (3,7) must be shaded: both contain 2.",
+        "Cells (3,3) and (4,3) cannot both be shaded.",
+        "At least one of (3,3) and (7,3) must be shaded: both contain 2.",
+        "At least one of (3,5) and (7,5) must be shaded: both contain 1.",
+        "Cells (3,6) and (4,6) cannot both be shaded.",
+        "Cells (3,8) and (4,8) cannot both be shaded.",
+        "At least one of (4,1) and (6,1) must be shaded: both contain 3.",
+        "At least one of (4,3) and (4,8) must be shaded: both contain 1.",
+        "Cells (4,6) and (4,7) cannot both be shaded.",
+        "Cells (5,1) and (6,1) cannot both be shaded.",
+        "At least one of (5,5) and (7,5) must be shaded: both contain 1.",
+        "Cells (5,6) and (6,6) cannot both be shaded.",
+        "Cells (5,8) and (6,8) cannot both be shaded.",
+        "Cells (6,1) and (7,1) cannot both be shaded.",
         "At least one of (6,1) and (6,5) must be shaded: both contain 3.",
-        "Cells (3,6) and (4,6) cannot both be shaded."
+        "Cells (6,3) and (7,3) cannot both be shaded.",
+        "Cells (6,3) and (6,4) cannot both be shaded.",
+        "At least one of (6,3) and (6,5) must be shaded: both contain 3.",
+        "At least one of (6,4) and (6,8) must be shaded: both contain 1.",
+        "Cells (6,5) and (6,6) cannot both be shaded.",
+        "Cells (6,6) and (6,7) cannot both be shaded.",
+        "At least one of (7,1) and (7,7) must be shaded: both contain 5.",
+        "At least one of (7,3) and (7,4) must be shaded: both contain 2.",
+        "Cells (7,4) and (8,4) cannot both be shaded.",
+        "Cells (7,4) and (7,5) cannot both be shaded.",
+        "All unshaded cells must form one nonempty edge-connected region."
+      ],
+      "constraint_ids": [
+        "separation_0_1_0_2",
+        "separation_0_2_0_3",
+        "duplicate_0_2_3_2",
+        "duplicate_0_4_0_5",
+        "separation_0_6_1_6",
+        "separation_1_3_1_4",
+        "duplicate_1_3_7_3",
+        "separation_1_5_1_6",
+        "duplicate_1_5_3_5",
+        "separation_1_6_2_6",
+        "separation_1_6_1_7",
+        "duplicate_1_6_5_6",
+        "duplicate_1_6_6_6",
+        "separation_2_0_3_0",
+        "duplicate_2_0_2_6",
+        "separation_2_2_3_2",
+        "duplicate_2_2_6_2",
+        "duplicate_2_4_6_4",
+        "separation_2_5_3_5",
+        "separation_2_7_3_7",
+        "duplicate_3_0_5_0",
+        "duplicate_3_2_3_7",
+        "separation_3_5_3_6",
+        "separation_4_0_5_0",
+        "duplicate_4_4_6_4",
+        "separation_4_5_5_5",
+        "separation_4_7_5_7",
+        "separation_5_0_6_0",
+        "duplicate_5_0_5_4",
+        "separation_5_2_6_2",
+        "separation_5_2_5_3",
+        "duplicate_5_2_5_4",
+        "duplicate_5_3_5_7",
+        "separation_5_4_5_5",
+        "separation_5_5_5_6",
+        "duplicate_6_0_6_6",
+        "duplicate_6_2_6_3",
+        "separation_6_3_7_3",
+        "separation_6_3_6_4",
+        "connectivity"
       ]
     }
   ]

@@ -56,6 +56,10 @@ export function renderKenKenDebugger(root: HTMLElement): void {
   let playIdx = 0;
   let liveGrid: Grid | null = null;
   let logLines: string[] = [];
+  /** Built once per trace load, not per drawBody() -- rebuilding this <img> on every
+   * step/tick forced a relayout as it re-decoded, which is what was making the page
+   * visibly jump on Step forward/back (and during auto-play). */
+  let sourceImage: HTMLElement | null = null;
 
   function stopPlaying(): void {
     playing = false;
@@ -111,6 +115,16 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         trace = t;
         const source = loopActive() ? t.interpreted : t.recognized;
         cages = source.map((c) => ({ cells: c.cells, op: c.op, target: c.target }));
+        sourceImage = el(
+          "div",
+          { style: { flex: "0 0 auto" } },
+          el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
+          el("img", {
+            src: t.imageUrl,
+            alt: `Real ${t.style} photo of ${t.title}`,
+            style: { display: "block", maxWidth: "220px", width: "100%", height: "auto", borderRadius: "6px", border: "1px solid var(--line)" },
+          })
+        );
         drawBody();
       })
       .catch(() => {
@@ -148,21 +162,18 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     const cellCage = cellCageIndex(t.size);
     const cellPx = t.size > 6 ? 44 : 56;
 
-    const sourceImage = el(
-      "div",
-      { style: { flex: "0 0 auto" } },
-      el("div", { style: { fontSize: "11px", color: "var(--muted)", marginBottom: "4px" } }, `Real ${t.style} source image — what the CNN actually read:`),
-      el("img", {
-        src: t.imageUrl,
-        alt: `Real ${t.style} photo of ${t.title}`,
-        style: { display: "block", maxWidth: "220px", width: "100%", height: "auto", borderRadius: "6px", border: "1px solid var(--line)" },
-      })
-    );
-
     const grid = el("div", {
       class: "lab-grid",
       style: { gridTemplateColumns: `repeat(${t.size}, ${cellPx}px)`, gridTemplateRows: `repeat(${t.size}, ${cellPx}px)`, gap: "2px" },
     });
+
+    // The cage the LIVE correction loop is acting on right now (this playthrough),
+    // distinct from correctionFor()'s offline-precomputed correction badge -- so
+    // the grid visibly highlights every cell of a cage being tried/reverted/fixed
+    // as the log narrates it.
+    const lastAppliedStep = playIdx > 0 ? playSteps[playIdx - 1] : null;
+    const liveCorrectionKind = lastAppliedStep?.correction?.kind ?? null;
+    const liveCorrectionCageIdx = liveCorrectionKind ? cellCage[lastAppliedStep!.row][lastAppliedStep!.col] : -1;
 
     for (let r = 0; r < t.size; r++) {
       for (let c = 0; c < t.size; c++) {
@@ -171,11 +182,17 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         const isOrigin = cage && cageOrigin(cage)[0] === r && cageOrigin(cage)[1] === c;
         const isSelected = selectedCage === cageIdx;
         const isCorrected = !!correctionFor(t, cageIdx);
+        const isLiveCorrectionTarget = cageIdx === liveCorrectionCageIdx && (liveCorrectionKind === "try" || liveCorrectionKind === "corrected" || liveCorrectionKind === "revert");
         const value = liveGrid ? liveGrid[r][c] : solve.solution ? solve.solution[r][c] : 0;
 
         const right = c + 1 < t.size ? cellCage[r][c + 1] : -2;
         const down = r + 1 < t.size ? cellCage[r + 1][c] : -2;
         const baseBorder = isSelected ? "2px solid var(--pos)" : "1px solid var(--line)";
+
+        let liveBg: string | null = null;
+        if (isLiveCorrectionTarget) {
+          liveBg = liveCorrectionKind === "corrected" ? "#e3f6e8" : liveCorrectionKind === "revert" ? "#fdecec" : "#fff4d6";
+        }
 
         grid.append(
           el(
@@ -189,7 +206,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
                 borderRight: right !== cageIdx ? "3px solid var(--line-strong)" : baseBorder,
                 borderBottom: down !== cageIdx ? "3px solid var(--line-strong)" : baseBorder,
                 borderRadius: "4px",
-                background: isCorrected ? "#fdecdc" : "var(--panel)",
+                background: liveBg ?? (isCorrected ? "#fdecdc" : "var(--panel)"),
                 fontWeight: "700",
                 fontSize: "16px",
                 cursor: "pointer",
@@ -285,7 +302,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     controlsHost.append(playRow, stepRow, logBox);
 
     body.append(
-      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage, grid),
+      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage!, grid),
       meta,
       status,
       panel,
@@ -314,12 +331,12 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     revealMode = canShowRealSolution(t);
     if (revealMode) {
       playSteps = explainRevealSteps(t.size, cages, t.result.solution!);
-    } else {
-      // Edited cages (or the offline baseline itself was unsat): Z3 never verified this
-      // exact state, so fall back to an independent client-side search instead. If the
-      // cages can't be jointly solved, first run a real confidence-ranked joint
-      // correction loop (client-side port of puzzlelab/visual.py's search) over every
-      // unlocked cage's real CNN alternative readings.
+    } else if (loopActive()) {
+      // Neural <-> Symbolic: the only pattern with a real correction loop. If the
+      // cages can't be jointly solved, run a real confidence-ranked joint
+      // correction loop (client-side port of puzzlelab/visual.py's search) over
+      // every unlocked cage's real CNN alternative readings, and explain exactly
+      // why each changed cage was changed.
       const topKByCageKey: Record<string, [number, number][][]> = {};
       for (const pred of t.predictions) {
         const idx = cages.findIndex((c) => cageKey(c) === cageKey({ cells: pred.cage }));
@@ -329,6 +346,10 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       const giveUp = correction.engaged && correction.status === "unsat";
       const fillSteps = giveUp ? [] : solveKenKenWithSteps(t.size, correction.correctedCages).steps;
       playSteps = [...correction.steps, ...fillSteps];
+    } else {
+      // Neural -> Symbolic (one-shot): CV cage detection + CNN reads once, solver
+      // runs once -- no correction, no reworking a cage's reading.
+      playSteps = solveKenKenWithSteps(t.size, cages).steps;
     }
     playIdx = 0;
   }

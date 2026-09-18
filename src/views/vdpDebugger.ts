@@ -289,9 +289,17 @@ export function renderVDPDebugger(root: HTMLElement): void {
   function stepRunTo(t: VDPTrace, idx: number): void {
     stopRunning();
     ensureRunSteps(t);
+    const prevIdx = runIdx;
     runIdx = Math.max(0, Math.min(runSteps.length, idx));
     runLines = runSteps.slice(0, runIdx);
-    drawBody();
+    // Cheap every click: just text and a couple of buttons, no images -- mirrors
+    // runFrom's tick. Calling the full drawBody() here (as before) rebuilt every
+    // thumbnail <img> in the overview on every single Step click, which is what was
+    // making the page visibly jump.
+    drawControls(controlsHost, t);
+    const crossedFresh = (prevIdx < freshRevealAt) !== (runIdx < freshRevealAt);
+    const crossedRef = (prevIdx < refRevealAt) !== (runIdx < refRevealAt);
+    if ((crossedFresh || crossedRef) && overviewHost) drawOverview(overviewHost, t);
   }
 
   function runFrom(t: VDPTrace): void {
