@@ -23,7 +23,7 @@ import {
   type SudokuManifestEntry,
   type CellPrediction,
 } from "../data/traces";
-import { findConflicts, solveGeneric, solveGenericWithSteps, solveWithCorrectionLoop, explainRevealSteps, type Grid, type SolveStep } from "../neural/genericSudoku";
+import { findConflicts, solveGeneric, solveGenericWithSteps, solveWithCorrectionLoop, explainRevealSteps, explainOfflineCorrections, type Grid, type SolveStep, type SolveResult } from "../neural/genericSudoku";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 import { store } from "../state";
@@ -57,6 +57,18 @@ export function renderSudokuDebugger(root: HTMLElement): void {
    * step/tick forced a relayout as it re-decoded, which is what was making the page
    * visibly jump on Step forward/back (and during auto-play). */
   let sourceImage: HTMLElement | null = null;
+  /** Cache of solveGeneric(working) -- a full backtracking solve, expensive on a
+   * 16x16 board with many blanks. `working` only ever changes at a handful of call
+   * sites below (never during a tick), so recomputing it on every drawBody() call --
+   * including every auto-play tick, even though its result is thrown away once
+   * liveGrid takes over -- was real wasted work per frame, exactly the kind of thing
+   * that previously made the Stop button unresponsive. Invalidated explicitly
+   * wherever `working` is set or mutated. */
+  let cachedSolve: SolveResult | null = null;
+  function getSolve(): SolveResult {
+    if (!cachedSolve) cachedSolve = solveGeneric(working);
+    return cachedSolve;
+  }
 
   function stopPlaying(): void {
     playing = false;
@@ -112,6 +124,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         trace = t;
         const source = loopActive() ? t.interpreted : t.recognized;
         working = source.map((row) => [...row]);
+        cachedSolve = null;
         sourceImage = el(
           "div",
           { style: { flex: "0 0 auto" } },
@@ -155,7 +168,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
 
     const conflicts = findConflicts(working);
     const conflictCells = new Set(conflicts.map((cf) => cellKey(cf.row, cf.col)));
-    const solve = solveGeneric(working);
+    const solve = getSolve();
 
     const grid = el("div", {
       class: "lab-grid",
@@ -302,6 +315,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           playIdx = 0;
           const source = loopActive() ? t.interpreted : t.recognized;
           working = source.map((row) => [...row]);
+          cachedSolve = null;
           overridden.clear();
           selected = null;
           drawBody();
@@ -339,8 +353,16 @@ export function renderSudokuDebugger(root: HTMLElement): void {
 
   function prepareSteps(t: SudokuTrace): void {
     revealMode = canShowRealSolution(t);
+    // Neural <-> Symbolic only: replay the offline pipeline's OWN self-correction(s)
+    // first, whenever they're still what's on screen (nothing overridden) -- a
+    // historical fact about this trace, so it belongs at the front of the log/grid
+    // regardless of which branch runs next. Without this, a fresh, unedited example
+    // never demonstrated the pipeline reworking a bad reading at all: revealMode
+    // jumps straight to the final answer, and the live loop below only re-engages
+    // if the user breaks something themselves.
+    const offlineReplay = loopActive() && overridden.size === 0 ? explainOfflineCorrections(t.recognized, t.corrections) : [];
     if (revealMode) {
-      playSteps = explainRevealSteps(working, t.result.solution!);
+      playSteps = [...offlineReplay, ...explainRevealSteps(working, t.result.solution!)];
     } else if (loopActive()) {
       // Neural <-> Symbolic: this is specifically the pattern with a real bounded
       // correction loop. If the given digits directly conflict, run a real
@@ -361,7 +383,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       // if the corrected givens still don't admit a solution).
       const giveUp = correction.engaged && correction.status === "unsat";
       const fillSteps = giveUp ? [] : solveGenericWithSteps(correction.correctedGiven).steps;
-      playSteps = [...correction.steps, ...fillSteps];
+      playSteps = [...offlineReplay, ...correction.steps, ...fillSteps];
     } else {
       // Neural -> Symbolic (one-shot): CNN reads once, Z3 solves once -- no
       // correction, no reworking a given reading, and no narrated "why" a dead end
@@ -493,13 +515,13 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       ),
     ];
     if (correction) {
+      const why = explainOfflineCorrections(t.recognized, [correction])[0].reason;
       rows.push(
         el(
           "div",
           { style: { marginTop: "6px" } },
           el("span", { class: "badge badge-strong" }, "self-corrected offline"),
-          ` the pipeline's own reading (${correction.before}) conflicted with a Sudoku constraint, so it tried the ` +
-            `alternative ${correction.after} (${(correction.score * 100).toFixed(2)}% confidence) and that resolved the conflict.`
+          ` ${why} So it tried the alternative ${correction.after} (${(correction.score * 100).toFixed(2)}% confidence), which resolved it.`
         )
       );
     }
@@ -532,6 +554,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
                 liveGrid = null;
                 logLines = [];
                 working[r][c] = digit;
+                cachedSolve = null;
                 overridden.add(cellKey(r, c));
                 drawBody();
               },

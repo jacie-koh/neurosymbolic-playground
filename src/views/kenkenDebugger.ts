@@ -19,12 +19,14 @@ import {
   solveKenKenWithSteps,
   solveKenKenWithCorrectionLoop,
   explainRevealSteps,
+  explainOfflineCorrections,
   cageReadAlternatives,
   cageKey,
   type Cage,
   type Op,
   type Grid,
   type KenKenSolveStep,
+  type KenKenSolveResult,
 } from "../neural/genericKenKen";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
@@ -60,6 +62,16 @@ export function renderKenKenDebugger(root: HTMLElement): void {
    * step/tick forced a relayout as it re-decoded, which is what was making the page
    * visibly jump on Step forward/back (and during auto-play). */
   let sourceImage: HTMLElement | null = null;
+  /** Cache of solveKenKen(t.size, cages) -- a full backtracking solve, recomputed on
+   * every drawBody() call (including every auto-play tick) even though `cages` only
+   * ever changes at a handful of call sites below. That redundant per-tick solve is
+   * exactly the kind of work that previously made the Stop button unresponsive.
+   * Invalidated explicitly wherever `cages` is set or a cage is mutated. */
+  let cachedSolve: KenKenSolveResult | null = null;
+  function getSolve(t: KenKenTrace): KenKenSolveResult {
+    if (!cachedSolve) cachedSolve = solveKenKen(t.size, cages);
+    return cachedSolve;
+  }
 
   function stopPlaying(): void {
     playing = false;
@@ -115,6 +127,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         trace = t;
         const source = loopActive() ? t.interpreted : t.recognized;
         cages = source.map((c) => ({ cells: c.cells, op: c.op, target: c.target }));
+        cachedSolve = null;
         sourceImage = el(
           "div",
           { style: { flex: "0 0 auto" } },
@@ -158,7 +171,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     const t = trace;
     clear(body);
 
-    const solve = solveKenKen(t.size, cages);
+    const solve = getSolve(t);
     const cellCage = cellCageIndex(t.size);
     const cellPx = t.size > 6 ? 44 : 56;
 
@@ -290,6 +303,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
           playIdx = 0;
           const source = loopActive() ? t.interpreted : t.recognized;
           cages = source.map((c) => ({ cells: c.cells, op: c.op, target: c.target }));
+          cachedSolve = null;
           overridden.clear();
           selectedCage = null;
           drawBody();
@@ -329,8 +343,17 @@ export function renderKenKenDebugger(root: HTMLElement): void {
 
   function prepareSteps(t: KenKenTrace): void {
     revealMode = canShowRealSolution(t);
+    // Neural <-> Symbolic only: replay the offline pipeline's OWN self-correction(s)
+    // first, whenever they're still what's on screen (nothing overridden) -- a
+    // historical fact about this trace, so it belongs at the front of the log/grid
+    // regardless of which branch runs next. Mirrors sudokuDebugger.ts: without this,
+    // a fresh, unedited example never demonstrated the pipeline reworking a bad
+    // cage reading at all.
+    const offlineTopKByCageKey: Record<string, [number, number][][]> = {};
+    for (const pred of t.predictions) offlineTopKByCageKey[cageKey({ cells: pred.cage })] = pred.topK;
+    const offlineReplay = loopActive() && overridden.size === 0 ? explainOfflineCorrections(t.corrections, offlineTopKByCageKey) : [];
     if (revealMode) {
-      playSteps = explainRevealSteps(t.size, cages, t.result.solution!);
+      playSteps = [...offlineReplay, ...explainRevealSteps(t.size, cages, t.result.solution!)];
     } else if (loopActive()) {
       // Neural <-> Symbolic: the only pattern with a real correction loop. If the
       // cages can't be jointly solved, run a real confidence-ranked joint
@@ -345,7 +368,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       const correction = solveKenKenWithCorrectionLoop(t.size, cages, topKByCageKey);
       const giveUp = correction.engaged && correction.status === "unsat";
       const fillSteps = giveUp ? [] : solveKenKenWithSteps(t.size, correction.correctedCages).steps;
-      playSteps = [...correction.steps, ...fillSteps];
+      playSteps = [...offlineReplay, ...correction.steps, ...fillSteps];
     } else {
       // Neural -> Symbolic (one-shot): CV cage detection + CNN reads once, solver
       // runs once -- no correction, no reworking a cage's reading, and no narrated
@@ -483,13 +506,16 @@ export function renderKenKenDebugger(root: HTMLElement): void {
     }
 
     if (correction) {
+      const alt = pred ? cageReadAlternatives(pred.topK, correction.before.cells.length).find((a) => a.op === correction.after.op && a.target === correction.after.target) : undefined;
+      const pct = alt ? ` (${(alt.confidence * 100).toFixed(1)}% confidence)` : "";
       rows.push(
         el(
           "div",
           { style: { marginTop: "8px" } },
           el("span", { class: "badge badge-strong" }, "self-corrected offline"),
-          ` the pipeline's own reading (${OP_SYMBOL[correction.before.op] || "="} ${correction.before.target}) conflicted with a ` +
-            `constraint, so it tried ${OP_SYMBOL[correction.after.op] || "="} ${correction.after.target} instead, which resolved the puzzle.`
+          ` this cage's own reading (${OP_SYMBOL[correction.before.op] || "="} ${correction.before.target}) couldn't be jointly solved with the rest of the puzzle ` +
+            `(row/column uniqueness + every cage's arithmetic all at once). So it tried the alternative reading ${OP_SYMBOL[correction.after.op] || "="} ` +
+            `${correction.after.target}${pct}, which resolved it.`
         )
       );
     }
@@ -512,6 +538,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
                   logLines = [];
                   cage.op = alt.op;
                   cage.target = alt.target;
+                  cachedSolve = null;
                   overridden.add(selectedCage!);
                   drawBody();
                 },
@@ -533,6 +560,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
           liveGrid = null;
           logLines = [];
           cage.op = (e.target as HTMLSelectElement).value as Op;
+          cachedSolve = null;
           overridden.add(selectedCage!);
           drawBody();
         },
@@ -549,6 +577,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
         liveGrid = null;
         logLines = [];
         cage.target = Number((e.target as HTMLInputElement).value);
+        cachedSolve = null;
         overridden.add(selectedCage!);
         drawBody();
       },

@@ -237,6 +237,39 @@ export function explainRevealSteps(given: Grid, solution: Grid): SolveStep[] {
   return steps;
 }
 
+/**
+ * Replays the offline pipeline's OWN self-correction(s) (the trace's `corrections`
+ * field) as explicit steps -- a historical fact about this trace, independent of
+ * anything the user does live. Previously this only ever showed up in a per-cell
+ * detail panel on click; a fresh, unedited Neural<->Symbolic example never
+ * demonstrated the pipeline reworking a bad reading in the log or on the grid
+ * itself unless the user broke something themselves to re-trigger the LIVE loop.
+ * The "why" is real: it re-finds the actual conflicting given in the raw CNN
+ * reading via findConflicts(), the same check the live correction loop itself
+ * uses, rather than a fabricated explanation.
+ */
+export function explainOfflineCorrections(
+  recognized: Grid,
+  corrections: { row: number; col: number; before: number; after: number; score: number }[]
+): SolveStep[] {
+  const steps: SolveStep[] = [];
+  for (const corr of corrections) {
+    const conflicts = findConflicts(recognized);
+    const hit = conflicts.find(
+      (cf) =>
+        (cf.row === corr.row && cf.col === corr.col && cf.digit === corr.before) ||
+        (cf.with[0] === corr.row && cf.with[1] === corr.col && cf.digit === corr.before)
+    );
+    const other = hit ? (hit.row === corr.row && hit.col === corr.col ? hit.with : [hit.row, hit.col]) : null;
+    const reason = other
+      ? `digit ${corr.before} at (${corr.row + 1},${corr.col + 1}) conflicts with the given ${corr.before} at (${other[0] + 1},${other[1] + 1}) in this ${hit!.kind === "box" ? "box" : hit!.kind} — the given readings directly disagree.`
+      : `the pipeline's own reading (${corr.before}) conflicted with a Sudoku constraint.`;
+    steps.push({ row: corr.row, col: corr.col, digit: corr.before, correction: { kind: "conflict-found" }, reason });
+    steps.push({ row: corr.row, col: corr.col, digit: corr.after, correction: { kind: "corrected", confidence: corr.score } });
+  }
+  return steps;
+}
+
 /** A real ranked alternative reading for a given cell, and its real CNN confidence. */
 interface GivenChoice {
   row: number;

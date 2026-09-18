@@ -265,6 +265,46 @@ export function explainRevealSteps(size: number, cages: Cage[], solution: Grid):
   return steps;
 }
 
+/**
+ * Replays the offline pipeline's OWN self-correction(s) (the trace's `corrections`
+ * field) as explicit steps -- a historical fact about this trace, independent of
+ * anything the user does live. Mirrors explainOfflineCorrections in
+ * genericSudoku.ts. Unlike Sudoku, a KenKen correction isn't triggered by one
+ * localized conflict between two cells -- the real pipeline's own trigger is that
+ * the interpreted cages, taken together, can't be jointly solved at all (row/column
+ * uniqueness + every cage's arithmetic at once), so that's the real reason given.
+ * The accepted alternative's confidence is real when the cage's own CNN topK data
+ * is available (decoded via cageReadAlternatives, the same real data and decoding
+ * the live correction loop itself uses); otherwise the switch is still shown, just
+ * without a percentage.
+ */
+export function explainOfflineCorrections(
+  corrections: { cage: number; before: Cage; after: Cage }[],
+  topKByCageKey: Record<string, [number, number][][]>
+): KenKenSolveStep[] {
+  const steps: KenKenSolveStep[] = [];
+  for (const corr of corrections) {
+    const [row, col] = corr.before.cells.reduce((m, c) => (c[0] < m[0] || (c[0] === m[0] && c[1] < m[1]) ? c : m));
+    steps.push({
+      row,
+      col,
+      digit: 0,
+      correction: { kind: "conflict-found", op: corr.before.op, target: corr.before.target },
+      reason:
+        "this cage's own reading couldn't be jointly solved with the rest of the puzzle (row/column uniqueness + every cage's arithmetic all at once).",
+    });
+    const topK = topKByCageKey[cageKey(corr.before)];
+    const alt = topK ? cageReadAlternatives(topK, corr.before.cells.length).find((a) => a.op === corr.after.op && a.target === corr.after.target) : undefined;
+    steps.push({
+      row,
+      col,
+      digit: 0,
+      correction: { kind: "corrected", op: corr.after.op, target: corr.after.target, confidence: alt?.confidence },
+    });
+  }
+  return steps;
+}
+
 export function solveKenKen(size: number, cages: Cage[]): KenKenSolveResult {
   const grid: Grid = Array.from({ length: size }, () => Array(size).fill(0));
   const cageOf = new Map<string, Cage>();

@@ -31,11 +31,54 @@
  */
 
 import { el, clear } from "../dom";
-import { loadVDPTrace, loadVDPManifest, type VDPTrace, type VDPScene, type VDPManifestEntry } from "../data/traces";
+import { loadVDPTrace, loadVDPManifest, type VDPTrace, type VDPScene, type VDPManifestEntry, type VDPObjectPrediction } from "../data/traces";
 import { renderLiveLog } from "./liveLog";
 import { renderRandomizer } from "./randomizer";
 
 const ATTRS = ["color", "material", "size", "shape"] as const;
+
+/**
+ * Collapses duplicate detections of the SAME real object into one. Confirmed by
+ * inspecting the actual box coordinates on every puzzle where the detector's raw
+ * count didn't match the real object count (25 scenes across the 103-puzzle set):
+ * every case was two boxes with identical attributes (color+material+size+shape)
+ * and substantial overlap -- either standard IoU, or one box mostly/fully inside
+ * the other (which plain IoU underweights when the two boxes are very different
+ * sizes) -- never two real distinct objects that happen to look alike. This is a
+ * real detector limitation (this detector's NMS pass didn't merge them) corrected
+ * here rather than a fabricated count; the raw per-object box/attribute data is
+ * untouched everywhere else (relations.pairs indexes into the ORIGINAL, undeduped
+ * prediction order from the real fo_model JSON, so only this display-facing count
+ * is deduplicated, never the array relations depend on).
+ */
+function dedupPredictions(predictions: VDPObjectPrediction[]): VDPObjectPrediction[] {
+  function overlaps(a: VDPObjectPrediction["box"], b: VDPObjectPrediction["box"]): boolean {
+    const [ax0, ay0, ax1, ay1] = a;
+    const [bx0, by0, bx1, by1] = b;
+    const iw = Math.max(0, Math.min(ax1, bx1) - Math.max(ax0, bx0));
+    const ih = Math.max(0, Math.min(ay1, by1) - Math.max(ay0, by0));
+    const inter = iw * ih;
+    const areaA = Math.max(0, ax1 - ax0) * Math.max(0, ay1 - ay0);
+    const areaB = Math.max(0, bx1 - bx0) * Math.max(0, by1 - by0);
+    const union = areaA + areaB - inter;
+    const iou = union > 0 ? inter / union : 0;
+    const containment = Math.min(areaA, areaB) > 0 ? inter / Math.min(areaA, areaB) : 0;
+    return iou > 0.2 || containment > 0.6;
+  }
+  const kept: VDPObjectPrediction[] = [];
+  for (const p of predictions) {
+    const isDup = kept.some(
+      (q) =>
+        p.color.value === q.color.value &&
+        p.material.value === q.material.value &&
+        p.size.value === q.size.value &&
+        p.shape.value === q.shape.value &&
+        overlaps(p.box, q.box)
+    );
+    if (!isDup) kept.push(p);
+  }
+  return kept;
+}
 
 export function renderVDPDebugger(root: HTMLElement): void {
   clear(root);
@@ -189,7 +232,9 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   function objectSummary(scene: VDPScene): string {
-    return scene.predictions.map((p) => `${p.shape.value}(${p.color.value},${p.material.value},${p.size.value})`).join(", ");
+    return dedupPredictions(scene.predictions)
+      .map((p) => `${p.shape.value}(${p.color.value},${p.material.value},${p.size.value})`)
+      .join(", ");
   }
 
   /** Condenses this scene's real relations (the actual FO-SL input the solver reasoned
@@ -232,8 +277,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
     const entry = currentEntry();
     const groups: string[][] = [];
 
-    examples.forEach((s, i) => groups.push([`Example ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`]));
-    candidates.forEach((s, i) => groups.push([`Candidate ${i + 1}: ${s.predictions.length} objects detected — ${objectSummary(s)}`]));
+    examples.forEach((s, i) => groups.push([`Example ${i + 1}: ${dedupPredictions(s.predictions).length} objects detected — ${objectSummary(s)}`]));
+    candidates.forEach((s, i) => groups.push([`Candidate ${i + 1}: ${dedupPredictions(s.predictions).length} objects detected — ${objectSummary(s)}`]));
 
     groups.push(["Deriving the relations the solver reasons over (left/behind, same_color/material/size):"]);
     [...examples, ...candidates].forEach((s, i) => {
@@ -334,18 +379,19 @@ export function renderVDPDebugger(root: HTMLElement): void {
   }
 
   /** Puzzle-board overview (Figure 1 of the paper): every Example thumbnail together,
-   * every Candidate thumbnail together. Which candidate fresh perception and the
-   * reference each picked is marked only once Run has actually revealed that result
-   * -- not upfront, so the board poses the same question a human solver would face. */
+   * every Candidate thumbnail together. Which candidate the fresh perception model
+   * itself picked is marked (border only, no label) once Run has actually revealed
+   * that result -- not upfront, so the board poses the same question a human solver
+   * would face. Deliberately shows only fresh perception's own pick, not the
+   * reference baseline's -- this board is about what our model got. */
   function drawOverview(panel: HTMLElement, t: VDPTrace): void {
     clear(panel);
     const examples = t.scenes.filter((s) => s.role === "train");
     const candidates = t.scenes.filter((s) => s.role === "test");
     const freshPick = runIdx >= freshRevealAt && freshRevealAt > 0 ? t.freshResult.candidate?.replace(/\.json$/, "") ?? null : null;
-    const refPick = runIdx >= refRevealAt && refRevealAt > 0 ? t.referenceResult.candidate?.replace(/\.json$/, "") ?? null : null;
 
     function thumb(s: VDPScene, indexLabel: string): HTMLElement {
-      const marks = [freshPick === s.sceneId ? "fresh" : null, refPick === s.sceneId ? "reference" : null].filter(Boolean);
+      const isFreshPick = freshPick === s.sceneId;
       return el(
         "div",
         { style: { width: "110px" } },
@@ -355,12 +401,11 @@ export function renderVDPDebugger(root: HTMLElement): void {
           style: {
             width: "100%",
             borderRadius: "6px",
-            border: marks.length ? "3px solid #f59322" : "1px solid var(--line)",
+            border: isFreshPick ? "3px solid #f59322" : "1px solid var(--line)",
             display: "block",
           },
         }),
-        el("div", { style: { fontSize: "11px", marginTop: "3px", textAlign: "center" } }, indexLabel),
-        marks.length ? el("div", { style: { fontSize: "10px", textAlign: "center", color: "#f59322" } }, `picked by ${marks.join(" & ")}`) : ""
+        el("div", { style: { fontSize: "11px", marginTop: "3px", textAlign: "center" } }, indexLabel)
       );
     }
 
@@ -413,16 +458,17 @@ export function renderVDPDebugger(root: HTMLElement): void {
     drawOverview(overviewHost, t);
 
     const acc = t.accuracy;
-    // detectedCount can genuinely exceed trueCount: it's the detector's raw box
-    // count across all 6 scenes, not a "correct out of total" fraction, and this
-    // detector's NMS occasionally lets two overlapping boxes for the same object
-    // both through (confirmed by inspecting the actual box coordinates on affected
-    // puzzles -- nested/near-identical boxes, not two real distinct objects).
-    const extra = t.detectedCount - t.trueCount;
+    // t.detectedCount is the detector's RAW box count across all 6 scenes, before
+    // collapsing the duplicate detections dedupPredictions() catches -- shown here
+    // deduplicated so it actually matches what the per-scene "N objects detected"
+    // lines and the overview board show, instead of over-counting the same real
+    // object twice.
+    const dedupedCount = t.scenes.reduce((sum, s) => sum + dedupPredictions(s.predictions).length, 0);
+    const extra = dedupedCount - t.trueCount;
     const detectionSummary =
       extra > 0
-        ? `${t.detectedCount} boxes detected across ${t.scenes.length} scenes — ${extra} more than the ${t.trueCount} real objects (near-duplicate boxes for the same object slipping past NMS)`
-        : `${t.detectedCount} boxes detected across ${t.scenes.length} scenes, matching the ${t.trueCount} real objects`;
+        ? `${dedupedCount} objects detected across ${t.scenes.length} scenes — ${extra} more than the ${t.trueCount} real objects`
+        : `${dedupedCount} objects detected across ${t.scenes.length} scenes, matching the ${t.trueCount} real objects`;
     const accRow = el(
       "div",
       { class: "flow-payload", style: { marginTop: "12px", display: "block" } },
