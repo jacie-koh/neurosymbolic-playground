@@ -96,7 +96,7 @@ export function renderZebraDebugger(root: HTMLElement): void {
         fields: [
           { key: "houses", label: "Houses", get: (e) => e.houses },
           { key: "hasBacktrack", label: "Backtracks", get: (e) => (e.hasBacktrack ? "yes" : "no") },
-          { key: "hasDeadClue", label: "Has dead rule", get: (e) => (e.hasDeadClue ? "yes" : "no") },
+          { key: "hasDeadClue", label: "Dead clue", get: (e) => (e.hasDeadClue ? "yes" : "no") },
           { key: "hasConflictRetry", label: "Real conflict retry", get: (e) => (e.hasConflictRetry ? "yes" : "no") },
         ],
         onPick: (entry) => {
