@@ -391,7 +391,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     const toggle = el(
       "button",
       { class: "btn", style: { padding: "3px 8px", fontSize: "11px", marginTop: "6px" }, onclick: () => { proofExpanded = !proofExpanded; drawBody(); } },
-      proofExpanded ? "Hide real Z3 proof" : "Show real Z3 proof"
+      proofExpanded ? "Hide Z3 proof" : "Show Z3 proof"
     );
     if (!proofExpanded) return el("div", {}, toggle);
     const coreBox = el(
