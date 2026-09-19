@@ -253,6 +253,13 @@ export function renderKenKenDebugger(root: HTMLElement): void {
                 borderBottom: down !== cageIdx ? "3px solid var(--line-strong)" : baseBorder,
                 borderRadius: "4px",
                 background: liveBg ?? (isCorrected ? "rgba(245, 147, 34, 0.16)" : "var(--panel)"),
+                // Buttons don't inherit text color from the page by default in
+                // most browsers (a longstanding UA-stylesheet quirk for form
+                // controls) -- without this, these cells fell back to the
+                // browser's own default button text color, invisible against
+                // the dark cell background. Every solved digit was rendering,
+                // just in black-on-near-black.
+                color: "var(--ink)",
                 fontWeight: "700",
                 fontSize: "16px",
                 cursor: "pointer",
