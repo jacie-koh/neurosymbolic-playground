@@ -179,7 +179,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         if (key === deducedCell) { background = "var(--symbolic)"; color = "#fff"; }
         else if (highlighted.has(key)) { background = "rgba(8, 119, 189, 0.16)"; }
         else if (isShaded) { background = "#000000"; color = "#fff"; }
-        else if (dupCells.has(key) || adjCells.has(key)) { background = "rgba(255, 68, 68, 0.16)"; color = "#ff6b6b"; }
+        else if (dupCells.has(key) || adjCells.has(key)) { background = "rgba(255, 68, 68, 0.16)"; color = "var(--danger-text)"; }
 
         grid.append(
           el(
@@ -248,7 +248,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
             fontSize: "10px",
             textTransform: "uppercase",
             letterSpacing: "0.05em",
-            color: t.status === "sat" ? "var(--acid)" : "var(--neural)",
+            color: t.status === "sat" ? "var(--acid-text)" : "var(--neural-text)",
             marginBottom: "4px",
           },
         },

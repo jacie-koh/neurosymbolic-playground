@@ -286,9 +286,9 @@ function outputSummary(p: Pipeline | null): string | null {
  * the same hue for the comparison note's dashed divider -- mirrors the Figma
  * reference's `stageColor()` + `${color}30` border. */
 const STAGE_ACCENT: Record<FlowStage["kind"], { label: string; border: string }> = {
-  neural: { label: "var(--neural)", border: "rgba(245, 147, 34, 0.3)" },
-  symbolic: { label: "#4db4f0", border: "rgba(8, 119, 189, 0.3)" },
-  output: { label: "#d19ae8", border: "rgba(142, 68, 173, 0.3)" },
+  neural: { label: "var(--neural-text)", border: "rgba(245, 147, 34, 0.3)" },
+  symbolic: { label: "var(--symbolic-text)", border: "rgba(8, 119, 189, 0.3)" },
+  output: { label: "var(--output-text)", border: "rgba(142, 68, 173, 0.3)" },
 };
 
 /** Simple at-a-glance flow: the real pipeline's stages as plain pill chips joined

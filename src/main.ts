@@ -1,3 +1,4 @@
+import { themeToggleButton } from "./theme";
 import "./style.css";
 import { store, type ViewName } from "./state";
 import { el, clear } from "./dom";
@@ -51,7 +52,8 @@ function topbar(): HTMLElement {
     el("img", { src: "/logo-mark.png", alt: "", class: "brand-mark" }),
     el("h1", {}, "Neurosymbolic Puzzle Playground"),
     el("div", { class: "stepper" }, ...steps),
-    el("div", { class: "spacer" })
+    el("div", { class: "spacer" }),
+    themeToggleButton()
   );
 }
 

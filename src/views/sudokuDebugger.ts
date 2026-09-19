@@ -227,17 +227,17 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         let background = "var(--panel)";
         let color = "inherit";
         if (isLiveCorrectionTarget && (liveCorrectionKind === "try" || liveCorrectionKind === "corrected" || liveCorrectionKind === "revert")) {
-          if (liveCorrectionKind === "corrected") { background = "rgba(46, 204, 113, 0.16)"; color = "#4ed98a"; }
-          else if (liveCorrectionKind === "revert") { background = "rgba(255, 68, 68, 0.16)"; color = "#ff6b6b"; }
-          else { background = "rgba(255, 170, 0, 0.16)"; color = "#ffc861"; }
+          if (liveCorrectionKind === "corrected") { background = "rgba(46, 204, 113, 0.16)"; color = "var(--badge-weak-text)"; }
+          else if (liveCorrectionKind === "revert") { background = "rgba(255, 68, 68, 0.16)"; color = "var(--danger-text)"; }
+          else { background = "rgba(255, 170, 0, 0.16)"; color = "var(--warn-text)"; }
         } else if (isConflict) {
           background = "rgba(255, 68, 68, 0.16)";
-          color = "#ff6b6b";
+          color = "var(--danger-text)";
         } else if (isOverridden) {
           background = "rgba(8, 119, 189, 0.16)";
         } else if (isAmbiguous) {
           background = "rgba(142, 68, 173, 0.18)";
-          color = "#d19ae8";
+          color = "var(--output-text)";
         } else if (isCorrected) {
           background = "rgba(245, 147, 34, 0.16)";
         } else if (!given) {
@@ -276,7 +276,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
             // Corrected marker (top-left): flags a cell the offline correction loop
             // actually changed, distinct from the background tint alone.
             isCorrected && !isOverridden && !liveGrid
-              ? el("span", { style: { position: "absolute", top: "1px", left: "2px", fontSize: "7px", color: "var(--acid)" } }, "✱")
+              ? el("span", { style: { position: "absolute", top: "1px", left: "2px", fontSize: "7px", color: "var(--acid-text)" } }, "✱")
               : ""
           )
         );
@@ -314,7 +314,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         { color: "#22c55e", label: "High conf." },
         { color: "#f59322", label: "Low conf." },
         { color: "#ef4444", label: "Conflict" },
-        { color: "var(--acid)", label: "✱ Corrected" },
+        { color: "var(--acid-text)", label: "✱ Corrected" },
         { color: "#c084fc", label: "Ambiguous" },
       ].map((l) =>
         el(
@@ -343,7 +343,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
             fontSize: "10px",
             textTransform: "uppercase",
             letterSpacing: "0.05em",
-            color: t.result.status === "sat" ? "var(--acid)" : "var(--neural)",
+            color: t.result.status === "sat" ? "var(--acid-text)" : "var(--neural-text)",
             marginBottom: "4px",
           },
         },
@@ -412,9 +412,9 @@ export function renderSudokuDebugger(root: HTMLElement): void {
                 { style: { display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--muted)", marginTop: i > 0 ? "5px" : "0" } },
                 el("span", { style: { fontSize: "10px", color: "var(--muted)", minWidth: "14px" } }, String(i + 1)),
                 `(${corr.row + 1},${corr.col + 1})`,
-                el("span", { style: { color: "var(--neural)" } }, String(corr.before)),
+                el("span", { style: { color: "var(--neural-text)" } }, String(corr.before)),
                 el("span", {}, "→"),
-                el("span", { style: { color: "var(--acid)" } }, String(corr.after)),
+                el("span", { style: { color: "var(--acid-text)" } }, String(corr.after)),
                 el("span", { style: { marginLeft: "auto", fontSize: "10px" } }, `${(corr.score * 100).toFixed(2)}%`)
               )
             )
@@ -706,7 +706,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         el(
           "div",
           { style: { marginTop: "6px" } },
-          el("span", { class: "badge", style: { background: "rgba(142, 68, 173, 0.18)", color: "#d19ae8", border: "1px solid rgba(142, 68, 173, 0.4)" } }, "sat but possibly wrong"),
+          el("span", { class: "badge", style: { background: "rgba(142, 68, 173, 0.18)", color: "var(--output-text)", border: "1px solid rgba(142, 68, 173, 0.4)" } }, "sat but possibly wrong"),
           ` the offline pipeline never flagged this cell — it only reacts to outright conflicts — but its reading (${ambiguous.given}, ` +
             `${(ambiguous.confidence * 100).toFixed(1)}%) is far from certain, and the alternative ${ambiguous.alternative} ` +
             `(${ambiguous.alternativeConfidence != null ? (ambiguous.alternativeConfidence * 100).toFixed(1) : "?"}%) also solves the ` +

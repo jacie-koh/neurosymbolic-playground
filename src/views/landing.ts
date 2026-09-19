@@ -2,6 +2,7 @@
 
 import { store } from "../state";
 import { el } from "../dom";
+import { themeToggleButton } from "../theme";
 
 export function renderLanding(root: HTMLElement): void {
   root.append(
@@ -9,6 +10,7 @@ export function renderLanding(root: HTMLElement): void {
       "div",
       { class: "landing" },
       el("div", { class: "landing-grid-bg" }),
+      themeToggleButton("landing-theme-toggle"),
       el(
         "div",
         { class: "landing-content" },

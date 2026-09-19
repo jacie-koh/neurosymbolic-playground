@@ -2,7 +2,10 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  /* Pipeline-stage colors: neural/symbolic/output, each with its own identity. */
+  /* Pipeline-stage colors: neural/symbolic/output, each with its own identity.
+   * Kept the same hue in both themes -- only the *text* tints derived from
+   * them (--symbolic-text, --output-text below) need a theme-specific,
+   * readable-on-the-current-background variant. */
   --neural: #f59322; /* orange */
   --symbolic: #0877bd; /* blue */
   --output: #8e44ad; /* purple */
@@ -13,10 +16,38 @@
   --bg: #080810;
   --panel: #0e0e22;
   --panel-2: #13132e;
+  --panel-3: #111128; /* topbar */
   --ink: #e0e0f4;
   --muted: #7878b0;
   --line: #1e1e3c;
   --line-strong: #2e2e52;
+
+  /* Readable-on-dark tints of --symbolic/--output/warn/badge hues, used for
+   * text sitting on a low-alpha wash of that hue -- too pale to read once the
+   * wash sits on a white card instead, so light mode gives each its own,
+   * darker variant below. */
+  --neural-text: #f59322;
+  --symbolic-text: #4db4f0;
+  --output-text: #d19ae8;
+  --warn-text: #ffc861;
+  --danger-text: #ff6b6b;
+  --acid-text: #c8f135;
+  --badge-strong-text: #f5a94e;
+  --badge-weak-text: #4ed98a;
+
+  /* Landing-page heading tint that isn't just --ink. */
+  --landing-heading: #f0f0ff;
+
+  /* White-based translucent overlays (subtle fills/borders/dim text meant to
+   * sit on a dark surface) -- light mode flips these to black-based so they
+   * stay visible instead of vanishing into a white surface. */
+  --overlay-1: rgba(255, 255, 255, 0.06);
+  --overlay-2: rgba(255, 255, 255, 0.08);
+  --overlay-3: rgba(255, 255, 255, 0.22);
+  --overlay-border-1: rgba(255, 255, 255, 0.1);
+  --overlay-border-2: rgba(255, 255, 255, 0.12);
+  --overlay-text-dim: rgba(255, 255, 255, 0.4);
+  --overlay-text-mid: rgba(255, 255, 255, 0.65);
 
   --radius: 10px;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.35);
@@ -24,9 +55,46 @@
 
   --font-mono: "JetBrains Mono", monospace;
 
+  color-scheme: dark;
   font-family: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color: var(--ink);
   background: var(--bg);
+}
+
+/* ---------- light theme ---------- */
+:root[data-theme="light"] {
+  --bg: #f4f4fa;
+  --panel: #ffffff;
+  --panel-2: #f1f1f8;
+  --panel-3: #ffffff;
+  --ink: #171728;
+  --muted: #64648a;
+  --line: #e2e2ee;
+  --line-strong: #cbcbe0;
+
+  --neural-text: #a85a00;
+  --symbolic-text: #055a90;
+  --output-text: #7a3a97;
+  --warn-text: #8a5a00;
+  --danger-text: #c62828;
+  --acid-text: #4a6300;
+  --badge-strong-text: #a2540a;
+  --badge-weak-text: #1c7d46;
+
+  --landing-heading: #101020;
+
+  --overlay-1: rgba(10, 10, 30, 0.04);
+  --overlay-2: rgba(10, 10, 30, 0.055);
+  --overlay-3: rgba(10, 10, 30, 0.12);
+  --overlay-border-1: rgba(10, 10, 30, 0.08);
+  --overlay-border-2: rgba(10, 10, 30, 0.1);
+  --overlay-text-dim: rgba(10, 10, 30, 0.38);
+  --overlay-text-mid: rgba(10, 10, 30, 0.6);
+
+  --shadow: 0 1px 3px rgba(30, 30, 60, 0.09), 0 1px 2px rgba(30, 30, 60, 0.06);
+  --shadow-lg: 0 8px 24px rgba(30, 30, 60, 0.14);
+
+  color-scheme: light;
 }
 
 * {
@@ -58,7 +126,7 @@ button {
   gap: 12px;
   height: 52px;
   padding: 0 24px;
-  background: #111128;
+  background: var(--panel-3);
   border-bottom: 1px solid var(--line);
   color: var(--ink);
   position: sticky;
@@ -82,6 +150,36 @@ button {
   flex: 1;
 }
 
+/* ---------- theme toggle ---------- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  padding: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--symbolic);
+  color: var(--symbolic-text);
+}
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.landing-theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
 /* ---------- stepper ---------- */
 .stepper {
   display: flex;
@@ -95,17 +193,17 @@ button {
   gap: 6px;
   padding: 4px 10px;
   border-radius: 20px;
-  color: rgba(255, 255, 255, 0.65);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--overlay-text-mid);
+  background: var(--overlay-2);
   cursor: pointer;
   white-space: nowrap;
 }
 .stepper .step.active {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.22);
+  color: var(--ink);
+  background: var(--overlay-3);
 }
 .stepper .sep {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--overlay-text-dim);
 }
 
 /* ---------- layout ---------- */
@@ -193,11 +291,11 @@ button {
   margin-top: 2px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--symbolic);
+  color: var(--symbolic-text);
 }
 .how-to-play {
   font-size: 12px;
-  color: var(--symbolic);
+  color: var(--symbolic-text);
   text-decoration: none;
 }
 .how-to-play:hover {
@@ -314,7 +412,7 @@ select:hover {
 .note.warn {
   background: rgba(255, 170, 0, 0.08);
   border-color: rgba(255, 170, 0, 0.28);
-  color: #ffc861;
+  color: var(--warn-text);
 }
 
 .flow-demo {
@@ -349,20 +447,20 @@ select:hover {
 .flow-node.symbolic {
   background: rgba(8, 119, 189, 0.12);
   border-color: rgba(8, 119, 189, 0.4);
-  color: #4db4f0;
+  color: var(--symbolic-text);
 }
 .flow-node.output {
   background: rgba(142, 68, 173, 0.12);
   border-color: rgba(142, 68, 173, 0.4);
-  color: #d19ae8;
+  color: var(--output-text);
 }
 .flow-payload {
   display: block;
   width: 100%;
   padding: 8px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--overlay-1);
+  border: 1px solid var(--overlay-border-1);
   font-family: var(--font-mono), "SFMono-Regular", ui-monospace, monospace;
   font-size: 11px;
   line-height: 1.5;
@@ -388,8 +486,8 @@ select:hover {
   gap: 8px;
 }
 .flow-chip {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--overlay-2);
+  border: 1px solid var(--overlay-border-2);
   border-radius: 999px;
   padding: 7px 16px;
   font-family: var(--font-mono), "SFMono-Regular", ui-monospace, monospace;
@@ -481,23 +579,23 @@ button.lab-token { cursor: pointer; }
 }
 .badge-strong {
   background: rgba(245, 147, 34, 0.14);
-  color: #f5a94e;
+  color: var(--badge-strong-text);
   border: 1px solid rgba(245, 147, 34, 0.35);
 }
 .badge-weak {
   background: rgba(46, 204, 113, 0.14);
-  color: #4ed98a;
+  color: var(--badge-weak-text);
   border: 1px solid rgba(46, 204, 113, 0.35);
 }
 /* distinct from strong/weak (supervision) — these mark a train/held-out pair */
 .badge-seen {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--overlay-1);
   color: var(--muted);
   border: 1px solid var(--line-strong);
 }
 .badge-heldout {
   background: rgba(8, 119, 189, 0.14);
-  color: #4db4f0;
+  color: var(--symbolic-text);
   border: 1px solid rgba(8, 119, 189, 0.35);
 }
 
@@ -618,7 +716,7 @@ button.lab-token { cursor: pointer; }
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #c0c0e0;
+  color: var(--muted);
   margin-bottom: 16px;
 }
 .landing-hero h1 {
@@ -626,12 +724,12 @@ button.lab-token { cursor: pointer; }
   font-size: clamp(24px, 3.6vw, 36px);
   font-weight: 500;
   line-height: 1.2;
-  color: #f0f0ff;
+  color: var(--landing-heading);
   margin: 0 0 18px;
   letter-spacing: -0.03em;
 }
 .landing-hero h1 .acid {
-  color: var(--acid);
+  color: var(--acid-text);
 }
 .landing-hero p {
   font-size: 15px;
@@ -642,7 +740,7 @@ button.lab-token { cursor: pointer; }
 .landing-cta {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--bg);
+  color: #0a0a14;
   background: var(--acid);
   border: none;
   border-radius: 6px;
@@ -666,16 +764,16 @@ button.lab-token { cursor: pointer; }
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #30306a;
+  color: var(--muted);
 }
 .landing-footer-brand img {
   width: 16px;
   height: 16px;
   object-fit: contain;
-  opacity: 0.45;
+  opacity: 0.6;
 }
-.landing-footer span:last-child {
+.landing-footer > span:last-child {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #20204a;
+  color: var(--muted);
 }
