@@ -41,6 +41,14 @@ interface Pipeline {
    * since a literal feedback arrow isn't part of the flow-node vocabulary this
    * reuses (the same one the app's now-removed builder page used). */
   loopNote?: string;
+  /** Short, at-a-glance pill labels for the same real pipeline -- the plain-text
+   * "Board Image → CNN Cell Recognition → ... → Verified Grid" summary
+   * shown above the detailed stage-by-stage breakdown. Only set on the
+   * `neurosymbolic` pipeline, since that's the one diagrammed. */
+  chips?: string[];
+  /** When set, the chip row loops back with "↻ loopChip" after the last chip --
+   * the real correction/retry patterns (conflict feedback into another CNN/LLM pass). */
+  loopChip?: string;
 }
 
 interface PatternRow {
@@ -69,6 +77,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Z3 solves once from the raw reading" },
           { label: "Output", kind: "output", text: "91.1% baseline_correct — a sat result is a checkable Z3 model (82.2% handwritten-only vs. 100% printed)" },
         ],
+        chips: ["Board Image", "CNN Cell Recognition", "Z3 Constraint Solving", "Verified Grid"],
       },
       symbolicOnly: {
         stages: [
@@ -97,6 +106,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Output", kind: "output", text: "95.5% answer_correct — bounded correction loop (handwritten-only: 82.2% → 91.0%, exactly where the loop earns its keep)" },
         ],
         loopNote: "When Z3 hits a conflict, it retries the next-ranked CNN alternative for the disputed cell until sat or the retry budget runs out.",
+        chips: ["Board Image", "CNN Predictions", "Z3 Verification", "Conflict Feedback"],
+        loopChip: "CNN Alternatives",
       },
       symbolicOnly: {
         stages: [
@@ -115,6 +126,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Exact arithmetic solver runs once, no correction" },
           { label: "Output", kind: "output", text: "66.9% baseline_correct (1,400/1,400 real cases; handwritten-only: 34.6% vs. 99.3% printed — the real source of KenKen's size-degradation trend)" },
         ],
+        chips: ["Board Image", "CNN Cage Recognition", "Arithmetic Solving", "Verified Grid"],
       },
       symbolicOnly: {
         stages: [
@@ -138,6 +150,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Output", kind: "output", text: "83.9% answer_correct — bounded joint-cage correction loop (handwritten-only: 34.6% → 68.4% — real ground recovered, though a real ceiling remains)" },
         ],
         loopNote: "On an unsat conflict, the loop retries ranked CNN alternatives for the cages the unsat core actually implicates, not every cage.",
+        chips: ["Board Image", "CNN Predictions", "Solver Verification", "Conflict Feedback"],
+        loopChip: "Cage Alternatives",
       },
       symbolicOnly: {
         stages: [
@@ -162,6 +176,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Explain", kind: "neural", text: "Local LLM turns the first forced move's unsat core into prose" },
           { label: "Output", kind: "output", text: "100% (15/15) — proof verified first; the LLM's prose is labeled \"not formally verified\"" },
         ],
+        chips: ["Structured Grid", "Z3 Forced-Move Proof", "LLM Explanation", "Natural-Language Rationale"],
       },
       symbolicOnly: {
         stages: [
@@ -186,6 +201,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Colored Exact Cover / MINIEXACT solves" },
           { label: "Output", kind: "output", text: "100% (6/6 of the 1,000 downloaded ZebraLogic puzzles tested) — independently checked against the real answer; too small a sample to also split out a robustness slice" },
         ],
+        chips: ["Natural-Language Clues", "LLM Relation Parsing", "MiniExact Reasoning", "Solved Assignment"],
       },
       symbolicOnly: {
         stages: [
@@ -209,6 +225,8 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Output", kind: "output", text: "1/1 real test (known-hard puzzle lgp-test-6x6-5) — stayed unsat on both attempts: a real solver conflict fed back to the LLM doesn't guarantee a better re-parse, an honest negative result, not a bug in the loop" },
         ],
         loopNote: "run_with_conflict_retry() genuinely re-prompts the LLM with the real solver's unsat result and re-solves from scratch — mechanically real, not simulated.",
+        chips: ["Natural-Language Clues", "LLM Relation Parsing", "MiniExact Verification", "Conflict Feedback"],
+        loopChip: "LLM Re-parsing",
       },
       symbolicOnly: {
         stages: [
@@ -232,6 +250,7 @@ const RESULTS: Partial<Record<string, ModuleResults>> = {
           { label: "Reasoning", kind: "symbolic", text: "Authors' unmodified FO-SL/Z3 synthesizer searches for a discriminator" },
           { label: "Output", kind: "output", text: "83% (5/6 held-out puzzles) — a sat result is a checkable FO-SL formula (wider 15-puzzle check against the paper's own saved/replayed perception: 12/15 sat)" },
         ],
+        chips: ["Scene Image", "Object & Attribute Detection", "Fo-SL/Z3 Reasoning", "Verified Answer"],
       },
       symbolicOnly: {
         stages: [{ label: "Reasoning", kind: "symbolic", text: "FO-SL/Z3 synthesizer alone — not measured standalone here; this module has no ground-truth scene models to feed it directly, always paired with perception" }],
@@ -272,6 +291,26 @@ const STAGE_ACCENT: Record<FlowStage["kind"], { label: string; border: string }>
   output: { label: "#d19ae8", border: "rgba(142, 68, 173, 0.3)" },
 };
 
+/** Simple at-a-glance flow: the real pipeline's stages as plain pill chips joined
+ * by "→" (and, for a correction loop, "↺" back to the retry chip) -- e.g.
+ * "Board Image → CNN Predictions → Z3 Verification → Conflict Feedback ↺ CNN
+ * Alternatives". Just the chips -- no stage-by-stage text or baseline
+ * comparisons underneath. */
+function simpleChipFlow(main: Pipeline): HTMLElement {
+  const chips = main.chips!;
+  const chipRow: (HTMLElement | string)[] = [];
+  chips.forEach((label, i) => {
+    if (i > 0) chipRow.push(el("span", { class: "flow-chip-arrow" }, "→"));
+    chipRow.push(el("span", { class: "flow-chip" }, label));
+  });
+  if (main.loopChip) {
+    chipRow.push(el("span", { class: "flow-chip-loop" }, "↺"));
+    chipRow.push(el("span", { class: "flow-chip" }, main.loopChip));
+  }
+
+  return el("div", { class: "flow-chip-row" }, ...chipRow);
+}
+
 /** One detailed diagram for the whole pattern -- the real neurosymbolic pipeline's
  * stages, each carrying its own real number, with the pure-neural and symbolic-
  * only baselines folded in as a comparison note on the first stage of the matching
@@ -281,6 +320,8 @@ const STAGE_ACCENT: Record<FlowStage["kind"], { label: string; border: string }>
 function flowDiagram(row: PatternRow): HTMLElement {
   const main = row.neurosymbolic;
   if (!main) return el("div", { style: { fontSize: "12px", color: "var(--muted)" } }, "Not measured for this module's real pipeline.");
+
+  if (main.chips) return simpleChipFlow(main);
 
   const pureNeuralText = outputSummary(row.pureNeural);
   const symbolicOnlyText = outputSummary(row.symbolicOnly);

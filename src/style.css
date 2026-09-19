@@ -380,6 +380,33 @@ select:hover {
   color: var(--muted);
 }
 
+.flow-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.flow-chip {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-family: var(--font-mono), "SFMono-Regular", ui-monospace, monospace;
+  font-size: 12.5px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.flow-chip-arrow,
+.flow-chip-loop {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+.flow-chip-loop {
+  font-size: 17px;
+}
+
 .lab-grid {
   display: grid;
   gap: 8px;
@@ -563,21 +590,26 @@ button.lab-token { cursor: pointer; }
 .landing-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .landing-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
+  flex: 1;
   max-width: 620px;
   margin: 0 auto;
-  padding: 120px 40px 80px;
+  padding: 40px 40px;
 }
 .landing-logo {
-  width: 140px;
-  height: 140px;
+  width: 104px;
+  height: 104px;
   object-fit: contain;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   filter: drop-shadow(0 0 28px rgba(200, 241, 53, 0.45)) drop-shadow(0 0 60px rgba(200, 241, 53, 0.2));
 }
 .landing-eyebrow {
@@ -587,25 +619,25 @@ button.lab-token { cursor: pointer; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #c0c0e0;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .landing-hero h1 {
   font-family: var(--font-mono);
-  font-size: clamp(26px, 4vw, 40px);
+  font-size: clamp(24px, 3.6vw, 36px);
   font-weight: 500;
   line-height: 1.2;
   color: #f0f0ff;
-  margin: 0 0 24px;
+  margin: 0 0 18px;
   letter-spacing: -0.03em;
 }
 .landing-hero h1 .acid {
   color: var(--acid);
 }
 .landing-hero p {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--muted);
-  line-height: 1.7;
-  margin: 0 0 36px;
+  line-height: 1.6;
+  margin: 0 0 28px;
 }
 .landing-cta {
   font-family: var(--font-mono);
