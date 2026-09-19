@@ -16,7 +16,7 @@ export function renderLanding(root: HTMLElement): void {
           "section",
           { class: "landing-hero" },
           el("img", { src: "/logo-mark.png", alt: "", class: "landing-logo" }),
-          el("div", { class: "landing-eyebrow" }, "Puzzle Playground"),
+          el("div", { class: "landing-eyebrow" }, "Neurosymbolic Puzzle Playground"),
           el(
             "h1",
             {},
@@ -45,7 +45,7 @@ export function renderLanding(root: HTMLElement): void {
             "div",
             { class: "landing-footer-brand" },
             el("img", { src: "/logo-mark.png", alt: "" }),
-            el("span", {}, "Neurosymbolic Playground")
+            el("span", {}, "Neurosymbolic Puzzle Playground")
           ),
           el("span", {}, "MIT License")
         )
