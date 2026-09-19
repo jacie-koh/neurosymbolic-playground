@@ -40,7 +40,11 @@ export function renderResults(root: HTMLElement): void {
 
   renderRealResults(root, st.situationId, () => renderResults(root));
 
-  const debuggerHost = el("div", { style: { marginTop: "16px" } });
+  // Centered, not stretched to the full results-panel width -- each debugger's
+  // own internal layout already fixes its content width (the puzzle grid), so
+  // matching the Figma reference means centering that block on the page rather
+  // than pinning it to the left edge.
+  const debuggerHost = el("div", { style: { width: "fit-content", maxWidth: "100%", margin: "16px auto 0" } });
   root.append(debuggerHost);
   debuggerRenderer(debuggerHost);
 

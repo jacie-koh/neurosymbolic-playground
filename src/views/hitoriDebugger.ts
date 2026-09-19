@@ -69,13 +69,9 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     }
   }
 
-  // Replay/Step/output stay in one fixed block at the top of the page, above the
-  // randomizer -- so they're never pushed around by (or push around) the grid
-  // below, and pressing Replay/Stop never shifts the page.
-  const controlsHost = el("div");
   const randomizerHost = el("div");
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(controlsHost, randomizerHost, body);
+  root.append(randomizerHost, body);
 
   loadHitoriManifest()
     .then((manifest) => {
@@ -132,7 +128,17 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     const highlighted = deductionIdx >= 0 ? evidenceCells(t.deductions[deductionIdx].evidence) : new Set<string>();
     const deducedCell = deductionIdx >= 0 ? cellKey(t.deductions[deductionIdx].row, t.deductions[deductionIdx].col) : null;
 
-    const grid = el("div", { class: "lab-grid", style: { gridTemplateColumns: `repeat(${t.grid[0].length}, 52px)` } });
+    const cols = t.grid[0].length;
+    const cellPx = 52;
+    const gridWidthPx = cols * cellPx + (cols - 1) * 8; // matches .lab-grid's 8px gap
+
+    const gridLabel = el(
+      "div",
+      { style: { fontSize: "10px", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.05em" } },
+      `${t.title} · click cells to shade/unshade`
+    );
+
+    const grid = el("div", { class: "lab-grid", style: { gridTemplateColumns: `repeat(${cols}, ${cellPx}px)` } });
     t.grid.forEach((row, r) =>
       row.forEach((value, c) => {
         const key = cellKey(r, c);
@@ -162,6 +168,24 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       })
     );
 
+    const legend = el(
+      "div",
+      { style: { display: "flex", gap: "10px", flexWrap: "wrap" } },
+      ...[
+        { swatch: "#000000", label: "Shaded" },
+        { swatch: "var(--symbolic)", label: "Forced cell (current deduction)" },
+        { swatch: "rgba(8, 119, 189, 0.16)", label: "Evidence cells" },
+        { swatch: "rgba(255, 68, 68, 0.16)", label: "Violation" },
+      ].map((l) =>
+        el(
+          "div",
+          { style: { display: "flex", alignItems: "center", gap: "4px" } },
+          el("span", { style: { width: "10px", height: "10px", borderRadius: "2px", background: l.swatch, display: "inline-block", border: "1px solid var(--line-strong)" } }),
+          el("span", { class: "muted", style: { fontSize: "10px" } }, l.label)
+        )
+      )
+    );
+
     const issues = [
       violations.duplicates.length ? `${violations.duplicates.length / 2 | 0} duplicate pair(s) among unshaded cells` : "",
       violations.adjacentShaded.length ? `${violations.adjacentShaded.length / 2 | 0} adjacent shaded pair(s)` : "",
@@ -170,10 +194,43 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     const solvedMatch = t.solution && JSON.stringify(shaded) === JSON.stringify(t.solution);
     const status = el(
       "div",
-      { class: "note", style: { marginTop: "16px" } },
+      { class: "note" },
       el("b", {}, "Rule check: "),
       issues.length ? issues.join("; ") + "." : solvedMatch ? "matches the verified unique solution." : "no violations yet — keep going.",
       solveMessage ? el("div", { style: { marginTop: "6px" } }, solveMessage) : ""
+    );
+
+    const z3Card = el(
+      "div",
+      {
+        style: {
+          background: t.status === "sat" ? "rgba(200, 241, 53, 0.08)" : "rgba(245, 147, 34, 0.08)",
+          border: `1px solid ${t.status === "sat" ? "rgba(200, 241, 53, 0.35)" : "rgba(245, 147, 34, 0.35)"}`,
+          borderRadius: "8px",
+          padding: "10px 12px",
+        },
+      },
+      el(
+        "div",
+        {
+          style: {
+            fontSize: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+            color: t.status === "sat" ? "var(--acid)" : "var(--neural)",
+            marginBottom: "4px",
+          },
+        },
+        `Z3: ${t.status}`
+      ),
+      el(
+        "div",
+        { class: "muted", style: { fontSize: "11px", lineHeight: "1.4" } },
+        t.status === "sat"
+          ? `Solution found${t.unique === false ? " · not unique" : t.unique === true ? " · unique" : ""}`
+          : "No valid shading found",
+        t.deductions.length > 0 ? ` · ${t.deductions.length} forced cell${t.deductions.length !== 1 ? "s" : ""} proven` : ""
+      )
     );
 
     const logLines =
@@ -184,7 +241,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
         : [];
     const logBox = renderLiveLog(logLines);
 
-    const deductionPanel = el("div", { class: "note", style: { marginTop: "16px" } });
+    const deductionPanel = el("div", { class: "note" });
     drawDeductionPanel(deductionPanel, t);
 
     const controls = el(
@@ -231,10 +288,35 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       )
     );
 
-    clear(controlsHost);
-    controlsHost.append(deductionPanel, logBox);
+    // Grid + rule-check status + action buttons sit in a fixed-width left column;
+    // the deduction step-through panel and live log sit in a right column that
+    // grows to fill the rest -- matching the Figma reference's Hitori-specific
+    // layout (grid+actions left, deduction panel right), distinct from the other
+    // four debuggers' single-column layouts. The explicit pixel width on leftCol
+    // (not "auto") is load-bearing -- see the matching note in sudokuDebugger.ts.
+    const leftCol = el(
+      "div",
+      { style: { display: "flex", flexDirection: "column", gap: "8px", width: `${gridWidthPx}px`, boxSizing: "border-box" } },
+      gridLabel,
+      grid,
+      legend,
+      status,
+      controls
+    );
+    // minWidth: "0" overrides the grid item's default min-width: auto (= its
+    // content's min-content size) -- without it, the Z3 proof <pre> blocks below
+    // (white-space: pre, so they never wrap) would set an unshrinkable floor on
+    // this column and push the whole page wider instead of just scrolling
+    // internally via their own overflow-x: auto.
+    const rightCol = el(
+      "div",
+      { style: { display: "flex", flexDirection: "column", gap: "12px", minWidth: "0" } },
+      deductionPanel,
+      logBox,
+      z3Card
+    );
 
-    body.append(grid, status, controls);
+    body.append(el("div", { style: { display: "grid", gridTemplateColumns: "auto 1fr", gap: "20px", alignItems: "start" } }, leftCol, rightCol));
   }
 
   /** O(1): stepForward only ever advances by exactly one deduction, so there's no

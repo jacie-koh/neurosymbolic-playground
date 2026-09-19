@@ -78,13 +78,11 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     }
   }
 
-  // Replay/Step/output stay in one fixed block at the top of the page, above the
-  // randomizer -- so they're never pushed around by (or push around) the puzzle
-  // grid below, and pressing Replay/Stop never shifts the page.
-  const controlsHost = el("div");
   const randomizerHost = el("div");
+  const resetHost = el("div");
+  const topRow = el("div", { style: { display: "flex", gap: "12px", alignItems: "flex-start", flexWrap: "wrap" } }, randomizerHost, resetHost);
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(controlsHost, randomizerHost, body);
+  root.append(topRow, body);
 
   loadSudokuManifest()
     .then((manifest) => {
@@ -170,9 +168,11 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     const conflictCells = new Set(conflicts.map((cf) => cellKey(cf.row, cf.col)));
     const solve = getSolve();
 
+    const cellPx = t.size > 9 ? 32 : 46;
+    const gridWidthPx = t.size * cellPx + (t.size - 1) * 8; // matches .lab-grid's 8px gap
     const grid = el("div", {
       class: "lab-grid",
-      style: { gridTemplateColumns: `repeat(${t.size}, ${t.size > 9 ? 32 : 46}px)` },
+      style: { gridTemplateColumns: `repeat(${t.size}, ${cellPx}px)` },
     });
 
     // The cell the LIVE correction loop is acting on right now (this playthrough),
@@ -214,13 +214,17 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           color = "var(--muted)";
         }
 
+        const pred = cellPrediction(t, r, c);
+        const confDotColor = pred ? (pred.confidence >= 0.9 ? "#22c55e" : pred.confidence >= 0.7 ? "#f59322" : "#ef4444") : null;
+
         grid.append(
           el(
             "button",
             {
               style: {
-                width: t.size > 9 ? "32px" : "46px",
-                height: t.size > 9 ? "32px" : "46px",
+                position: "relative",
+                width: `${cellPx}px`,
+                height: `${cellPx}px`,
                 border: isSelected ? "2px solid var(--pos)" : "1px solid var(--line)",
                 borderRadius: "8px",
                 background,
@@ -232,7 +236,17 @@ export function renderSudokuDebugger(root: HTMLElement): void {
               "aria-label": `row ${r + 1} column ${c + 1}`,
               onclick: given ? () => { stopPlaying(); selected = [r, c]; drawBody(); } : undefined,
             },
-            value !== 0 ? String(value) : solverFill != null ? String(solverFill) : ""
+            value !== 0 ? String(value) : solverFill != null ? String(solverFill) : "",
+            // Confidence dot (bottom-right): only meaningful on a given cell's own
+            // CNN reading, and only while showing the static reading, not a live step.
+            confDotColor && !liveGrid
+              ? el("span", { style: { position: "absolute", bottom: "2px", right: "3px", width: "4px", height: "4px", borderRadius: "50%", background: confDotColor } })
+              : "",
+            // Corrected marker (top-left): flags a cell the offline correction loop
+            // actually changed, distinct from the background tint alone.
+            isCorrected && !isOverridden && !liveGrid
+              ? el("span", { style: { position: "absolute", top: "1px", left: "2px", fontSize: "7px", color: "var(--acid)" } }, "✱")
+              : ""
           )
         );
       }
@@ -259,9 +273,73 @@ export function renderSudokuDebugger(root: HTMLElement): void {
 
     const logBox = renderLiveLog(logLines);
 
+    const gridLabel = el(
+      "div",
+      { style: { fontSize: "10px", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.05em" } },
+      liveGrid
+        ? lastAppliedStep
+          ? stepLine(lastAppliedStep)
+          : "solving…"
+        : loopActive()
+        ? "CNN interpretation (after correction loop)"
+        : "Raw CNN reading (no correction)"
+    );
+
+    const legend = el(
+      "div",
+      { style: { display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "2px" } },
+      ...[
+        { color: "#22c55e", label: "High conf." },
+        { color: "#f59322", label: "Low conf." },
+        { color: "#ef4444", label: "Conflict" },
+        { color: "var(--acid)", label: "✱ Corrected" },
+        { color: "#c084fc", label: "Ambiguous" },
+      ].map((l) =>
+        el(
+          "div",
+          { style: { display: "flex", alignItems: "center", gap: "4px" } },
+          el("span", { style: { width: "6px", height: "6px", borderRadius: "50%", background: l.color, display: "inline-block" } }),
+          el("span", { class: "muted", style: { fontSize: "10px" } }, l.label)
+        )
+      )
+    );
+
+    const z3Card = el(
+      "div",
+      {
+        style: {
+          background: t.result.status === "sat" ? "rgba(200, 241, 53, 0.08)" : "rgba(245, 147, 34, 0.08)",
+          border: `1px solid ${t.result.status === "sat" ? "rgba(200, 241, 53, 0.35)" : "rgba(245, 147, 34, 0.35)"}`,
+          borderRadius: "8px",
+          padding: "10px 12px",
+        },
+      },
+      el(
+        "div",
+        {
+          style: {
+            fontSize: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+            color: t.result.status === "sat" ? "var(--acid)" : "var(--neural)",
+            marginBottom: "4px",
+          },
+        },
+        `Z3: ${t.result.status}`
+      ),
+      el(
+        "div",
+        { class: "muted", style: { fontSize: "11px", lineHeight: "1.4" } },
+        t.result.status === "sat"
+          ? `Solution found${t.result.unique === false ? " · not unique" : t.result.unique === true ? " · unique" : ""}`
+          : "No satisfying assignment found",
+        t.correctionAttempts > 0 ? ` · ${t.corrections.length} correction(s) over ${t.correctionAttempts} attempt(s)` : ""
+      )
+    );
+
     const status = el(
       "div",
-      { class: "note", style: { marginTop: "16px" } },
+      { class: "note" },
       el("b", {}, "Current grid: "),
       solve.status === "sat"
         ? `satisfiable${conflicts.length === 0 ? "" : " (conflicts remain in the given clues)"}. ` +
@@ -271,7 +349,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
 
     const meta = el(
       "div",
-      { class: "flow-payload", style: { marginTop: "10px", display: "block" } },
+      { class: "flow-payload", style: { display: "block" } },
       loopActive()
         ? `${t.title} · Neural ↔ Symbolic (correction loop) · offline pipeline result: ${t.result.status}` +
           (t.result.unique != null ? `, unique=${t.result.unique}` : "") +
@@ -284,7 +362,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       t.ambiguousGivens.length > 0
         ? el(
             "div",
-            { class: "note", style: { marginTop: "16px" } },
+            { class: "note" },
             el("span", { class: "badge badge-strong" }, "sat but possibly wrong"),
             ` this puzzle solved ${t.result.status === "sat" ? "successfully" : ""}, but ${t.ambiguousGivens.length} ` +
               `given cell${t.ambiguousGivens.length === 1 ? "" : "s"} (purple below) has a low-confidence reading whose ranked ` +
@@ -293,8 +371,33 @@ export function renderSudokuDebugger(root: HTMLElement): void {
           )
         : "";
 
-    const panel = el("div", { class: "note", style: { marginTop: "16px" } });
+    const panel = el("div", { class: "note" });
     drawPanel(panel, t);
+
+    const correctionLoopBox =
+      t.corrections.length > 0
+        ? el(
+            "div",
+            { class: "note" },
+            el(
+              "div",
+              { style: { fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--muted)", marginBottom: "8px" } },
+              `Correction loop · ${t.correctionAttempts} attempt${t.correctionAttempts !== 1 ? "s" : ""}`
+            ),
+            ...t.corrections.map((corr, i) =>
+              el(
+                "div",
+                { style: { display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "var(--muted)", marginTop: i > 0 ? "5px" : "0" } },
+                el("span", { style: { fontSize: "10px", color: "var(--muted)", minWidth: "14px" } }, String(i + 1)),
+                `(${corr.row + 1},${corr.col + 1})`,
+                el("span", { style: { color: "var(--neural)" } }, String(corr.before)),
+                el("span", {}, "→"),
+                el("span", { style: { color: "var(--acid)" } }, String(corr.after)),
+                el("span", { style: { marginLeft: "auto", fontSize: "10px" } }, `${(corr.score * 100).toFixed(2)}%`)
+              )
+            )
+          )
+        : "";
 
     const resetBtn = el(
       "button",
@@ -318,17 +421,48 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       "Reset to pipeline readings"
     );
 
-    clear(controlsHost);
-    controlsHost.append(playRow, stepRow, logBox);
+    clear(resetHost);
+    // Only shown once something's actually been overridden -- otherwise it'd sit
+    // there unconditionally with nothing to reset, unlike the Figma reference.
+    if (overridden.size > 0) resetHost.append(resetBtn);
 
-    body.append(
-      el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage!, grid),
+    // Grid + its own play/step controls and live log sit in a fixed-width left
+    // column; the source image, Z3 result, mode meta, ambiguity note, cell-detail
+    // panel, and correction log sit in a right column that grows to fill the rest
+    // -- matching the Figma reference's per-puzzle layout (grid+controls left,
+    // info panels right), distinct from KenKen/Zebra/VDP's single-column layouts
+    // below. An explicit pixel width (not "auto") on this grid item is
+    // load-bearing: CSS grid sizes an "auto" column to its item's max-content
+    // width, which for wrappable text is measured as if laid out on one line -- a
+    // long log line would otherwise balloon this whole column (and the grid it's
+    // in) far past the puzzle grid's actual width. See liveLog.ts for the
+    // matching fix on the log box itself.
+    const leftCol = el(
+      "div",
+      { style: { display: "flex", flexDirection: "column", gap: "6px", width: `${gridWidthPx}px`, boxSizing: "border-box" } },
+      playRow,
+      stepRow,
+      gridLabel,
+      grid,
+      legend,
+      logBox
+    );
+    const rightCol = el(
+      "div",
+      { style: { display: "flex", flexDirection: "column", gap: "12px", minWidth: "0" } },
+      el(
+        "div",
+        { style: { display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "flex-start" } },
+        sourceImage!,
+        el("div", { style: { flex: "1", minWidth: "0", display: "flex", flexDirection: "column", gap: "6px" } }, z3Card, status)
+      ),
       meta,
       ambiguityNote,
-      status,
       panel,
-      resetBtn
+      correctionLoopBox
     );
+
+    body.append(el("div", { style: { display: "grid", gridTemplateColumns: "auto 1fr", gap: "20px", alignItems: "start" } }, leftCol, rightCol));
   }
 
   /** True only when nothing's been edited and the offline Z3 pass actually found an answer — the only case where there's a real, verified solution to show. */
@@ -467,6 +601,16 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     // playback time the same while the button stays clickable throughout.
     const RENDER_INTERVAL = 50;
     const stepsPerTick = Math.max(1, Math.round(RENDER_INTERVAL / delay));
+    // A trace with very few steps (e.g. a one-shot unsat read that dead-ends
+    // almost immediately) would otherwise finish in a single ~50ms tick --
+    // Stop flashing back to Start faster than it's perceptible, reading as if
+    // the button did nothing. Spacing out however many ticks it actually takes
+    // so the whole run takes at least MIN_VISIBLE_MS keeps a genuinely long
+    // search's pacing untouched (it already needs many ticks) while making a
+    // short one visibly play out instead of instantly completing.
+    const MIN_VISIBLE_MS = 400;
+    const totalTicks = Math.max(1, Math.ceil(playSteps.length / stepsPerTick));
+    const tickInterval = totalTicks < MIN_VISIBLE_MS / RENDER_INTERVAL ? MIN_VISIBLE_MS / totalTicks : RENDER_INTERVAL;
     const tick = () => {
       if (!playing) return;
       for (let i = 0; i < stepsPerTick && playIdx < playSteps.length; i++) {
@@ -479,10 +623,10 @@ export function renderSudokuDebugger(root: HTMLElement): void {
         return;
       }
       drawBody();
-      playTimer = setTimeout(tick, RENDER_INTERVAL);
+      playTimer = setTimeout(tick, tickInterval);
     };
     drawBody();
-    playTimer = setTimeout(tick, RENDER_INTERVAL);
+    playTimer = setTimeout(tick, tickInterval);
   }
 
   function drawPanel(panel: HTMLElement, t: SudokuTrace): void {

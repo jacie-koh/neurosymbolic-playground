@@ -481,6 +481,13 @@ export function renderZebraDebugger(root: HTMLElement): void {
     // clicks could reliably land on it.
     const RENDER_INTERVAL = 50;
     const stepsPerTick = Math.max(1, Math.round(RENDER_INTERVAL / delay));
+    // See sudokuDebugger.ts's playFrom for why: a trace with very few steps would
+    // otherwise finish in a single ~50ms tick, flashing back to Start faster than
+    // it's perceptible. Spreads however many ticks it actually needs across at
+    // least MIN_VISIBLE_MS, without touching the pacing of a genuinely long search.
+    const MIN_VISIBLE_MS = 400;
+    const totalTicks = Math.max(1, Math.ceil(playSteps.length / stepsPerTick));
+    const tickInterval = totalTicks < MIN_VISIBLE_MS / RENDER_INTERVAL ? MIN_VISIBLE_MS / totalTicks : RENDER_INTERVAL;
     const tick = () => {
       if (!playing) return;
       for (let i = 0; i < stepsPerTick && playIdx < playSteps.length; i++) {
@@ -493,10 +500,10 @@ export function renderZebraDebugger(root: HTMLElement): void {
         return;
       }
       drawBody();
-      playTimer = setTimeout(tick, RENDER_INTERVAL);
+      playTimer = setTimeout(tick, tickInterval);
     };
     drawBody();
-    playTimer = setTimeout(tick, RENDER_INTERVAL);
+    playTimer = setTimeout(tick, tickInterval);
   }
 
   function cellStyle(header: boolean): Record<string, string> {

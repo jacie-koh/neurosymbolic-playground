@@ -262,6 +262,16 @@ function outputSummary(p: Pipeline | null): string | null {
   return out?.text ?? null;
 }
 
+/** Per-stage accent: the label color (matches the lighter tint `.flow-node.KIND`
+ * already uses for readable text on a dark background) and a 30%-alpha version of
+ * the same hue for the comparison note's dashed divider -- mirrors the Figma
+ * reference's `stageColor()` + `${color}30` border. */
+const STAGE_ACCENT: Record<FlowStage["kind"], { label: string; border: string }> = {
+  neural: { label: "var(--neural)", border: "rgba(245, 147, 34, 0.3)" },
+  symbolic: { label: "#4db4f0", border: "rgba(8, 119, 189, 0.3)" },
+  output: { label: "#d19ae8", border: "rgba(142, 68, 173, 0.3)" },
+};
+
 /** One detailed diagram for the whole pattern -- the real neurosymbolic pipeline's
  * stages, each carrying its own real number, with the pure-neural and symbolic-
  * only baselines folded in as a comparison note on the first stage of the matching
@@ -277,15 +287,6 @@ function flowDiagram(row: PatternRow): HTMLElement {
   let attachedNeural = false;
   let attachedSymbolic = false;
 
-  // Every pattern's real pipeline is the same 3 stages (perception/parse,
-  // reasoning, output) -- a CSS grid with one equal-width column per stage (plus
-  // a narrow auto column per arrow) keeps all three boxes the same size and in the
-  // same position whether you're looking at Neural->Symbolic, Symbolic->Neural, or
-  // Neural<->Symbolic, instead of flex-wrap letting box widths drift with content
-  // length and making the three tabs look inconsistently laid out.
-  const n = main.stages.length;
-  const columns = Array(n).fill("minmax(0, 1fr)").join(" auto ");
-
   const nodes = main.stages.flatMap((stage, i) => {
     let compare: { label: string; text: string } | null = null;
     if (stage.kind === "neural" && !attachedNeural) {
@@ -295,27 +296,40 @@ function flowDiagram(row: PatternRow): HTMLElement {
       attachedSymbolic = true;
       if (symbolicOnlyText) compare = { label: "Symbolic alone (no perception)", text: symbolicOnlyText };
     }
+    const accent = STAGE_ACCENT[stage.kind];
+    // Content-sized, not stretched to fill an equal grid column -- matches the
+    // Figma reference, where the three boxes' widths follow their own text
+    // instead of all three being forced to the same width.
     const box = el(
       "div",
-      { class: `flow-node ${stage.kind}`, style: { display: "flex", flexDirection: "column", textAlign: "left" } },
-      el("div", { style: { fontSize: "10px", opacity: 0.8, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center" } }, stage.label),
-      el("div", { style: { textAlign: "center" } }, stage.text),
+      {
+        class: `flow-node ${stage.kind}`,
+        style: { display: "flex", flexDirection: "column", textAlign: "left", flexShrink: "0", minWidth: "160px", maxWidth: "240px" },
+      },
+      el(
+        "div",
+        { style: { fontSize: "10px", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center", color: accent.label } },
+        stage.label
+      ),
+      // Body copy stays neutral ink, not the stage's accent color -- only the
+      // uppercase label and the comparison note below are accent-colored.
+      el("div", { style: { textAlign: "center", color: "var(--ink)" } }, stage.text),
       compare
         ? el(
             "div",
-            { style: { marginTop: "10px", paddingTop: "8px", borderTop: "1px dashed rgba(16,24,40,0.15)", fontSize: "10.5px", opacity: 0.85 } },
-            el("b", {}, `${compare.label}: `),
+            { style: { marginTop: "10px", paddingTop: "8px", borderTop: `1px dashed ${accent.border}`, fontSize: "10.5px", color: "var(--muted)", lineHeight: "1.4" } },
+            el("b", { style: { color: accent.label } }, `${compare.label}: `),
             compare.text
           )
         : ""
     );
-    return i > 0 ? [el("div", { class: "flow-arrow", style: { textAlign: "center" } }, "→"), box] : [box];
+    return i > 0 ? [el("div", { class: "flow-arrow" }, "→"), box] : [box];
   });
 
   return el(
     "div",
     {},
-    el("div", { class: "flow-demo", style: { display: "grid", gridTemplateColumns: columns, alignItems: "stretch", gap: "10px" } }, ...nodes),
+    el("div", { class: "flow-demo", style: { display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "stretch", gap: "8px" } }, ...nodes),
     main.loopNote ? el("div", { style: { fontSize: "12px", marginTop: "10px", color: "var(--muted)" } }, main.loopNote) : ""
   );
 }
@@ -356,7 +370,7 @@ export function renderRealResults(root: HTMLElement, situationId: string, onPatt
     const diagram = el(
       "div",
       { class: "metric-card", style: { marginTop: "14px" } },
-      el("div", { class: "label" }, PATTERNS[pattern].flow),
+      el("div", { class: "label", style: { marginBottom: "14px" } }, PATTERNS[pattern].flow),
       flowDiagram(row)
     );
 

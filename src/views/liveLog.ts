@@ -9,15 +9,34 @@ import { el } from "../dom";
 let savedHeight: string | null = null;
 let lastObserver: ResizeObserver | null = null;
 
-export function renderLiveLog(lines: string[]): HTMLElement | "" {
-  if (lines.length === 0) return "";
+export function renderLiveLog(lines: string[]): HTMLElement {
+  // Always rendered, even with nothing to show yet -- returning "" (no element)
+  // for an empty log meant its ~120px footprint would pop into existence the
+  // instant the first line arrived (right after pressing Start), shoving every
+  // element below it down the page. Reserving that space from the start, with a
+  // placeholder message, keeps the page from jumping when playback begins.
+  const lineEls: HTMLElement[] =
+    lines.length === 0
+      ? [el("div", { class: "muted" }, "Press ▶ Start to watch the pipeline run live, or use Step forward to step manually.")]
+      : // wordBreak + a fixed width above are what actually stop a long unwrapped
+        // line (e.g. a Z3 "also legal" explanation) from ballooning this box's
+        // *intrinsic* content width past its container -- a CSS grid/flex "auto"
+        // track sizes to an item's max-content width, which for wrappable text is
+        // computed as if it were laid out on one line, not the width it visually
+        // wraps to. Without an explicit width here the log box (and every
+        // ancestor up to the grid/flex container) would balloon to fit the
+        // longest line.
+        lines.map((line) => el("div", { style: { overflowWrap: "anywhere", wordBreak: "break-word" } }, line));
   const box = el(
     "div",
     {
       style: {
         marginTop: "8px",
+        width: "100%",
+        boxSizing: "border-box",
         height: savedHeight ?? "120px",
         minHeight: "60px",
+        minWidth: "0",
         overflow: "auto",
         resize: "vertical",
         fontFamily: "monospace",
@@ -29,7 +48,7 @@ export function renderLiveLog(lines: string[]): HTMLElement | "" {
         padding: "6px 8px",
       },
     },
-    ...lines.map((line) => el("div", {}, line))
+    ...lineEls
   );
   lastObserver?.disconnect();
   lastObserver = new ResizeObserver(() => {

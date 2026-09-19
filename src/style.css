@@ -268,6 +268,7 @@ select:hover {
   gap: 12px;
   margin-top: 24px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 /* ---------- results / tradeoff ---------- */
@@ -371,7 +372,11 @@ select:hover {
   word-break: break-word;
 }
 .flow-arrow {
-  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
   color: var(--muted);
 }
 
@@ -429,11 +434,11 @@ button.lab-token { cursor: pointer; }
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 .seg-btn:hover {
-  border-color: var(--pos);
+  border-color: var(--symbolic);
 }
 .seg-btn.active {
-  border-color: var(--pos);
-  background: rgba(200, 241, 53, 0.08);
+  border-color: var(--symbolic);
+  background: rgba(8, 119, 189, 0.12);
 }
 .seg-flow {
   font-weight: 600;
