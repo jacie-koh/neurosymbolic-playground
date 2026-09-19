@@ -3,9 +3,17 @@
 import { el } from "../dom";
 
 /** The box is recreated from scratch on every render (every step, every auto-play
- * tick), so a plain per-element height would snap back the instant the user
+ * tick), so a plain per-element size would snap back the instant the user
  * finishes dragging the native resize handle -- these persist the user's chosen
- * height (and the observer watching for drag-resize) across those re-renders. */
+ * size (and the observer watching for drag-resize) across those re-renders.
+ * width defaults to a fixed pixel value rather than "100%" of its container --
+ * that container's own natural width can shift slightly from one render to the
+ * next (e.g. a step counter like "12/58" growing to "99/1143050" changes how
+ * much horizontal space sibling buttons take up), which made this box visibly
+ * change width on every single tick/step even though nothing about the log
+ * itself changed. A fixed width means it only ever changes size when the user
+ * actually drags the resize handle. */
+let savedWidth: string | null = null;
 let savedHeight: string | null = null;
 let lastObserver: ResizeObserver | null = null;
 
@@ -32,13 +40,14 @@ export function renderLiveLog(lines: string[]): HTMLElement {
     {
       style: {
         marginTop: "8px",
-        width: "100%",
+        width: savedWidth ?? "460px",
+        maxWidth: "100%", // never lets a wider saved/dragged width overflow a narrower container
         boxSizing: "border-box",
         height: savedHeight ?? "120px",
         minHeight: "60px",
         minWidth: "0",
         overflow: "auto",
-        resize: "vertical",
+        resize: "both",
         fontFamily: "monospace",
         fontSize: "11px",
         lineHeight: "1.5",
@@ -52,13 +61,14 @@ export function renderLiveLog(lines: string[]): HTMLElement {
   );
   lastObserver?.disconnect();
   lastObserver = new ResizeObserver(() => {
-    // offsetHeight (border+padding+content) matches what the CSS `height` above
-    // actually means under box-sizing: border-box. Using clientHeight here (which
-    // excludes the 1px+1px border) fed back a value 2px too small every time --
-    // and since that value becomes next render's `height`, each of the many
-    // re-renders during auto-play or Step forward/back shaved another 2px off,
-    // visibly shrinking the box (and shifting everything below it up the page)
-    // a little more on every single step.
+    // offsetWidth/offsetHeight (border+padding+content) match what the CSS
+    // width/height above actually mean under box-sizing: border-box. Using
+    // clientHeight here (which excludes the 1px+1px border) fed back a value 2px
+    // too small every time -- and since that value becomes next render's
+    // `height`, each of the many re-renders during auto-play or Step
+    // forward/back shaved another 2px off, visibly shrinking the box (and
+    // shifting everything below it up the page) a little more on every step.
+    savedWidth = `${box.offsetWidth}px`;
     savedHeight = `${box.offsetHeight}px`;
   });
   lastObserver.observe(box);
