@@ -303,20 +303,26 @@ export function renderHitoriDebugger(root: HTMLElement): void {
       status,
       controls
     );
-    // minWidth: "0" overrides the grid item's default min-width: auto (= its
-    // content's min-content size) -- without it, the Z3 proof <pre> blocks below
-    // (white-space: pre, so they never wrap) would set an unshrinkable floor on
-    // this column and push the whole page wider instead of just scrolling
-    // internally via their own overflow-x: auto.
+    // A fixed pixel width here (not "1fr" / "auto") is load-bearing, same as
+    // leftCol above: this page is centered on the page via the debugger host's
+    // width: fit-content (see results.ts), which sizes itself to its content's
+    // *max-content* width -- and per the CSS spec, that measurement assumes
+    // text is laid out with NO line breaks at all, even wrappable text with
+    // overflow-wrap set. So as long as this column's own width was "auto"/1fr,
+    // whichever deduction's evidence happened to have the longest unwrapped
+    // line would nudge fit-content's answer, and the whole debugger (including
+    // the log box, which is width: 100% of this column) would visibly change
+    // width on every step. An explicit width makes this column's contribution
+    // to that calculation a fixed number, independent of its content.
     const rightCol = el(
       "div",
-      { style: { display: "flex", flexDirection: "column", gap: "12px", minWidth: "0" } },
+      { style: { display: "flex", flexDirection: "column", gap: "12px", width: "420px", boxSizing: "border-box" } },
       deductionPanel,
       logBox,
       z3Card
     );
 
-    body.append(el("div", { style: { display: "grid", gridTemplateColumns: "auto 1fr", gap: "20px", alignItems: "start" } }, leftCol, rightCol));
+    body.append(el("div", { style: { display: "grid", gridTemplateColumns: `${gridWidthPx}px 420px`, gap: "20px", alignItems: "start" } }, leftCol, rightCol));
   }
 
   /** O(1): stepForward only ever advances by exactly one deduction, so there's no
@@ -447,10 +453,24 @@ export function renderHitoriDebugger(root: HTMLElement): void {
 
   function renderEvidence(evidence: string[]): HTMLElement {
     const shown = evidenceExpanded ? evidence : evidence.slice(0, EVIDENCE_PREVIEW);
+    // overflowWrap/wordBreak here are what stop a long evidence line from
+    // silently widening the whole debugger: CSS computes an ancestor's
+    // fit-content width using each descendant's *unwrapped* line width, so
+    // without this, whichever deduction currently has the longest evidence
+    // line would nudge the whole page's width, and the width would visibly
+    // drift wider/narrower as you stepped between deductions with different
+    // evidence lengths -- see the matching note in liveLog.ts.
+    //
+    // A fixed height (not max-height) + its own scrollbar is what keeps the
+    // whole deduction panel a consistent size regardless of which deduction is
+    // showing -- a "local" deduction has as few as 3 evidence lines, a
+    // "connectivity" one can have 30+. Without this, the panel (and everything
+    // below it) would grow and shrink every time you stepped to a deduction of
+    // a different kind.
     const list = el(
       "ul",
-      { style: { marginTop: "6px", paddingLeft: "18px" } },
-      ...shown.map((line) => el("li", { style: { fontSize: "12px" } }, line))
+      { style: { marginTop: "6px", paddingLeft: "18px", height: "170px", overflowY: "auto" } },
+      ...shown.map((line) => el("li", { style: { fontSize: "12px", overflowWrap: "anywhere", wordBreak: "break-word" } }, line))
     );
     const rest = evidence.length - EVIDENCE_PREVIEW;
     const toggle =

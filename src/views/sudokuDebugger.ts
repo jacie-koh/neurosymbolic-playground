@@ -447,9 +447,19 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       legend,
       logBox
     );
+    // A fixed pixel width here (not "1fr"/"auto") is load-bearing for the same
+    // reason as leftCol's above, but for a subtler reason: this page is
+    // centered via the debugger host's width: fit-content (results.ts), which
+    // sizes itself to its content's *max-content* width -- and that CSS
+    // measurement assumes text is laid out with no line breaks at all, even
+    // wrappable text. So with this column at "auto"/1fr, whichever bit of
+    // status/panel/meta text happened to be longest on a given render would
+    // nudge fit-content's answer, and the whole debugger would visibly change
+    // width. An explicit width makes this column's contribution to that
+    // calculation a fixed number, independent of its content.
     const rightCol = el(
       "div",
-      { style: { display: "flex", flexDirection: "column", gap: "12px", minWidth: "0" } },
+      { style: { display: "flex", flexDirection: "column", gap: "12px", width: "420px", boxSizing: "border-box" } },
       el(
         "div",
         { style: { display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "flex-start" } },
@@ -462,7 +472,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       correctionLoopBox
     );
 
-    body.append(el("div", { style: { display: "grid", gridTemplateColumns: "auto 1fr", gap: "20px", alignItems: "start" } }, leftCol, rightCol));
+    body.append(el("div", { style: { display: "grid", gridTemplateColumns: `${gridWidthPx}px 420px`, gap: "20px", alignItems: "start" } }, leftCol, rightCol));
   }
 
   /** True only when nothing's been edited and the offline Z3 pass actually found an answer — the only case where there's a real, verified solution to show. */

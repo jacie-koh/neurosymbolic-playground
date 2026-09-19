@@ -33,6 +33,15 @@ export function renderLiveLog(lines: string[]): HTMLElement {
       style: {
         marginTop: "8px",
         width: "100%",
+        // Caps this box's contribution to any ancestor's fit-content/max-content
+        // sizing (e.g. the debugger host centering this page, see results.ts) --
+        // that computation assumes unwrapped text (ignoring overflowWrap), so
+        // without a real max-width here, a debugger whose log lines keep
+        // growing over a run (VDP's scene descriptions, e.g.) would make the
+        // whole page visibly wider tick by tick. width: 100% still lets it
+        // shrink to fit a narrower container (e.g. Sudoku's fixed-width left
+        // column); this only clamps the upper bound.
+        maxWidth: "640px",
         boxSizing: "border-box",
         height: savedHeight ?? "120px",
         minHeight: "60px",
