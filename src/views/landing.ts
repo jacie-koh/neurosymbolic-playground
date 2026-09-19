@@ -13,27 +13,24 @@ export function renderLanding(root: HTMLElement): void {
         "div",
         { class: "landing-content" },
         el(
-          "nav",
-          { class: "landing-nav" },
-          el("img", { src: "/logo-mark.png", alt: "", class: "landing-nav-mark" }),
-          el("span", { class: "landing-nav-title" }, "Neurosymbolic Playground")
-        ),
-        el(
           "section",
           { class: "landing-hero" },
+          el("img", { src: "/logo-mark.png", alt: "", class: "landing-logo" }),
+          el("div", { class: "landing-eyebrow" }, "Puzzle Playground"),
           el(
             "h1",
             {},
-            "Where neural",
+            "Explore",
             el("br"),
-            "networks meet",
+            el("span", { style: { whiteSpace: "nowrap" } }, "NeuralSymbolic Reasoning"),
             el("br"),
-            el("span", { class: "acid" }, "formal logic.")
+            "through ",
+            el("span", { class: "acid" }, "Logic Puzzles")
           ),
           el(
             "p",
             {},
-            "Five puzzles that show exactly how neural and symbolic approaches can be combined to improve results and explainability. Pick a puzzle and watch the pipeline run live."
+            "NeuroSymbolic Puzzle Playground lets you explore different ways neural and symbolic AI can work together through a collection of interactive puzzles. Try challenges involving logic, arithmetic, spatial, relational, and visual reasoning, and examine how different combinations of learning and reasoning lead to a solution."
           ),
           el(
             "button",
