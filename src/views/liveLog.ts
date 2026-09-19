@@ -52,7 +52,14 @@ export function renderLiveLog(lines: string[]): HTMLElement {
   );
   lastObserver?.disconnect();
   lastObserver = new ResizeObserver(() => {
-    savedHeight = `${box.clientHeight}px`;
+    // offsetHeight (border+padding+content) matches what the CSS `height` above
+    // actually means under box-sizing: border-box. Using clientHeight here (which
+    // excludes the 1px+1px border) fed back a value 2px too small every time --
+    // and since that value becomes next render's `height`, each of the many
+    // re-renders during auto-play or Step forward/back shaved another 2px off,
+    // visibly shrinking the box (and shifting everything below it up the page)
+    // a little more on every single step.
+    savedHeight = `${box.offsetHeight}px`;
   });
   lastObserver.observe(box);
   queueMicrotask(() => {
