@@ -18,8 +18,9 @@ export interface Situation {
   icon: string;
   /** External link to the puzzle's own rules, when a real one exists -- shown as a
    * "How to play" link on the card. Left unset rather than guessed for a puzzle
-   * with no established rules page of its own (e.g. Visual Discrimination, a
-   * task specific to one research paper, not a named puzzle genre). */
+   * with no established rules page of its own. Visual Discrimination has no
+   * named-genre rules page (it's a task specific to one research paper, not a
+   * puzzle genre), so its link points at that paper instead. */
   howToPlayUrl?: string;
   /** What the neural net is asked to perceive (plain language). */
   perception: string;
@@ -167,6 +168,7 @@ export const SITUATIONS: Situation[] = [
     title: "Visual Discrimination Puzzle",
     tagline: "Compare example and candidate scenes to find the rule that picks out the right one.",
     icon: ICON_VDP,
+    howToPlayUrl: "https://arxiv.org/abs/1907.05878",
     perception: "Detect objects and their attributes/relations (shape, color, size, material, left-of, etc.) in each scene.",
     reasoning: "Search a bounded first-order logic fragment for a discriminating rule, verified independently.",
     neuralWeakness:
