@@ -120,6 +120,37 @@ export function renderVDPDebugger(root: HTMLElement): void {
   const body = el("div", { style: { marginTop: "16px" } });
   root.append(controlsHost, randomizerHost, body);
 
+  // Created exactly once and appended to controlsHost exactly once, and never
+  // touched by clear() again for the lifetime of this debugger -- restControlsHost
+  // below (stepRow + logBox) is the only part of controlsHost's content that
+  // gets cleared and rebuilt each tick. This isn't just about reusing the same
+  // JS object: even reusing the same node, moving it out of a parent that gets
+  // clear()'d and back in still detaches it from the document for a moment,
+  // which is enough for the browser to drop its internal "this element is
+  // pressed" tracking -- so a real mouse click (mousedown, hold, mouseup,
+  // unlike an instant synthetic test click) can still silently fail to fire if
+  // ANY re-render happens while the mouse is held down, even with a stable
+  // node reference. See the matching fix in sudokuDebugger.ts, confirmed
+  // necessary there by screen recording and reproduced with a realistic
+  // held-mouse click in automation.
+  const startStopBtn = el("button", { class: "btn primary" });
+  const startStopLabel = el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } });
+  const playControlsHost = el("div", { class: "btn-row" }, startStopBtn, startStopLabel);
+  const restControlsHost = el("div");
+  controlsHost.append(playControlsHost, restControlsHost);
+  function updatePlayButton(t: VDPTrace): void {
+    if (running) {
+      startStopBtn.textContent = "⏸ Stop";
+      startStopBtn.onclick = () => { stopRunning(); drawControls(t); };
+      startStopLabel.textContent = `running… line ${runIdx}/${runSteps.length}`;
+      startStopLabel.style.display = "";
+    } else {
+      startStopBtn.textContent = "▶ Start";
+      startStopBtn.onclick = () => runFrom(t);
+      startStopLabel.style.display = "none";
+    }
+  }
+
   let manifest: VDPManifestEntry[] = [];
 
   function currentEntry(): VDPManifestEntry | undefined {
@@ -269,7 +300,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
     // runFrom's tick. Calling the full drawBody() here (as before) rebuilt every
     // thumbnail <img> in the overview on every single Step click, which is what was
     // making the page visibly jump.
-    drawControls(controlsHost, t);
+    drawControls(t);
     const crossedFresh = (prevIdx < freshRevealAt) !== (runIdx < freshRevealAt);
     if (crossedFresh && overviewHost) drawOverview(overviewHost, t);
   }
@@ -286,14 +317,14 @@ export function renderVDPDebugger(root: HTMLElement): void {
       if (!running) return;
       if (runIdx >= runSteps.length) {
         running = false;
-        drawControls(controlsHost, t);
+        drawControls(t);
         return;
       }
       const prevIdx = runIdx;
       runIdx++;
       runLines = runSteps.slice(0, runIdx);
       // Cheap every tick: just text and a couple of buttons, no images.
-      drawControls(controlsHost, t);
+      drawControls(t);
       // Expensive, so only when the pick actually just became known: the overview's
       // thumbnails (real <img> elements) get rebuilt.
       const justRevealed = prevIdx < freshRevealAt && runIdx >= freshRevealAt;
@@ -343,16 +374,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
 
   /** Just the Run/Stop button, the Step back/forward row, and the log -- all cheap
    * (text + buttons, no images) -- so the auto-play tick can refresh this alone. */
-  function drawControls(host: HTMLElement, t: VDPTrace): void {
-    clear(host);
-    const runRow = el(
-      "div",
-      { class: "btn-row" },
-      running
-        ? el("button", { class: "btn primary", onclick: () => { stopRunning(); drawControls(controlsHost, t); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => runFrom(t) }, "▶ Start"),
-      running ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `running… line ${runIdx}/${runSteps.length}`) : ""
-    );
+  function drawControls(t: VDPTrace): void {
+    updatePlayButton(t);
 
     const stepRow = el(
       "div",
@@ -363,7 +386,8 @@ export function renderVDPDebugger(root: HTMLElement): void {
     );
 
     const logBox = renderLiveLog(runLines);
-    host.append(runRow, stepRow, logBox);
+    clear(restControlsHost);
+    restControlsHost.append(stepRow, logBox);
   }
 
   function drawBody(): void {
@@ -399,7 +423,7 @@ export function renderVDPDebugger(root: HTMLElement): void {
       `${detectionSummary} · ` + ATTRS.map((a) => `${a} ${acc[a] != null ? `${((acc[a] as number) * 100).toFixed(1)}%` : "—"}`).join(" · ")
     );
 
-    drawControls(controlsHost, t);
+    drawControls(t);
 
     body.append(conceptNote, overviewHost, accRow);
   }

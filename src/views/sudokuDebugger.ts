@@ -82,7 +82,38 @@ export function renderSudokuDebugger(root: HTMLElement): void {
   const resetHost = el("div");
   const topRow = el("div", { style: { display: "flex", gap: "12px", alignItems: "flex-start", flexWrap: "wrap" } }, randomizerHost, resetHost);
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(topRow, body);
+
+  // The Start/Stop button is appended directly to root -- never inside body,
+  // which drawBody() clears and rebuilds on every single auto-play tick
+  // (~every 50ms) -- and created exactly once. This isn't just about reusing
+  // the same JS object: even reusing the same node, moving it out of a parent
+  // that gets clear()'d and back in still detaches it from the document for a
+  // moment, which is enough for the browser to drop its internal "this
+  // element is pressed" tracking -- so a real mouse click (mousedown, hold,
+  // mouseup, unlike an instant synthetic test click) can still silently fail
+  // to fire if ANY re-render happens while the mouse is held down, even with a
+  // stable node reference. This was confirmed by screen recording (the run
+  // never stopping despite the cursor sitting directly on the button) and
+  // reproduced with a realistic held-mouse click in automation -- the only
+  // real fix is for this button to never leave the document at all during
+  // play. (This also moves it above the randomizer row, matching
+  // KenKen/Zebra/VDP's layout instead of Sudoku's own previous one.)
+  const startStopBtn = el("button", { class: "btn primary" });
+  const startStopLabel = el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } });
+  const playControlsHost = el("div", { class: "btn-row", style: { marginTop: "12px" } }, startStopBtn, startStopLabel);
+  root.append(playControlsHost, topRow, body);
+  function updatePlayButton(t: SudokuTrace): void {
+    if (playing) {
+      startStopBtn.textContent = "⏸ Stop";
+      startStopBtn.onclick = () => { stopPlaying(); drawBody(); };
+      startStopLabel.textContent = `solving… step ${playIdx}/${playSteps.length}`;
+      startStopLabel.style.display = "";
+    } else {
+      startStopBtn.textContent = "▶ Start";
+      startStopBtn.onclick = () => playFrom(t);
+      startStopLabel.style.display = "none";
+    }
+  }
 
   loadSudokuManifest()
     .then((manifest) => {
@@ -252,16 +283,7 @@ export function renderSudokuDebugger(root: HTMLElement): void {
       }
     }
 
-    const playRow = el(
-      "div",
-      { class: "btn-row", style: { marginTop: "12px" } },
-      playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Start"),
-      playing
-        ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
-        : ""
-    );
+    updatePlayButton(t);
 
     const stepRow = el(
       "div",
@@ -437,10 +459,15 @@ export function renderSudokuDebugger(root: HTMLElement): void {
     // long log line would otherwise balloon this whole column (and the grid it's
     // in) far past the puzzle grid's actual width. See liveLog.ts for the
     // matching fix on the log box itself.
+    // Kept in sync with the grid's own width so the Start/Stop button (now
+    // living outside this column -- see playControlsHost above) still lines
+    // up visually with it, even though puzzle size (and therefore gridWidthPx)
+    // can change between traces.
+    playControlsHost.style.width = `${gridWidthPx}px`;
+    playControlsHost.style.boxSizing = "border-box";
     const leftCol = el(
       "div",
       { style: { display: "flex", flexDirection: "column", gap: "6px", width: `${gridWidthPx}px`, boxSizing: "border-box" } },
-      playRow,
       stepRow,
       gridLabel,
       grid,

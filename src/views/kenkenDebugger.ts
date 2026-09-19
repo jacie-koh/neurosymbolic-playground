@@ -89,6 +89,39 @@ export function renderKenKenDebugger(root: HTMLElement): void {
   const body = el("div", { style: { marginTop: "16px" } });
   root.append(controlsHost, randomizerHost, body);
 
+  // Created exactly once and appended to controlsHost exactly once, and never
+  // touched by clear() again for the lifetime of this debugger -- restControlsHost
+  // below (stepRow + logBox) is the only part of controlsHost's content that
+  // gets cleared and rebuilt each tick. This isn't just about reusing the same
+  // JS object: even reusing the same node, moving it out of a parent that gets
+  // clear()'d and back in (as the previous version of this fix did) still
+  // detaches it from the document for a moment, which is enough for the
+  // browser to drop its internal "this element is pressed" tracking -- so a
+  // real mouse click (mousedown, hold, mouseup, unlike an instant synthetic
+  // test click) can still silently fail to fire if ANY re-render happens while
+  // the mouse is held down, even with a stable node reference. Confirmed by
+  // screen recording (the run never stopping despite the cursor sitting
+  // directly on the button) and reproduced with a realistic held-mouse click
+  // in automation. The only real fix is for this button to never leave the
+  // document at all during play.
+  const startStopBtn = el("button", { class: "btn primary" });
+  const startStopLabel = el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } });
+  const playControlsHost = el("div", { class: "btn-row", style: { marginTop: "12px" } }, startStopBtn, startStopLabel);
+  const restControlsHost = el("div");
+  controlsHost.append(playControlsHost, restControlsHost);
+  function updatePlayButton(t: KenKenTrace): void {
+    if (playing) {
+      startStopBtn.textContent = "⏸ Stop";
+      startStopBtn.onclick = () => { stopPlaying(); drawBody(); };
+      startStopLabel.textContent = `solving… step ${playIdx}/${playSteps.length}`;
+      startStopLabel.style.display = "";
+    } else {
+      startStopBtn.textContent = "▶ Start";
+      startStopBtn.onclick = () => playFrom(t);
+      startStopLabel.style.display = "none";
+    }
+  }
+
   loadKenKenManifest()
     .then((manifest) => {
       renderRandomizer<KenKenManifestEntry>(randomizerHost, manifest, {
@@ -240,16 +273,7 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       }
     }
 
-    const playRow = el(
-      "div",
-      { class: "btn-row", style: { marginTop: "12px" } },
-      playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Start"),
-      playing
-        ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… step ${playIdx}/${playSteps.length}`)
-        : ""
-    );
+    updatePlayButton(t);
 
     const stepRow = el(
       "div",
@@ -306,8 +330,8 @@ export function renderKenKenDebugger(root: HTMLElement): void {
       "Reset to pipeline readings"
     );
 
-    clear(controlsHost);
-    controlsHost.append(playRow, stepRow, logBox);
+    clear(restControlsHost);
+    restControlsHost.append(stepRow, logBox);
 
     body.append(
       el("div", { style: { display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-start" } }, sourceImage!, grid),

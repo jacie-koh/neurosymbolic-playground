@@ -71,7 +71,38 @@ export function renderHitoriDebugger(root: HTMLElement): void {
 
   const randomizerHost = el("div");
   const body = el("div", { style: { marginTop: "16px" } });
-  root.append(randomizerHost, body);
+
+  // The Start/Stop button is appended directly to root -- never inside body,
+  // which drawBody() clears and rebuilds on every auto-play tick
+  // (PLAY_DELAY_MS) -- and created exactly once. This isn't just about
+  // reusing the same JS object: even reusing the same node, moving it out of
+  // a parent that gets clear()'d and back in still detaches it from the
+  // document for a moment, which is enough for the browser to drop its
+  // internal "this element is pressed" tracking -- so a real mouse click
+  // (mousedown, hold, mouseup, unlike an instant synthetic test click) can
+  // still silently fail to fire if a re-render happens while the mouse is
+  // held down, even with a stable node reference. Confirmed necessary in
+  // sudokuDebugger.ts by screen recording and a realistic held-mouse click in
+  // automation (Hitori's much slower 700ms tick rate makes the window far
+  // narrower than Sudoku's, but the same class of bug applies). This also
+  // moves it above the randomizer row, matching the other four debuggers'
+  // layout instead of sitting inside the deduction panel.
+  const startStopBtn = el("button", { class: "btn primary" });
+  const startStopLabel = el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } });
+  const playControlsHost = el("div", { class: "btn-row", style: { marginTop: "12px" } }, startStopBtn, startStopLabel);
+  root.append(playControlsHost, randomizerHost, body);
+  function updatePlayButton(t: HitoriTrace): void {
+    if (playing) {
+      startStopBtn.textContent = "⏸ Stop";
+      startStopBtn.onclick = () => { stopPlaying(); drawBody(); };
+      startStopLabel.textContent = `solving… ${Math.max(deductionIdx + 1, 0)}/${t.deductions.length}`;
+      startStopLabel.style.display = "";
+    } else {
+      startStopBtn.textContent = "▶ Start";
+      startStopBtn.onclick = () => playFrom(t);
+      startStopLabel.style.display = "none";
+    }
+  }
 
   loadHitoriManifest()
     .then((manifest) => {
@@ -367,16 +398,7 @@ export function renderHitoriDebugger(root: HTMLElement): void {
   }
 
   function drawDeductionPanel(panel: HTMLElement, t: HitoriTrace): void {
-    const playRow = el(
-      "div",
-      { class: "btn-row" },
-      playing
-        ? el("button", { class: "btn primary", onclick: () => { stopPlaying(); drawBody(); } }, "⏸ Stop")
-        : el("button", { class: "btn primary", onclick: () => playFrom(t) }, "▶ Start"),
-      playing
-        ? el("span", { class: "muted", style: { fontSize: "12px", alignSelf: "center" } }, `solving… ${Math.max(deductionIdx + 1, 0)}/${t.deductions.length}`)
-        : ""
-    );
+    updatePlayButton(t);
     const nav = el(
       "div",
       { class: "btn-row", style: { marginTop: "8px" } },
@@ -408,7 +430,6 @@ export function renderHitoriDebugger(root: HTMLElement): void {
     );
     panel.append(
       el("div", {}, el("b", {}, "Step-through: "), `${t.deductions.length} cells are forced, ranked local-first.`),
-      playRow,
       nav
     );
 
